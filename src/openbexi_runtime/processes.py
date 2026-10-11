@@ -108,18 +108,8 @@ class ProcessTree:
             if not self.job or not query(self.job, 1, ctypes.byref(report), ctypes.sizeof(report), None):
                 return None
             return report.active
-        proc = __import__('pathlib').Path('/proc')
-        if not proc.is_dir():
-            return None
-        count = 0
-        for entry in proc.iterdir():
-            if entry.name.isdigit():
-                try:
-                    if os.getpgid(int(entry.name)) == self.pid:
-                        count += 1
-                except (ProcessLookupError, PermissionError):
-                    continue
-        return count
+        identifiers = self.process_ids()
+        return None if identifiers is None else len(identifiers)
 
     def process_ids(self):
         """Return actual owned process identities, or None when unobservable."""
@@ -144,9 +134,15 @@ class ProcessTree:
             if entry.name.isdigit():
                 try:
                     if os.getpgid(int(entry.name)) == self.pid:
-                        identifiers.add(int(entry.name))
-                except (ProcessLookupError, PermissionError):
+                        # An exited child can remain a zombie until its paused
+                        # Python parent reaps it. It cannot execute or hold a slot.
+                        state = (entry / 'stat').read_bytes().rsplit(b')', 1)[1].split()[0]
+                        if state not in {b'Z', b'X'}:
+                            identifiers.add(int(entry.name))
+                except (ProcessLookupError, FileNotFoundError):
                     continue
+                except (PermissionError, IndexError):
+                    return None
         return identifiers
 
 
@@ -232,7 +228,10 @@ def own_worker_tree():
         owner.pid, owner.job, owner.closed = os.getpid(), None, False
         owner._create_windows_job(owner.pid)
         _worker_job = owner
-    elif os.getsid(0) != os.getpid():
+    # debugpy already creates a debuggee process group within its launcher's
+    # session. setsid() is forbidden for that group leader; retain its group so
+    # debugpy can terminate the debuggee and its children together.
+    elif os.getpgrp() != os.getpid():
         os.setsid()
 
 

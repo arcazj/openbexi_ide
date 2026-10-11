@@ -13,6 +13,22 @@ Python stacks, bounded locals and per-procedure output.
 
 ## Install and open
 
+For a complete local Docker test desktop, run this from the repository root with
+`openbexi_spell_plugin` beside it:
+
+```powershell
+docker compose up -d --build --wait ide
+```
+
+Open [the browser desktop](http://localhost:6080/vnc.html?autoconnect=1&resize=scale).
+Python, Qt, debugpy, examples, shared sessions, a local DSS and the durable
+Python/mutual-TLS test profile are included. See the
+[Docker testing guide](docs/DOCKER_TESTING.md) for test steps, CLI commands,
+persistent files and automated checks. This tests the current implementation;
+IDE v0.3 acceptance is still in progress.
+
+For a native Windows desktop:
+
 ```powershell
 ./install.ps1 -Python C:/path/to/python.exe
 ./start.ps1 -Project examples -File examples/test_menu.py

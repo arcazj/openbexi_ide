@@ -6,7 +6,7 @@ import time
 
 from PySide6.QtCore import QObject, QProcess, QThreadPool, QTimer, Signal
 from openbexi_runtime.dap import MessageReader, ProtocolError, encode_message
-from openbexi_runtime.launch import LaunchSpec
+from openbexi_runtime.launch import LaunchSpec, console_interpreter
 from .controller import OwnedProcess, ProbeTask, StreamPump, process_environment
 
 
@@ -209,7 +209,7 @@ class DebugController(QObject):
         command = args.get("args")
         if (not isinstance(command, list) or len(command) < 2
                 or not all(isinstance(value, str) and "\0" not in value for value in command)
-                or Path(command[0]).resolve() != self.spec.interpreter
+                or console_interpreter(command[0]) != self.spec.interpreter
                 or args.get("argsCanBeInterpretedByShell", False)
                 or self.terminal.state() != QProcess.NotRunning):
             self.reply(request, False, message="Invalid integrated-console launch")

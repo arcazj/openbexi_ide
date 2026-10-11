@@ -1,0 +1,51 @@
+name: openbexi-ide-test
+
+x-test-image: &test-image
+  image: openbexi-ide-test:current
+  platform: linux/amd64
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    additional_contexts:
+      spell_plugin: ../openbexi_spell_plugin
+
+services:
+  ide:
+    <<: *test-image
+    init: true
+    ports:
+      - "127.0.0.1:${OPENBEXI_DESKTOP_PORT:-6080}:6080"
+    shm_size: 256m
+    mem_limit: 3g
+    pids_limit: 512
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - workspace:/workspace
+      - preferences:/home/tester
+      - evidence:/evidence:ro
+    healthcheck:
+      test: ["CMD", "python", "-I", "/opt/test-lab/health.py"]
+      interval: 5s
+      timeout: 5s
+      start_period: 45s
+      retries: 12
+    stop_grace_period: 20s
+
+  tests:
+    <<: *test-image
+    profiles: [tests]
+    init: true
+    command: ["test"]
+    shm_size: 256m
+    mem_limit: 3g
+    pids_limit: 512
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - evidence:/evidence
+
+volumes:
+  workspace:
+  preferences:
+  evidence:

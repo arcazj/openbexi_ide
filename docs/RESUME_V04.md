@@ -44,6 +44,13 @@ Read these before resuming:
 
 ## Next implementation work
 
+The user requested a Docker test environment before further v0.3 completion.
+The browser desktop and isolated automated-test profile are described in
+[DOCKER_TESTING.md](DOCKER_TESTING.md). Preserve its named workspace/preferences/
+evidence volumes and the user's edits. Linux testing also corrected virtualenv
+interpreter selection, debugpy process-group startup and exited-child accounting.
+This is a testing milestone, not completion of any outstanding release gate.
+
 An additional tested partial prerequisite is now implemented; read
 [DURABLE_SERVICE.md](DURABLE_SERVICE.md) and
 [DURABLE_QUALIFICATION.json](DURABLE_QUALIFICATION.json) before editing it.

@@ -1,7 +1,12 @@
 from pathlib import Path
+from importlib.metadata import distribution
 import json
+import shutil
+import subprocess
+import sys
 import time
 
+import pytest
 from PySide6.QtTest import QTest
 from openbexi_ide.debugger import DebugController
 from openbexi_runtime.launch import LaunchSpec
@@ -15,7 +20,20 @@ def wait_until(app, condition, timeout=30):
     assert condition(), "Debugger did not reach the expected state"
 
 
-def test_real_debugpy_breakpoint_variables_steps_and_console(app, tmp_path):
+@pytest.mark.parametrize('use_venv', [False, True])
+def test_real_debugpy_breakpoint_variables_steps_and_console(app, tmp_path, use_venv):
+    interpreter = Path(sys.executable)
+    if use_venv:
+        environment = tmp_path / 'runtime'
+        subprocess.run([sys.executable, '-I', '-m', 'venv', '--without-pip',
+                        str(environment)], check=True, timeout=20)
+        interpreter = environment / ('Scripts/python.exe' if sys.platform == 'win32' else 'bin/python')
+        site = Path(subprocess.check_output([str(interpreter), '-I', '-c',
+                    "import sysconfig; print(sysconfig.get_path('purelib'))"], text=True).strip())
+        # Reuse the already installed, locked debugger without network access.
+        dependency = distribution('debugpy')
+        for name in ('debugpy', 'debugpy-1.8.22.dist-info'):
+            shutil.copytree(dependency.locate_file(name), site / name)
     script = tmp_path / "debug me.py"
     script.write_text("def add(value):\n    shifted = value + 1\n    return shifted\n"
                       "number = 7\nresult = add(number)\nprint('Result', result)\n"
@@ -26,7 +44,7 @@ def test_real_debugpy_breakpoint_variables_steps_and_console(app, tmp_path):
     debugger.output.connect(output.append); debugger.error.connect(errors.append)
     debugger.breakpoints_verified.connect(verified.append); debugger.finished.connect(exits.append)
     try:
-        debugger.start(LaunchSpec(tmp_path, script), {script: [5]})
+        debugger.start(LaunchSpec(tmp_path, script, interpreter), {script: [5]})
         wait_until(app, lambda: bool(stacks) or bool(errors))
         assert not errors, errors
         assert verified and verified[0]["breakpoints"][0]["verified"]

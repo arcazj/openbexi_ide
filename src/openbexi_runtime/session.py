@@ -15,7 +15,7 @@ import threading
 import time
 import uuid
 
-from .launch import LaunchSpec, clean_environment, interpreter_info
+from .launch import LaunchSpec, clean_environment, console_interpreter, interpreter_info
 from .processes import ProcessTree, start_owned_process
 
 TERMINAL = frozenset({'COMPLETED', 'FAILED', 'CANCELLED'})
@@ -81,7 +81,7 @@ class Session:
         if type(lease_seconds) not in {int, float} or not 0.5 <= lease_seconds <= 300:
             raise ValueError('lease_seconds must be in 0.5..300')
         interpreter_info(interpreter)
-        self.interpreter, self.max_parallel = Path(interpreter), max_parallel
+        self.interpreter, self.max_parallel = console_interpreter(interpreter), max_parallel
         self.lease_seconds, self.dss_url = lease_seconds, dss_url
         self.id = uuid.uuid4().hex
         self.developer_invite, self.monitor_invite = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
@@ -136,7 +136,7 @@ class Session:
 
     def _durable_state(self, sequence):
         return {'schema': 1, 'id': self.id, 'project': str(self.project),
-                'interpreter': str(self.interpreter.resolve()), 'max_parallel': self.max_parallel,
+                'interpreter': str(self.interpreter), 'max_parallel': self.max_parallel,
                 'sequence': sequence, 'epoch': self.epoch, 'aliases': self.aliases, 'fences': self.fences,
                 'procedures': [{**{k: v for k, v in p.public().items() if k != 'threads'}, 'capture': str(p.spec.project),
                                 'arguments': list(p.spec.arguments),
@@ -148,7 +148,7 @@ class Session:
         if state is None:
             return
         if (state['schema'] != 1 or state['project'] != str(self.project)
-                or state['interpreter'] != str(self.interpreter.resolve())):
+                or state['interpreter'] != str(self.interpreter)):
             raise ValueError('Durable service project or interpreter identity differs')
         self.id, self.sequence, self.epoch = state['id'], state['sequence'], state['epoch'] + 1
         self.max_parallel, self.aliases, self.fences = state['max_parallel'], state['aliases'], state['fences']

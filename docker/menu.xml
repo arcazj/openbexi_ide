@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+  <menu id="root-menu" label="OpenBEXI testing">
+    <item label="Local Python IDE — Run and Debug"><action name="Execute"><command>openbexi-lab local</command></action></item>
+    <separator label="Shared Python / bounded SPELL + DSS"/>
+    <item label="Developer Alice"><action name="Execute"><command>openbexi-lab alice</command></action></item>
+    <item label="Developer Bob"><action name="Execute"><command>openbexi-lab bob</command></action></item>
+    <item label="Read-only monitor"><action name="Execute"><command>openbexi-lab monitor</command></action></item>
+    <separator label="Durable Python + mutual TLS"/>
+    <item label="Durable developer"><action name="Execute"><command>openbexi-lab durable</command></action></item>
+    <item label="Durable monitor"><action name="Execute"><command>openbexi-lab durable-monitor</command></action></item>
+    <separator/>
+    <item label="Terminal"><action name="Execute"><command>openbexi-lab terminal</command></action></item>
+  </menu>
+</openbox_menu>

@@ -17,7 +17,11 @@ def clean_environment() -> dict[str, str]:
 
 
 def console_interpreter(executable: str | Path) -> Path:
-    path = Path(executable).resolve()
+    # POSIX venv executables are symlinks. Resolving them selects the base
+    # interpreter and silently loses the chosen environment and its packages.
+    path = Path(os.path.abspath(executable))
+    if not (path.parent.parent / 'pyvenv.cfg').is_file():
+        path = path.resolve()
     if path.name.lower() == "pythonw.exe":
         path = path.with_name("python.exe")
     return path

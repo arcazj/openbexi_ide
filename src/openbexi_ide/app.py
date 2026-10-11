@@ -399,7 +399,7 @@ class MainWindow(QMainWindow):
         for relative in (".venv/Scripts/python.exe", ".venv/bin/python"):
             candidate = folder / relative
             if candidate.is_file():
-                self.interpreter = candidate.resolve(); break
+                self.interpreter = console_interpreter(candidate); break
         key = "interpreter/" + hashlib.sha256(str(folder).encode()).hexdigest()
         remembered = self.settings.value(key, "")
         if remembered and Path(remembered).is_file():
