@@ -93,9 +93,22 @@ remote. Initial publication preserves the existing commit histories and release
 tags. A local commit does not publish changes: push `master` and new release
 tags explicitly, then verify the remote identities.
 
-Archival of `arcazj/openbexi_SPELL` remains a separate pending operation. The
-legacy Git bundle was verified to contain complete history, but it is not a
-backup of all GitHub metadata. Preserve the old local directory regardless.
+The user subsequently requested deletion of the old GitHub repositories
+`arcazj/openbexi_SPELL` and `arcazj/openbexi_REI`. Both were backed up on
+2026-10-11 under
+`C:/projects/.openbexi-archive/20261011-github-retirement/f5100ca154e5452da72da5bb7515a9b2/`.
+`backup-manifest.json` records verified Git mirrors/bundles, LFS inventory,
+seven releases and all 26 release assets, empty issues/PR inventories and REI's
+Pages configuration. SPELL had no initialized wiki repository. This is not a
+complete export of all GitHub account metadata.
+
+The deletion attempts returned HTTP 403: the saved Git credential lacks
+`delete_repo` scope. Both old repositories still existed at that verification;
+`deletion-attempt.json` records the result. Deletion through the owner's GitHub
+Settings pages, or an appropriately authorized credential, remains pending.
+Recheck remote state before a later attempt. The new repositories are preserved.
+The request to delete the two GitHub repositories does not authorize removal of
+`C:/projects/openbexi_spell`; preserve it until the user confirms local removal.
 
 ## Restart instruction
 
