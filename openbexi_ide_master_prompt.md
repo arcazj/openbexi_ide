@@ -1,5 +1,10 @@
 # openbexi_ide engineering master prompt
 
+For the project switch and remaining work, read [the v0.4 handoff](docs/RESUME_V04.md).
+User requirement: preserve `C:/projects/openbexi_spell`; ask the user before
+removing it, after establishing it is no longer needed. Preserve the external
+legacy archive and local qualification artifacts as well.
+
 Build a domain-neutral CPython 3.13 desktop IDE and CLI. Keep the Python runtime
 independent of Qt and SPELL. Reuse the existing tested launch, owned process-tree
 and real debugpy/DAP foundation; do not replace mature debugger/tooling APIs with

@@ -1,5 +1,7 @@
 # openbexi_ide v0.2
 
+Continuing development after the repository split: [resume v0.4](docs/RESUME_V04.md).
+
 A standalone CPython 3.13 IDE and headless CLI. The desktop has a project tree,
 tabbed editor, output and real debugpy debugger, with light/dark themes and a
 compact Open Folder / Run / Debug / Stop toolbar. SPELL is an optional, separately
