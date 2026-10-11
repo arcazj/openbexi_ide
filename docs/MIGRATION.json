@@ -1,0 +1,188 @@
+{
+  "source_repository": "openbexi_spell",
+  "source_commit": "d4b0ed98f186346ea9e9af53816af2578953042c",
+  "version": "0.1.0",
+  "files": [
+    {
+      "source": "desktop/LICENSE",
+      "project": "openbexi_ide",
+      "target": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "desktop/NOTICE",
+      "project": "openbexi_ide",
+      "target": "NOTICE",
+      "sha256": "e2333c48f339d39846c40007b703206af3b618c48c4782c12b38eb95b9676bba"
+    },
+    {
+      "source": "desktop/build-requirements.lock",
+      "project": "openbexi_ide",
+      "target": "build-requirements.lock",
+      "sha256": "d1ff29fc884cbcbf907784faf5366752f6f4046acdc9196c40aa5b3a96f45e96"
+    },
+    {
+      "source": "desktop/examples/debug_demo.py",
+      "project": "openbexi_ide",
+      "target": "examples/debug_demo.py",
+      "sha256": "a118d3b2c3f90666d95b7af3c3a4a05beb8c85cc314455aa7d70e35701c25d56"
+    },
+    {
+      "source": "desktop/examples/graphics_demo.py",
+      "project": "openbexi_ide",
+      "target": "examples/graphics_demo.py",
+      "sha256": "8b2f6159e100cdfce5d44d6a61f6612bc84adb511fcb631a0ccacb7693633943"
+    },
+    {
+      "source": "desktop/examples/hello.py",
+      "project": "openbexi_ide",
+      "target": "examples/hello.py",
+      "sha256": "7fbf6421371538f7d577b2bef2f5f1f2f2054db00135ecd69c20fb389ce39ef1"
+    },
+    {
+      "source": "desktop/examples/test_menu.py",
+      "project": "openbexi_ide",
+      "target": "examples/test_menu.py",
+      "sha256": "b039af1236cae96847ca7c175e1cb24190a91a7df4d3eb02d21a5c3ff1ad3478"
+    },
+    {
+      "source": "desktop/install.ps1",
+      "project": "openbexi_ide",
+      "target": "install.ps1",
+      "sha256": "459457eab0d252deb4f9b05c5d6ec0f642bfa596d94ccc97b4e329873e67ac38"
+    },
+    {
+      "source": "desktop/pyproject.toml",
+      "project": "openbexi_ide",
+      "target": "pyproject.toml",
+      "sha256": "81c81dc9bba7cacb0ed362b13ba40fb11b36955038224da9f592426f15e1b33f"
+    },
+    {
+      "source": "desktop/requirements-windows-cp313.lock",
+      "project": "openbexi_ide",
+      "target": "requirements-windows-cp313.lock",
+      "sha256": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8"
+    },
+    {
+      "source": "desktop/run_ide.py",
+      "project": "openbexi_ide",
+      "target": "run_ide.py",
+      "sha256": "0f1ba527b8eb1d3c9160e01385761cbc7bf9a0f043149a3154bc8ae934c9e79a"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/__init__.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/__init__.py",
+      "sha256": "270fec00b47c7cf86313d91ca0879fc567e7f440eff290fb3c1189237d7b580e"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/__main__.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/__main__.py",
+      "sha256": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/app.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/app.py",
+      "sha256": "a34a27b795a3eff2a7f8f9cfa60b3b842e7d7dc7139233c1c77368c5ebf6cb87"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/controller.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/controller.py",
+      "sha256": "c37d634f753b725d27809266585c74c1759dafc8f22457736bae55be1667275d"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/debugger.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/debugger.py",
+      "sha256": "b8543cf4a74375569bab9e9fa7a83d071e59f2aab918b4c85cddf66a85d5fbca"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/editor.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/editor.py",
+      "sha256": "74c0201acaf15e91b121e23b3c2bb7d0371f9122bc359509514727b261dbc71d"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/fonts.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/fonts.py",
+      "sha256": "e99274c43c6a0e04a56152cb420d3802b9ba841883d48f9dbd79b9e40bd66c82"
+    },
+    {
+      "source": "desktop/src/openbexi_ide/themes.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_ide/themes.py",
+      "sha256": "1fa6f2559ac41e9f96187b60642714cce070ea81f50c45e6efa7e6aa80ac7bf8"
+    },
+    {
+      "source": "desktop/src/openbexi_runtime/__init__.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_runtime/__init__.py",
+      "sha256": "5bd901a8dc17440f76768d8587b5efba1036834894577ea972eae6775f66f8d1"
+    },
+    {
+      "source": "desktop/src/openbexi_runtime/dap.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_runtime/dap.py",
+      "sha256": "f6833b90e7842f0b4fb68ef1c0f8a56808a92986848b2bbcf79eccc8a6d6fc0d"
+    },
+    {
+      "source": "desktop/src/openbexi_runtime/launch.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_runtime/launch.py",
+      "sha256": "749fe9cc4f5e4ea63bf195ad5dc6414726f8b38d2ba2ada5d072c889c2b18bd6"
+    },
+    {
+      "source": "desktop/src/openbexi_runtime/processes.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_runtime/processes.py",
+      "sha256": "c194b84f338ad94daec3a76602e7db1f5c90bd4ae734f970c2791e57e472a6bd"
+    },
+    {
+      "source": "desktop/src/openbexi_runtime/worker.py",
+      "project": "openbexi_ide",
+      "target": "src/openbexi_runtime/worker.py",
+      "sha256": "feb8550adb2bad4d0525b5ca6337abbc2b7ae6a3612c6a283aa5dafb0cb50f6e"
+    },
+    {
+      "source": "desktop/start.ps1",
+      "project": "openbexi_ide",
+      "target": "start.ps1",
+      "sha256": "57691a2ac3258bd7feb169f93c00ffd2d588410bcf426495b77e8e665be801be"
+    },
+    {
+      "source": "desktop/tests/conftest.py",
+      "project": "openbexi_ide",
+      "target": "tests/conftest.py",
+      "sha256": "9859a60d2cce4aa4392839feb80dd4d0fa3a2a7b4039cdeb7ba0784e2699dda8"
+    },
+    {
+      "source": "desktop/tests/test_debugger.py",
+      "project": "openbexi_ide",
+      "target": "tests/test_debugger.py",
+      "sha256": "e3876069cd6b0960afde337368aa6bb4946eb68c477e8821aa09829c1a5dd496"
+    },
+    {
+      "source": "desktop/tests/test_runtime.py",
+      "project": "openbexi_ide",
+      "target": "tests/test_runtime.py",
+      "sha256": "1bfb4398a46420ab3fe8312051fd37e08bc2a5ab29847dce122406ef0d3dd5de"
+    },
+    {
+      "source": "desktop/tests/test_ui.py",
+      "project": "openbexi_ide",
+      "target": "tests/test_ui.py",
+      "sha256": "2697dce44d9089f0f3815ae78beb352a6a948b7640378169cac89c0b57f465d3"
+    },
+    {
+      "source": "procedures/test_Python.py",
+      "project": "openbexi_ide",
+      "target": "examples/test_Python.py",
+      "sha256": "1d34c925cfae0227561c9619740c5931e48558cf81f3cd08d8a7f5b01a3fd7e7"
+    }
+  ],
+  "note": "Hashes describe original extracted bytes before documented relocation/name patches. Historical Git and release evidence are archived separately."
+}

@@ -1,0 +1,10 @@
+# Windows x64 / CPython 3.13 runtime distributions, verified downloaded wheels.
+# Install with --require-hashes --only-binary=:all:.
+PySide6-Essentials==6.10.3 \
+    --hash=sha256:051a70e2df79cf1c012a208ad82a98e8de23ca7fe3b0f3344d07152d15705b59
+shiboken6==6.10.3 \
+    --hash=sha256:38261c88e87a1c32d1302b642b755470d2369c78af3c7d7d9e95d631f79b556c
+debugpy==1.8.22 \
+    --hash=sha256:f49b1d6cecf326b63c06d7f517e4a6642777f758c58cb799e7bc5a6dd74721c2
+Pygments==2.21.0 \
+    --hash=sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9

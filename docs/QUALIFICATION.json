@@ -1,0 +1,171 @@
+{
+  "project": "openbexi_ide",
+  "version": "0.1.0",
+  "status": "completed bounded Windows Development baseline",
+  "generated_utc": "2026-10-11T03:59:23.374201+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.15 (main, Aug 14 2026, 15:36:10) [MSC v.1944 64 bit (AMD64)]",
+  "interpreter": "C:\\projects\\openbexi_ide\\.venv\\Scripts\\python.exe",
+  "source_representation": "canonical Git index blobs, excluding this self-referential manifest",
+  "source_sha256": {
+    ".gitattributes": "1e1abfba9dfc13ace3113c745bead7727a9930ee74ad428d73222b8c597c7a0c",
+    ".gitignore": "dd2475bb645e5b6f83bf5aa7ef2280d2893bf5c8277e5d8e81424b290aa8bba9",
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "NOTICE": "f9ced6eb4c4fe403a21bff90aa3b4588da9b082c357dd04a055d68c66fdb00bf",
+    "README.md": "43a691f9c14ec6cf81af5ca158c055325a42d05ecab6e400096b3276bc0e8b11",
+    "ROADMAP.md": "afe88379d215e161ded97ea9dba12c0855acb064df5c548800770226df7cef42",
+    "build-requirements.lock": "d1ff29fc884cbcbf907784faf5366752f6f4046acdc9196c40aa5b3a96f45e96",
+    "docs/ARCHITECTURE.md": "dd05dab815125ed316ebdab43abab9e49c6207c1507a9240d85c8d67e8ad1ddc",
+    "docs/MIGRATION.json": "a81e94590d3838f755469d3843951da205ca7db1893b2f5decc1d1a0957565a9",
+    "docs/MIGRATION.md": "5431c58fabe147eb509f2b5769ca3b48c0f6efcca17abe47b168ce41c6318556",
+    "docs/QUALIFICATION.md": "5c2d18f17177b257597ebf9031af2dd916d0485dfe274e0aff6fa6925d0e3c77",
+    "examples/debug_demo.py": "a118d3b2c3f90666d95b7af3c3a4a05beb8c85cc314455aa7d70e35701c25d56",
+    "examples/graphics_demo.py": "8b2f6159e100cdfce5d44d6a61f6612bc84adb511fcb631a0ccacb7693633943",
+    "examples/hello.py": "21ef69c983ecc2a55e81a7f2cf4d1b0aa045910c13f9e5d2054141c749aaaf9d",
+    "examples/session_first.py": "7940b4295eed6f2992d3994bbba69979cd086d2e60ed65c81c273ea633f29758",
+    "examples/session_second.py": "dbfedef92a87bd0f02e07a6480af480ed76a43443552ad643eb8820015abed50",
+    "examples/test_Python.py": "1d34c925cfae0227561c9619740c5931e48558cf81f3cd08d8a7f5b01a3fd7e7",
+    "examples/test_menu.py": "56cfff91166879e19a12461b8c9be923fb86d2258c3796b71259363f1282c09e",
+    "install.ps1": "4d6f35ca07049d4a2ee3b7dc06739d866373a1c7a088f285d00ed493f0ebfa41",
+    "openbexi_ide_master_prompt.md": "36f6aa5b2342176b5c1bd094e487eab5ed58a89a8b7fac130172a4a2caddecbd",
+    "pyproject.toml": "cee19cacd574966d949e1a1fb7cf5a63ed31d5ec93aa7033196cc335ec0e105a",
+    "requirements-windows-cp313.lock": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8",
+    "run_cli.py": "52a07aaf311b8b5ecb1fc091e7bf2ea70f320bb318df7dd47f9f38d950c05ee3",
+    "run_ide.py": "ee1aa6c617256f4dce7f288448524994ad90545a97ab0039398173ce887ff03e",
+    "scripts/qualify_installed.py": "425e3080b8ccac8fde51d32af772ee6f4e51f0a92e3dea47b13cbb289df1cb6c",
+    "src/openbexi_ide/__init__.py": "8632fde3fc8e279276892e8ba574045c1e3c4b998c35d56465905c0a2163c5b2",
+    "src/openbexi_ide/__main__.py": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+    "src/openbexi_ide/app.py": "1f65a1dc9ffe8686a32d11661f8db9f3231deb428bfbb6efea2cd7247de2ca92",
+    "src/openbexi_ide/controller.py": "c37d634f753b725d27809266585c74c1759dafc8f22457736bae55be1667275d",
+    "src/openbexi_ide/debugger.py": "b8543cf4a74375569bab9e9fa7a83d071e59f2aab918b4c85cddf66a85d5fbca",
+    "src/openbexi_ide/editor.py": "74c0201acaf15e91b121e23b3c2bb7d0371f9122bc359509514727b261dbc71d",
+    "src/openbexi_ide/fonts.py": "e99274c43c6a0e04a56152cb420d3802b9ba841883d48f9dbd79b9e40bd66c82",
+    "src/openbexi_ide/themes.py": "1fa6f2559ac41e9f96187b60642714cce070ea81f50c45e6efa7e6aa80ac7bf8",
+    "src/openbexi_runtime/__init__.py": "2256d042148d2b6199eb77a7d8346c67296217d7d251243ac92e94393a77bada",
+    "src/openbexi_runtime/cli.py": "3ab36b58c4d1580bb45f673409d48aa9ede2bdc884fdd18f4851ca34b20674ec",
+    "src/openbexi_runtime/dap.py": "f6833b90e7842f0b4fb68ef1c0f8a56808a92986848b2bbcf79eccc8a6d6fc0d",
+    "src/openbexi_runtime/languages.py": "d3c6526879f193da65245b5c97eb80e16795791fcdee2e595c69dac9d754044c",
+    "src/openbexi_runtime/launch.py": "749fe9cc4f5e4ea63bf195ad5dc6414726f8b38d2ba2ada5d072c889c2b18bd6",
+    "src/openbexi_runtime/processes.py": "9946533574a18bdbc47c49573725ac326e47db10ebc57de0825917f61a20c9d9",
+    "src/openbexi_runtime/session.py": "da8fbb0e9e4fac1e67a8f49cd509de8e4a1de0d3b4706d0e09055c3d0d4a44a9",
+    "src/openbexi_runtime/session_http.py": "9fba770bcd156d84dda85289d0e2e1a526e0527aaa1ee3eae99c987b5ff43a21",
+    "src/openbexi_runtime/session_worker.py": "60960bab49d7b8400368f801163ddcf7135f0933c265c4b94b2cfbe8a871f79d",
+    "src/openbexi_runtime/worker.py": "feb8550adb2bad4d0525b5ca6337abbc2b7ae6a3612c6a283aa5dafb0cb50f6e",
+    "start.ps1": "c04871b46bcd8a892c7d669155cc57e402941cb51652d307199402c8556e2e38",
+    "tests/conftest.py": "9859a60d2cce4aa4392839feb80dd4d0fa3a2a7b4039cdeb7ba0784e2699dda8",
+    "tests/test_debugger.py": "e3876069cd6b0960afde337368aa6bb4946eb68c477e8821aa09829c1a5dd496",
+    "tests/test_runtime.py": "bbbb8a14c0e6624d11cd5f3a1f33309d8e525ed8cf2a3d2e6e84b79379791634",
+    "tests/test_session_backpressure.py": "4c769ec826914fdd43da7fd39b6491bd3d7532ac4043fdf3914af486b3e3fa0c",
+    "tests/test_session_library_threads.py": "a2ac59da05ef8bcb7de57ee9f17f260c2e47a8183d18acea485b8ba07292acfb",
+    "tests/test_session_safe_locals.py": "279d39a5e72c89fedf93968ee5448828459f06af1627590a1b9e383050fb9d78",
+    "tests/test_session_stack_sampling.py": "23dd578963e6377178cb9174566d9ee547ad8d337f61c4fca34c03a9460c15d8",
+    "tests/test_sessions.py": "7f391f04161b58fb674472758d30fd95b1aa717d15f560e5a207ccc2bf4739a0",
+    "tests/test_ui.py": "cd5b7e93b1342222a67d826c84133f415a97fc9dc8ffd2b1c603b0caab387a4b"
+  },
+  "wheel": {
+    "filename": "openbexi_ide-0.1.0-py3-none-any.whl",
+    "sha256": "3ecd35758256a5c2856766773443e81237eb543537a61de16d878ed611b62057",
+    "size": 48746,
+    "source_date_epoch": 1791590400,
+    "two_builds_identical": true,
+    "build_command": "python -m pip wheel --no-build-isolation --no-deps --wheel-dir OUTPUT .",
+    "build_backend": "setuptools 80.9.0"
+  },
+  "peer_wheel": {
+    "filename": "openbexi_spell_plugin-0.1.0-py3-none-any.whl",
+    "sha256": "db9d099431381346403d927eefb28513a34be1ab0f4b06d182adf41bdc0f7367",
+    "size": 53403,
+    "source_date_epoch": 1791590400,
+    "two_builds_identical": true,
+    "build_command": "python -m pip wheel --no-build-isolation --no-deps --wheel-dir OUTPUT .",
+    "build_backend": "setuptools 80.9.0"
+  },
+  "installed_integration": {
+    "sha256": "0617a6f04e5ec3e3a5d5df180546fac1d6fe27936c4eefc1a1fc6e09ee1545c6",
+    "checks": [
+      "installed headless session",
+      "two developers and read-only monitor",
+      "real stack",
+      "serial Python/SPELL token queue",
+      "Unicode output/stdin",
+      "actual binary DSS command",
+      "controller handoff and stale-command rejection"
+    ],
+    "passed": true,
+    "dss_commands_executed": 1,
+    "procedure": "scripts/qualify_installed.py"
+  },
+  "cleanup": {
+    "obsolete_image_tags_removed": 11,
+    "unreferenced_qualification_volumes_removed": 248,
+    "final_dangling_image_prune_reclaimed": "37.77 MB",
+    "final_builder_prune_reclaimed": "438 MB",
+    "retained": [
+      "current v0.1 DSS image",
+      "operational data volumes",
+      "unrelated checkpoints",
+      "Kubernetes images"
+    ],
+    "filesystem": "Legacy content/history archived; automatic approval review blocked filesystem deletion and Windows locks retained some old qualification caches."
+  },
+  "legacy": {
+    "source_commit": "d4b0ed98f186346ea9e9af53816af2578953042c",
+    "archive": "C:\\projects\\.openbexi-archive\\20261010-split",
+    "git_bundle_sha256": "79555ed3e93da9321b41cecb94c5e77f5e37b7c427c2e15596a321f75cc5ce9c",
+    "source_zip_sha256": "320dd4482d13c111095747f77e1238f56bb5f1d49fea5890a552579e3b768eed",
+    "remote_histories": "unchanged; no remote configured for these new repositories"
+  },
+  "test_reports": [
+    {
+      "path": ".qualification/v0.1/ide-tests.xml",
+      "sha256": "a0b33c5dcce26b1f61a1028d7fddbcd2117a6aad6eafebd8249cef9e7c520569",
+      "tests": 53,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 41.664,
+      "warnings": "treated as errors"
+    },
+    {
+      "path": ".qualification/v0.1/session-tests.xml",
+      "sha256": "95986b5863fc5c33e870555b0559329b2a7e6917897d6341f3da0bfa47fce144",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 19.542,
+      "warnings": "treated as errors"
+    }
+  ],
+  "python_reference": {
+    "path": ".qualification/v0.1/python-reference.log",
+    "sha256": "cffe858bd27f5352efe8d66ad81b578fc396bcef245d3b7a2c094566474ac22f",
+    "checks": 260,
+    "topics": 39,
+    "optional_capability_dispositions": 1,
+    "disposition": "Windows symlink privilege unavailable"
+  },
+  "ui": {
+    "verification": "actual Qt widgets and debugger tests; light/dark screenshots visually inspected",
+    "captures": [
+      {
+        "path": ".qualification/desktop-ui/light.png",
+        "sha256": "85617191586fb30547a4fba7f840d8f00f3b2eebf93892845e8f02f0892d54fb"
+      },
+      {
+        "path": ".qualification/desktop-ui/dark.png",
+        "sha256": "c2e61013dfc532711de6952a2f81202e4ad0ead84df942fa190229c4c8552770"
+      },
+      {
+        "path": ".qualification/desktop-ui/debugger.png",
+        "sha256": "06d3532d07ead98b7ce0e4d7b417d0aab5307e4ae52ab3be696eda0b3e676f6a"
+      }
+    ]
+  },
+  "limitations": [
+    "local Development service; remote access requires an authenticated tunnel",
+    "cooperative Python pauses; native calls and owned children hold slots until quiescent",
+    "no durable recovery or approved operational Execution",
+    "shared desktop debugger and actual JetBrains hosts are later gates"
+  ]
+}

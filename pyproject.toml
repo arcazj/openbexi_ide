@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openbexi-ide"
+version = "0.1.0"
+description = "Standalone CPython 3.13 desktop IDE with optional domain plugins"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+dependencies = []
+
+[project.optional-dependencies]
+desktop = ["PySide6-Essentials==6.10.3", "debugpy==1.8.22", "Pygments==2.21.0"]
+test = ["pytest==8.4.2"]
+
+[project.scripts]
+openbexi-ide = "openbexi_ide.app:main"
+openbexi = "openbexi_runtime.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-config"

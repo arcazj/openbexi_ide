@@ -1,0 +1,109 @@
+"""Validated, isolated local-development launches, independent of the GUI."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+
+def clean_environment() -> dict[str, str]:
+    return {key: value for key, value in os.environ.items()
+            if key.upper() not in {"PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP",
+                                   "PYTHONINSPECT", "PYTHONBREAKPOINT"}}
+
+
+def console_interpreter(executable: str | Path) -> Path:
+    path = Path(executable).resolve()
+    if path.name.lower() == "pythonw.exe":
+        path = path.with_name("python.exe")
+    return path
+
+
+def interpreter_info(executable: str | Path, require_debugger=False, cancel=None) -> dict:
+    interpreter = console_interpreter(executable)
+    if not interpreter.is_file():
+        raise ValueError(f"Python interpreter does not exist: {interpreter}")
+    if cancel is not None and cancel.is_set():
+        raise RuntimeError("Interpreter check cancelled")
+    probe = subprocess.Popen(
+        [str(interpreter), "-I", "-B", "-X", "utf8", "-c",
+         "import json,sys,platform,importlib.metadata; "
+         "debugger=next((d.version for d in importlib.metadata.distributions() "
+         "if (d.metadata.get('Name') or '').lower()=='debugpy'),None); "
+         "print(json.dumps({'version':list(sys.version_info[:3]),'debugpy':debugger,"
+         "'implementation':platform.python_implementation(),'executable':sys.executable,"
+         "'isolated':sys.flags.isolated,'safe_path':sys.flags.safe_path}))"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8",
+        env=clean_environment(), start_new_session=os.name != "nt",
+        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+    )
+    from .processes import ProcessTree
+    owner = None
+    try:
+        owner = ProcessTree(probe.pid)
+        deadline = time.monotonic() + 5
+        while True:
+            if cancel is not None and cancel.is_set():
+                raise RuntimeError("Interpreter check cancelled")
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Interpreter check timed out")
+            try:
+                stdout, stderr = probe.communicate(timeout=0.1)
+                break
+            except subprocess.TimeoutExpired:
+                continue
+    finally:
+        if owner:
+            owner.close()
+        if probe.poll() is None:
+            probe.kill()
+        probe.communicate(timeout=5)
+    if probe.returncode:
+        raise ValueError(f"Interpreter check failed: {stderr.strip()}")
+    try:
+        info = json.loads(stdout)
+    except (ValueError, TypeError) as exc:
+        raise ValueError("Interpreter returned an invalid version report") from exc
+    if info.get("implementation") != "CPython" or info.get("version", [])[:2] != [3, 13]:
+        raise ValueError("Select CPython 3.13 for this workspace")
+    if require_debugger and info.get("debugpy") != "1.8.22":
+        raise ValueError("Debug needs debugpy 1.8.22 in the selected interpreter. "
+                         "Install it with that interpreter's pip, then try again.")
+    return info
+
+
+@dataclass(frozen=True)
+class LaunchSpec:
+    project: Path
+    script: Path
+    interpreter: Path = Path(sys.executable)
+    arguments: tuple[str, ...] = ()
+
+    def validate(self) -> LaunchSpec:
+        project, script = self.project.resolve(), self.script.resolve()
+        interpreter = console_interpreter(self.interpreter)
+        if not project.is_dir():
+            raise ValueError("Open an existing project folder first")
+        if not script.is_file() or script.suffix.lower() != ".py":
+            raise ValueError("Select a Python (.py) file to run")
+        if not script.is_relative_to(project):
+            raise ValueError("The script must be inside the opened project")
+        if any(not isinstance(arg, str) or "\0" in arg for arg in self.arguments):
+            raise ValueError("Script arguments must be text without NUL characters")
+        if not interpreter.is_file():
+            raise ValueError("The selected Python interpreter is unavailable")
+        return LaunchSpec(project, script, interpreter, self.arguments)
+
+    def worker_arguments(self) -> list[str]:
+        spec = self.validate()
+        return [str(Path(__file__).with_name("worker.py")), str(spec.project),
+                str(spec.script), *spec.arguments]
+
+    def command(self) -> list[str]:
+        spec = self.validate()
+        return [str(spec.interpreter), "-I", "-B", "-u", "-X", "utf8",
+                *spec.worker_arguments()]

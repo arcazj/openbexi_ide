@@ -1,0 +1,6 @@
+OpenBEXI IDE
+Copyright OpenBEXI contributors.
+
+This distribution contains independent desktop and runtime code under Apache-2.0.
+It does not contain the legacy SPELL source library. Qt for Python, debugpy and
+Pygments are separately installed dependencies with their own license notices.
