@@ -13,15 +13,17 @@ class ProbeSignals(QObject):
 
 
 class ProbeTask(QRunnable):
-    def __init__(self, epoch, interpreter, debugger=False):
+    def __init__(self, epoch, interpreter, debugger=False, language='python'):
         super().__init__()
         self.epoch, self.interpreter, self.debugger = epoch, interpreter, debugger
         self.signals = ProbeSignals()
+        self.language = language
         self.cancel = threading.Event()
 
     def run(self):
         try:
-            result = interpreter_info(self.interpreter, require_debugger=self.debugger, cancel=self.cancel)
+            result = interpreter_info(self.interpreter, require_debugger=self.debugger,
+                                      cancel=self.cancel, language=self.language)
             self.signals.done.emit(self.epoch, result, "")
         except Exception as error:
             self.signals.done.emit(self.epoch, None, str(error))
@@ -152,7 +154,7 @@ class RunController(QObject):
         self.stopping = False
         self.pump.reset()
         self.state_changed.emit(True)
-        self.probe = ProbeTask(self.epoch, self.spec.interpreter)
+        self.probe = ProbeTask(self.epoch, self.spec.interpreter, language=self.spec.language)
         self.probe.signals.done.connect(self.probe_finished)
         QThreadPool.globalInstance().start(self.probe)
 
@@ -163,9 +165,10 @@ class RunController(QObject):
         if error:
             self.error.emit(error); self.finish(-1); return
         self.interpreter_checked.emit(info)
-        self.process.setProcessEnvironment(process_environment())
+        self.backend = info.get('backend')
+        self.process.setProcessEnvironment(process_environment({'OPENBEXI_HOST_MANAGED': '1'} if self.backend else None))
         self.process.setWorkingDirectory(str(self.spec.project))
-        command = self.spec.command()
+        command = self.spec.command(self.backend)
         self.process.start(command[0], command[1:])
 
     def on_finished(self, code, _status):
@@ -200,4 +203,10 @@ class RunController(QObject):
             self.epoch += 1
             self.finish(-1)
         else:
-            self.process.kill_tree()
+            if self.backend:
+                self.process.closeWriteChannel()
+                epoch = self.epoch
+                QTimer.singleShot(self.backend['gracefulStopMilliseconds'],
+                    lambda: self.process.kill_tree() if self.active and epoch == self.epoch else None)
+            else:
+                self.process.kill_tree()

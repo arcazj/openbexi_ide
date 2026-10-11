@@ -66,7 +66,7 @@ def parser():
     local.add_argument('script')
     local.add_argument('--project', default='.')
     local.add_argument('--python', default=sys.executable)
-    local.add_argument('--language', choices=('python', 'spell'), default='python')
+    local.add_argument('--language', default='python', help='Python or an installed runtime backend ID')
     local.add_argument('--dss-url')
     local.add_argument('--arguments', nargs=argparse.REMAINDER, default=[])
     server = commands.add_parser('serve', help='Start a shared Development session')
@@ -105,17 +105,23 @@ def parser():
 
 
 def run_local(args):
-    interpreter_info(args.python)
+    info = interpreter_info(args.python)
     spec = LaunchSpec(Path(args.project), Path(args.project) / args.script,
                       Path(args.python), tuple(args.arguments)).validate()
     command, environment = spec.command(), clean_environment()
-    if args.language == 'spell':
+    installed = next((item for item in info.get('backends', []) if item['id'] == args.language), None)
+    if installed:
+        spec = LaunchSpec(spec.project, spec.script, spec.interpreter, spec.arguments, args.language)
+        command = spec.command(installed)
+    elif args.language == 'spell':
         from .languages import check_spell
         check_spell(spec.interpreter)
         command = [str(spec.interpreter), '-I', '-B', '-u', '-X', 'utf8', '-m',
                    'openbexi_spell_plugin.runner', str(spec.project), str(spec.script), *spec.arguments]
         if args.dss_url:
             environment['OPENBEXI_DSS_URL'] = args.dss_url
+    elif args.language != 'python':
+        raise ValueError(f'Install the {args.language} backend in the selected interpreter first')
     process = subprocess.Popen(command, cwd=spec.project, env=environment, start_new_session=os.name != 'nt')
     owner = None
     try:

@@ -21,6 +21,7 @@ class DebugController(QObject):
     stack_changed = Signal(object)
     threads_changed = Signal(object)
     breakpoints_verified = Signal(object)
+    input_requested = Signal(object)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -45,6 +46,8 @@ class DebugController(QObject):
         self.paused = False
         self.thread_id = None
         self.pending = {}
+        self.input_pending = False
+        self.backend = None
 
     @property
     def running(self):
@@ -60,6 +63,7 @@ class DebugController(QObject):
         self.active = self.validating = True
         self.stopping = self.terminated = self.paused = False
         self.thread_id = None
+        self.input_pending = False
         self.exit_code = 0
         self.sequence = self.view_generation = 0
         self.pending = {}
@@ -67,7 +71,7 @@ class DebugController(QObject):
         self.reverse_request = None
         self.pump.reset()
         self.state_changed.emit(True)
-        self.probe = ProbeTask(self.epoch, self.spec.interpreter, debugger=True)
+        self.probe = ProbeTask(self.epoch, self.spec.interpreter, debugger=True, language=self.spec.language)
         self.probe.signals.done.connect(self.probe_finished)
         QThreadPool.globalInstance().start(self.probe)
 
@@ -78,19 +82,27 @@ class DebugController(QObject):
         if error:
             self.fail(error); return
         self.interpreter_checked.emit(info)
+        self.backend = info.get('backend')
         self.adapter.setWorkingDirectory(str(self.spec.project))
         self.adapter.setProcessEnvironment(process_environment())
         self.timer.start()
-        self.adapter.start(str(self.spec.interpreter), ["-I", "-B", "-X", "utf8", "-m", "debugpy.adapter"])
+        module = self.backend['debugAdapter'] if self.backend else 'debugpy.adapter'
+        args = ['--project', str(self.spec.project)] if self.backend else []
+        self.adapter.start(str(self.spec.interpreter), ["-I", "-B", "-X", "utf8", "-m", module, *args])
 
     def adapter_started(self):
-        self.request("initialize", {"clientID": "openbexi-python", "adapterID": "python",
+        self.request("initialize", {"clientID": "openbexi-python", "adapterID": self.spec.language,
             "linesStartAt1": True, "columnsStartAt1": True, "pathFormat": "path",
             "supportsRunInTerminalRequest": True, "supportsVariableType": True,
             "supportsVariablePaging": True, "supportsArgsCanBeInterpretedByShell": False},
             lambda _body: self.launch())
 
     def launch(self):
+        if self.backend:
+            self.request('launch', {'name': self.spec.script.name, 'type': self.spec.language,
+                'request': 'launch', 'program': str(self.spec.script), 'project': str(self.spec.project),
+                'args': list(self.spec.arguments), 'stopOnEntry': False})
+            return
         self.request("launch", {"name": self.spec.script.name, "type": "python", "request": "launch",
             "program": self.spec.worker_arguments()[0], "args": self.spec.worker_arguments()[1:],
             "cwd": str(self.spec.project), "python": str(self.spec.interpreter),
@@ -165,11 +177,16 @@ class DebugController(QObject):
                 self.continued.emit()
             elif event == "exited":
                 self.exit_code = body.get("exitCode", 0)
+            elif event == 'openbexi/inputRequest' and self.backend:
+                self.input_pending = True
+                self.input_requested.emit(body)
+                self.state_changed.emit(True)
             elif event == "terminated":
                 self.terminated = self.stopping = True
                 self.request("disconnect", {"terminateDebuggee": True})
                 epoch = self.epoch
-                QTimer.singleShot(150, lambda: self.force_end(epoch))
+                grace = self.backend['gracefulStopMilliseconds'] if self.backend else 150
+                QTimer.singleShot(grace, lambda: self.force_end(epoch))
 
     def configure(self):
         for path, lines in self.breakpoints.items():
@@ -246,6 +263,10 @@ class DebugController(QObject):
     def send_input(self, text):
         if self.terminal.state() == QProcess.Running:
             self.terminal.write((text + "\n").encode("utf-8"))
+        elif self.backend and self.input_pending:
+            self.request('openbexi/input', {'text': text})
+            self.input_pending = False
+            self.state_changed.emit(True)
 
     def close_input(self):
         self.terminal.closeWriteChannel()
@@ -294,7 +315,8 @@ class DebugController(QObject):
             self.maybe_finish(); return
         self.request("disconnect", {"terminateDebuggee": True})
         epoch = self.epoch
-        QTimer.singleShot(250, lambda: self.force_end(epoch))
+        grace = self.backend['gracefulStopMilliseconds'] if getattr(self, 'backend', None) else 250
+        QTimer.singleShot(grace, lambda: self.force_end(epoch))
 
     def force_end(self, epoch):
         if epoch != self.epoch or not self.active:
@@ -306,6 +328,7 @@ class DebugController(QObject):
     def maybe_finish(self):
         if self.active and not self.validating and all(p.state() == QProcess.NotRunning for p in (self.adapter, self.terminal)):
             self.active = self.paused = False
+            self.input_pending = False
             self.timer.stop(); self.pending.clear()
             self.state_changed.emit(False)
             self.finished.emit(self.exit_code)

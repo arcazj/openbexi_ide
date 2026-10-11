@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path
 import sys
 
-from PySide6.QtCore import QDir, QSettings, QSize, Qt
+from PySide6.QtCore import QDir, QSettings, QSize, Qt, QThreadPool
 from PySide6.QtGui import QAction, QColor, QFontDatabase, QIcon, QPainter, QPainterPath, QPen, QPixmap, QTextCursor
 from PySide6.QtWidgets import (
     QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFileSystemModel,
@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
 )
 
 from openbexi_runtime.launch import LaunchSpec, console_interpreter
-from .controller import RunController
+from .controller import ProbeTask, RunController
 from .debugger import DebugController
 from .editor import CodeEditor, FileConflictError
 from .fonts import configure_fonts, fixed_font
@@ -80,6 +80,9 @@ class MainWindow(QMainWindow):
         self.project: Path | None = None
         self.interpreter = console_interpreter(sys.executable)
         self.arguments: tuple[str, ...] = ()
+        self.backend_choices = []
+        self.backend_epoch = 0
+        self.backend_probe = None
         self.theme = self.settings.value("theme", "light")
         if self.theme not in THEMES:
             self.theme = "light"
@@ -110,6 +113,7 @@ class MainWindow(QMainWindow):
         self.debug_controller.stack_changed.connect(self.show_stack)
         self.debug_controller.threads_changed.connect(self.show_threads)
         self.debug_controller.breakpoints_verified.connect(self.show_verified_breakpoints)
+        self.debug_controller.input_requested.connect(self.show_backend_prompt)
         self.make_actions()
         self.make_workspace()
         self.session_client.changed.connect(self.shared_changed)
@@ -123,6 +127,8 @@ class MainWindow(QMainWindow):
         if remembered and Path(remembered).is_dir():
             self.open_project(Path(remembered))
         self.set_busy(False)
+        if not self.project:
+            self.discover_backends()
 
     def action(self, name, callback, shortcut=None):
         item = QAction(name, self)
@@ -268,10 +274,8 @@ class MainWindow(QMainWindow):
         toolbar.addWidget(spacer)
         self.language = QComboBox()
         self.language.addItem("Python", "python")
-        self.language.addItem("SPELL plugin", "spell")
-        self.language.setToolTip("Language for shared-session Run; plugins belong to the server interpreter")
+        self.language.setToolTip("Runtime for Run and Debug; plugins belong to the selected interpreter")
         self.language_action = toolbar.addWidget(self.language)
-        self.language_action.setVisible(False)
         self.session_button = QPushButton("Local workspace")
         self.session_button.clicked.connect(self.show_session)
         toolbar.addWidget(self.session_button)
@@ -306,6 +310,7 @@ class MainWindow(QMainWindow):
         run_menu.addSeparator()
         for action in (self.interpreter_action, self.args_action, self.eof_action):
             run_menu.addAction(action)
+        run_menu.addAction(self.action('Reload Runtime Plugins', self.discover_backends))
         view_menu = self.menuBar().addMenu("View")
         view_menu.addAction(self.find_action); view_menu.addAction(self.theme_action)
         session_menu = self.menuBar().addMenu("Session")
@@ -342,7 +347,7 @@ class MainWindow(QMainWindow):
         return False
 
     def shared_changed(self):
-        self.language_action.setVisible(self.session_client.active)
+        self.populate_backends()
         role = self.session_client.identity.get('role')
         label = ('Control' if self.session_client.can_control else 'Monitor' if role == 'monitor' else 'Shared session')
         self.session_button.setText(label if self.session_client.active else 'Local workspace')
@@ -400,6 +405,7 @@ class MainWindow(QMainWindow):
         if remembered and Path(remembered).is_file():
             self.interpreter = Path(remembered)
         self.interpreter_button.setToolTip(str(self.interpreter))
+        self.discover_backends()
         self.statusBar().showMessage("Choose a Python file from the project")
         self.set_busy(False)
         return True
@@ -518,7 +524,45 @@ class MainWindow(QMainWindow):
             if self.project:
                 key = "interpreter/" + hashlib.sha256(str(self.project).encode()).hexdigest()
                 self.settings.setValue(key, str(self.interpreter))
-            self.statusBar().showMessage("Interpreter is checked when you run a script", 5000)
+            self.discover_backends()
+
+    def discover_backends(self):
+        if self.is_busy():
+            return
+        if self.backend_probe:
+            self.backend_probe.cancel.set()
+        self.backend_epoch += 1
+        self.backend_choices = []
+        self.populate_backends()
+        self.backend_probe = ProbeTask(self.backend_epoch, self.interpreter)
+        self.backend_probe.signals.done.connect(self.backends_discovered)
+        QThreadPool.globalInstance().start(self.backend_probe)
+
+    def backends_discovered(self, epoch, info, error):
+        if epoch != self.backend_epoch:
+            return
+        if error:
+            self.statusBar().showMessage(error, 8000)
+            return
+        self.backend_choices = info.get('backends', [])
+        self.populate_backends()
+        if info.get('backendErrors'):
+            self.append_output('\n'.join('Plugin ' + entry['id'] + ': ' + entry['error']
+                                         for entry in info['backendErrors']) + '\n')
+
+    def populate_backends(self):
+        selected = self.language.currentData()
+        self.language.clear()
+        self.language.addItem('Python', 'python')
+        if self.session_client.active:
+            # v0.2 servers expose the separate bounded adapter. Their runtime
+            # capabilities migrate with the durable-service protocol.
+            self.language.addItem('SPELL plugin', 'spell')
+        else:
+            for backend in self.backend_choices:
+                self.language.addItem(backend['label'], backend['id'])
+        index = self.language.findData(selected)
+        self.language.setCurrentIndex(max(0, index))
 
     def choose_arguments(self):
         dialog = ArgumentsDialog(self.arguments, self)
@@ -549,7 +593,8 @@ class MainWindow(QMainWindow):
         self.append_output(f"Running {editor.path.name}\n\n")
         self._stopping = False
         try:
-            self.run_controller.start(LaunchSpec(self.project, editor.path, self.interpreter, self.arguments))
+            self.run_controller.start(LaunchSpec(self.project, editor.path, self.interpreter,
+                                                 self.arguments, self.language.currentData()))
         except (OSError, ValueError, RuntimeError) as error:
             self.report_error(str(error)); self.set_busy(False)
 
@@ -570,7 +615,8 @@ class MainWindow(QMainWindow):
         self.append_output(f"Debugging {editor.path.name}\n\n")
         breakpoints = {self.tabs.widget(i).path: self.tabs.widget(i).breakpoints for i in range(self.tabs.count())}
         try:
-            self.debug_controller.start(LaunchSpec(self.project, editor.path, self.interpreter, self.arguments), breakpoints)
+            self.debug_controller.start(LaunchSpec(self.project, editor.path, self.interpreter,
+                                                   self.arguments, self.language.currentData()), breakpoints)
         except (OSError, ValueError, RuntimeError) as error:
             self.report_error(str(error)); self.refresh_busy()
 
@@ -594,6 +640,12 @@ class MainWindow(QMainWindow):
         self.interpreter_button.setText(f"Python {version}")
         self.interpreter_button.setToolTip(info["executable"])
 
+    def show_backend_prompt(self, prompt):
+        self.append_output(str(prompt.get('text', 'Input requested')) + '\n')
+        if prompt.get('choices'):
+            self.append_output('Choices: ' + str(prompt['choices']) + '\n')
+        self.input.setFocus()
+
     def set_busy(self, busy):
         editor = self.current_editor()
         self.run_action.setEnabled(not busy and bool(editor) and editor.path.suffix == ".py")
@@ -604,15 +656,19 @@ class MainWindow(QMainWindow):
         self.save_action.setEnabled(not busy and bool(editor))
         self.interpreter_action.setEnabled(not busy)
         self.interpreter_button.setEnabled(not busy)
+        self.language.setEnabled(not busy)
         self.args_action.setEnabled(not busy)
         self.eof_action.setEnabled(busy)
         if hasattr(self, "input"):
             input_ready = any(process.state() == process.ProcessState.Running
                               for process in (self.run_controller.process, self.debug_controller.terminal))
-            self.input.setEnabled(input_ready)
+            self.input.setEnabled(input_ready or self.debug_controller.input_pending)
         paused = self.debug_controller.running and self.debug_controller.paused
         for action in (self.continue_action, self.over_action, self.into_action, self.out_action):
             action.setEnabled(paused)
+        backend = getattr(self.debug_controller, 'backend', None)
+        if backend and not backend.get('supportsStepOut', True):
+            self.out_action.setEnabled(False)
         self.pause_action.setEnabled(self.debug_controller.running and not paused)
         self.threads.setEnabled(paused); self.expression.setEnabled(paused)
         for index in range(self.tabs.count()):
@@ -824,6 +880,9 @@ class MainWindow(QMainWindow):
             self.session_client.disconnect()
             event.ignore(); return
         self.settings.sync()
+        if self.backend_probe:
+            self.backend_probe.cancel.set()
+        self.backend_epoch += 1
         event.accept()
 
 
