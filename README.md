@@ -5,7 +5,7 @@ Continuing development after the repository split: [resume v0.4](docs/RESUME_V04
 A standalone CPython 3.13 IDE and headless CLI. The desktop has a project tree,
 tabbed editor, output and real debugpy debugger, with light/dark themes and a
 compact Open Folder / Run / Debug / Stop toolbar. SPELL is an optional, separately
-installed [plugin](../openbexi_spell_plugin/README.md).
+installed [plugin](https://github.com/arcazj/openbexi_spell_plugin).
 
 The desktop and CLI now share the same Development session service. The Session
 tab shows developers, controller ownership, serial/parallel queues, real live

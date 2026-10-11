@@ -83,12 +83,19 @@ must not be treated as disposable qualification processes.
 
 ## GitHub migration status
 
-At this handoff, both repositories are committed locally but neither has a
-remote configured. GitHub publishing, remote verification and archival of
-`arcazj/openbexi_SPELL` remain pending. The legacy Git bundle was verified to
-contain complete history, but it is not a backup of all GitHub metadata.
-Publish the two new repositories and verify their branches/tags before
-archiving the old GitHub repository. Preserve the local directory regardless.
+The two repositories were created under `arcazj` on 2026-10-11, initially private:
+
+- [openbexi_ide](https://github.com/arcazj/openbexi_ide)
+- [openbexi_spell_plugin](https://github.com/arcazj/openbexi_spell_plugin)
+
+Both use `master` as their working/default branch and `origin` as their GitHub
+remote. Initial publication preserves the existing commit histories and release
+tags. A local commit does not publish changes: push `master` and new release
+tags explicitly, then verify the remote identities.
+
+Archival of `arcazj/openbexi_SPELL` remains a separate pending operation. The
+legacy Git bundle was verified to contain complete history, but it is not a
+backup of all GitHub metadata. Preserve the old local directory regardless.
 
 ## Restart instruction
 

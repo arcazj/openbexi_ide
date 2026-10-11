@@ -21,3 +21,11 @@ the owner separately requests its migration.
 The fresh repository carries only current product code, tests, dependency locks,
 examples, license notices and current docs. Historical release hashes and native
 SPELL compatibility are not relabelled as new v0.1 acceptance.
+
+## GitHub publication
+
+The independent repository is [arcazj/openbexi_ide](https://github.com/arcazj/openbexi_ide),
+created privately on 2026-10-11. Its branch is `master` and its local remote is
+`origin`. Publication preserves existing commits and tags. The old GitHub
+repository and local legacy directory are retained; removing the local directory
+requires the user's confirmation. See [the current handoff](RESUME_V04.md).
