@@ -39,3 +39,9 @@ Qualify the original-source SPELL library against this host and the actual
 IntelliJ/PyCharm hosts in the sibling plugin project. Complete OS/platform,
 security/capacity, backup/upgrade and independent conformance gates before a full
 product compatibility or operational acceptance claim. Commit each tested phase.
+
+Coordinate these gates with openbexi_spell_plugin v0.2 through v0.6: original
+native runtime, real host plugins, drivers/modes, full conformance, then
+distribution/compatibility. Each project retains independent version numbers.
+The plugin's v0.6 release requires actual installed-host workflow evidence from
+this IDE; it does not automatically advance this project's release number.
