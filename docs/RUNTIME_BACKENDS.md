@@ -50,5 +50,8 @@ The extension milestone passed 46 runtime, debugger, desktop, shared-desktop
 and backend-discovery tests on Windows x64 / CPython 3.13.15. The installed
 fixture check discovers a real entry-point distribution, rejects malformed
 metadata, removes the backend and runs ordinary Python without debugpy.
-Original SPELL desktop acceptance remains tracked in the sibling plugin
-project; its native output-flush regression is still under investigation.
+The sibling plugin's installed native SPELL Qt workflow now passes discovery,
+Run, artifact export, Debug, variable editing, Step, Continue, prompts, Stop,
+removal and ordinary Python Run afterward. Its native output-flush regression
+is fixed and qualified. Complete plugin acceptance remains tracked in that
+project, including adapter boundary tests and both JetBrains hosts.
