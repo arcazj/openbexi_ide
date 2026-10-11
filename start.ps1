@@ -1,7 +1,10 @@
 param(
     [string]$Project = "",
     [string]$File = "",
-    [ValidateSet("light", "dark")][string]$Theme = "light"
+    [ValidateSet("light", "dark")][string]$Theme = "light",
+    [string]$SessionInfo = "",
+    [Alias("User")][string]$SessionUser = $env:USERNAME,
+    [ValidateSet("developer", "monitor")][string]$Role = "developer"
 )
 $ErrorActionPreference = "Stop"
 $taskRepoRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
@@ -26,6 +29,11 @@ if ($File) {
     if (!$Project) { throw "Supply -Project when opening a file." }
     $taskFilePath = (Resolve-Path -LiteralPath $File).Path
     $taskArguments += @("--file", (Format-TaskPath $taskFilePath))
+}
+if ($SessionInfo) {
+    $taskSessionPath = (Resolve-Path -LiteralPath $SessionInfo).Path
+    $taskArguments += @("--session-info", (Format-TaskPath $taskSessionPath),
+                        "--user", (Format-TaskPath $SessionUser), "--role", $Role)
 }
 $taskProcess = Start-Process -FilePath $taskPython -ArgumentList $taskArguments -WorkingDirectory $taskRepoRoot -WindowStyle Hidden -PassThru
 Write-Output "OpenBEXI IDE desktop started (PID $($taskProcess.Id))."

@@ -1,9 +1,13 @@
-# openbexi_ide v0.1
+# openbexi_ide v0.2
 
 A standalone CPython 3.13 IDE and headless CLI. The desktop has a project tree,
 tabbed editor, output and real debugpy debugger, with light/dark themes and a
 compact Open Folder / Run / Debug / Stop toolbar. SPELL is an optional, separately
 installed [plugin](../openbexi_spell_plugin/README.md).
+
+The desktop and CLI now share the same Development session service. The Session
+tab shows developers, controller ownership, serial/parallel queues, real live
+Python stacks, bounded locals and per-procedure output.
 
 ## Install and open
 
@@ -53,6 +57,35 @@ In another terminal, connect a read-only monitor:
 .venv/Scripts/openbexi.exe --connection .session/reader.json stack
 ```
 
+Join from the desktop with **Session > Join Shared Session**, or launch two
+independent clients from the IDE repository:
+
+```powershell
+./start.ps1 -Project examples -SessionInfo .session/server.json -User Alice
+./start.ps1 -Project examples -SessionInfo .session/server.json -User Reader -Role monitor
+```
+
+In the Session tab, choose **Open session folder**, then **Claim control**. The
+toolbar's Python/SPELL choice selects the language for shared Run. The server's
+interpreter owns execution and must have the optional SPELL plugin installed.
+The desktop interpreter remains for local Run/Debug after disconnecting.
+
+Select a procedure to inspect its live threads, frames, locals and output;
+double-click a frame to open its local project file. Pause/Resume/Stop apply to
+the selected procedure or **All procedures**. Console input goes to the selected
+running/pausing procedure. Shared inspection never evaluates expressions.
+
+**Keep control** renews the controller lease while connected. Release,
+Disconnect or closing the desktop pauses its session work and fences ownership.
+Another developer claims control and explicitly resumes. An unavailable service
+disables execution controls; recovered connectivity never automatically claims
+or resumes. Monitor windows also make project editors read-only.
+
+The controller may change **Slots** and click **Apply**, or use
+`openbexi configure --max-parallel 2`. Reducing the limit below occupied slots
+is rejected until those procedures finish or confirm pause. `openbexi disconnect`
+revokes that CLI connection. Other desktop/CLI members remain connected.
+
 Use separate connection files for each developer. A second developer may connect
 with the developer invitation and monitor the same session, but cannot claim the
 controller while somebody else holds it. `pause ID`, `resume ID`, `stop ID` and
@@ -94,5 +127,5 @@ are not the approved operational Execution service. Monitoring is read-only;
 operational release approvals, durable recovery and uncertain external effects
 remain explicit future gates. See [architecture](docs/ARCHITECTURE.md),
 [roadmap](ROADMAP.md), [master prompt](openbexi_ide_master_prompt.md) and
-[migration](docs/MIGRATION.md). The v0.1 test scope and remaining gates are in
+[migration](docs/MIGRATION.md). The v0.2 test scope and remaining gates are in
 [qualification](docs/QUALIFICATION.md).

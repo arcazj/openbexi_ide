@@ -5,6 +5,21 @@ launch/process ownership, DAP framing, the CLI and the shared-session server.
 The core imports no SPELL package at startup. GUI dependencies are an optional
 desktop extra; a headless wheel uses the standard library.
 
+The v0.2 desktop uses a bounded background HTTP queue and queued Qt signals; no
+network request runs on the GUI thread. It shares CLI authentication, fencing,
+slots, cooperative pauses and source admission. Desktop identities are issued
+independently per join and held only in memory. Disconnect revokes the member's
+credential atomically, releases owned control and pauses session work. A request
+authenticated before revocation cannot reacquire mutation authority afterward.
+Late join responses are revoked when the user cancels a pending connection.
+
+Only a current controller changes the slot limit. Reducing it below occupied
+tokens is rejected; acknowledged pauses/finished workers make room. The GUI
+never guesses that PAUSING is quiescent. Service failures disable mutations and
+clear the desktop's lease authority; recovery requires explicit claim/resume.
+Shared live inspection has no expression evaluation or remote source writes.
+The selected local folder must match the session project for desktop Run.
+
 One authenticated controller identity and one monotonic fencing epoch govern
 session mutations. Monitoring credentials cannot claim, renew, submit, send input,
 pause, resume or stop. Names are display labels; authority belongs to independently

@@ -21,6 +21,8 @@ from .debugger import DebugController
 from .editor import CodeEditor, FileConflictError
 from .fonts import configure_fonts, fixed_font
 from .themes import THEMES, apply_theme
+from .session_client import SessionClient
+from .session_panel import JoinDialog, SessionPanel
 
 
 def icon(kind: str, color: str) -> QIcon:
@@ -89,6 +91,9 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(760, 520)
         self.run_controller = RunController(self)
         self.debug_controller = DebugController(self)
+        self.session_client = SessionClient(self)
+        self.session_client.output.connect(lambda event: self.append_output(event['text']))
+        self.session_client.error.connect(self.report_error)
         self.run_controller.output.connect(self.append_output)
         self.run_controller.error.connect(self.report_error)
         self.run_controller.state_changed.connect(self.refresh_busy)
@@ -107,6 +112,7 @@ class MainWindow(QMainWindow):
         self.debug_controller.breakpoints_verified.connect(self.show_verified_breakpoints)
         self.make_actions()
         self.make_workspace()
+        self.session_client.changed.connect(self.shared_changed)
         self.make_toolbar()
         self.make_menus()
         self.position_label = QLabel("Development")
@@ -138,6 +144,8 @@ class MainWindow(QMainWindow):
         self.interpreter_action = self.action("Select Python Interpreter…", self.choose_interpreter)
         self.args_action = self.action("Script Arguments…", self.choose_arguments)
         self.eof_action = self.action("Close Script Input", self.close_input)
+        self.join_action = self.action("Join Shared Session…", self.join_session)
+        self.disconnect_action = self.action("Disconnect from Session", self.session_client.disconnect)
         self.continue_action = self.action("Continue", lambda: self.debug_controller.control("continue"), "F6")
         self.pause_action = self.action("Pause", lambda: self.debug_controller.control("pause"), "F7")
         self.over_action = self.action("Step Over", lambda: self.debug_controller.control("next"), "F10")
@@ -199,8 +207,8 @@ class MainWindow(QMainWindow):
         self.console.setPlaceholderText("Output appears here when you run a script.")
         self.input = QLineEdit(); self.input.setPlaceholderText("Send input to your running script…")
         self.input.returnPressed.connect(self.send_input)
-        send_button = QPushButton("Send"); send_button.clicked.connect(self.send_input)
-        input_row = QHBoxLayout(); input_row.addWidget(self.input); input_row.addWidget(send_button)
+        self.send_button = QPushButton("Send"); self.send_button.clicked.connect(self.send_input)
+        input_row = QHBoxLayout(); input_row.addWidget(self.input); input_row.addWidget(self.send_button)
         console_panel = QWidget(); console_layout = QVBoxLayout(console_panel)
         console_layout.setContentsMargins(12, 8, 12, 10)
         console_layout.addWidget(self.console); console_layout.addLayout(input_row)
@@ -235,6 +243,12 @@ class MainWindow(QMainWindow):
         self.frame_id = None
         self.output_tabs = QTabWidget(); self.output_tabs.setDocumentMode(True)
         self.output_tabs.addTab(console_panel, "Console"); self.output_tabs.addTab(self.debug_panel, "Debugger")
+        self.session_panel = SessionPanel(self.session_client, self)
+        self.session_panel.join_requested.connect(self.join_session)
+        self.session_panel.open_project_requested.connect(lambda path: self.open_project(Path(path)))
+        self.session_panel.frame_activated.connect(self.open_shared_frame)
+        self.session_panel.selection_changed.connect(self.refresh_busy)
+        self.output_tabs.addTab(self.session_panel, "Session")
         self.vertical = QSplitter(Qt.Vertical)
         self.vertical.addWidget(editor_panel); self.vertical.addWidget(self.output_tabs)
         self.vertical.setSizes([510, 225]); self.vertical.setCollapsible(0, False)
@@ -252,6 +266,15 @@ class MainWindow(QMainWindow):
             toolbar.addAction(item)
         spacer = QWidget(); spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         toolbar.addWidget(spacer)
+        self.language = QComboBox()
+        self.language.addItem("Python", "python")
+        self.language.addItem("SPELL plugin", "spell")
+        self.language.setToolTip("Language for shared-session Run; plugins belong to the server interpreter")
+        self.language_action = toolbar.addWidget(self.language)
+        self.language_action.setVisible(False)
+        self.session_button = QPushButton("Local workspace")
+        self.session_button.clicked.connect(self.show_session)
+        toolbar.addWidget(self.session_button)
         self.interpreter_button = QPushButton("Python 3.13")
         self.interpreter_button.clicked.connect(self.choose_interpreter)
         self.interpreter_button.setToolTip("Select the interpreter for this project")
@@ -285,6 +308,59 @@ class MainWindow(QMainWindow):
             run_menu.addAction(action)
         view_menu = self.menuBar().addMenu("View")
         view_menu.addAction(self.find_action); view_menu.addAction(self.theme_action)
+        session_menu = self.menuBar().addMenu("Session")
+        session_menu.addAction(self.join_action)
+        session_menu.addAction(self.disconnect_action)
+        self.session_actions = {}
+        for name in ('claim', 'release', 'pause', 'resume', 'stop'):
+            button = getattr(self.session_panel, name)
+            item = self.action(button.text(), button.click)
+            self.session_actions[name] = item
+            session_menu.addAction(item)
+
+    def show_session(self):
+        self.output_tabs.setCurrentWidget(self.session_panel)
+        if not self.session_client.active:
+            self.join_session()
+
+    def join_session(self):
+        if self.is_busy() or self.session_client.active:
+            return
+        dialog = JoinDialog(self)
+        if dialog.exec() == QDialog.Accepted:
+            self.join_shared_session(**dialog.values())
+
+    def join_shared_session(self, **values):
+        if self.is_busy():
+            self.report_error('Stop the local Run/Debug before joining a shared session')
+            return False
+        if self.session_client.join(**values):
+            self.console.clear()
+            self.output_tabs.setCurrentWidget(self.session_panel)
+            self.vertical.setSizes([max(200, self.vertical.height()-360), 360])
+            return True
+        return False
+
+    def shared_changed(self):
+        self.language_action.setVisible(self.session_client.active)
+        role = self.session_client.identity.get('role')
+        label = ('Control' if self.session_client.can_control else 'Monitor' if role == 'monitor' else 'Shared session')
+        self.session_button.setText(label if self.session_client.active else 'Local workspace')
+        self.update_position()
+        self.refresh_busy()
+        if self._close_requested and not self.session_client.active and not self.is_busy():
+            self.close()
+
+    def open_shared_frame(self, frame):
+        path = Path(frame['file']).resolve()
+        if self.project and path.is_relative_to(self.project):
+            editor = self.open_file(path)
+            if editor:
+                editor.show_execution_line(frame['line'])
+
+    def shared_project_matches(self):
+        remote = self.session_client.snapshot.get('project')
+        return bool(self.project and remote and self.project == Path(remote).resolve())
 
     def current_editor(self):
         widget = self.tabs.currentWidget()
@@ -369,11 +445,15 @@ class MainWindow(QMainWindow):
         editor = self.current_editor()
         if editor:
             cursor = editor.textCursor()
-            self.position_label.setText(f"Development    Ln {cursor.blockNumber()+1}, Col {cursor.positionInBlock()+1}")
+            mode = 'Monitoring' if self.session_client.active and self.session_client.identity.get('role') == 'monitor' else 'Development'
+            self.position_label.setText(f"{mode}    Ln {cursor.blockNumber()+1}, Col {cursor.positionInBlock()+1}")
         else:
             self.position_label.setText("Development")
 
     def save_editor(self, editor):
+        if self.session_client.active and self.session_client.identity.get('role') == 'monitor':
+            self.report_error('Monitoring connections cannot save project changes')
+            return False
         try:
             editor.save()
             self.statusBar().showMessage(f"Saved {editor.path.name}", 4000)
@@ -412,6 +492,8 @@ class MainWindow(QMainWindow):
             self.editor_stack.setCurrentIndex(0)
 
     def new_file(self):
+        if self.session_client.active and self.session_client.identity.get('role') == 'monitor':
+            return
         if not self.project or self.is_busy():
             self.statusBar().showMessage("Open a project folder first", 4000); return
         filename, _ = QFileDialog.getSaveFileName(self, "New Python file", str(self.project / "main.py"), "Python (*.py)")
@@ -447,6 +529,18 @@ class MainWindow(QMainWindow):
         editor = self.current_editor()
         if not editor or not self.project or self.is_busy():
             return
+        if self.session_client.active:
+            if not self.session_client.can_control or not self.shared_project_matches():
+                self.report_error('Open the session folder and claim control before Run')
+                return
+            for index in range(self.tabs.count()):
+                other = self.tabs.widget(index)
+                if other.document().isModified() and not self.save_editor(other):
+                    return
+            self.output_tabs.setCurrentWidget(self.session_panel)
+            self.session_client.command('run', script=str(editor.path.relative_to(self.project)),
+                                        arguments=list(self.arguments), language=self.language.currentData())
+            return
         for index in range(self.tabs.count()):
             other = self.tabs.widget(index)
             if other.document().isModified() and not self.save_editor(other):
@@ -460,6 +554,9 @@ class MainWindow(QMainWindow):
             self.report_error(str(error)); self.set_busy(False)
 
     def debug_script(self):
+        if self.session_client.active:
+            self.report_error('Shared sessions expose read-only live stacks. Disconnect to use local Debug.')
+            return
         editor = self.current_editor()
         if not editor or not self.project or self.is_busy():
             return
@@ -478,6 +575,9 @@ class MainWindow(QMainWindow):
             self.report_error(str(error)); self.refresh_busy()
 
     def stop_script(self):
+        if self.session_client.active and not self.is_busy():
+            self.session_panel.control('stop')
+            return
         self._stopping = True
         self.statusBar().showMessage("Stopping script…")
         self.run_controller.stop()
@@ -520,6 +620,34 @@ class MainWindow(QMainWindow):
         if busy:
             self.statusBar().showMessage("Debugging · local development" if self.debug_controller.running
                                          else "Running · local development")
+        self.join_action.setEnabled(not busy and not self.session_client.active)
+        self.disconnect_action.setEnabled(self.session_client.active and self.session_client.state != 'leaving')
+        self.session_button.setEnabled(not busy)
+        if self.session_client.active:
+            client = self.session_client
+            monitor = client.identity.get('role') == 'monitor' or client.state != 'joined'
+            self.run_action.setEnabled(client.can_control and self.shared_project_matches() and bool(editor) and editor.path.suffix == '.py')
+            self.debug_action.setEnabled(False)
+            self.stop_action.setEnabled(self.session_panel.stop.isEnabled())
+            self.save_action.setEnabled(not monitor and bool(editor))
+            self.new_action.setEnabled(not monitor and self.project is not None)
+            self.interpreter_action.setEnabled(False)
+            self.interpreter_button.setEnabled(False)
+            self.language.setEnabled(client.can_control)
+            self.args_action.setEnabled(client.can_control)
+            selected = self.session_panel.selected or {}
+            input_ready = client.can_control and selected.get('status') in {'RUNNING', 'PAUSING'} and not selected.get('input_closed')
+            self.input.setEnabled(bool(input_ready))
+            self.eof_action.setEnabled(bool(input_ready))
+            active_paths = {p['script'] for p in client.snapshot.get('procedures', [])
+                            if p['status'] not in {'COMPLETED', 'FAILED', 'CANCELLED'}}
+            for index in range(self.tabs.count()):
+                tab = self.tabs.widget(index)
+                logical = str(tab.path.relative_to(self.project)) if self.project else ''
+                tab.setReadOnly(monitor or logical in active_paths or logical.replace('\\', '/') in active_paths)
+        self.send_button.setEnabled(self.input.isEnabled())
+        for name, action in self.session_actions.items():
+            action.setEnabled(getattr(self.session_panel, name).isEnabled())
 
     def append_output(self, content):
         cursor = self.console.textCursor(); cursor.movePosition(QTextCursor.End)
@@ -546,10 +674,20 @@ class MainWindow(QMainWindow):
 
     def send_input(self):
         if self.input.isEnabled():
+            if self.session_client.active:
+                selected = self.session_panel.selected
+                if selected and self.session_client.command('input', procedure=selected['id'], text=self.input.text()):
+                    self.input.clear()
+                return
             controller = self.debug_controller if self.debug_controller.running else self.run_controller
             controller.send_input(self.input.text()); self.input.clear()
 
     def close_input(self):
+        if self.session_client.active:
+            selected = self.session_panel.selected
+            if selected:
+                self.session_client.command('input', procedure=selected['id'], text=None)
+            return
         controller = self.debug_controller if self.debug_controller.running else self.run_controller
         controller.close_input()
 
@@ -675,11 +813,16 @@ class MainWindow(QMainWindow):
         return super().eventFilter(watched, event)
 
     def closeEvent(self, event):
-        if not self.confirm_unsaved():
+        if not self._close_requested and not self.confirm_unsaved():
             event.ignore(); return
         if self.is_busy():
             self._close_requested = True
             self.stop_script(); event.ignore(); return
+        if self.session_client.active:
+            self._close_requested = True
+            self.setEnabled(False)
+            self.session_client.disconnect()
+            event.ignore(); return
         self.settings.sync()
         event.accept()
 
@@ -689,6 +832,9 @@ def main(argv=None):
     parser.add_argument("--project", type=Path, help="Project folder to open")
     parser.add_argument("--file", type=Path, help="File inside the project to edit")
     parser.add_argument("--theme", choices=THEMES, help="Light or dark theme")
+    parser.add_argument('--session-info', type=Path, help='Private session invitation JSON')
+    parser.add_argument('--user', default='Developer', help='Shared-session display name')
+    parser.add_argument('--role', choices=('developer', 'monitor'), default='developer')
     args = parser.parse_args(argv)
     app = QApplication.instance() or QApplication(sys.argv[:1])
     app.setApplicationName("OpenBEXI IDE")
@@ -700,6 +846,8 @@ def main(argv=None):
     if args.file:
         window.open_file(args.file)
     window.show()
+    if args.session_info:
+        window.join_shared_session(user=args.user, role=args.role, invite_file=args.session_info)
     return app.exec()
 
 

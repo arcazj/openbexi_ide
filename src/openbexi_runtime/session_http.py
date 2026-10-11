@@ -23,7 +23,7 @@ class SessionServer(ThreadingHTTPServer):
 
     def __init__(self, address, session):
         if address[0] not in {'127.0.0.1', 'localhost', '::1'}:
-            raise ValueError('v0.1 sessions require a loopback address; use an authenticated tunnel for remote developers')
+            raise ValueError('Shared Development sessions require a loopback address; use an authenticated tunnel for remote developers')
         self.session = session
         super().__init__(address, Handler)
         session.worker_url = f'http://127.0.0.1:{self.server_port}'
@@ -114,6 +114,10 @@ class Handler(BaseHTTPRequestHandler):
                 actor, epoch = self.actor(), body.get('epoch')
                 if route.path == '/claim':
                     result = session.claim(actor)
+                elif route.path == '/disconnect':
+                    result = session.leave(actor)
+                elif route.path == '/configure':
+                    result = session.configure(actor, epoch, body['max_parallel'])
                 elif route.path == '/renew':
                     result = session.renew(actor, epoch)
                 elif route.path == '/release':

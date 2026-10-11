@@ -1,10 +1,11 @@
 """Qualify installed IDE/plugin wheels with real workers and a fresh native DSS.
 
-Run with: python -I scripts/qualify_installed.py --output .qualification/v0.1
+Run with: python -I scripts/qualify_installed.py --output .qualification/v0.2
 The selected interpreter must contain both distributions; editable installs are
 not accepted. This script never inserts repository packages into sys.path.
 """
 import argparse
+from importlib.metadata import version
 from pathlib import Path
 import json
 import sys
@@ -27,7 +28,7 @@ def wait(predicate):
     raise AssertionError('Installed session did not reach expected state')
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--output', type=Path, default=Path('.qualification/v0.1'))
+parser.add_argument('--output', type=Path, default=Path('.qualification/v0.2'))
 root = parser.parse_args().output.resolve()
 root.mkdir(parents=True, exist_ok=True)
 project = root / 'installed-project'
@@ -67,7 +68,8 @@ try:
     try: request(url,'/stop',{'epoch':epoch,'procedure':'all'},alice['token'])
     except ValueError: pass
     else: raise AssertionError('Old controller was not fenced')
-    result={'version':'0.1.0','ide_origin':openbexi_runtime.__file__,'plugin_origin':openbexi_spell_plugin.__file__,
+    result={'version':version('openbexi-ide'),'plugin_version':version('openbexi-spell-plugin'),
+            'ide_origin':openbexi_runtime.__file__,'plugin_origin':openbexi_spell_plugin.__file__,
             'checks':['installed headless session','two developers and read-only monitor','real stack','serial Python/SPELL token queue','Unicode output/stdin','actual binary DSS command','controller handoff and stale-command rejection'],
             'dss_commands_executed':1,'passed':True}
     (root/'installed-smoke.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')

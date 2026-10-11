@@ -57,6 +57,7 @@ class Procedure:
                 'pause_reason': self.reason, 'has_token': self.has_token,
                 'pid': None if self.process is None else self.process.pid,
                 'worker_pid': self.worker_pid,
+                'input_closed': self.input_closed,
                 'exit_code': self.exit_code, 'error': self.error,
                 'threads': list(self.stacks.values())}
 
@@ -115,7 +116,19 @@ class Session:
                 raise SessionError('Connection credential required', 401)
             return self.clients[token]
 
+    def leave(self, client):
+        """Revoke this member's credential and pause any control it owns."""
+        with self.lock:
+            if self.controller == client['id']:
+                self._lose_controller('CONTROLLER_DISCONNECTED')
+            self.clients = {token: member for token, member in self.clients.items()
+                            if member['id'] != client['id']}
+            self.event('disconnected', client=client['id'])
+            return {'disconnected': True}
+
     def _developer(self, client):
+        if not any(member is client for member in self.clients.values()):
+            raise SessionError('Connection credential revoked', 401)
         if client['role'] != 'developer':
             raise SessionError('Monitoring connections are read-only', 403)
 
@@ -162,6 +175,19 @@ class Session:
             self._control(client, epoch)
             self._lose_controller('CONTROLLER_RELEASED')
             return {'epoch': self.epoch}
+
+    def configure(self, client, epoch, max_parallel):
+        with self.lock:
+            self._control(client, epoch)
+            if type(max_parallel) is not int or not 1 <= max_parallel <= 16:
+                raise SessionError('max_parallel must be in 1..16', 400)
+            occupied = sum(procedure.has_token for procedure in self.procedures.values())
+            if max_parallel < occupied:
+                raise SessionError('Pause or finish procedures before reducing the occupied slot count')
+            self.max_parallel = max_parallel
+            self.event('configuration_changed', max_parallel=max_parallel)
+            self._dispatch()
+            return {'max_parallel': max_parallel}
 
     def submit(self, client, epoch, script, *, arguments=(), language='python'):
         with self.lock:

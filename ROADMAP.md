@@ -10,13 +10,20 @@ queue, explicit handoff, lease expiry and owned process cleanup. Qualification
 is Windows x64 / CPython 3.13. This bounded v0.1 phase is complete;
 see [qualification](docs/QUALIFICATION.md) and its source/package manifest.
 
-## v0.2 — richer IDE and session controls
+## v0.2 — desktop shared sessions
 
-Connect desktop widgets to the same session API. Add completion and navigation,
-clear session/queue/owner views, debugger integration for shared sessions, explicit
-interactive prompt handling and verified plugin install/uninstall UI. Improve
-pause responsiveness for supported blocking operations without claiming arbitrary
-native/subprocess suspension. Add Windows packaging and platform-specific gates.
+Connect desktop widgets to the same session API. Show developers, queues,
+controller ownership, live stacks/locals and selected output. Add controller
+claim/release, pause/resume/stop/input, explicit Python/SPELL submission, graceful
+disconnect, slot configuration and safe connection-loss handling. Qualify real
+desktop/CLI peers and actual binary DSS effects before committing this phase.
+This bounded v0.2 phase is complete on Windows x64 / CPython 3.13; see the
+source tests, installed-package checks and captures in the current qualification.
+
+Completion/navigation, a shared DAP debugger, interactive SPELL prompt handling,
+plugin install/uninstall UI and Windows application packaging remain separate
+future gates. Shared v0.2 stacks are read-only inspection; local Debug keeps its
+existing real debugpy backend. Native/subprocess pauses remain cooperative.
 
 ## v0.3 — durable collaborative service
 

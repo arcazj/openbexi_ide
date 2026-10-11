@@ -74,7 +74,7 @@ def test_themes_breakpoint_gutter_find_and_render(window, app, tmp_path):
     window.show_find(); window.find.setText("ordinary"); window.find_next()
     assert editor.textCursor().selectedText() == "ordinary"
     window.find.hide()
-    output = Path(__file__).resolve().parents[1] / ".qualification" / "desktop-ui"
+    output = Path(__file__).resolve().parents[1] / ".qualification" / "v0.2" / "desktop-ui"
     output.mkdir(parents=True, exist_ok=True)
     for theme in ("light", "dark"):
         if window.theme != theme: window.toggle_theme()
@@ -126,7 +126,7 @@ def test_real_debugger_widgets_show_frame_variables_and_can_stop(window, app):
     assert window.continue_action.isEnabled() and window.into_action.isEnabled()
     window.expression.setText("number * 2"); QTest.keyClick(window.expression, Qt.Key_Return)
     wait_until(app, lambda: window.eval_result.text() == "42")
-    output = Path(__file__).resolve().parents[1] / ".qualification" / "desktop-ui"
+    output = Path(__file__).resolve().parents[1] / ".qualification" / "v0.2" / "desktop-ui"
     app.processEvents(); window.grab().save(str(output / "debugger.png"))
     window.stop_action.trigger()
     wait_until(app, lambda: not window.debug_controller.running)

@@ -3,7 +3,8 @@
 Build a domain-neutral CPython 3.13 desktop IDE and CLI. Keep the Python runtime
 independent of Qt and SPELL. Reuse the existing tested launch, owned process-tree
 and real debugpy/DAP foundation; do not replace mature debugger/tooling APIs with
-an invented implementation. Version starts at 0.1.0 after the repository split.
+an invented implementation. The repository split established v0.1.0; the current
+v0.2.0 baseline connects the desktop and CLI to the same session protocol.
 
 Prioritize a beginner-friendly PyCharm-inspired, macOS-style desktop: subtle
 colours, generous spacing, rounded surfaces, thin borders, restrained shadows,
@@ -18,6 +19,12 @@ queued procedures remain paused until granted a token. A running procedure must
 confirm actual pause/cleanup before its slot is reused. Reject duplicate active
 logical procedures. Handoff and lease expiry fence stale commands and require
 explicit resume; never silently resume on reconnect or transfer.
+
+Expose session membership, controller, queue, execution slots, selected output and
+live stacks in the desktop. Keep network requests off the GUI thread. Monitoring
+disables shared Run, Debug, editing, input and evaluation. Closing a controller
+window revokes its credential and pauses its work; a restored connection never
+claims control automatically. Keep local debugpy available outside shared sessions.
 
 Keep exactly three fundamental operating modes: Development (mutable local
 Run/Debug under the user's OS permissions), Monitoring (read-only, no commands,

@@ -60,7 +60,7 @@ def emit(value):
 def parser():
     root = argparse.ArgumentParser(prog='openbexi', description=__doc__)
     root.add_argument('--connection', default='.session/client.json', help='Private connection credential file')
-    root.add_argument('--version', action='version', version='openbexi_ide 0.1.0')
+    root.add_argument('--version', action='version', version='openbexi_ide 0.2.0')
     commands = root.add_subparsers(dest='command', required=True)
     local = commands.add_parser('run', help='Run a local Python/SPELL file without a session')
     local.add_argument('script')
@@ -84,8 +84,10 @@ def parser():
     connect.add_argument('--invite')
     connect.add_argument('--invite-file', help='Private server-info or invitation JSON')
     connect.add_argument('--role', choices=('developer', 'monitor'), default='developer')
-    for name in ('claim', 'renew', 'release', 'status', 'stack'):
+    for name in ('claim', 'renew', 'release', 'disconnect', 'status', 'stack'):
         commands.add_parser(name)
+    configure = commands.add_parser('configure', help='Change the controller-owned execution slot limit')
+    configure.add_argument('--max-parallel', type=int, required=True)
     submit = commands.add_parser('submit', help='Queue a procedure in the connected session')
     submit.add_argument('script')
     submit.add_argument('--language', choices=('python', 'spell'), default='python')
@@ -165,6 +167,9 @@ def main(argv=None):
             if not url or not invite:
                 raise ValueError('Supply a URL and invitation, or --invite-file')
             result = request(url, '/connect', {'name': args.user, 'invite': invite})
+            if result.get('role') != args.role:
+                request(url, '/disconnect', {}, result['token'])
+                raise ValueError('Invitation role does not match the selected connection role')
             private_json(args.connection, {'url': url, **result})
             emit({key: value for key, value in result.items() if key != 'token'})
             return 0
@@ -197,6 +202,8 @@ def main(argv=None):
             if args.command == 'submit':
                 route = '/run'
                 body.update(script=args.script, language=args.language, arguments=args.arguments)
+            elif args.command == 'configure':
+                body['max_parallel'] = args.max_parallel
             elif args.command in {'pause', 'resume', 'stop', 'input'}:
                 body['procedure'] = args.procedure
                 if args.command == 'input':
@@ -208,6 +215,8 @@ def main(argv=None):
             elif args.command == 'release':
                 connection.pop('epoch', None)
                 private_json(args.connection, connection)
+            elif args.command == 'disconnect':
+                private_json(args.connection, {'disconnected': True})
             emit(result)
         return 0
     except KeyboardInterrupt:

@@ -243,7 +243,7 @@ def test_headless_cli_help_and_run(tmp_path):
     script(tmp_path, 'hello.py', "print('CLI café 😀')\n")
     command = [sys.executable, '-I', '-X', 'utf8', str(root / 'run_cli.py')]
     result = subprocess.run([*command, '--version'], capture_output=True, text=True, encoding='utf-8')
-    assert result.returncode == 0 and 'openbexi_ide 0.1.0' in result.stdout
+    assert result.returncode == 0 and 'openbexi_ide 0.2.0' in result.stdout
     result = subprocess.run([*command, 'run', 'hello.py', '--project', str(tmp_path)], capture_output=True, text=True, encoding='utf-8')
     assert result.returncode == 0 and 'CLI café 😀' in result.stdout
 
