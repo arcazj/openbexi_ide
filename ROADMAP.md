@@ -38,8 +38,8 @@ versions/contexts, leases/fencing and holds on uncertain external effects.
 The optional local runtime extension contract is implemented and covered by 46
 regression tests. It adds installed backend discovery, local CLI selection,
 Run/Debug integration, bounded shutdown and backend prompts. See
-[runtime backends](docs/RUNTIME_BACKENDS.md). Full installed SPELL host acceptance
-is still in progress in the sibling plugin project.
+[runtime backends](docs/RUNTIME_BACKENDS.md). Installed SPELL host acceptance
+is complete at sibling plugin v0.3.0; this IDE retains its independent versions.
 
 Qualify the original-source SPELL library against this host and the actual
 IntelliJ/PyCharm hosts in the sibling plugin project. Complete OS/platform,

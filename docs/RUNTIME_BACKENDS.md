@@ -53,5 +53,8 @@ metadata, removes the backend and runs ordinary Python without debugpy.
 The sibling plugin's installed native SPELL Qt workflow now passes discovery,
 Run, artifact export, Debug, variable editing, Step, Continue, prompts, Stop,
 removal and ordinary Python Run afterward. Its native output-flush regression
-is fixed and qualified. Complete plugin acceptance remains tracked in that
-project, including adapter boundary tests and both JetBrains hosts.
+is fixed and qualified. The sibling plugin v0.3.0 is now accepted, including
+native adapter boundary tests, installed CLI lifecycle and actual PyCharm and
+IntelliJ IDEA Run/Debug/prompt/Stop/removal. Its docs/HOST_QUALIFICATION.json
+records exact artifacts and host versions. The durable shared service remains
+the separate IDE v0.3 prerequisite for operational plugin v0.4.
