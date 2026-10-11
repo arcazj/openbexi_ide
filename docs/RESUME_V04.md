@@ -102,13 +102,18 @@ seven releases and all 26 release assets, empty issues/PR inventories and REI's
 Pages configuration. SPELL had no initialized wiki repository. This is not a
 complete export of all GitHub account metadata.
 
-The deletion attempts returned HTTP 403: the saved Git credential lacks
-`delete_repo` scope. Both old repositories still existed at that verification;
-`deletion-attempt.json` records the result. Deletion through the owner's GitHub
-Settings pages, or an appropriately authorized credential, remains pending.
-Recheck remote state before a later attempt. The new repositories are preserved.
-The request to delete the two GitHub repositories does not authorize removal of
+The initial API deletion attempts returned HTTP 403 because the saved Git
+credential lacked `delete_repo` scope; `deletion-attempt.json` retains that
+earlier result. The user then deleted both repositories from their GitHub
+account. Authenticated verification on 2026-10-11 returned HTTP 404 for both old
+names and HTTP 200 for both new repositories, whose default branch is `master`.
+GitHub retirement is complete; no further deletion attempt is needed.
+
+The old local directory, legacy workspace and retirement backups remain on
+disk. Deletion of the two GitHub repositories does not authorize removal of
 `C:/projects/openbexi_spell`; preserve it until the user confirms local removal.
+It is safe to close the old IntelliJ project and resume from the existing
+`C:/projects/openbexi_ide` directory, with the sibling plugin directory retained.
 
 ## Restart instruction
 

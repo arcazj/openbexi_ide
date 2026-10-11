@@ -26,6 +26,9 @@ SPELL compatibility are not relabelled as new v0.1 acceptance.
 
 The independent repository is [arcazj/openbexi_ide](https://github.com/arcazj/openbexi_ide),
 created privately on 2026-10-11. Its branch is `master` and its local remote is
-`origin`. Publication preserves existing commits and tags. The old GitHub
-repository and local legacy directory are retained; removing the local directory
-requires the user's confirmation. See [the current handoff](RESUME_V04.md).
+`origin`. Publication preserves existing commits and tags. The user subsequently
+deleted `arcazj/openbexi_SPELL` and `arcazj/openbexi_REI` on GitHub; authenticated
+verification on 2026-10-11 confirmed both old names unavailable and both new
+repositories present. Verified retirement backups and the local legacy directory
+are retained. Removing that local directory requires the user's confirmation.
+See [the current handoff](RESUME_V04.md).
