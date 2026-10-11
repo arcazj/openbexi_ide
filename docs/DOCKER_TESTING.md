@@ -23,8 +23,10 @@ docker compose ps
 
 Open **[OpenBEXI IDE](http://localhost:6080/)**. The base address automatically
 opens the desktop; `http://127.0.0.1:6080/` also works.
-The IDE opens `hello.py`. Right-click the gray desktop background for additional
-IDE windows and a terminal. Double-click a window title to maximize it; Alt+Tab
+The IDE opens `hello.py`. The desktop underneath has visible launch buttons for
+Python, **SPELL / DSS — Alice**, Monitoring and a terminal. Closing an IDE leaves
+these buttons available. Right-click the background for the same choices.
+Double-click a window title to maximize it; Alt+Tab
 switches between windows. If the browser intercepts a function key, use the IDE
 toolbar/menu or noVNC's extra-keys controls.
 
@@ -41,12 +43,12 @@ existing Windows DSS/session services and bind only inside the container.
 
 ## Choose a test window
 
-| Desktop menu item | What to test |
+| Desktop button | What to test |
 | --- | --- |
-| Local Python IDE | Editor, Run, console input, debugpy breakpoints/steps/variables, graphics |
-| Developer Alice / Developer Bob | Shared Python or bounded SPELL; controller ownership, queue, slots, pause/resume, handoff |
+| Python IDE | Editor, Run, console input, debugpy breakpoints/steps/variables, graphics |
+| SPELL / DSS — Alice / Shared developer — Bob | Shared Python or bounded SPELL; controller ownership, queue, slots, pause/resume, handoff |
 | Read-only monitor | Shared output/stacks with editing and execution controls disabled |
-| Durable developer | Python with captured committed Git sources, durable events and mutual TLS |
+| Durable Python | Python with captured committed Git sources, durable events and mutual TLS |
 | Durable monitor | Read-only certificate identity on the durable service |
 | Terminal | CLI, Git and test files inside Docker |
 
@@ -68,8 +70,8 @@ The Run menu can select a project virtual environment if you create one.
 
 ### Shared developers, Monitoring and DSS
 
-1. Right-click the desktop and open **Developer Alice**, **Developer Bob** and
-   **Read-only monitor**. Each joins the same ephemeral session automatically.
+1. Open **SPELL / DSS — Alice**, **Shared developer — Bob** and
+   **Read-only monitor** using the desktop buttons. Each joins the same ephemeral session automatically.
 2. In Alice's **Session** tab, click **Claim control** and leave **Keep control**
    enabled. Bob and the monitor can inspect without controlling Alice's work.
 3. Run `session_first.py` and `session_second.py`. The default is two execution
@@ -86,7 +88,7 @@ uses the local Python window; shared debugger sessions remain outside this profi
 
 ### Durable Development
 
-Open **Durable developer**, claim control and Run `hello.py`. It is already
+Open **Durable Python**, claim control and Run `hello.py`. It is already
 committed in the durable sample Git repository. Open **Durable monitor** to
 inspect through the separate read-only certificate identity.
 
@@ -175,8 +177,10 @@ docker compose cp ide:/workspace/projects ./docker-project-backup
 
 Use `docker compose down` to remove this lab's containers/network while
 retaining its volumes. Do not add `-v` or prune volumes if you want to keep
-your files. Closing an IDE window leaves the desktop running; reopen it from
-the desktop menu. From Windows you can also use
+your files. Closing an IDE window leaves the desktop launcher visible; use a
+button to reopen a window. The display's idle screen blanking is disabled.
+The health check requires the launcher to be running as well as the services.
+From Windows you can also use
 `docker compose exec -d ide openbexi-lab local` (or `alice`, `bob`, `monitor`,
 `durable`, `durable-monitor`, `terminal`).
 

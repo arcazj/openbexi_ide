@@ -103,7 +103,7 @@ def desktop():
     signal.signal(signal.SIGTERM, shutdown)
     signal.signal(signal.SIGINT, shutdown)
     try:
-        start('display', ['Xvfb', ':0', '-screen', '0', '1600x1000x24', '-nolisten', 'tcp', '-ac'])
+        start('display', ['Xvfb', ':0', '-screen', '0', '1600x1000x24', '-nolisten', 'tcp', '-ac', '-s', '0'])
         wait_until(lambda: Path('/tmp/.X11-unix/X0').exists())
         start('window-manager', ['openbox', '--config-file', '/opt/test-lab/openbox.xml'])
         start('vnc', ['x11vnc', '-display', ':0', '-rfbport', '5900', '-localhost', '-nopw', '-forever', '-shared', '-noxdamage'])
@@ -118,12 +118,11 @@ def desktop():
                                  '--state-directory', str(ROOT / 'durable-state'), '--info', str(ROOT / 'connections/durable-server.json'),
                                  '--tls-cert', str(certs / 'server.pem'), '--tls-key', str(certs / 'server.key'),
                                  '--client-ca', str(certs / 'ca.pem'), '--identities', str(certs / 'identities.json')])
+        start('desktop', [sys.executable, '-I', '/opt/test-lab/desktop.py'])
         wait_until(lambda: subprocess.run([sys.executable, '-I', '/opt/test-lab/health.py'],
                                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0)
-        # Closing an IDE window is a normal user action; the desktop stays alive.
-        subprocess.Popen(['openbexi-lab', 'local'], start_new_session=True)
         print('OpenBEXI test desktop ready: http://localhost:6080/vnc.html?autoconnect=1&resize=scale', flush=True)
-        print('Right-click the desktop for local/shared/monitor/durable IDEs and a terminal.', flush=True)
+        print('Use the desktop launch buttons for local/shared/monitor/durable IDEs and a terminal.', flush=True)
         while not stopping:
             wait_until(lambda: True)
             time.sleep(0.5)

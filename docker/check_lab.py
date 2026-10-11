@@ -7,9 +7,11 @@ import os
 from pathlib import Path
 import runpy
 import socket
+import subprocess
 from urllib.request import urlopen
 
 runpy.run_path('/opt/test-lab/health.py')
+assert 'OpenBEXI Test Desktop' in subprocess.check_output(['xwininfo', '-root', '-tree'], text=True)
 with urlopen('http://127.0.0.1:6080/', timeout=5) as response:
     assert b'url=vnc.html?autoconnect=1&amp;resize=scale' in response.read(), 'Root must open the desktop'
 assert os.getuid() == 10003
@@ -38,7 +40,7 @@ with socket.create_connection(('127.0.0.1', 6080), timeout=5) as connection:
 result = {
     'passed': True, 'uid': os.getuid(),
     'versions': {name: version(name) for name in ('openbexi-ide', 'openbexi-spell-plugin', 'PySide6-Essentials', 'debugpy')},
-    'checks': ['root URL redirects to the desktop', 'noVNC HTTP assets', 'WebSocket upgrade and real VNC banner',
+    'checks': ['persistent desktop launcher running with an X11 window', 'root URL redirects to the desktop', 'noVNC HTTP assets', 'WebSocket upgrade and real VNC banner',
                'DSS health', 'shared session health', 'durable mutual TLS health'],
     'wheels': {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in Path('/opt/wheels').glob('*.whl')},
 }

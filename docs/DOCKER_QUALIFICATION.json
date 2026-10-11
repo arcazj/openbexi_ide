@@ -169,6 +169,42 @@
         "docker/Dockerfile": "9e4e81b5adf0e9bf3ce80d51f99d4bdc90c482f4d785daea7178ca115b2f288d",
         "docker/check_lab.py": "28d0d3f7216e7e7acc80eb6ed7d16c068ef94885054f5431b8336db65f9e60bc"
       }
+    },
+    {
+      "qualified_utc": "2026-10-11T18:44:38.293541+00:00",
+      "scope": "Persistent launcher after IDE exit; application/runtime wheels unchanged",
+      "base_commit": "6e1ed186b6cd889039a1377825b06298ab92ac1c",
+      "image_id": "sha256:8136bc60574f03245a7eaecf975aeebe9ef0c2364a9866030f904c95186b33dd",
+      "cause": "Original IDE process exited with code 0, leaving a black, empty Openbox desktop; no OOM recorded.",
+      "checks": [
+        "visible X11 desktop background and launch buttons",
+        "desktop survives close request",
+        "Alice button starts real installed IDE",
+        "desktop remains visible after IDE process exits",
+        "Python button reopens a real installed IDE",
+        "persistent desktop launcher running with an X11 window",
+        "root URL redirects to the desktop",
+        "noVNC HTTP assets",
+        "WebSocket upgrade and real VNC banner",
+        "DSS health",
+        "shared session health",
+        "durable mutual TLS health"
+      ],
+      "runtime_wheels_unchanged": true,
+      "live_application": "Launcher and idle-blanking fix applied without restarting user session services; fresh-image startup checked separately.",
+      "files": {
+        "docker/desktop.py": "1fdd42fea616e46a5569152b0c988ac7855ae78030e0fb10e0505e78e93fd3f7",
+        "docker/start.py": "56efdca2068c63dc296398ab842d4401b19c24772ef948e722d9d12131677c8f",
+        "docker/health.py": "2400e537b25f071d9bf26b01ebb538387e7bbbd631febf3f8cd57279e4ae9c61",
+        "docker/check_lab.py": "30a1c1efa2d91dec378cd27d5294a182c8fbc5a7bea6d9fd8528b1866ea4f440",
+        "docker/qualify_desktop.py": "b2e514cc252e09773da6cef1076198ed4bb538c12c5d7a550d067be4280c95fb"
+      },
+      "artifacts": {
+        ".qualification/docker-test/launcher-02/launcher-after-ide-exit.png": "cfd987a901c67c75d765f7fb5f092db6cfa44d6cd569df7cdaab8148abad8301",
+        ".qualification/docker-test/launcher-02/launcher-check.json": "ff69431953834d5e3cd2c75c3c4626d067524439d7a8fa9fec31c59cb4936057",
+        ".qualification/docker-test/launcher-02/launcher-display.log": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+        ".qualification/docker-test/launcher-02/launcher.png": "c5a99cc30589346f45e47ff6551f5e25c04655a93f39ea5751ce7c7217b51b12"
+      }
     }
   ]
 }
