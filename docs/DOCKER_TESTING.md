@@ -21,7 +21,8 @@ docker compose up -d --build --wait ide
 docker compose ps
 ```
 
-Open **[OpenBEXI IDE](http://localhost:6080/vnc.html?autoconnect=1&resize=scale)**.
+Open **[OpenBEXI IDE](http://localhost:6080/)**. The base address automatically
+opens the desktop; `http://127.0.0.1:6080/` also works.
 The IDE opens `hello.py`. Right-click the gray desktop background for additional
 IDE windows and a terminal. Double-click a window title to maximize it; Alt+Tab
 switches between windows. If the browser intercepts a function key, use the IDE

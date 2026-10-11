@@ -144,5 +144,31 @@
     "Bounded SPELL SDK/DSS fixture only; no native host or Kafka/operational driver",
     "Durable Python Development only; approved Execution gates remain open",
     "Base and Python wheels pinned; Debian packages are not snapshot locked"
+  ],
+  "followups": [
+    {
+      "qualified_utc": "2026-10-11T18:08:38.779902+00:00",
+      "scope": "Root URL start-page correction; installed runtime wheels unchanged",
+      "base_commit": "bf9ee1dabee1f163ee51f733c511287ae8dc046f",
+      "image_id": "sha256:a6ccb0f83f12fa0364a88fcb7a32fa047dd5a5b48846fca081a3ea8c6c3cc689",
+      "host_http_addresses_verified": [
+        "http://127.0.0.1:6080/",
+        "http://localhost:6080/"
+      ],
+      "checks": [
+        "root URL redirects to the desktop",
+        "noVNC HTTP assets",
+        "WebSocket upgrade and real VNC banner",
+        "DSS health",
+        "shared session health",
+        "durable mutual TLS health"
+      ],
+      "runtime_wheels_unchanged": true,
+      "files": {
+        "docker/index.html": "b432f05cb595b1096945b9d4b28eb1d6295516d9149688b6f7f1d469a2098ffd",
+        "docker/Dockerfile": "9e4e81b5adf0e9bf3ce80d51f99d4bdc90c482f4d785daea7178ca115b2f288d",
+        "docker/check_lab.py": "28d0d3f7216e7e7acc80eb6ed7d16c068ef94885054f5431b8336db65f9e60bc"
+      }
+    }
   ]
 }
