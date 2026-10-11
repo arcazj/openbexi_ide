@@ -21,12 +21,34 @@ class SessionServer(ThreadingHTTPServer):
     daemon_threads = True
     block_on_close = False
 
-    def __init__(self, address, session):
-        if address[0] not in {'127.0.0.1', 'localhost', '::1'}:
+    def __init__(self, address, session, *, tls_context=None, identities=None, worker_only=False):
+        if bool(tls_context) != bool(identities):
+            raise ValueError('TLS requires explicit certificate identities')
+        if address[0] not in {'127.0.0.1', 'localhost'} and not tls_context:
             raise ValueError('Shared Development sessions require a loopback address; use an authenticated tunnel for remote developers')
+        if worker_only and tls_context:
+            raise ValueError('Worker endpoint must be a separate loopback listener')
+        if tls_context and session.store is None:
+            raise ValueError('Remote identity requires a durable session directory')
+        self.identities, self.worker_only = identities, worker_only
         self.session = session
         super().__init__(address, Handler)
-        session.worker_url = f'http://127.0.0.1:{self.server_port}'
+        if tls_context:
+            self.socket = tls_context.wrap_socket(self.socket, server_side=True, do_handshake_on_connect=False)
+        else:
+            session.worker_url = f'http://127.0.0.1:{self.server_port}'
+
+    def service_actions(self):
+        if self.identities:
+            try:
+                identities = self.identities.read()
+            except (ValueError, OSError):
+                identities = {}
+            with self.session.lock:
+                for member in list(self.session.clients.values()):
+                    subject = member.get('subject')
+                    if subject and identities.get(subject) != {'name': member['name'], 'role': member['role']}:
+                        self.session.revoke_subject(subject)
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -58,10 +80,29 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
     def actor(self):
+        principal = self.principal()
         header = self.headers.get('Authorization', '')
         if not header.startswith('Bearer '):
             raise SessionError('Bearer credential required', 401)
-        return self.server.session.authenticate(header[7:])
+        actor = self.server.session.authenticate(header[7:])
+        if principal is not None and (actor.get('subject') != principal['subject']
+                                      or actor['role'] != principal['role'] or actor['name'] != principal['name']):
+            raise SessionError('Connection certificate identity differs', 403)
+        return actor
+
+    def principal(self):
+        if self.server.worker_only:
+            raise SessionError('Worker endpoint does not accept client commands', 403)
+        if self.server.identities is None:
+            return None
+        der = self.connection.getpeercert(binary_form=True)
+        try:
+            principal = self.server.identities.principal(der) if der else None
+        except (ValueError, OSError):
+            principal = None
+        if principal is None:
+            raise SessionError('Certificate identity is revoked or unregistered', 403)
+        return principal
 
     def body(self):
         if self.headers.get('Origin') is not None:
@@ -85,9 +126,12 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
+            self.principal()
             route = urlsplit(self.path)
             if route.path == '/healthz':
-                self.reply(200, {'status': 'ready', 'session': self.server.session.id})
+                available = not self.server.session.closed.is_set()
+                self.reply(200 if available else 503,
+                           {'status': 'ready' if available else 'fenced', 'session': self.server.session.id})
                 return
             self.actor()
             if route.path != '/session':
@@ -107,8 +151,10 @@ class Handler(BaseHTTPRequestHandler):
             if route.query:
                 raise SessionError('Query unsupported', 400)
             if route.path == '/connect':
-                result = session.join(body['name'], body['invite'])
+                result = session.join(body.get('name', 'certificate'), body.get('invite'), principal=self.principal())
             elif route.path == '/worker/checkpoint':
+                if self.server.identities is not None:
+                    raise SessionError('Worker checkpoint requires the private loopback endpoint', 403)
                 result = session.checkpoint(body)
             else:
                 actor, epoch = self.actor(), body.get('epoch')
@@ -122,6 +168,8 @@ class Handler(BaseHTTPRequestHandler):
                     result = session.renew(actor, epoch)
                 elif route.path == '/release':
                     result = session.release(actor, epoch)
+                elif route.path == '/handoff':
+                    result = session.handoff(actor, epoch, body['target'])
                 elif route.path == '/run':
                     result = session.submit(actor, epoch, body['script'], arguments=body.get('arguments', []), language=body.get('language', 'python'))
                 elif route.path in {'/pause', '/resume', '/stop'}:

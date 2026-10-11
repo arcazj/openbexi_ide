@@ -1,0 +1,90 @@
+{
+  "schema": "openbexi.durable-prerequisite-qualification/1",
+  "release_accepted": false,
+  "scope": "IDE v0.3 partial durable Development prerequisite; plugin v0.4-v0.6 remain open",
+  "base_commit": "3532cb1160d2a016d31ab954ea92eac5f15fee95",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.15",
+  "tests": {
+    "tests": 83,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_hash_format": "SHA-256 of bytes with CRLF normalized to LF",
+  "sources": {
+    "NOTICE": "695786bfc7439aff2afdf5ea252bd5ab29a82fa2e0b25cd3cf70d0693d7de6f7",
+    "pyproject.toml": "4b0b5f2fa1114a8de69481e9369e5a0704302f9903b204b0618f01bd30904423",
+    "scripts/qualify_durable_installed.py": "8ce1cabbdf218fe714b4f79627930b64fbb6bd0f1f7f247fc41517eda5cba0b3",
+    "scripts/record_durable_qualification.py": "6c9f01704255032ea0e5bee9a1140d4bb403e2b828c3c32d452dcab68dd485a6",
+    "src/openbexi_ide/__init__.py": "8632fde3fc8e279276892e8ba574045c1e3c4b998c35d56465905c0a2163c5b2",
+    "src/openbexi_ide/__main__.py": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+    "src/openbexi_ide/app.py": "e51795f9c52f2202c16841d039de66c541ac759d9c12a3d7f1442baecb11612d",
+    "src/openbexi_ide/controller.py": "2a86fd0fab3e5f0e42009d29caf2e6f9d046af7b5505607c2eb92417578d584e",
+    "src/openbexi_ide/debugger.py": "174b5ed6741d871d91ae451147551635307c5190b7d27641c14d596fe4e59dab",
+    "src/openbexi_ide/editor.py": "74c0201acaf15e91b121e23b3c2bb7d0371f9122bc359509514727b261dbc71d",
+    "src/openbexi_ide/fonts.py": "e99274c43c6a0e04a56152cb420d3802b9ba841883d48f9dbd79b9e40bd66c82",
+    "src/openbexi_ide/session_client.py": "0881cd83dd26ef54371d2c591c1fd17b2575b436bcac76f5845ad952590ca182",
+    "src/openbexi_ide/session_panel.py": "04543c06075273c7513a815fc567fe8e0e903e48c167576f591b3c429a07501e",
+    "src/openbexi_ide/themes.py": "1fa6f2559ac41e9f96187b60642714cce070ea81f50c45e6efa7e6aa80ac7bf8",
+    "src/openbexi_runtime/__init__.py": "2256d042148d2b6199eb77a7d8346c67296217d7d251243ac92e94393a77bada",
+    "src/openbexi_runtime/cli.py": "75683b4efd973ee151015468d608460d8eb2b3926400872e380575a78decd9a9",
+    "src/openbexi_runtime/dap.py": "f6833b90e7842f0b4fb68ef1c0f8a56808a92986848b2bbcf79eccc8a6d6fc0d",
+    "src/openbexi_runtime/interpreter_probe.py": "c87199962b6585904ca52c621f2a8c575e15fc6e9db473bc8489bd2a91a376a8",
+    "src/openbexi_runtime/languages.py": "d3c6526879f193da65245b5c97eb80e16795791fcdee2e595c69dac9d754044c",
+    "src/openbexi_runtime/launch.py": "44b527323c67a063932e1524ec8220c1311f751b82f5bba7bc8c5533b6e9b8e8",
+    "src/openbexi_runtime/procedure_identity.py": "e43fbbe481fc43ff42a85d52307b0f41b1eff2f099aed7a8a63e87497225aca0",
+    "src/openbexi_runtime/processes.py": "c127a6c092f813f213c142fe3a693bffb6fd4caa67c874d0c8303f5c3e5bb4b2",
+    "src/openbexi_runtime/session.py": "75fb3401b3dace28f1de941fcb489d3c8e8c703f6ee208344887880ec25cbc06",
+    "src/openbexi_runtime/session_http.py": "7e5b059cdeb6d80816a9d4634df158bb54ec508103853db3feb94e9219cc6cd3",
+    "src/openbexi_runtime/session_identity.py": "6d7e0a190d5aca9124fde9f530315e3c7f48450085a983c83831858d00eada54",
+    "src/openbexi_runtime/session_store.py": "b622e9c905a8b6c2f6b74f1203fcd571215684db45043df8fa75706f477dd83f",
+    "src/openbexi_runtime/session_worker.py": "60960bab49d7b8400368f801163ddcf7135f0933c265c4b94b2cfbe8a871f79d",
+    "src/openbexi_runtime/source_capture.py": "3d1832886fc16ca39ab596f3a598619edf140c0cd181355ba4b1858ef5dd83a1",
+    "src/openbexi_runtime/worker.py": "feb8550adb2bad4d0525b5ca6337abbc2b7ae6a3612c6a283aa5dafb0cb50f6e",
+    "tests/conftest.py": "9859a60d2cce4aa4392839feb80dd4d0fa3a2a7b4039cdeb7ba0784e2699dda8",
+    "tests/test_backends.py": "795fe5d8a52ef4062532e36b87dcb3b910cf6e574d68dcd7e81f7ef1f706a617",
+    "tests/test_debugger.py": "e3876069cd6b0960afde337368aa6bb4946eb68c477e8821aa09829c1a5dd496",
+    "tests/test_durable_sessions.py": "c70e78cadbb29af50a7796ab48a7fa8f56cc8ba3618927951dd402acfa60a152",
+    "tests/test_runtime.py": "bbbb8a14c0e6624d11cd5f3a1f33309d8e525ed8cf2a3d2e6e84b79379791634",
+    "tests/test_session_backpressure.py": "4c769ec826914fdd43da7fd39b6491bd3d7532ac4043fdf3914af486b3e3fa0c",
+    "tests/test_session_library_threads.py": "a2ac59da05ef8bcb7de57ee9f17f260c2e47a8183d18acea485b8ba07292acfb",
+    "tests/test_session_safe_locals.py": "279d39a5e72c89fedf93968ee5448828459f06af1627590a1b9e383050fb9d78",
+    "tests/test_session_stack_sampling.py": "23dd578963e6377178cb9174566d9ee547ad8d337f61c4fca34c03a9460c15d8",
+    "tests/test_session_tls.py": "ccfd19e066154f9a2aceeda3f4ed8659eca90f6929d5f253dd9fce962bd34b4e",
+    "tests/test_sessions.py": "223cf7e14576df00ff7c7087839b4431ef090ed9afb6945b9a77cde5bf49f6dd",
+    "tests/test_shared_ui.py": "bfd490659823723d3dd1fb4d0e038bbe3265336f205cc685b6e5cb091520ebb0",
+    "tests/test_ui.py": "c557c2d2e7f5b63dd301e06529eb69bba2664dadbe0477c99e467026e785286e"
+  },
+  "artifacts": {
+    "wheel": {
+      "path": ".qualification/durable-service-01/wheels-final/openbexi_ide-0.2.0-py3-none-any.whl",
+      "sha256": "628987b91364ca7cacb3bb3adf94fb3d269f292beee7695a1cd5528be0a952cd"
+    },
+    "source_tests": {
+      "path": ".qualification/durable-service-01/tests-final.xml",
+      "sha256": "6e0011444e6995cf9c224b98aa3c04f9790fa7bcf19915f5089262272f966f4f"
+    },
+    "installed": {
+      "path": ".qualification/durable-service-01/installed-final-check/result.json",
+      "sha256": "cdb0b2df6652855c284fbceeca125e96a7e35326f0fc324b08dbe2034cc0e17f"
+    }
+  },
+  "installed_checks": [
+    "fresh non-editable core without Qt or SPELL",
+    "committed source and dependency execution",
+    "real service kill and fresh-process recovery",
+    "owned worker shutdown",
+    "durable event replay",
+    "stale credential and epoch fencing",
+    "uncertain reservation prevents duplicate admission and automatic replay"
+  ],
+  "remaining_gates": [
+    "IDE v0.3 approved immutable release authority and qualified Execution isolation",
+    "Interpreter and third-party dependency provenance beyond the captured Git tree",
+    "Native shared runtime and fine-grained external-effect receipts",
+    "Plugin v0.4 original DSS driver/RPC integration and three-mode acceptance",
+    "Plugin v0.5 all 763 independent inventory requirements",
+    "Plugin v0.6 reproducibility, upgrades, actual hosts and DSS distribution"
+  ]
+}

@@ -1,5 +1,10 @@
 # v0.2 qualification
 
+For the subsequent, separately tested partial IDE v0.3 prerequisite, see
+[durable Development](DURABLE_SERVICE.md) and its
+[source/artifact manifest](DURABLE_QUALIFICATION.json). The historical v0.2
+acceptance below remains bound to its own release sources and artifacts.
+
 Windows x64 / CPython 3.13.15. The migrated native desktop, neutral runtime and
 real debugpy debugger remain qualified. The combined desktop/runtime/CLI suite
 passed 61 tests with warnings treated as errors, including eight shared-desktop

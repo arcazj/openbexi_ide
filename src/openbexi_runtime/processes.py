@@ -153,6 +153,73 @@ class ProcessTree:
 _worker_job = None
 
 
+def _resume_created_process(pid):
+    """Resume the initial Windows thread after the suspended child owns its job.
+
+    Popen closes the primary thread handle, so recover it using the documented
+    Tool Help thread inventory. No user code can spawn a child before ResumeThread.
+    """
+    class ThreadEntry(ctypes.Structure):
+        _fields_ = [('size', wintypes.DWORD), ('usage', wintypes.DWORD),
+                    ('thread', wintypes.DWORD), ('process', wintypes.DWORD),
+                    ('base_priority', wintypes.LONG), ('delta_priority', wintypes.LONG),
+                    ('flags', wintypes.DWORD)]
+    snapshot = kernel.CreateToolhelp32Snapshot
+    snapshot.argtypes, snapshot.restype = [wintypes.DWORD, wintypes.DWORD], wintypes.HANDLE
+    first, next_thread = kernel.Thread32First, kernel.Thread32Next
+    for function in (first, next_thread):
+        function.argtypes = [wintypes.HANDLE, ctypes.POINTER(ThreadEntry)]
+        function.restype = wintypes.BOOL
+    open_thread = kernel.OpenThread
+    open_thread.argtypes, open_thread.restype = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD], wintypes.HANDLE
+    resume = kernel.ResumeThread
+    resume.argtypes, resume.restype = [wintypes.HANDLE], wintypes.DWORD
+    handle = snapshot(0x00000004, 0)  # TH32CS_SNAPTHREAD
+    if handle == ctypes.c_void_p(-1).value:
+        raise ctypes.WinError(ctypes.get_last_error())
+    try:
+        entry = ThreadEntry()
+        entry.size = ctypes.sizeof(entry)
+        found = first(handle, ctypes.byref(entry))
+        while found:
+            if entry.process == pid:
+                thread = open_thread(0x0002, False, entry.thread)  # THREAD_SUSPEND_RESUME
+                if not thread:
+                    raise ctypes.WinError(ctypes.get_last_error())
+                try:
+                    if resume(thread) == 0xFFFFFFFF:
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    return
+                finally:
+                    kernel.CloseHandle(thread)
+            found = next_thread(handle, ctypes.byref(entry))
+        raise RuntimeError('Suspended process primary thread is unavailable')
+    finally:
+        kernel.CloseHandle(handle)
+
+
+def start_owned_process(command, **options):
+    """Establish process-tree ownership before a Windows launcher can spawn."""
+    if os.name == 'nt':
+        options['creationflags'] = options.get('creationflags', 0) | 0x00000004  # CREATE_SUSPENDED
+    else:
+        options['start_new_session'] = True
+    process = subprocess.Popen(command, **options)
+    owner = None
+    try:
+        owner = ProcessTree(process.pid)
+        if os.name == 'nt':
+            _resume_created_process(process.pid)
+        return process, owner
+    except BaseException:
+        if owner:
+            owner.close()
+        if process.poll() is None:
+            process.kill()
+        process.communicate(timeout=5)
+        raise
+
+
 def own_worker_tree():
     """Before running user code, make worker death also end its descendants.
 

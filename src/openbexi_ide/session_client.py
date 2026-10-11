@@ -37,6 +37,7 @@ class SessionClient(QObject):
         self._last_renew = 0
         self._lease_seconds = 30
         self._requested_role = 'developer'
+        self._tls = None
         self._unavailability_reported = False
         self._jobs = queue.Queue(maxsize=16)
         self._thread = None
@@ -82,15 +83,21 @@ class SessionClient(QObject):
                 info = json.loads(path.read_text(encoding='utf-8-sig'))
             url = url or info.get('url')
             invite = invite or info.get(role + '_invite')
-            if not url or not invite:
+            tls = info.get('tls')
+            if tls is not None:
+                if type(tls) is not dict or set(tls) - {'ca', 'certificate', 'key'}:
+                    raise ValueError('Invalid session TLS configuration')
+                tls = {key: str((path.parent / value).resolve()) if value else None for key, value in tls.items()}
+            if not url or not (invite or tls):
                 raise ValueError('Supply a session URL and invitation or invitation file')
-            if role == 'monitor' and invite == info.get('developer_invite'):
+            if role == 'monitor' and invite and invite == info.get('developer_invite'):
                 raise ValueError('A monitor needs the monitor invitation')
         except (OSError, ValueError, TypeError, AttributeError) as exc:
             self.error.emit(str(exc))
             return False
         self._generation += 1
         self.state, self.url = 'joining', url
+        self._tls = tls
         self.identity, self.snapshot, self.epoch = {}, {}, None
         self.healthy = False
         self._unavailability_reported = False
@@ -109,6 +116,7 @@ class SessionClient(QObject):
         if kind in self._pending:
             return False
         job = {'generation': self._generation, 'kind': kind, 'url': self.url,
+               'tls': self._tls,
                'path': path, 'body': body, 'token': self.identity.get('token') if token is None and kind != 'connect' else token}
         try:
             self._jobs.put_nowait(job)
@@ -129,11 +137,11 @@ class SessionClient(QObject):
             result = {'job': job}
             try:
                 result['value'] = ({'disconnected': True} if job['kind'] == 'disconnect' and not job['token']
-                                   else request(job['url'], job['path'], job['body'], job['token']))
+                                   else request(job['url'], job['path'], job['body'], job['token'], tls=job.get('tls')))
                 if job['kind'] == 'connect' and job['generation'] != self._generation:
                     # A join cancelled while its HTTP response was in flight
                     # still owns a newly issued credential: revoke it explicitly.
-                    request(job['url'], '/disconnect', {}, result['value']['token'])
+                    request(job['url'], '/disconnect', {}, result['value']['token'], tls=job.get('tls'))
             except (ValueError, OSError, KeyError, TypeError) as exc:
                 result['error'] = str(exc)
                 result['http_status'] = getattr(exc.__cause__, 'code', None)
@@ -190,7 +198,7 @@ class SessionClient(QObject):
                 self.healthy, self.epoch = False, None
                 self.error.emit('The service session changed; disconnect and join the new session')
             else:
-                self.healthy = True
+                self.healthy = value.get('storage_healthy', True)
                 self._unavailability_reported = False
                 owner = value.get('controller') or {}
                 if owner.get('id') != self.identity.get('client') or value.get('epoch') != self.epoch:

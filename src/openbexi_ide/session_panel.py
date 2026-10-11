@@ -217,9 +217,10 @@ class SessionPanel(QWidget):
         self.keep_control.setEnabled(client.identity.get('role') == 'developer' and client.state == 'joined')
         selected = client.snapshot.get('procedures', []) if self.target == 'all' else [self.selected] if self.selected else []
         active = [p for p in selected if p['status'] not in TERMINAL]
-        self.pause.setEnabled(client.can_control and any(p['status'] not in {'PAUSED', 'STOPPING'} for p in active))
+        held = any(p['status'] == 'RECOVERY_REQUIRED' for p in active)
+        self.pause.setEnabled(client.can_control and not held and any(p['status'] not in {'PAUSED', 'STOPPING'} for p in active))
         self.resume.setEnabled(client.can_control and bool(active) and all(p['status'] == 'PAUSED' for p in active))
-        self.stop.setEnabled(client.can_control and bool(active))
+        self.stop.setEnabled(client.can_control and bool(active) and not held)
 
     def update_snapshot(self, snapshot):
         current = self.preferred or (self.selected or {}).get('id')

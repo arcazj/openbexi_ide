@@ -33,6 +33,13 @@ behaviour. Preserve exactly Development, read-only Monitoring and approved
 Execution. Operational admission uses one active logical procedure across
 versions/contexts, leases/fencing and holds on uncertain external effects.
 
+The [durable Development prerequisite](docs/DURABLE_SERVICE.md) now implements
+certificate identities/TLS, revocation, bounded durable output, separate control
+audit, committed Git captures, restart holds, logical alias reservations and
+offline reconciliation. This is a partial milestone: approved Execution isolation,
+full dependency provenance and native shared-runtime/effect integration still
+gate v0.3. Plugin v0.4 must not be promoted from this prerequisite evidence.
+
 ## Later — plugin and product acceptance
 
 The optional local runtime extension contract is implemented and covered by 46

@@ -28,8 +28,8 @@ when they are demonstrably obsolete project resources and unused by containers.
 | openbexi_spell_plugin | v0.3.0 tagged at `c34b21c`; native source foundation and three local IDE hosts accepted |
 
 The projects have independent version numbers. IDE v0.3 durable shared service
-is a prerequisite for plugin v0.4; it has not been implemented yet. Only analysis
-had begun when the user requested this project switch. Plugin v0.4, v0.5 and
+is a prerequisite for plugin v0.4. Only analysis had begun at the original project
+switch; the partial implementation below is subsequent work. Plugin v0.4, v0.5 and
 v0.6 remain open; do not infer their completion from the v0.3 host release.
 
 Read these before resuming:
@@ -44,17 +44,29 @@ Read these before resuming:
 
 ## Next implementation work
 
-Implement and qualify the neutral IDE's durable collaborative service: explicit
-identity/TLS, revocation, bounded durable events, captured source/dependencies,
-crash recovery and audited controller handoff. Preserve one fenced, leased
+An additional tested partial prerequisite is now implemented; read
+[DURABLE_SERVICE.md](DURABLE_SERVICE.md) and
+[DURABLE_QUALIFICATION.json](DURABLE_QUALIFICATION.json) before editing it.
+It provides durable Development sessions, mutual TLS identities/revocation,
+captured Git trees, bounded replay and separate audit, crash holds, stable logical
+identity and offline reconciliation. It does not complete IDE v0.3 or any plugin
+release. The package/release version remains 0.2.0 and no new release tag was
+created. Continue from the explicit remaining gates in that document; do not
+repeat the completed store/TLS/capture implementation or infer Execution approval.
+
+Finish and qualify the neutral IDE's durable collaborative service, including
+approved release authorization, Execution isolation and native shared integration.
+Retain the implemented identity/TLS, revocation, bounded durable events, captured
+Git sources, crash recovery and audited controller handoff. Preserve one fenced, leased
 controller, configurable execution slots, logical-procedure admission across
 versions/contexts, and uncertain-effect holds without automatic replay.
 
 Inspect the preserved legacy `backend/procedure_identity.py`,
 `backend/execution_locks.py`, `backend/executor_release.py` and their tests before
 migrating their reusable rules and dependencies. Keep SPELL imports and domain
-services out of the neutral IDE core. The current shared worker still uses the
-bounded v0.1 SPELL adapter; local native host acceptance does not upgrade it.
+services out of the neutral IDE core. The default ephemeral shared worker still
+uses the bounded v0.1 SPELL adapter; durable shared SPELL is explicitly rejected
+pending native integration. Local native host acceptance does not upgrade either.
 
 Then implement plugin v0.4 using the original registry, factory, driver manager,
 interfaces and `SPELLDriver.proto`, bridged explicitly to the existing DSS

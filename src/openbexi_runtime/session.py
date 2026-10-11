@@ -16,7 +16,7 @@ import time
 import uuid
 
 from .launch import LaunchSpec, clean_environment, interpreter_info
-from .processes import ProcessTree
+from .processes import ProcessTree, start_owned_process
 
 TERMINAL = frozenset({'COMPLETED', 'FAILED', 'CANCELLED'})
 
@@ -34,6 +34,11 @@ class Procedure:
     spec: LaunchSpec
     language: str
     source_hash: str
+    definition: str | None = None
+    version: str | None = None
+    capture_digest: str | None = None
+    fence: int = 0
+    uncertain: bool = False
     status: str = 'PAUSED'
     reason: str | None = 'WAITING_TOKEN'
     wants_run: bool = True
@@ -54,6 +59,9 @@ class Procedure:
     def public(self):
         return {'id': self.id, 'script': self.script, 'language': self.language,
                 'source_sha256': self.source_hash, 'status': self.status,
+                'definition_id': self.definition, 'version_id': self.version,
+                'capture_sha256': self.capture_digest, 'procedure_fence': self.fence,
+                'uncertain_effects': self.uncertain,
                 'pause_reason': self.reason, 'has_token': self.has_token,
                 'pid': None if self.process is None else self.process.pid,
                 'worker_pid': self.worker_pid,
@@ -64,7 +72,7 @@ class Procedure:
 
 class Session:
     def __init__(self, project: Path, *, max_parallel=1, lease_seconds=30,
-                 interpreter=Path(sys.executable), dss_url=None):
+                 interpreter=Path(sys.executable), dss_url=None, state_directory=None):
         self.project = Path(project).resolve()
         if not self.project.is_dir():
             raise ValueError('Session project must exist')
@@ -81,22 +89,101 @@ class Session:
         self.controller, self.epoch, self.deadline = None, 0, 0.0
         self.lock, self.closed = threading.RLock(), threading.Event()
         self.events, self.sequence = deque(maxlen=2048), 0
+        self.store, self.aliases, self.fences = None, {}, {}
+        self.storage_failed = False
         self.worker_url = None
+        if state_directory is not None:
+            from .session_store import SessionStore
+            self.store = SessionStore(state_directory)
+            try:
+                self._restore()
+                self.event('service_started', epoch=self.epoch, recovered=bool(self.procedures))
+            except BaseException:
+                self.store.close()
+                raise
         self.housekeeper = threading.Thread(target=self._housekeep, name='session-lease', daemon=True)
         self.housekeeper.start()
 
     def event(self, kind, **data):
         with self.lock:
-            self.sequence += 1
-            self.events.append({'sequence': self.sequence, 'type': kind,
-                                'time': time.time(), **data})
+            if self.storage_failed:
+                # Only cleanup can reach here after the authority fails closed.
+                # Preserve the last committed recovery state and its cursor.
+                return
+            event = {'sequence': self.sequence + 1, 'type': kind, 'time': time.time(), **data}
+            if self.store:
+                try:
+                    oldest = self.store.save(self._durable_state(event['sequence']), event)
+                except Exception as error:
+                    # Persistence is a launch/control precondition. A failed
+                    # commit cannot be followed by further grants or worker run.
+                    self.storage_failed = True
+                    self.closed.set()
+                    self.controller = None
+                    self.epoch += 1
+                    for procedure in self.procedures.values():
+                        procedure.wants_run = False
+                        if procedure.status not in TERMINAL and (procedure.process or procedure.has_token):
+                            procedure.uncertain = True
+                            procedure.status, procedure.reason = 'RECOVERY_REQUIRED', 'PERSISTENCE_FAILURE'
+                        if procedure.owner:
+                            procedure.owner.close()
+                    raise SessionError('Durable persistence unavailable; service fenced', 503) from error
+                while self.events and self.events[0]['sequence'] < oldest:
+                    self.events.popleft()
+            self.sequence = event['sequence']
+            self.events.append(event)
 
-    def join(self, name, invite):
+    def _durable_state(self, sequence):
+        return {'schema': 1, 'id': self.id, 'project': str(self.project),
+                'interpreter': str(self.interpreter.resolve()), 'max_parallel': self.max_parallel,
+                'sequence': sequence, 'epoch': self.epoch, 'aliases': self.aliases, 'fences': self.fences,
+                'procedures': [{**{k: v for k, v in p.public().items() if k != 'threads'}, 'capture': str(p.spec.project),
+                                'arguments': list(p.spec.arguments),
+                                'launched': p.process is not None or p.status in {'STARTING', 'RECOVERY_REQUIRED'}}
+                               for p in self.procedures.values()]}
+
+    def _restore(self):
+        state, events = self.store.load()
+        if state is None:
+            return
+        if (state['schema'] != 1 or state['project'] != str(self.project)
+                or state['interpreter'] != str(self.interpreter.resolve())):
+            raise ValueError('Durable service project or interpreter identity differs')
+        self.id, self.sequence, self.epoch = state['id'], state['sequence'], state['epoch'] + 1
+        self.max_parallel, self.aliases, self.fences = state['max_parallel'], state['aliases'], state['fences']
+        self.events.extend(events)
+        for row in state['procedures']:
+            root = Path(row['capture'])
+            p = Procedure(row['id'], row['script'], LaunchSpec(root, root / row['script'], self.interpreter,
+                          tuple(row['arguments'])), row['language'], row['source_sha256'],
+                          definition=row['definition_id'], version=row['version_id'],
+                          capture_digest=row['capture_sha256'], fence=row['procedure_fence'])
+            p.status, p.exit_code, p.error = row['status'], row['exit_code'], row['error']
+            p.wants_run = False
+            p.uncertain = row.get('uncertain_effects', False)
+            if p.status not in TERMINAL:
+                if row['launched']:
+                    p.status, p.reason, p.has_token, p.uncertain = 'RECOVERY_REQUIRED', 'UNCONFIRMED_SHUTDOWN', True, True
+                else:
+                    p.status, p.reason = 'PAUSED', 'SERVICE_RESTARTED'
+            self.procedures[p.id] = p
+
+    def revoke_subject(self, subject):
+        with self.lock:
+            self.event('identity_revoked', subject=subject)
+            for client in list(self.clients.values()):
+                if client.get('subject') == subject:
+                    self.leave(client)
+
+    def join(self, name, invite, *, principal=None):
         if not isinstance(name, str) or not 1 <= len(name) <= 64 or not name.strip() or any(ord(c) < 32 for c in name):
             raise SessionError('Developer name must be 1..64 printable characters', 400)
-        if not isinstance(invite, str):
+        if principal is not None:
+            name, role = principal['name'], principal['role']
+        elif not isinstance(invite, str):
             raise SessionError('Invitation required', 403)
-        if secrets.compare_digest(invite, self.developer_invite):
+        elif secrets.compare_digest(invite, self.developer_invite):
             role = 'developer'
         elif secrets.compare_digest(invite, self.monitor_invite):
             role = 'monitor'
@@ -107,7 +194,10 @@ class Session:
             if len(self.clients) >= 64:
                 raise SessionError('Session connection limit reached')
             self.clients[token] = {'id': client_id, 'name': name, 'role': role}
-            self.event('connected', client=client_id, name=name, role=role)
+            if principal is not None:
+                self.clients[token]['subject'] = principal['subject']
+            self.event('connected', client=client_id, name=name, role=role,
+                       subject=principal['subject'] if principal else None)
         return {'session': self.id, 'client': client_id, 'token': token, 'role': role}
 
     def authenticate(self, token):
@@ -127,6 +217,8 @@ class Session:
             return {'disconnected': True}
 
     def _developer(self, client):
+        if self.closed.is_set():
+            raise SessionError('Session is not accepting commands', 503)
         if not any(member is client for member in self.clients.values()):
             raise SessionError('Connection credential revoked', 401)
         if client['role'] != 'developer':
@@ -176,6 +268,19 @@ class Session:
             self._lose_controller('CONTROLLER_RELEASED')
             return {'epoch': self.epoch}
 
+    def handoff(self, client, epoch, target):
+        with self.lock:
+            self._control(client, epoch)
+            member = next((c for c in self.clients.values() if c['id'] == target), None)
+            if member is None or member['role'] != 'developer' or target == client['id']:
+                raise SessionError('Handoff requires another connected developer', 400)
+            self._lose_controller('CONTROLLER_HANDOFF')
+            self.controller = target
+            self.deadline = time.monotonic() + self.lease_seconds
+            # The recipient must explicitly claim the new fence and resume.
+            self.event('controller_handoff', client=client['id'], target=target, epoch=self.epoch)
+            return {'epoch': self.epoch, 'target': target, 'requires_claim': True}
+
     def configure(self, client, epoch, max_parallel):
         with self.lock:
             self._control(client, epoch)
@@ -185,11 +290,14 @@ class Session:
             if max_parallel < occupied:
                 raise SessionError('Pause or finish procedures before reducing the occupied slot count')
             self.max_parallel = max_parallel
-            self.event('configuration_changed', max_parallel=max_parallel)
+            self.event('configuration_changed', max_parallel=max_parallel, client=client['id'], epoch=epoch)
             self._dispatch()
             return {'max_parallel': max_parallel}
 
     def submit(self, client, epoch, script, *, arguments=(), language='python'):
+        # Git capture can be slow. Authenticate first, prepare outside the
+        # control lock, then recheck the live fence at atomic admission. Worker
+        # checkpoints and revocation must remain responsive during preparation.
         with self.lock:
             self._control(client, epoch)
             if self.closed.is_set() or not self.worker_url:
@@ -201,6 +309,17 @@ class Session:
             target = self.project / script
             spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments)).validate()
             logical = spec.script.relative_to(self.project).as_posix()
+        captured = None
+        if self.store:
+            if language != 'python':
+                raise SessionError('Durable shared SPELL requires the qualified native driver migration', 400)
+            from .source_capture import capture
+            captured = capture(self.project, logical, self.store.directory)
+        elif language == 'spell':
+            from .languages import check_spell
+            check_spell(self.interpreter)
+        with self.lock:
+            self._control(client, epoch)
             if any(p.script == logical and p.status not in TERMINAL for p in self.procedures.values()):
                 raise SessionError('This logical procedure is already active in the session')
             if sum(p.status not in TERMINAL for p in self.procedures.values()) >= 128:
@@ -208,13 +327,31 @@ class Session:
             if len(self.procedures) >= 512:
                 for identifier in [p.id for p in self.procedures.values() if p.status in TERMINAL][:256]:
                     del self.procedures[identifier]
-            if language == 'spell':
-                from .languages import check_spell
-                check_spell(self.interpreter)
             procedure = Procedure(uuid.uuid4().hex, logical, spec, language,
+                                  captured[2]['files'][logical]['sha256'] if captured else
                                   hashlib.sha256(spec.script.read_bytes()).hexdigest())
+            if captured:
+                from .procedure_identity import definition_id, version_id
+                root, digest, manifest = captured
+                procedure.spec = LaunchSpec(root, root / logical, self.interpreter, tuple(arguments))
+                procedure.source_hash = manifest['files'][logical]['sha256']
+                import tokenize
+                with tokenize.open(procedure.spec.script) as source:
+                    identity = definition_id(logical, source.read())
+                bound = self.aliases.get(logical.casefold())
+                if bound is not None and bound != identity:
+                    raise SessionError('Catalog alias is already bound to another procedure definition')
+                if any(p.definition == identity and (p.status not in TERMINAL or p.uncertain)
+                       for p in self.procedures.values()):
+                    raise SessionError('This logical procedure is already active or requires reconciliation')
+                self.aliases[logical.casefold()] = identity
+                self.fences[identity] = self.fences.get(identity, 0) + 1
+                procedure.definition, procedure.fence = identity, self.fences[identity]
+                procedure.capture_digest = digest
+                procedure.version = version_id(identity, procedure.source_hash, 'python/3.13', digest)
             self.procedures[procedure.id] = procedure
-            self.event('queued', procedure=procedure.id, script=logical)
+            self.event('queued', procedure=procedure.id, script=logical, client=client['id'], epoch=epoch,
+                       definition=procedure.definition, version=procedure.version, fence=procedure.fence)
             self._dispatch()
             return procedure.public()
 
@@ -241,6 +378,9 @@ class Session:
                 if not procedure.has_token or self.closed.is_set():
                     return
                 spec = procedure.spec
+                if procedure.capture_digest:
+                    from .source_capture import verify_capture
+                    verify_capture(spec.project, procedure.capture_digest)
                 environment = clean_environment()
                 environment['OPENBEXI_SESSION_WORKER'] = __import__('json').dumps({
                     'url': self.worker_url, 'id': procedure.id, 'token': procedure.secret,
@@ -249,16 +389,11 @@ class Session:
                 command = [str(spec.interpreter), '-I', '-B', '-u', '-X', 'utf8',
                            str(Path(__file__).with_name('session_worker.py')),
                            str(spec.project), str(spec.script), *spec.arguments]
-                process = subprocess.Popen(command, cwd=spec.project, env=environment,
+                process, procedure.owner = start_owned_process(command, cwd=spec.project, env=environment,
                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     start_new_session=os.name != 'nt',
                     creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
                 procedure.process = process
-                try:
-                    procedure.owner = ProcessTree(process.pid)
-                except BaseException:
-                    process.kill()
-                    raise
                 self.event('started', procedure=procedure.id, pid=process.pid)
             writer = threading.Thread(target=self._input_pump, args=(procedure,), daemon=True)
             writer.start()
@@ -278,6 +413,10 @@ class Session:
             with self.lock:
                 procedure.exit_code = code
                 procedure.status = 'CANCELLED' if procedure.cancelled else 'COMPLETED' if code == 0 else 'FAILED'
+                if self.store and (code != 0 or procedure.cancelled):
+                    # Arbitrary Python may affect external systems. Abnormal
+                    # termination supplies no proof that those effects settled.
+                    procedure.uncertain = True
         except BaseException as error:
             with self.lock:
                 procedure.error, procedure.status = str(error), 'FAILED'
@@ -302,6 +441,8 @@ class Session:
                 # A grant cancelled before process creation stays resumable.
                 if procedure.process is not None or procedure.status == 'FAILED':
                     procedure.has_token, procedure.wants_run = False, False
+                    if procedure.uncertain:
+                        procedure.status, procedure.reason = 'RECOVERY_REQUIRED', 'UNCERTAIN_EFFECTS'
                     self.event('finished', procedure=procedure.id, status=procedure.status, exit_code=procedure.exit_code)
                 self._expire()
                 self._dispatch()
@@ -327,6 +468,8 @@ class Session:
             self.event('input_closed', procedure=procedure.id)
 
     def _pause(self, procedure, reason='USER_PAUSED'):
+        if procedure.status == 'RECOVERY_REQUIRED':
+            return
         procedure.wants_run, procedure.reason = False, reason
         if procedure.status in TERMINAL or procedure.status == 'STOPPING':
             return
@@ -344,6 +487,8 @@ class Session:
                 raise SessionError('Procedure does not exist', 404)
             if action not in {'pause', 'resume', 'stop'}:
                 raise SessionError('Unknown procedure action', 400)
+            if any(p.status == 'RECOVERY_REQUIRED' or p.uncertain for p in selected):
+                raise SessionError('Recovery hold requires offline shutdown and effect reconciliation')
             if action == 'resume' and any(p.status not in TERMINAL and p.status != 'PAUSED' for p in selected):
                 raise SessionError('Wait for every selected procedure to confirm PAUSED before resuming')
             for procedure in selected:
@@ -353,6 +498,7 @@ class Session:
                     self._pause(procedure)
                 elif action == 'resume':
                     procedure.wants_run, procedure.reason = True, 'WAITING_TOKEN'
+                    self.event('resume_requested', procedure=procedure.id, client=client['id'], epoch=epoch)
                 else:
                     procedure.cancelled, procedure.wants_run = True, False
                     if procedure.process:
@@ -361,7 +507,7 @@ class Session:
                             procedure.owner.close()
                     else:
                         procedure.status, procedure.has_token = 'CANCELLED', False
-                    self.event('stop_requested', procedure=procedure.id)
+                    self.event('stop_requested', procedure=procedure.id, client=client['id'], epoch=epoch)
             self._dispatch()
             return [p.public() for p in selected]
 
@@ -375,12 +521,16 @@ class Session:
                 raise SessionError('Input exceeds its bound', 400)
             if procedure.input_closed:
                 raise SessionError('Procedure input is closed')
+            if procedure.input_queue.full():
+                raise SessionError('Procedure input queue is full; wait before sending more')
+            if text is None:
+                procedure.input_closed = True
+            self.event('input_submitted', procedure=procedure.id, client=client['id'], epoch=epoch,
+                       eof=text is None, bytes=0 if text is None else len(text.encode('utf-8')))
             try:
                 procedure.input_queue.put_nowait(None if text is None else (text + '\n').encode('utf-8'))
             except queue.Full as error:
                 raise SessionError('Procedure input queue is full; wait before sending more') from error
-            if text is None:
-                procedure.input_closed = True
             return {'accepted': True}
 
     def checkpoint(self, body):
@@ -432,6 +582,9 @@ class Session:
                 raise SessionError('Invalid event cursor', 400)
             controller = next((c for c in self.clients.values() if c['id'] == self.controller), None)
             return {'session': self.id, 'mode': 'Development', 'project': str(self.project),
+                    'durable': self.store is not None,
+                    'storage_healthy': not self.storage_failed,
+                    'execution_approved': False,
                     'max_parallel': self.max_parallel, 'controller': controller,
                     'epoch': self.epoch, 'lease_remaining': max(0, self.deadline-time.monotonic()) if controller else 0,
                     'clients': list(self.clients.values()), 'procedures': [p.public() for p in self.procedures.values()],
@@ -450,7 +603,17 @@ class Session:
                 procedure.cancelled = True
                 if procedure.owner:
                     procedure.owner.close()
+                elif procedure.status not in TERMINAL and procedure.status != 'RECOVERY_REQUIRED':
+                    procedure.wants_run, procedure.has_token = False, False
+                    procedure.status, procedure.reason = 'PAUSED', 'SERVICE_STOPPED'
             threads = [p.thread for p in self.procedures.values() if p.thread]
         for thread in threads:
             thread.join(timeout=6)
         self.housekeeper.join(timeout=2)
+        if any(thread.is_alive() for thread in threads):
+            raise RuntimeError('Worker cleanup is unconfirmed; durable service ownership is retained')
+        if self.store and self.store.db is not None:
+            with self.lock:
+                if not self.storage_failed:
+                    self.event('service_stopped', epoch=self.epoch)
+                self.store.close()

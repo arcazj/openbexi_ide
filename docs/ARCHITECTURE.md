@@ -32,7 +32,8 @@ Execution slots are separate from controller ownership. The server grants at mos
 project-relative procedure cannot have two active instances in a session. Paths
 resolve inside the opened project, source SHA-256 is checked on worker startup,
 and the selected interpreter must be CPython 3.13. This is mutable Development;
-dependency capture and approved immutable Execution bundles are later work.
+the optional durable profile captures committed Git trees and their local
+dependencies. Approved immutable Execution bundles and isolation remain later work.
 
 Workers use isolated interpreters, clean Python environment variables, owned
 process trees, explicit project paths and UTF-8 streams. Windows Job ownership
@@ -50,8 +51,13 @@ UTF-8 decoding; 2,048 bounded events are retained and cursor gaps are reported.
 Input is delivered by a bounded queue outside the control lock, so a script that
 does not read stdin cannot block controller renewal or Stop. Active procedures
 are capped at 128; completed procedure records are also bounded.
-Live stacks and credentials are memory-only: a server restart ends its workers and
-starts a new session identity. Durable recovery is not claimed in v0.1.
+Live stacks and credentials are memory-only. The default ephemeral service starts
+a new session identity after restart. The optional durable profile preserves its
+session identity, event cursor, logical reservations, procedure fences and captured
+source identities. It revokes credentials and restores started work only as held
+recovery records, never as automatically replayed processes. See
+[durable Development](DURABLE_SERVICE.md) for its transaction, TLS, recovery and
+offline reconciliation boundaries and the remaining v0.3 gates.
 
 SPELL is selected explicitly with `--language spell`, checked in the worker
 interpreter and activated inside that worker. Procedures still import SPELL

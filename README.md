@@ -108,8 +108,11 @@ it returns or the controller chooses Stop. A paused procedure can resume from
 its live Python stack; a completed or stopped procedure starts anew on submission.
 The same logical file cannot run twice concurrently in one session.
 
-The session service binds to loopback. Remote developers can connect through an
-authenticated tunnel; direct LAN/TLS identity integration is a later milestone.
+The default session service binds to loopback. An opt-in
+[durable Development service](docs/DURABLE_SERVICE.md) now adds committed Git
+captures, crash holds and direct remote access with explicit mutual TLS identities.
+The durable profile currently admits Python only; native shared SPELL and
+approved Execution remain release gates.
 Connection files contain private credentials and are excluded from Git. Give a
 monitor only the monitor invitation, not the server file containing both invites.
 
@@ -126,8 +129,9 @@ python -m pytest tests -q
 
 Local Development executes with the server user's OS permissions. These sessions
 are not the approved operational Execution service. Monitoring is read-only;
-operational release approvals, durable recovery and uncertain external effects
-remain explicit future gates. See [architecture](docs/ARCHITECTURE.md),
+operational release approvals, isolation and fine-grained external-effect receipts
+remain explicit future gates. Durable restart/reconciliation is available in the
+bounded profile described above. See [architecture](docs/ARCHITECTURE.md),
 [roadmap](ROADMAP.md), [master prompt](openbexi_ide_master_prompt.md) and
 [migration](docs/MIGRATION.md). The v0.2 test scope and remaining gates are in
 [qualification](docs/QUALIFICATION.md).
