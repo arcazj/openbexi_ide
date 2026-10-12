@@ -70,8 +70,17 @@ partial milestone; IDE v0.3 and plugin v0.4–v0.6 remain open. Do not repeat th
 bounded release authority/container implementation or infer operational DSS
 approval from its synthetic offline qualification approvals.
 
+The [native shared Development milestone](NATIVE_SHARED_SERVICE.md) now connects
+the original native host through a separate installed provider. Its source,
+image, wheel, Qt and fresh-install evidence is in
+[NATIVE_SHARED_QUALIFICATION.json](NATIVE_SHARED_QUALIFICATION.json). It adds
+captured native source/image bindings, confirmed whole-container pause, native
+prompts/results, descendant shutdown checks and owned-container recovery without
+replay. The optional provider is `openbexi-spell-shared==0.4.0.dev1`; the accepted
+local host image/wheel 0.3.0 remain unchanged. This is a tested partial milestone.
+
 Finish and qualify the neutral IDE's durable collaborative service by extending
-the bounded Execution profile to native shared runtime and operational effects.
+the bounded Execution profile to approved native runtime and operational effects.
 Retain the implemented identity/TLS, revocation, bounded durable events, captured
 Git sources, crash recovery and audited controller handoff. Preserve one fenced, leased
 controller, configurable execution slots, logical-procedure admission across
@@ -81,8 +90,9 @@ Inspect the preserved legacy `backend/procedure_identity.py`,
 `backend/execution_locks.py`, `backend/executor_release.py` and their tests before
 migrating their reusable rules and dependencies. Keep SPELL imports and domain
 services out of the neutral IDE core. The default ephemeral shared worker still
-uses the bounded v0.1 SPELL adapter; durable shared SPELL is explicitly rejected
-pending native integration. Local native host acceptance does not upgrade either.
+uses the bounded v0.1 SPELL adapter; durable shared SPELL now requires the optional
+native shared provider and rejects missing providers rather than falling back.
+Native shared debugger inspection and approved native Execution remain open.
 
 Then implement plugin v0.4 using the original registry, factory, driver manager,
 interfaces and `SPELLDriver.proto`, bridged explicitly to the existing DSS

@@ -11,6 +11,11 @@ The desktop and CLI now share the same Development session service. The Session
 tab shows developers, controller ownership, serial/parallel queues, real live
 Python stacks, bounded locals and per-procedure output.
 
+Durable sessions also support [native shared SPELL Development](docs/NATIVE_SHARED_SERVICE.md)
+through an optional provider: captured Git sources, whole-container pause,
+fenced handoff, native prompts/results and restart holds. Operational native
+Execution and DSS integration remain release gates.
+
 ## Install and open
 
 For a complete local Docker test desktop, run this from the repository root with

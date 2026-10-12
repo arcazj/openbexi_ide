@@ -3,7 +3,8 @@
 This is a tested prerequisite milestone for IDE v0.3, not acceptance of that
 release. IDE v0.3 and plugin v0.4–v0.6 remain open. The default loopback v0.2
 service and its bounded SPELL adapter are still available. Durable sessions
-currently admit Python only; they reject shared SPELL explicitly.
+admit Python and, with the separately installed provider, original
+[native shared SPELL Development](NATIVE_SHARED_SERVICE.md).
 
 The subsequent [offline Python Execution profile](EXECUTION_SERVICE.md) adds
 image-bound runtime/source approval and Linux container isolation. This document
@@ -203,8 +204,11 @@ warnings treated as errors (zero failures, errors or skips). The final wheel
 also passes all seven installed core checks in a separate fresh environment.
 These results include the existing desktop/runtime/debugger/session regressions.
 
-IDE v0.3 remains open for operational external-effect receipts, native shared
-runtime integration and full interpreter/third-party supply-chain provenance.
+IDE v0.3 remains open for operational external-effect receipts, approved native
+Execution and full interpreter/third-party supply-chain provenance. Native shared
+Development is now qualified separately in
+[NATIVE_SHARED_SERVICE.md](NATIVE_SHARED_SERVICE.md); shared native debugger
+inspection and operational effects remain open.
 Approved immutable release authorization and container isolation are now
 qualified separately for the bounded offline Python Execution profile linked above.
 This milestone is qualified on Windows x64 / CPython 3.13 only. POSIX process

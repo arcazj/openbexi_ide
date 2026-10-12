@@ -77,3 +77,15 @@ interpreter and activated inside that worker. Procedures still import SPELL
 symbols explicitly. The plugin owns DSS/driver services; the IDE core owns no
 satellite concepts. The first plugin profile is bounded local testing, not full
 legacy SPELL language or JetBrains host qualification.
+
+Durable native Development uses a separate installed
+`openbexi.shared_backends.v1` provider. Its opaque runtime binding is persisted
+with the captured procedure and participates in version identity. The neutral
+service owns grants and calls the provider only at its lifecycle boundary; native
+workers cannot report Python checkpoint quiescence. A provider must leave user
+code paused at startup and confirm quiescence before Pause returns. The SPELL
+provider implements that contract with the original native DAP host in a private
+Docker container and the whole-container freezer. Native stacks/debugger requests
+are not exposed by this contract. Ordered terminal receipts additionally require
+that native descendants have exited; abnormal completion retains a hold. See
+[native shared service](NATIVE_SHARED_SERVICE.md) for limits and evidence.

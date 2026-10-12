@@ -48,6 +48,14 @@ container recovery. Its real-container, Qt and installed-wheel evidence is in
 bounded offline Python approval/isolation profile only. Native shared SPELL,
 operational effect receipts and full runtime supply-chain provenance remain open.
 
+The [native shared Development milestone](docs/NATIVE_SHARED_SERVICE.md) now
+connects the original native host through an optional installed provider. It
+retains captured source/image bindings, verifies whole-container pause before
+slot reuse, supports prompts/results and fences restart without replay. This
+completes the bounded native shared Development slice; shared native debugger
+inspection, approved native Execution, original DSS effects and full provenance
+remain open. See [its evidence](docs/NATIVE_SHARED_QUALIFICATION.json).
+
 ## Later — plugin and product acceptance
 
 The optional local runtime extension contract is implemented and covered by 46

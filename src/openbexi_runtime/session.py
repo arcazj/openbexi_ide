@@ -38,6 +38,7 @@ class Procedure:
     version: str | None = None
     capture_digest: str | None = None
     release: str | None = None
+    backend: dict | None = None
     channel: object | None = None
     fence: int = 0
     uncertain: bool = False
@@ -64,6 +65,7 @@ class Procedure:
                 'definition_id': self.definition, 'version_id': self.version,
                 'capture_sha256': self.capture_digest, 'procedure_fence': self.fence,
                 'release_id': self.release,
+                'backend': self.backend,
                 'uncertain_effects': self.uncertain,
                 'pause_reason': self.reason, 'has_token': self.has_token,
                 'pid': None if self.process is None else self.process.pid,
@@ -154,7 +156,7 @@ class Session:
                 'sequence': sequence, 'epoch': self.epoch, 'aliases': self.aliases, 'fences': self.fences,
                 'procedures': [{**{k: v for k, v in p.public().items() if k != 'threads'}, 'capture': str(p.spec.project),
                                 'arguments': list(p.spec.arguments),
-                                'launched': p.process is not None or p.status in {'STARTING', 'RECOVERY_REQUIRED'}}
+                                'launched': p.process is not None or p.owner is not None or p.status in {'STARTING', 'RECOVERY_REQUIRED'}}
                                for p in self.procedures.values()]}
 
     def _restore(self):
@@ -174,7 +176,7 @@ class Session:
                           tuple(row['arguments'])), row['language'], row['source_sha256'],
                           definition=row['definition_id'], version=row['version_id'],
                           capture_digest=row['capture_sha256'], fence=row['procedure_fence'],
-                          release=row.get('release_id'))
+                          release=row.get('release_id'), backend=row.get('backend'))
             p.status, p.exit_code, p.error = row['status'], row['exit_code'], row['error']
             p.wants_run = False
             p.uncertain = row.get('uncertain_effects', False)
@@ -183,6 +185,9 @@ class Session:
                     if p.release:
                         from .execution_container import recover_container
                         recover_container(self.id, p.id)
+                    elif p.backend is not None:
+                        from .shared_backends import load_backend
+                        load_backend(p.language).recover(self.id, p.id, p.backend)
                     p.status, p.reason, p.has_token, p.uncertain = 'RECOVERY_REQUIRED', 'UNCONFIRMED_SHUTDOWN', True, True
                 else:
                     p.status, p.reason = 'PAUSED', 'SERVICE_RESTARTED'
@@ -339,13 +344,15 @@ class Session:
             logical = spec.script.relative_to(self.project).as_posix()
         captured = None
         released = None
+        backend = None
         if self.execution_release:
             with self.lock:
                 released = self.authority.require(self.execution_release)
             captured = self.project, released['source_digest'], released['source']
         elif self.store:
             if language != 'python':
-                raise SessionError('Durable shared SPELL requires the qualified native driver migration', 400)
+                from .shared_backends import bind_backend
+                backend = bind_backend(language)
             from .source_capture import capture
             captured = capture(self.project, logical, self.store.directory)
         elif language == 'spell':
@@ -362,7 +369,7 @@ class Session:
                     del self.procedures[identifier]
             procedure = Procedure(uuid.uuid4().hex, logical, spec, language,
                                   captured[2]['files'][logical]['sha256'] if captured else
-                                  hashlib.sha256(spec.script.read_bytes()).hexdigest())
+                                  hashlib.sha256(spec.script.read_bytes()).hexdigest(), backend=backend)
             if captured:
                 from .procedure_identity import definition_id, version_id
                 root, digest, manifest = captured
@@ -384,7 +391,8 @@ class Session:
                 self.fences[identity] = self.fences.get(identity, 0) + 1
                 procedure.definition, procedure.fence = identity, self.fences[identity]
                 procedure.capture_digest = digest
-                procedure.version = version_id(identity, procedure.source_hash, 'python/3.13', digest)
+                procedure.version = version_id(identity, procedure.source_hash,
+                    {'provider': language, 'binding': backend} if backend is not None else 'python/3.13', digest)
                 if released:
                     procedure.release, procedure.version = self.execution_release, released['procedures'][logical]['version']
             self.procedures[procedure.id] = procedure
@@ -411,6 +419,9 @@ class Session:
                     procedure.thread.start()
 
     def _execute(self, procedure):
+        if procedure.backend is not None:
+            from .shared_backends import execute
+            return execute(self, procedure)
         pumps = []
         try:
             with self.lock:
@@ -548,7 +559,7 @@ class Session:
         procedure.wants_run, procedure.reason = False, reason
         if procedure.status in TERMINAL or procedure.status == 'STOPPING':
             return
-        if procedure.process is None:
+        if procedure.process is None and procedure.owner is None:
             procedure.has_token, procedure.status = False, 'PAUSED'
         elif procedure.has_token:
             procedure.status = 'PAUSING'
@@ -576,7 +587,7 @@ class Session:
                     self.event('resume_requested', procedure=procedure.id, client=client['id'], epoch=epoch)
                 else:
                     procedure.cancelled, procedure.wants_run = True, False
-                    if procedure.process:
+                    if procedure.process or procedure.owner:
                         procedure.status = 'STOPPING'
                         if procedure.owner:
                             procedure.owner.close()
@@ -614,6 +625,8 @@ class Session:
             token = body.get('token')
             if not procedure or not isinstance(token, str) or not secrets.compare_digest(token, procedure.secret):
                 raise SessionError('Worker credential rejected', 403)
+            if procedure.backend is not None:
+                raise SessionError('Plugin workers cannot use Python checkpoints', 403)
             if bool(procedure.release) != isolated:
                 raise SessionError('Worker transport does not match its execution boundary', 403)
             self._expire()
