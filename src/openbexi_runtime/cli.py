@@ -93,6 +93,7 @@ def parser():
     server.add_argument('--dss-url')
     server.add_argument('--info', default='.session/server.json')
     server.add_argument('--state-directory', help='Durable authority directory; requires committed Git sources')
+    server.add_argument('--execution-release', help='Approved release SHA-256; isolated offline Python Execution')
     server.add_argument('--tls-cert')
     server.add_argument('--tls-key')
     server.add_argument('--client-ca')
@@ -111,6 +112,21 @@ def parser():
     reconcile = commands.add_parser('reconcile', help='Offline maintenance after verifying worker shutdown and external effects')
     reconcile.add_argument('--state-directory', required=True)
     reconcile.add_argument('--receipt', required=True, help='Identity-bound JSON with shutdown and effect settlement evidence')
+    prepare = commands.add_parser('release-prepare', help='Build an immutable Python release without approving it')
+    prepare.add_argument('script')
+    prepare.add_argument('--project', required=True)
+    prepare.add_argument('--runtime-image', required=True, help='Exact local Linux amd64 Docker image ID')
+    prepare.add_argument('--output', required=True, help='New directory for retained source, recipe and manifest')
+    prepare.add_argument('--procedure', action='append', default=[], help='Additional explicitly released Python procedure')
+    approve = commands.add_parser('release-approve', help='Offline approval of reviewed source and runtime')
+    approve.add_argument('--manifest', required=True)
+    approve.add_argument('--expected-release', required=True, help='Reviewed manifest SHA-256')
+    revoke = commands.add_parser('release-revoke', help='Offline revocation; queued work cannot bypass it')
+    revoke.add_argument('--release', required=True)
+    for command in (approve, revoke):
+        command.add_argument('--state-directory', required=True)
+        command.add_argument('--actor', required=True)
+        command.add_argument('--evidence', required=True, help='Reference to retained review or revocation evidence')
     for name in ('claim', 'renew', 'release', 'disconnect', 'status', 'stack'):
         commands.add_parser(name)
     configure = commands.add_parser('configure', help='Change the controller-owned execution slot limit')
@@ -175,7 +191,8 @@ def serve(args):
         tls = server_context(args.tls_cert, args.tls_key, args.client_ca)
         identities = CertificateIdentities(args.identities)
     session = Session(Path(args.project), max_parallel=args.max_parallel, lease_seconds=args.lease_seconds,
-                      interpreter=Path(args.python), dss_url=args.dss_url, state_directory=args.state_directory)
+                      interpreter=Path(args.python), dss_url=args.dss_url, state_directory=args.state_directory,
+                      execution_release=args.execution_release)
     server = worker_server = worker_thread = None
     try:
         if tls:
@@ -214,6 +231,28 @@ def main(argv=None):
             return run_local(args)
         if args.command == 'serve':
             return serve(args)
+        if args.command == 'release-prepare':
+            from .execution_release import prepare
+            emit(prepare(args.project, args.script, args.runtime_image, args.output,
+                         additional_procedures=args.procedure))
+            return 0
+        if args.command in {'release-approve', 'release-revoke'}:
+            from .execution_release import ReleaseAuthority, read_manifest, digest
+            from .session_store import SessionStore
+            store = SessionStore(args.state_directory)
+            try:
+                authority = ReleaseAuthority(store)
+                if args.command == 'release-approve':
+                    manifest = read_manifest(args.manifest)
+                    if digest(manifest) != args.expected_release:
+                        raise ValueError('Reviewed release identity differs from the supplied manifest')
+                else:
+                    manifest = authority.require(args.release)
+                emit(authority.decide(manifest, approved=args.command == 'release-approve',
+                                      actor=args.actor, evidence=args.evidence))
+            finally:
+                store.close()
+            return 0
         if args.command == 'reconcile':
             from .session_store import SessionStore
             receipt = Path(args.receipt)

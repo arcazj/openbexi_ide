@@ -61,8 +61,17 @@ release. The package/release version remains 0.2.0 and no new release tag was
 created. Continue from the explicit remaining gates in that document; do not
 repeat the completed store/TLS/capture implementation or infer Execution approval.
 
-Finish and qualify the neutral IDE's durable collaborative service, including
-approved release authorization, Execution isolation and native shared integration.
+An additional [offline Python Execution profile](EXECUTION_SERVICE.md) now
+implements immutable source/runtime images, offline release approval/revocation,
+isolated Linux container workers, private pipe control, read-only Execution
+editors and recovery without replay. Its exact evidence is recorded in
+[EXECUTION_QUALIFICATION.json](EXECUTION_QUALIFICATION.json). It is a tested
+partial milestone; IDE v0.3 and plugin v0.4–v0.6 remain open. Do not repeat this
+bounded release authority/container implementation or infer operational DSS
+approval from its synthetic offline qualification approvals.
+
+Finish and qualify the neutral IDE's durable collaborative service by extending
+the bounded Execution profile to native shared runtime and operational effects.
 Retain the implemented identity/TLS, revocation, bounded durable events, captured
 Git sources, crash recovery and audited controller handoff. Preserve one fenced, leased
 controller, configurable execution slots, logical-procedure admission across

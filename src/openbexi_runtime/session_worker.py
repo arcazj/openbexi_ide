@@ -12,7 +12,7 @@ import time
 from urllib.request import Request, urlopen
 
 
-def main():
+def main(*, pipe_report=None, infrastructure=()):
     if not sys.flags.isolated:
         raise RuntimeError('Session workers require -I')
     project, script = (Path(p).resolve() for p in sys.argv[1:3])
@@ -63,13 +63,15 @@ def main():
         # A library-created Python thread may have no project frame (for
         # example a Timer calling a builtin). It still owns execution and
         # must finish or acknowledge a traced pause before its slot is reused.
-        return set(sys._current_frames()) - {sampler_identity[0]}
+        return set(sys._current_frames()) - {sampler_identity[0]} - set(infrastructure)
 
     def report(frame, identifier, quiescent=False, bootstrap=False):
         body = {'id': config['id'], 'token': config['token'], 'pid': os.getpid(), 'quiescent': quiescent, 'bootstrap': bootstrap,
                 'active_threads': [str(i) for i in active_threads()],
                 'thread': {'id': str(identifier), 'name': next((t.name for t in threading.enumerate() if t.ident == identifier), 'Python thread'),
                            'stack': snapshot(frame), 'paused': identifier in paused}}
+        if pipe_report is not None:
+            return pipe_report(body)
         request = Request(config['url'] + '/worker/checkpoint', data=json.dumps(body).encode('utf-8'),
                           headers={'Content-Type': 'application/json'})
         try:
@@ -126,7 +128,7 @@ def main():
         while True:
             time.sleep(0.15)
             for identifier, frame in sys._current_frames().items():
-                if identifier == sampler_identity[0]:
+                if identifier == sampler_identity[0] or identifier in infrastructure:
                     continue
                 with lock:
                     quiescent = active_threads().issubset(paused)

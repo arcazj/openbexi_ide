@@ -202,7 +202,8 @@ class SessionPanel(QWidget):
         elif not client.healthy:
             text = 'Session unavailable · execution controls are disabled.'
         else:
-            mode = 'Monitoring (read-only)' if client.identity.get('role') == 'monitor' else 'Development'
+            mode = ('Monitoring (read-only)' if client.identity.get('role') == 'monitor'
+                    else client.snapshot.get('mode', 'Development'))
             occupied = sum(p['has_token'] for p in client.snapshot.get('procedures', []))
             text = f"{mode} · {client.url} · Controller: {owner.get('name', 'unclaimed')} · {occupied}/{client.snapshot.get('max_parallel', 1)} slots"
         self.status.setText(text)

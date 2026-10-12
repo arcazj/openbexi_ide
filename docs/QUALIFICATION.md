@@ -55,3 +55,9 @@ until `openbexi claim`. The active session permits two parallel procedures.
 The initial release does not claim durable recovery, direct LAN/TLS identity,
 arbitrary native/subprocess suspension, shared desktop debugger sessions, full
 SPELL compatibility or actual JetBrains plugin acceptance. Each has a roadmap gate.
+
+Subsequent prerequisites have separate, source-bound acceptance records:
+[durable Development](DURABLE_QUALIFICATION.json),
+[Docker test lab](DOCKER_QUALIFICATION.json), and
+[offline Python Execution](EXECUTION_QUALIFICATION.json). Their bounded scope
+does not advance the package version or complete IDE v0.3.

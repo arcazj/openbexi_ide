@@ -127,8 +127,10 @@ The same logical file cannot run twice concurrently in one session.
 The default session service binds to loopback. An opt-in
 [durable Development service](docs/DURABLE_SERVICE.md) now adds committed Git
 captures, crash holds and direct remote access with explicit mutual TLS identities.
-The durable profile currently admits Python only; native shared SPELL and
-approved Execution remain release gates.
+Durable sessions admit Python only. An opt-in
+[approved offline Python Execution profile](docs/EXECUTION_SERVICE.md) runs
+immutable source/runtime images with container isolation and offline release
+approval. Native shared SPELL and operational external effects remain release gates.
 Connection files contain private credentials and are excluded from Git. Give a
 monitor only the monitor invitation, not the server file containing both invites.
 
@@ -145,9 +147,10 @@ python -m pytest tests -q
 
 Local Development executes with the server user's OS permissions. These sessions
 are not the approved operational Execution service. Monitoring is read-only;
-operational release approvals, isolation and fine-grained external-effect receipts
-remain explicit future gates. Durable restart/reconciliation is available in the
-bounded profile described above. See [architecture](docs/ARCHITECTURE.md),
+operational driver integration and fine-grained external-effect receipts remain
+explicit future gates. Approval and isolation are qualified only for the offline
+Python profile above. Durable restart/reconciliation is available in the
+bounded profiles described above. See [architecture](docs/ARCHITECTURE.md),
 [roadmap](ROADMAP.md), [master prompt](openbexi_ide_master_prompt.md) and
 [migration](docs/MIGRATION.md). The v0.2 test scope and remaining gates are in
 [qualification](docs/QUALIFICATION.md).

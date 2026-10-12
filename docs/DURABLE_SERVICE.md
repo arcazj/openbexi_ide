@@ -5,6 +5,10 @@ release. IDE v0.3 and plugin v0.4–v0.6 remain open. The default loopback v0.2
 service and its bounded SPELL adapter are still available. Durable sessions
 currently admit Python only; they reject shared SPELL explicitly.
 
+The subsequent [offline Python Execution profile](EXECUTION_SERVICE.md) adds
+image-bound runtime/source approval and Linux container isolation. This document
+and its original qualification manifest describe the earlier Development scope.
+
 ## Run a durable session
 
 Use a dedicated service directory and a committed Git project:
@@ -199,9 +203,10 @@ warnings treated as errors (zero failures, errors or skips). The final wheel
 also passes all seven installed core checks in a separate fresh environment.
 These results include the existing desktop/runtime/debugger/session regressions.
 
-IDE v0.3 remains open for approved immutable release authorization and qualified
-Execution isolation, complete interpreter/third-party dependency capture,
-operational external-effect receipts and native shared-runtime integration.
+IDE v0.3 remains open for operational external-effect receipts, native shared
+runtime integration and full interpreter/third-party supply-chain provenance.
+Approved immutable release authorization and container isolation are now
+qualified separately for the bounded offline Python Execution profile linked above.
 This milestone is qualified on Windows x64 / CPython 3.13 only. POSIX process
 loss/descendant cleanup and other platforms are not accepted by this evidence.
 Plugin v0.4's original DSS driver bridge, v0.5's 763-row conformance inventory

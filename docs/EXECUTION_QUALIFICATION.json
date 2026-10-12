@@ -1,0 +1,166 @@
+{
+  "schema": "openbexi.execution-prerequisite-qualification/1",
+  "qualified_utc": "2026-10-12T01:23:37.289215+00:00",
+  "profile_accepted": true,
+  "release_accepted": false,
+  "scope": "Approved offline Python Execution only; IDE v0.3 and plugin v0.4-v0.6 remain open",
+  "base_commit": "549a8fbb7cb592a892032dcb8c8ffc5e11b16844",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.15",
+  "docker": {
+    "Platform": {
+      "Name": "Docker Desktop 4.94.0 (241994)"
+    },
+    "Version": "29.8.2",
+    "ApiVersion": "1.56",
+    "MinAPIVersion": "1.40",
+    "Os": "linux",
+    "Arch": "amd64",
+    "Components": [
+      {
+        "Name": "Engine",
+        "Version": "29.8.2",
+        "Details": {
+          "ApiVersion": "1.56",
+          "Arch": "amd64",
+          "BuildTime": "Wed Sep 30 19:32:25 2026",
+          "Experimental": "false",
+          "GitCommit": "8af9fe3",
+          "GoVersion": "go1.26.8",
+          "KernelVersion": "7.0.14-linuxkit",
+          "MinAPIVersion": "1.40",
+          "Module": "github.com/moby/moby/v2",
+          "ModuleVersion": "v2.0.0+unknown",
+          "Os": "linux"
+        }
+      },
+      {
+        "Name": "containerd",
+        "Version": "v2.3.6",
+        "Details": {
+          "GitCommit": "ee2735368117d2eb259779949d5e75cdafec9761"
+        }
+      },
+      {
+        "Name": "runc",
+        "Version": "1.5.1",
+        "Details": {
+          "GitCommit": "v1.5.1-0-g8f2685a4"
+        }
+      },
+      {
+        "Name": "docker-init",
+        "Version": "0.19.0",
+        "Details": {
+          "GitCommit": "de40ad0"
+        }
+      }
+    ],
+    "GitCommit": "8af9fe3",
+    "GoVersion": "go1.26.8",
+    "KernelVersion": "7.0.14-linuxkit",
+    "BuildTime": "2026-09-30T19:32:25.000000000+00:00"
+  },
+  "runtime_image": "sha256:280f64d0d798d06691354131d292e4fddd7a227c5f03381b8d70cdae501322dd",
+  "tests": {
+    "tests": 93,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "installed_checks": [
+    "fresh non-editable core without Qt or SPELL",
+    "CLI prepare and offline approval",
+    "unapproved release denied",
+    "immutable source despite changed host dependency",
+    "non-root read-only runtime without network or host mounts",
+    "real service kill stops owned container",
+    "restart fences old credentials",
+    "uncertainty hold and paused queue without replay"
+  ],
+  "source_hash_format": "SHA-256 of UTF-8 bytes with CRLF normalized to LF",
+  "sources": {
+    "docker/Dockerfile.execution": "6b74920cb618b9d145133b259eefee1c881666eddbe3b9b366f9febaff7c5432",
+    "docs/EXECUTION_SERVICE.md": "56f94bb0d59bc1c3da10d8eec084c6eb2ca284fa4e56e8cbb951a7719949808f",
+    "NOTICE": "8d25ac93e0e41c1401a61d1e8908d695eebd0bc72aa8a442b42e75ae41397c0c",
+    "pyproject.toml": "4b0b5f2fa1114a8de69481e9369e5a0704302f9903b204b0618f01bd30904423",
+    "scripts/qualify_execution_installed.py": "86aa9da4093e7b2fdb1fcaf8b779106c0f4c4faca6585abc0dd1ab310a0cf44f",
+    "scripts/record_execution_qualification.py": "df478ab029ba80231c5c0cd1cb67d9d45ed5e654e2d07ba4c2c5086113630b25",
+    "src/openbexi_ide/__init__.py": "8632fde3fc8e279276892e8ba574045c1e3c4b998c35d56465905c0a2163c5b2",
+    "src/openbexi_ide/__main__.py": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+    "src/openbexi_ide/app.py": "80ec6f471b9737ec9912bcc366dbc2d78b65cb85cbf8069df2ea9720c7cbb2a7",
+    "src/openbexi_ide/controller.py": "2a86fd0fab3e5f0e42009d29caf2e6f9d046af7b5505607c2eb92417578d584e",
+    "src/openbexi_ide/debugger.py": "2c4a72418486d69f27b657581e3f38bdb78d8e1d2b64ba2e5c4e0c8b652678e3",
+    "src/openbexi_ide/editor.py": "74c0201acaf15e91b121e23b3c2bb7d0371f9122bc359509514727b261dbc71d",
+    "src/openbexi_ide/fonts.py": "e99274c43c6a0e04a56152cb420d3802b9ba841883d48f9dbd79b9e40bd66c82",
+    "src/openbexi_ide/session_client.py": "0881cd83dd26ef54371d2c591c1fd17b2575b436bcac76f5845ad952590ca182",
+    "src/openbexi_ide/session_panel.py": "24b8e0577f379125ebd6a688a30272ccf18a9abbec9766daf43d9277eaa151c9",
+    "src/openbexi_ide/themes.py": "1fa6f2559ac41e9f96187b60642714cce070ea81f50c45e6efa7e6aa80ac7bf8",
+    "src/openbexi_runtime/__init__.py": "2256d042148d2b6199eb77a7d8346c67296217d7d251243ac92e94393a77bada",
+    "src/openbexi_runtime/cli.py": "b592f5f56b33e8cdbe8136d149f4df998ce28735c135766cfe07b9bf9872ad24",
+    "src/openbexi_runtime/dap.py": "f6833b90e7842f0b4fb68ef1c0f8a56808a92986848b2bbcf79eccc8a6d6fc0d",
+    "src/openbexi_runtime/execution_container.py": "368df1b34e988a2f8e9a867a43d1c0e89cf4759b5a96fbc78209dfa388b2f7a0",
+    "src/openbexi_runtime/execution_release.py": "dafaddda086ebada749d3f0fc8130ee41454c36abf18a3c6f0d5f24c0aa03b5a",
+    "src/openbexi_runtime/execution_transport.py": "02ab4e8094d32bfaf2b414289151f0814d54a21b1f73726e6582420e82fe66c5",
+    "src/openbexi_runtime/interpreter_probe.py": "c87199962b6585904ca52c621f2a8c575e15fc6e9db473bc8489bd2a91a376a8",
+    "src/openbexi_runtime/languages.py": "d3c6526879f193da65245b5c97eb80e16795791fcdee2e595c69dac9d754044c",
+    "src/openbexi_runtime/launch.py": "aa254a4c0955126a80f20aaedba0865a0559728fbea6cdc32f645b59d8d902a6",
+    "src/openbexi_runtime/procedure_identity.py": "e43fbbe481fc43ff42a85d52307b0f41b1eff2f099aed7a8a63e87497225aca0",
+    "src/openbexi_runtime/processes.py": "33d279a8654adca9e90e354a5974b207f884233a98941401f4d4fd0560fabaa1",
+    "src/openbexi_runtime/session.py": "aa760ae88ab2ad325a9c1c833f5f648846c35f00eb57972955ba013bbfbec4c9",
+    "src/openbexi_runtime/session_http.py": "7e5b059cdeb6d80816a9d4634df158bb54ec508103853db3feb94e9219cc6cd3",
+    "src/openbexi_runtime/session_identity.py": "6d7e0a190d5aca9124fde9f530315e3c7f48450085a983c83831858d00eada54",
+    "src/openbexi_runtime/session_store.py": "b622e9c905a8b6c2f6b74f1203fcd571215684db45043df8fa75706f477dd83f",
+    "src/openbexi_runtime/session_worker.py": "eb7f0a3909e02792699fa6c6f17c278d0c08356b66c3e29f31cc5ab705754589",
+    "src/openbexi_runtime/source_capture.py": "3d1832886fc16ca39ab596f3a598619edf140c0cd181355ba4b1858ef5dd83a1",
+    "src/openbexi_runtime/worker.py": "feb8550adb2bad4d0525b5ca6337abbc2b7ae6a3612c6a283aa5dafb0cb50f6e",
+    "tests/conftest.py": "9859a60d2cce4aa4392839feb80dd4d0fa3a2a7b4039cdeb7ba0784e2699dda8",
+    "tests/test_backends.py": "795fe5d8a52ef4062532e36b87dcb3b910cf6e574d68dcd7e81f7ef1f706a617",
+    "tests/test_debugger.py": "760c3619e872c48ef463568c4385e544df7acf2c4fe0708f71f482dbe68d1d9d",
+    "tests/test_durable_sessions.py": "c70e78cadbb29af50a7796ab48a7fa8f56cc8ba3618927951dd402acfa60a152",
+    "tests/test_execution_release.py": "b765f9efca927aa706611a589af5f52618818f5f386d2d68b2aecc5fc50b5cd5",
+    "tests/test_execution_sessions.py": "49ae4e6fd0ef921268ba600e18b930481bdc96a467d5ad51f1886b00536542c9",
+    "tests/test_runtime.py": "bbbb8a14c0e6624d11cd5f3a1f33309d8e525ed8cf2a3d2e6e84b79379791634",
+    "tests/test_session_backpressure.py": "4c769ec826914fdd43da7fd39b6491bd3d7532ac4043fdf3914af486b3e3fa0c",
+    "tests/test_session_library_threads.py": "a2ac59da05ef8bcb7de57ee9f17f260c2e47a8183d18acea485b8ba07292acfb",
+    "tests/test_session_safe_locals.py": "279d39a5e72c89fedf93968ee5448828459f06af1627590a1b9e383050fb9d78",
+    "tests/test_session_stack_sampling.py": "23dd578963e6377178cb9174566d9ee547ad8d337f61c4fca34c03a9460c15d8",
+    "tests/test_session_tls.py": "ccfd19e066154f9a2aceeda3f4ed8659eca90f6929d5f253dd9fce962bd34b4e",
+    "tests/test_sessions.py": "223cf7e14576df00ff7c7087839b4431ef090ed9afb6945b9a77cde5bf49f6dd",
+    "tests/test_shared_ui.py": "bfd490659823723d3dd1fb4d0e038bbe3265336f205cc685b6e5cb091520ebb0",
+    "tests/test_ui.py": "c557c2d2e7f5b63dd301e06529eb69bba2664dadbe0477c99e467026e785286e"
+  },
+  "artifacts": {
+    "wheel": {
+      "path": ".qualification/execution-01/wheels-accepted-02/openbexi_ide-0.2.0-py3-none-any.whl",
+      "sha256": "15ca4bf8175f364b836cb47c23eeb62c4ff3250946134d32da5ea92beee9029f"
+    },
+    "tests": {
+      "path": ".qualification/execution-01/windows-accepted-tests.xml",
+      "sha256": "9c530f13261f957b1e85c838274ef96110c8b66ee5fa846ddeb9291ec41a51e5"
+    },
+    "installed": {
+      "path": ".qualification/execution-01/installed-accepted-02-check/result.json",
+      "sha256": "a1137ae9b497423f29f69669994e816bcb35ac2ce4c8869f0bb2240b84534326"
+    },
+    "synthetic_release_manifest": {
+      "path": ".qualification/execution-01/installed-accepted-02-check/prepared/release.json",
+      "sha256": "8dce23ef7ffa9673745b406bf0afbf93f748a24c45b76c564b1659bd2f673302"
+    }
+  },
+  "limits": [
+    "Reviewed offline Python only; no native shared SPELL or DSS endpoints",
+    "Docker daemon and administering OS account are trusted",
+    "Single durable authority; no distributed admission across independent authorities",
+    "Image freezes installed bytes; upstream provenance and reproducible builds remain open",
+    "Temporary outputs discarded; no persistent artifact export",
+    "Approval fixtures are synthetic and confer no operational authorization"
+  ],
+  "remaining_gates": [
+    "Native shared-runtime integration and operational external-effect receipts",
+    "Full runtime supply-chain provenance and operational isolation qualification",
+    "Plugin v0.4 original DSS driver/RPC integration and three-mode acceptance",
+    "Plugin v0.5 independent 763-row conformance inventory",
+    "Plugin v0.6 distribution, upgrades, reproducibility and actual-host acceptance"
+  ]
+}

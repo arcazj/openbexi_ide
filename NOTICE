@@ -9,3 +9,7 @@ Procedure identity rules retain the Apache-2.0 legacy OpenBEXI implementation's
 UUID namespace and comment metadata behavior. The durable service consciously
 migrates its admission and no-automatic-replay rules without importing the legacy
 SPELL parser, operational broker or domain services.
+
+The offline Execution release authority retains the legacy OpenBEXI rules for
+operator-provisioned immutable releases, exact source/dependency identities and
+server-side admission, without its parser, SQLAlchemy or operational DSS broker.

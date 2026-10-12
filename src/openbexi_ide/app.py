@@ -451,14 +451,16 @@ class MainWindow(QMainWindow):
         editor = self.current_editor()
         if editor:
             cursor = editor.textCursor()
-            mode = 'Monitoring' if self.session_client.active and self.session_client.identity.get('role') == 'monitor' else 'Development'
+            mode = ('Monitoring' if self.session_client.active and self.session_client.identity.get('role') == 'monitor'
+                    else self.session_client.snapshot.get('mode', 'Development') if self.session_client.active else 'Development')
             self.position_label.setText(f"{mode}    Ln {cursor.blockNumber()+1}, Col {cursor.positionInBlock()+1}")
         else:
             self.position_label.setText("Development")
 
     def save_editor(self, editor):
-        if self.session_client.active and self.session_client.identity.get('role') == 'monitor':
-            self.report_error('Monitoring connections cannot save project changes')
+        if self.session_client.active and (self.session_client.identity.get('role') == 'monitor'
+                or self.session_client.snapshot.get('mode') == 'Execution'):
+            self.report_error('Monitoring and Execution connections cannot save project changes')
             return False
         try:
             editor.save()
@@ -498,7 +500,8 @@ class MainWindow(QMainWindow):
             self.editor_stack.setCurrentIndex(0)
 
     def new_file(self):
-        if self.session_client.active and self.session_client.identity.get('role') == 'monitor':
+        if self.session_client.active and (self.session_client.identity.get('role') == 'monitor'
+                or self.session_client.snapshot.get('mode') == 'Execution'):
             return
         if not self.project or self.is_busy():
             self.statusBar().showMessage("Open a project folder first", 4000); return
@@ -577,6 +580,20 @@ class MainWindow(QMainWindow):
             if not self.session_client.can_control or not self.shared_project_matches():
                 self.report_error('Open the session folder and claim control before Run')
                 return
+            if self.session_client.snapshot.get('mode') == 'Execution':
+                import hashlib
+                logical = editor.path.relative_to(self.project).as_posix()
+                expected = self.session_client.snapshot.get('approved_sources', {}).get(logical)
+                try:
+                    raw = editor.path.read_bytes()
+                    # Git may store LF while the Windows checkout uses CRLF.
+                    # Python source decoding uses universal newlines in either.
+                    actual = {hashlib.sha256(raw).hexdigest(), hashlib.sha256(raw.replace(b'\r\n', b'\n')).hexdigest()}
+                except OSError:
+                    actual = set()
+                if not expected or expected not in actual:
+                    self.report_error('This file differs from the approved version. Open the reviewed source copy before Run.')
+                    return
             for index in range(self.tabs.count()):
                 other = self.tabs.widget(index)
                 if other.document().isModified() and not self.save_editor(other):
@@ -682,11 +699,12 @@ class MainWindow(QMainWindow):
         if self.session_client.active:
             client = self.session_client
             monitor = client.identity.get('role') == 'monitor' or client.state != 'joined'
+            read_only = monitor or client.snapshot.get('mode') == 'Execution'
             self.run_action.setEnabled(client.can_control and self.shared_project_matches() and bool(editor) and editor.path.suffix == '.py')
             self.debug_action.setEnabled(False)
             self.stop_action.setEnabled(self.session_panel.stop.isEnabled())
-            self.save_action.setEnabled(not monitor and bool(editor))
-            self.new_action.setEnabled(not monitor and self.project is not None)
+            self.save_action.setEnabled(not read_only and bool(editor))
+            self.new_action.setEnabled(not read_only and self.project is not None)
             self.interpreter_action.setEnabled(False)
             self.interpreter_button.setEnabled(False)
             self.language.setEnabled(client.can_control)
@@ -700,7 +718,7 @@ class MainWindow(QMainWindow):
             for index in range(self.tabs.count()):
                 tab = self.tabs.widget(index)
                 logical = str(tab.path.relative_to(self.project)) if self.project else ''
-                tab.setReadOnly(monitor or logical in active_paths or logical.replace('\\', '/') in active_paths)
+                tab.setReadOnly(read_only or logical in active_paths or logical.replace('\\', '/') in active_paths)
         self.send_button.setEnabled(self.input.isEnabled())
         for name, action in self.session_actions.items():
             action.setEnabled(getattr(self.session_panel, name).isEnabled())

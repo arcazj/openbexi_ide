@@ -37,6 +37,8 @@ class Procedure:
     definition: str | None = None
     version: str | None = None
     capture_digest: str | None = None
+    release: str | None = None
+    channel: object | None = None
     fence: int = 0
     uncertain: bool = False
     status: str = 'PAUSED'
@@ -61,6 +63,7 @@ class Procedure:
                 'source_sha256': self.source_hash, 'status': self.status,
                 'definition_id': self.definition, 'version_id': self.version,
                 'capture_sha256': self.capture_digest, 'procedure_fence': self.fence,
+                'release_id': self.release,
                 'uncertain_effects': self.uncertain,
                 'pause_reason': self.reason, 'has_token': self.has_token,
                 'pid': None if self.process is None else self.process.pid,
@@ -72,7 +75,8 @@ class Procedure:
 
 class Session:
     def __init__(self, project: Path, *, max_parallel=1, lease_seconds=30,
-                 interpreter=Path(sys.executable), dss_url=None, state_directory=None):
+                 interpreter=Path(sys.executable), dss_url=None, state_directory=None,
+                 execution_release=None):
         self.project = Path(project).resolve()
         if not self.project.is_dir():
             raise ValueError('Session project must exist')
@@ -92,10 +96,19 @@ class Session:
         self.store, self.aliases, self.fences = None, {}, {}
         self.storage_failed = False
         self.worker_url = None
+        self.execution_release = execution_release
+        self.authority = self.release_manifest = None
+        if execution_release and not state_directory:
+            raise ValueError('Execution requires a durable release authority')
         if state_directory is not None:
             from .session_store import SessionStore
             self.store = SessionStore(state_directory)
             try:
+                if execution_release:
+                    from .execution_release import ReleaseAuthority, image_info
+                    self.authority = ReleaseAuthority(self.store)
+                    self.release_manifest = self.authority.require(execution_release)
+                    image_info(self.release_manifest['image'])
                 self._restore()
                 self.event('service_started', epoch=self.epoch, recovered=bool(self.procedures))
             except BaseException:
@@ -136,6 +149,7 @@ class Session:
 
     def _durable_state(self, sequence):
         return {'schema': 1, 'id': self.id, 'project': str(self.project),
+                'mode': 'Execution' if self.execution_release else 'Development',
                 'interpreter': str(self.interpreter), 'max_parallel': self.max_parallel,
                 'sequence': sequence, 'epoch': self.epoch, 'aliases': self.aliases, 'fences': self.fences,
                 'procedures': [{**{k: v for k, v in p.public().items() if k != 'threads'}, 'capture': str(p.spec.project),
@@ -148,7 +162,8 @@ class Session:
         if state is None:
             return
         if (state['schema'] != 1 or state['project'] != str(self.project)
-                or state['interpreter'] != str(self.interpreter)):
+                or state['interpreter'] != str(self.interpreter)
+                or state.get('mode', 'Development') != ('Execution' if self.execution_release else 'Development')):
             raise ValueError('Durable service project or interpreter identity differs')
         self.id, self.sequence, self.epoch = state['id'], state['sequence'], state['epoch'] + 1
         self.max_parallel, self.aliases, self.fences = state['max_parallel'], state['aliases'], state['fences']
@@ -158,12 +173,16 @@ class Session:
             p = Procedure(row['id'], row['script'], LaunchSpec(root, root / row['script'], self.interpreter,
                           tuple(row['arguments'])), row['language'], row['source_sha256'],
                           definition=row['definition_id'], version=row['version_id'],
-                          capture_digest=row['capture_sha256'], fence=row['procedure_fence'])
+                          capture_digest=row['capture_sha256'], fence=row['procedure_fence'],
+                          release=row.get('release_id'))
             p.status, p.exit_code, p.error = row['status'], row['exit_code'], row['error']
             p.wants_run = False
             p.uncertain = row.get('uncertain_effects', False)
             if p.status not in TERMINAL:
                 if row['launched']:
+                    if p.release:
+                        from .execution_container import recover_container
+                        recover_container(self.id, p.id)
                     p.status, p.reason, p.has_token, p.uncertain = 'RECOVERY_REQUIRED', 'UNCONFIRMED_SHUTDOWN', True, True
                 else:
                     p.status, p.reason = 'PAUSED', 'SERVICE_RESTARTED'
@@ -307,10 +326,24 @@ class Session:
             if not isinstance(script, str) or not isinstance(arguments, (list, tuple)) or len(arguments) > 128:
                 raise SessionError('Invalid procedure arguments', 400)
             target = self.project / script
-            spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments)).validate()
+            if self.execution_release:
+                script = Path(script).as_posix()
+                target = self.project / script
+                if script not in self.release_manifest['procedures'] or language != 'python':
+                    raise SessionError('Procedure is outside the approved Python release', 400)
+                if any(not isinstance(a, str) or '\0' in a for a in arguments):
+                    raise SessionError('Invalid procedure arguments', 400)
+                spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments))
+            else:
+                spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments)).validate()
             logical = spec.script.relative_to(self.project).as_posix()
         captured = None
-        if self.store:
+        released = None
+        if self.execution_release:
+            with self.lock:
+                released = self.authority.require(self.execution_release)
+            captured = self.project, released['source_digest'], released['source']
+        elif self.store:
             if language != 'python':
                 raise SessionError('Durable shared SPELL requires the qualified native driver migration', 400)
             from .source_capture import capture
@@ -336,8 +369,11 @@ class Session:
                 procedure.spec = LaunchSpec(root, root / logical, self.interpreter, tuple(arguments))
                 procedure.source_hash = manifest['files'][logical]['sha256']
                 import tokenize
-                with tokenize.open(procedure.spec.script) as source:
-                    identity = definition_id(logical, source.read())
+                if released:
+                    identity = released['procedures'][logical]['definition']
+                else:
+                    with tokenize.open(procedure.spec.script) as source:
+                        identity = definition_id(logical, source.read())
                 bound = self.aliases.get(logical.casefold())
                 if bound is not None and bound != identity:
                     raise SessionError('Catalog alias is already bound to another procedure definition')
@@ -349,9 +385,12 @@ class Session:
                 procedure.definition, procedure.fence = identity, self.fences[identity]
                 procedure.capture_digest = digest
                 procedure.version = version_id(identity, procedure.source_hash, 'python/3.13', digest)
+                if released:
+                    procedure.release, procedure.version = self.execution_release, released['procedures'][logical]['version']
             self.procedures[procedure.id] = procedure
             self.event('queued', procedure=procedure.id, script=logical, client=client['id'], epoch=epoch,
-                       definition=procedure.definition, version=procedure.version, fence=procedure.fence)
+                       definition=procedure.definition, version=procedure.version, fence=procedure.fence,
+                       release=procedure.release)
             self._dispatch()
             return procedure.public()
 
@@ -378,7 +417,7 @@ class Session:
                 if not procedure.has_token or self.closed.is_set():
                     return
                 spec = procedure.spec
-                if procedure.capture_digest:
+                if procedure.capture_digest and not procedure.release:
                     from .source_capture import verify_capture
                     verify_capture(spec.project, procedure.capture_digest)
                 environment = clean_environment()
@@ -389,19 +428,40 @@ class Session:
                 command = [str(spec.interpreter), '-I', '-B', '-u', '-X', 'utf8',
                            str(Path(__file__).with_name('session_worker.py')),
                            str(spec.project), str(spec.script), *spec.arguments]
-                process, procedure.owner = start_owned_process(command, cwd=spec.project, env=environment,
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                    start_new_session=os.name != 'nt',
-                    creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
+                if procedure.release:
+                    from .execution_container import ContainerOwner, ContainerChannel
+                    manifest = self.authority.require(procedure.release)
+                    procedure.owner = ContainerOwner(self.id, procedure, manifest)
+                    process = procedure.owner.start()
+                else:
+                    process, procedure.owner = start_owned_process(command, cwd=spec.project, env=environment,
+                        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                        start_new_session=os.name != 'nt',
+                        creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
                 procedure.process = process
+                if procedure.release:
+                    procedure.channel = ContainerChannel(self, procedure)
+                    config = __import__('json').loads(environment['OPENBEXI_SESSION_WORKER'])
+                    config.pop('url')
+                    procedure.channel.send(config)
                 self.event('started', procedure=procedure.id, pid=process.pid)
             writer = threading.Thread(target=self._input_pump, args=(procedure,), daemon=True)
             writer.start()
             for stream, name in ((process.stdout, 'stdout'), (process.stderr, 'stderr')):
-                pump = threading.Thread(target=self._pump, args=(procedure.id, stream, name), daemon=True)
+                pump = (threading.Thread(target=procedure.channel.read, daemon=True)
+                        if procedure.channel and name == 'stdout' else
+                        threading.Thread(target=self._pump, args=(procedure.id, stream, name), daemon=True))
                 pumps.append(pump)
                 pump.start()
+            if procedure.channel:
+                heartbeat = threading.Thread(target=procedure.channel.heartbeat, daemon=True)
+                pumps.append(heartbeat)
+                heartbeat.start()
             code = process.wait()
+            if procedure.release and not procedure.owner.closed:
+                state = procedure.owner.inspect()['State']
+                if state['Running'] or state['ExitCode'] != 0:
+                    code = state['ExitCode'] or 75
             procedure.owner.close()
             try:
                 procedure.input_queue.put_nowait(None)
@@ -411,6 +471,8 @@ class Session:
             for pump in pumps:
                 pump.join(timeout=3)
             with self.lock:
+                if procedure.channel and procedure.channel.error:
+                    procedure.error, code = procedure.channel.error, 75
                 procedure.exit_code = code
                 procedure.status = 'CANCELLED' if procedure.cancelled else 'COMPLETED' if code == 0 else 'FAILED'
                 if self.store and (code != 0 or procedure.cancelled):
@@ -420,9 +482,16 @@ class Session:
         except BaseException as error:
             with self.lock:
                 procedure.error, procedure.status = str(error), 'FAILED'
+                if procedure.release and procedure.owner and procedure.owner.started:
+                    procedure.uncertain = True
         finally:
+            if procedure.channel:
+                procedure.channel.done.set()
             if procedure.owner:
-                procedure.owner.close()
+                try:
+                    procedure.owner.close()
+                except (ValueError, OSError, subprocess.SubprocessError) as error:
+                    procedure.error, procedure.uncertain = str(error), True
             if procedure.process:
                 if procedure.process.poll() is None:
                     procedure.process.kill()
@@ -460,10 +529,16 @@ class Session:
             while True:
                 chunk = procedure.input_queue.get()
                 if chunk is None:
-                    procedure.process.stdin.close()
+                    if procedure.channel:
+                        procedure.channel.send({'type': 'input', 'text': None})
+                    else:
+                        procedure.process.stdin.close()
                     return
-                procedure.process.stdin.write(chunk)
-                procedure.process.stdin.flush()
+                if procedure.channel:
+                    procedure.channel.send({'type': 'input', 'text': chunk.decode('utf-8')})
+                else:
+                    procedure.process.stdin.write(chunk)
+                    procedure.process.stdin.flush()
         except (OSError, ValueError):
             self.event('input_closed', procedure=procedure.id)
 
@@ -533,12 +608,14 @@ class Session:
                 raise SessionError('Procedure input queue is full; wait before sending more') from error
             return {'accepted': True}
 
-    def checkpoint(self, body):
+    def checkpoint(self, body, *, isolated=False):
         with self.lock:
             procedure = self.procedures.get(body.get('id'))
             token = body.get('token')
             if not procedure or not isinstance(token, str) or not secrets.compare_digest(token, procedure.secret):
                 raise SessionError('Worker credential rejected', 403)
+            if bool(procedure.release) != isolated:
+                raise SessionError('Worker transport does not match its execution boundary', 403)
             self._expire()
             worker_pid = body.get('pid')
             if type(worker_pid) is not int or worker_pid <= 0 or procedure.worker_pid not in {None, worker_pid}:
@@ -546,7 +623,7 @@ class Session:
             procedure.worker_pid = worker_pid
             if body.get('bootstrap') is True and procedure.bootstrap_pids is None:
                 procedure.bootstrap_pids = procedure.owner.process_ids() if procedure.owner else None
-                if procedure.bootstrap_pids is not None and worker_pid not in procedure.bootstrap_pids:
+                if not isolated and procedure.bootstrap_pids is not None and worker_pid not in procedure.bootstrap_pids:
                     raise SessionError('Worker is outside its owned process tree', 403)
             thread = body.get('thread')
             active = body.get('active_threads')
@@ -581,10 +658,15 @@ class Session:
             if type(after) is not int or after < 0:
                 raise SessionError('Invalid event cursor', 400)
             controller = next((c for c in self.clients.values() if c['id'] == self.controller), None)
-            return {'session': self.id, 'mode': 'Development', 'project': str(self.project),
+            return {'session': self.id, 'mode': 'Execution' if self.execution_release else 'Development', 'project': str(self.project),
                     'durable': self.store is not None,
                     'storage_healthy': not self.storage_failed,
-                    'execution_approved': False,
+                    'execution_approved': bool(self.execution_release),
+                    'release_id': self.execution_release,
+                    'execution_profile': self.release_manifest['profile'] if self.release_manifest else None,
+                    'approved_sources': ({name: self.release_manifest['source']['files'][name]['sha256']
+                                          for name in self.release_manifest['procedures']}
+                                         if self.release_manifest else {}),
                     'max_parallel': self.max_parallel, 'controller': controller,
                     'epoch': self.epoch, 'lease_remaining': max(0, self.deadline-time.monotonic()) if controller else 0,
                     'clients': list(self.clients.values()), 'procedures': [p.public() for p in self.procedures.values()],

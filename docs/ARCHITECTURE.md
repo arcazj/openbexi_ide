@@ -33,7 +33,10 @@ project-relative procedure cannot have two active instances in a session. Paths
 resolve inside the opened project, source SHA-256 is checked on worker startup,
 and the selected interpreter must be CPython 3.13. This is mutable Development;
 the optional durable profile captures committed Git trees and their local
-dependencies. Approved immutable Execution bundles and isolation remain later work.
+dependencies. The opt-in [offline Python Execution](EXECUTION_SERVICE.md) profile
+instead admits offline-approved source/runtime images and starts isolated Linux
+containers. Approval is bound to an exact image, catalog and source inventory;
+session clients have no release-authority mutation endpoint.
 
 Workers use isolated interpreters, clean Python environment variables, owned
 process trees, explicit project paths and UTF-8 streams. Windows Job ownership
@@ -58,6 +61,16 @@ source identities. It revokes credentials and restores started work only as held
 recovery records, never as automatically replayed processes. See
 [durable Development](DURABLE_SERVICE.md) for its transaction, TLS, recovery and
 offline reconciliation boundaries and the remaining v0.3 gates.
+
+Execution workers use a private framed pipe transport. OS pipes preserve Python
+and native stdout/stderr; a separate reader routes console input and checkpoint
+replies. A worker watchdog terminates on service loss. The server owns exact
+container IDs and labels, verifies their runtime configuration, and requires
+real child-process quiescence before reusing a paused slot. Source/runtime
+filesystems are read-only, networking is disabled and no host paths are mounted.
+The desktop marks Execution sources read-only and checks the selected local
+procedure hash against the approved catalog before submission. The service
+always executes the immutable image, independently of local preview files.
 
 SPELL is selected explicitly with `--language spell`, checked in the worker
 interpreter and activated inside that worker. Procedures still import SPELL

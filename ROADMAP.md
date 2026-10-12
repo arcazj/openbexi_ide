@@ -36,9 +36,17 @@ versions/contexts, leases/fencing and holds on uncertain external effects.
 The [durable Development prerequisite](docs/DURABLE_SERVICE.md) now implements
 certificate identities/TLS, revocation, bounded durable output, separate control
 audit, committed Git captures, restart holds, logical alias reservations and
-offline reconciliation. This is a partial milestone: approved Execution isolation,
+offline reconciliation. This is a partial milestone: operational Execution isolation,
 full dependency provenance and native shared-runtime/effect integration still
 gate v0.3. Plugin v0.4 must not be promoted from this prerequisite evidence.
+
+The subsequent [offline Python Execution milestone](docs/EXECUTION_SERVICE.md)
+adds image-bound source/runtime identity, offline approval/revocation, isolated
+Linux workers, private pipe control, read-only Execution editors and owned
+container recovery. Its real-container, Qt and installed-wheel evidence is in
+[Execution qualification](docs/EXECUTION_QUALIFICATION.json). This satisfies the
+bounded offline Python approval/isolation profile only. Native shared SPELL,
+operational effect receipts and full runtime supply-chain provenance remain open.
 
 ## Later — plugin and product acceptance
 

@@ -1,0 +1,3 @@
+# Bounded offline Python Execution runtime; no GUI, SPELL or external endpoints.
+FROM python:3.13.15-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+LABEL org.openbexi.scope="Python offline Execution runtime prerequisite"
