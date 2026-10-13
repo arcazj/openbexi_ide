@@ -1,4 +1,18 @@
-# openbexi_ide v0.4 release candidate
+# openbexi_ide v0.5 release candidate
+
+The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
+file, `compose.v05.yaml`. Typing a menu choice while the console output has
+focus now reaches the script input field; Send restores focus for the next
+answer. Linux shared debugging also tracks the debuggee's separate process
+group before releasing a paused execution slot.
+
+Shared Development **Debug** now uses real debugpy with shared breakpoints,
+threads, stacks and variables. The controller can evaluate, edit variables and
+step; monitors inspect cached views and read-only source copies. Durable source
+views verify the captured tree rather than displaying changed worktree files.
+**Run > Runtime Plugins** installs/removes optional local wheels in the selected
+interpreter. See [shared debugging](docs/shared-debugging.md). Shared native SPELL
+debugging is explicitly unavailable; its existing local debugger remains usable.
 
 The usability candidate adds **Ctrl+Space** Python name completion, **F12**
 project definition navigation, and **Ctrl+Shift+O** searchable project symbols.
@@ -7,7 +21,8 @@ Console history stays readable during new output; **Latest output** resumes
 following the tail. The deep Python, interactive graphics and explicitly imported
 original SPELL examples are included. See [v0.4 qualification](docs/IDE_V04_USABILITY.md).
 Live noVNC X-button/mouse-wheel verification remains open, so the final v0.4 tag
-has not been accepted. IDE v0.5/v0.6 development follows its independent roadmap.
+has not been accepted. The IDE releases follow their independent roadmap;
+candidate commits do not promote the sibling plugin's conformance releases.
 
 Continuing development after the repository split: [resume v0.4](docs/RESUME_V04.md).
 

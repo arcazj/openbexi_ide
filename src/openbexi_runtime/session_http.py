@@ -57,7 +57,7 @@ class Handler(BaseHTTPRequestHandler):
     def handle(self):
         try:
             super().handle()
-        except (ConnectionResetError, BrokenPipeError, TimeoutError):
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError, TimeoutError):
             # Worker cleanup and a disconnected monitor can close a socket
             # between accept and request parsing; this is an ordinary lifecycle.
             pass
@@ -171,7 +171,14 @@ class Handler(BaseHTTPRequestHandler):
                 elif route.path == '/handoff':
                     result = session.handoff(actor, epoch, body['target'])
                 elif route.path == '/run':
-                    result = session.submit(actor, epoch, body['script'], arguments=body.get('arguments', []), language=body.get('language', 'python'))
+                    result = session.submit(actor, epoch, body['script'], arguments=body.get('arguments', []),
+                        language=body.get('language', 'python'), debug=body.get('debug', False),
+                        stop_on_entry=body.get('stop_on_entry', True), breakpoints=body.get('breakpoints'))
+                elif route.path == '/debug':
+                    result = session.debug_request(actor, epoch, body['procedure'], body['command'],
+                        body.get('arguments'), body.get('revision'))
+                elif route.path == '/source':
+                    result = session.debug_source(body['procedure'], body['path'])
                 elif route.path in {'/pause', '/resume', '/stop'}:
                     result = session.change(actor, epoch, route.path[1:], body['procedure'])
                 elif route.path == '/input':

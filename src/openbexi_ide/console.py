@@ -1,4 +1,5 @@
 """Bounded output that lets readers stay on older text while a script runs."""
+from PySide6.QtCore import QCoreApplication, Qt
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QPlainTextEdit
 
@@ -8,6 +9,18 @@ class OutputConsole(QPlainTextEdit):
         super().__init__(parent)
         self.setReadOnly(True)
         self.setMaximumBlockCount(5000)
+        self.input_target = None
+
+    def keyPressEvent(self, event):
+        target = self.input_target
+        editing = (event.text().isprintable() and bool(event.text())
+                   or event.key() in (Qt.Key_Return, Qt.Key_Enter, Qt.Key_Backspace))
+        shortcuts = event.modifiers() & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier)
+        if target is not None and target.isEnabled() and editing and not shortcuts:
+            target.setFocus(Qt.OtherFocusReason)
+            QCoreApplication.sendEvent(target, event)
+            return
+        super().keyPressEvent(event)
 
     def show_latest(self):
         cursor = self.textCursor()

@@ -6,11 +6,11 @@ import hashlib
 from pathlib import Path
 import sys
 
-from PySide6.QtCore import QDir, QSettings, QSize, Qt, QThreadPool
+from PySide6.QtCore import QDir, QPersistentModelIndex, QSettings, QSize, Qt, QThreadPool
 from PySide6.QtGui import QAction, QColor, QFontDatabase, QIcon, QPainter, QPainterPath, QPen, QPixmap, QTextCursor
 from PySide6.QtWidgets import (
     QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFileSystemModel,
-    QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QPlainTextEdit,
+    QHBoxLayout, QInputDialog, QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QPlainTextEdit,
     QPushButton, QSizePolicy, QSplitter, QStackedWidget, QTabWidget, QToolBar,
     QTreeView, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
@@ -24,6 +24,9 @@ from .fonts import configure_fonts, fixed_font
 from .themes import THEMES, apply_theme
 from .session_client import SessionClient
 from .session_panel import JoinDialog, SessionPanel
+from .shared_debugger import SharedDebugController
+from .plugin_manager import PluginManager
+from .source_view import SourceView
 
 
 def icon(kind: str, color: str) -> QIcon:
@@ -117,9 +120,23 @@ class MainWindow(QMainWindow):
         self.debug_controller.input_requested.connect(self.show_backend_prompt)
         self.make_actions()
         self.make_workspace()
+        self.source_view = None
+        self._source_pending = None
+        self._source_latest = None
+        self.shared_debug = SharedDebugController(self.session_client, lambda: self.session_panel.selected, self)
+        self.shared_debug.stopped.connect(self.debug_stopped)
+        self.shared_debug.continued.connect(self.debug_continued)
+        self.shared_debug.stack_changed.connect(self.show_stack)
+        self.shared_debug.threads_changed.connect(self.show_threads)
+        self.shared_debug.breakpoints_verified.connect(self.show_verified_breakpoints)
+        self.shared_debug.views_changed.connect(self.shared_views_changed)
+        self.shared_debug.error.connect(self.report_error)
+        self.session_panel.selection_changed.connect(self.shared_debug.schedule_refresh)
+        self.session_client.source_result.connect(self.shared_source_received)
         self.session_client.changed.connect(self.shared_changed)
         self.make_toolbar()
         self.make_menus()
+        self.language.currentIndexChanged.connect(self.refresh_busy)
         self.position_label = QLabel("Development")
         self.position_label.setObjectName("muted")
         self.statusBar().addPermanentWidget(self.position_label)
@@ -156,11 +173,12 @@ class MainWindow(QMainWindow):
         self.eof_action = self.action("Close Script Input", self.close_input)
         self.join_action = self.action("Join Shared Session…", self.join_session)
         self.disconnect_action = self.action("Disconnect from Session", self.session_client.disconnect)
-        self.continue_action = self.action("Continue", lambda: self.debug_controller.control("continue"), "F6")
-        self.pause_action = self.action("Pause", lambda: self.debug_controller.control("pause"), "F7")
-        self.over_action = self.action("Step Over", lambda: self.debug_controller.control("next"), "F10")
-        self.into_action = self.action("Step Into", lambda: self.debug_controller.control("stepIn"), "F11")
-        self.out_action = self.action("Step Out", lambda: self.debug_controller.control("stepOut"), "Shift+F11")
+        self.plugins_action = self.action('Runtime Plugins…', self.manage_plugins)
+        self.continue_action = self.action("Continue", lambda: self.active_debugger.control("continue"), "F6")
+        self.pause_action = self.action("Pause", lambda: self.active_debugger.control("pause"), "F7")
+        self.over_action = self.action("Step Over", lambda: self.active_debugger.control("next"), "F10")
+        self.into_action = self.action("Step Into", lambda: self.active_debugger.control("stepIn"), "F11")
+        self.out_action = self.action("Step Out", lambda: self.active_debugger.control("stepOut"), "Shift+F11")
 
     def make_workspace(self):
         self.files = QFileSystemModel(self)
@@ -215,6 +233,7 @@ class MainWindow(QMainWindow):
         self.console.setFont(fixed_font())
         self.console.setPlaceholderText("Output appears here when you run a script.")
         self.input = QLineEdit(); self.input.setPlaceholderText("Send input to your running script…")
+        self.console.input_target = self.input
         self.input.returnPressed.connect(self.send_input)
         self.send_button = QPushButton("Send"); self.send_button.clicked.connect(self.send_input)
         input_row = QHBoxLayout(); input_row.addWidget(self.input); input_row.addWidget(self.send_button)
@@ -246,6 +265,8 @@ class MainWindow(QMainWindow):
         self.variables = QTreeWidget(); self.variables.setHeaderLabels(["Name", "Value", "Type"])
         self.variables.setColumnWidth(0, 150); self.variables.setColumnWidth(1, 210)
         self.variables.itemExpanded.connect(self.expand_variable)
+        self.variables.itemDoubleClicked.connect(self.edit_variable)
+        self.variables.setToolTip('Double-click a variable value to edit it while paused')
         details.addWidget(self.stack_list); details.addWidget(self.variables)
         details.setSizes([250, 650]); debug_layout.addWidget(details)
         self.expression = QLineEdit(); self.expression.setPlaceholderText("Evaluate a Python expression while paused")
@@ -318,6 +339,7 @@ class MainWindow(QMainWindow):
         for action in (self.interpreter_action, self.args_action, self.eof_action):
             run_menu.addAction(action)
         run_menu.addAction(self.action('Reload Runtime Plugins', self.discover_backends))
+        run_menu.addAction(self.plugins_action)
         view_menu = self.menuBar().addMenu("View")
         for action in (self.find_action, self.completion_action, self.definition_action, self.symbols_action, self.theme_action):
             view_menu.addAction(action)
@@ -361,6 +383,8 @@ class MainWindow(QMainWindow):
         self.session_button.setText(label if self.session_client.active else 'Local workspace')
         self.update_position()
         self.refresh_busy()
+        if self._source_pending and 'source' not in self.session_client._pending:
+            self._source_pending = None
         if self._close_requested and not self.session_client.active and not self.is_busy():
             self.close()
 
@@ -378,6 +402,59 @@ class MainWindow(QMainWindow):
     def current_editor(self):
         widget = self.tabs.currentWidget()
         return widget if isinstance(widget, CodeEditor) else None
+
+    @property
+    def active_debugger(self):
+        return self.shared_debug if self.session_client.active else self.debug_controller
+
+    def manage_plugins(self):
+        if self.is_busy() or self.session_client.active:
+            return
+        dialog = PluginManager(self.interpreter, self)
+        dialog.plugins_changed.connect(self.discover_backends)
+        dialog.exec()
+
+    def shared_views_changed(self):
+        if not self.shared_debug.paused or self.frame_id is None:
+            return
+        owner = (self.session_client.snapshot.get('controller') or {}).get('id')
+        if owner != self.session_client.identity.get('client'):
+            self.shared_debug.view_generation += 1
+            scopes = self.shared_debug.state.get('scopes', {}).get(str(self.frame_id), [])
+            self.show_scopes({'scopes': scopes})
+
+    def request_shared_source(self, frame):
+        source = frame.get('source', {}).get('path')
+        if not source or Path(source).is_absolute() or not self.shared_debug.procedure:
+            return
+        self._source_latest = (self.shared_debug.procedure['id'], self.shared_debug.state['revision'],
+                               frame['id'], source, frame.get('line'))
+        self.flush_shared_source()
+
+    def flush_shared_source(self):
+        if self._source_pending is not None or self._source_latest is None:
+            return
+        context = self._source_latest
+        if self.session_client.fetch_source(context[0], context[3]):
+            self._source_pending = context
+
+    def shared_source_received(self, result):
+        context, self._source_pending = self._source_pending, None
+        if context:
+            current = self.shared_debug.procedure or {}
+            if (context == self._source_latest and self.shared_debug.paused
+                    and current.get('id') == result['procedure'] == context[0]
+                    and self.shared_debug.state.get('revision') == context[1]
+                    and self.frame_id == context[2] and result['path'] == context[3]):
+                if self.source_view is not None:
+                    self.source_view.close()
+                self.source_view = SourceView(result, self.colors, context[4], self)
+                view = self.source_view
+                view.destroyed.connect(lambda: setattr(self, 'source_view', None)
+                                       if self.source_view is view else None)
+                self.source_view.show()
+                self._source_latest = None
+        self.flush_shared_source()
 
     def choose_project(self):
         folder = QFileDialog.getExistingDirectory(self, "Open project folder", str(self.project or Path.home()))
@@ -642,7 +719,26 @@ class MainWindow(QMainWindow):
 
     def debug_script(self):
         if self.session_client.active:
-            self.report_error('Shared sessions expose read-only live stacks. Disconnect to use local Debug.')
+            editor = self.current_editor()
+            capabilities = self.session_client.snapshot.get('debug_capabilities', {})
+            language = self.language.currentData()
+            if not (editor and self.shared_project_matches() and self.session_client.can_control):
+                self.report_error('Open the session folder and claim control before Debug')
+                return
+            if not capabilities.get(language, {}).get('available'):
+                self.report_error(capabilities.get(language, {}).get('reason') or 'Shared Debug is unavailable for this runtime')
+                return
+            for index in range(self.tabs.count()):
+                other = self.tabs.widget(index)
+                if other.document().isModified() and not self.save_editor(other):
+                    return
+            points = {self.tabs.widget(i).path.relative_to(self.project).as_posix():
+                      sorted(self.tabs.widget(i).breakpoints) for i in range(self.tabs.count())
+                      if self.tabs.widget(i).path.suffix == '.py'}
+            self.session_client.submit(editor.path.relative_to(self.project).as_posix(),
+                language=language, arguments=self.arguments, debug=True,
+                stop_on_entry=not any(points.values()), breakpoints=points)
+            self.output_tabs.setCurrentWidget(self.session_panel)
             return
         editor = self.current_editor()
         if not editor or not self.project or self.is_busy():
@@ -700,6 +796,7 @@ class MainWindow(QMainWindow):
         self.interpreter_button.setEnabled(not busy)
         self.language.setEnabled(not busy)
         self.args_action.setEnabled(not busy)
+        self.plugins_action.setEnabled(not busy and not self.session_client.active)
         self.eof_action.setEnabled(busy)
         if hasattr(self, "input"):
             input_ready = any(process.state() == process.ProcessState.Running
@@ -726,7 +823,9 @@ class MainWindow(QMainWindow):
             monitor = client.identity.get('role') == 'monitor' or client.state != 'joined'
             read_only = monitor or client.snapshot.get('mode') == 'Execution'
             self.run_action.setEnabled(client.can_control and self.shared_project_matches() and bool(editor) and editor.path.suffix == '.py')
-            self.debug_action.setEnabled(False)
+            capabilities = client.snapshot.get('debug_capabilities', {})
+            self.debug_action.setEnabled(self.run_action.isEnabled()
+                and capabilities.get(self.language.currentData(), {}).get('available', False))
             self.stop_action.setEnabled(self.session_panel.stop.isEnabled())
             self.save_action.setEnabled(not read_only and bool(editor))
             self.new_action.setEnabled(not read_only and self.project is not None)
@@ -735,6 +834,14 @@ class MainWindow(QMainWindow):
             self.language.setEnabled(client.can_control)
             self.args_action.setEnabled(client.can_control)
             selected = self.session_panel.selected or {}
+            paused = self.shared_debug.paused
+            ready = (client.can_control and paused and selected.get('status') == 'PAUSED'
+                     and self.shared_debug.thread_id is not None and bool(self.shared_debug.state.get('threads')))
+            for action in (self.continue_action, self.over_action, self.into_action, self.out_action):
+                action.setEnabled(ready)
+            self.pause_action.setEnabled(client.can_control and self.shared_debug.running and not paused)
+            self.threads.setEnabled(paused)
+            self.expression.setEnabled(ready and self.frame_id is not None)
             input_ready = client.can_control and selected.get('status') in {'RUNNING', 'PAUSING'} and not selected.get('input_closed')
             self.input.setEnabled(bool(input_ready))
             self.eof_action.setEnabled(bool(input_ready))
@@ -775,9 +882,11 @@ class MainWindow(QMainWindow):
                 selected = self.session_panel.selected
                 if selected and self.session_client.command('input', procedure=selected['id'], text=self.input.text()):
                     self.input.clear()
+                    self.input.setFocus()
                 return
             controller = self.debug_controller if self.debug_controller.running else self.run_controller
             controller.send_input(self.input.text()); self.input.clear()
+            self.input.setFocus()
 
     def close_input(self):
         if self.session_client.active:
@@ -794,10 +903,20 @@ class MainWindow(QMainWindow):
             self.vertical.setSizes([max(200, self.vertical.height() - 320), 320])
         self.eval_result.setText(f"Paused · {body.get('reason', 'breakpoint')}")
         self.refresh_busy()
-        self.statusBar().showMessage("Paused · local development")
+        self.statusBar().showMessage('Paused · shared Development' if self.session_client.active
+                                     else 'Paused · local development')
 
     def debug_continued(self):
-        self.frame_id = None; self.stack_list.clear(); self.variables.clear()
+        self.frame_id = None
+        self.stack_list.blockSignals(True)
+        self.stack_list.clear()
+        self.stack_list.blockSignals(False)
+        self.variables.blockSignals(True)
+        self.variables.clear()
+        self.variables.blockSignals(False)
+        self._source_latest = None
+        if self.source_view is not None:
+            self.source_view.close()
         for index in range(self.tabs.count()):
             self.tabs.widget(index).show_execution_line(None)
         self.eval_result.setText("Running · use Pause to inspect the current thread")
@@ -807,16 +926,19 @@ class MainWindow(QMainWindow):
         self.threads.blockSignals(True); self.threads.clear()
         for thread in threads:
             self.threads.addItem(thread.get("name", str(thread["id"])), thread["id"])
-        index = self.threads.findData(self.debug_controller.thread_id)
+        index = self.threads.findData(self.active_debugger.thread_id)
         if index >= 0: self.threads.setCurrentIndex(index)
         self.threads.blockSignals(False)
 
     def select_thread(self, _index):
         thread_id = self.threads.currentData()
         if thread_id is not None:
-            self.debug_controller.select_thread(thread_id)
+            self.active_debugger.select_thread(thread_id)
 
     def show_stack(self, frames):
+        self.frame_id = None
+        self.variables.clear()
+        self.stack_list.blockSignals(True)
         self.stack_list.clear()
         for frame in frames:
             source = frame.get("source", {})
@@ -824,19 +946,22 @@ class MainWindow(QMainWindow):
             item = QListWidgetItem(f"{frame.get('name', '<frame>')} · {filename}:{frame.get('line', '?')}")
             item.setData(Qt.UserRole, frame); item.setToolTip(source.get("path", ""))
             self.stack_list.addItem(item)
+        self.stack_list.blockSignals(False)
         if frames: self.stack_list.setCurrentRow(0)
 
     def select_frame(self, item, _previous):
-        if not item or not self.debug_controller.paused:
+        if not item or not self.active_debugger.paused:
             return
         frame = item.data(Qt.UserRole); self.frame_id = frame["id"]
-        self.debug_controller.view_generation += 1
+        self.active_debugger.view_generation += 1
         path = frame.get("source", {}).get("path")
-        if path and self.project and Path(path).resolve().is_relative_to(self.project):
+        if self.session_client.active:
+            self.request_shared_source(frame)
+        elif path and self.project and Path(path).resolve().is_relative_to(self.project):
             editor = self.open_file(Path(path))
             if editor: editor.show_execution_line(frame.get("line"))
         self.variables.clear()
-        self.debug_controller.view_request("scopes", {"frameId": self.frame_id}, self.show_scopes)
+        self.active_debugger.view_request("scopes", {"frameId": self.frame_id}, self.show_scopes)
 
     def show_scopes(self, body):
         self.variables.clear()
@@ -850,29 +975,57 @@ class MainWindow(QMainWindow):
 
     def expand_variable(self, item):
         reference = item.data(0, Qt.UserRole)
-        if not reference or not self.debug_controller.paused:
+        if not reference or not self.active_debugger.paused:
             return
         # A request belongs to a particular stopped view; stale replies are
         # rejected by the controller before touching a cleared tree item.
+        index = QPersistentModelIndex(self.variables.indexFromItem(item))
         def received(body):
+            if not index.isValid() or not self.active_debugger.paused:
+                return
+            item = self.variables.itemFromIndex(index)
+            if item is None:
+                return
             item.takeChildren()
             for variable in body.get("variables", [])[:100]:
                 child = QTreeWidgetItem([variable["name"], variable.get("value", "")[:4000], variable.get("type", "")])
                 child.setData(0, Qt.UserRole, variable.get("variablesReference", 0))
+                child.setData(0, Qt.UserRole + 1, {'reference': reference, 'name': variable['name'],
+                                                'value': variable.get('value', '')})
                 if variable.get("variablesReference"): child.addChild(QTreeWidgetItem(["Expand to inspect"]))
                 item.addChild(child)
-        self.debug_controller.view_request("variables", {"variablesReference": reference, "start": 0, "count": 100}, received)
+        self.active_debugger.view_request("variables", {"variablesReference": reference, "start": 0, "count": 100}, received)
 
     def evaluate_expression(self):
-        if self.frame_id is not None and self.debug_controller.paused and self.expression.text():
-            self.debug_controller.view_request("evaluate", {"frameId": self.frame_id,
+        if self.session_client.active and not self.session_client.can_control:
+            return
+        if self.frame_id is not None and self.active_debugger.paused and self.expression.text():
+            submitted = self.active_debugger.view_request("evaluate", {"frameId": self.frame_id,
                 "expression": self.expression.text(), "context": "watch"},
                 lambda body: self.eval_result.setText(body.get("result", "")[:4000]))
+            if self.session_client.active and submitted:
+                self.eval_result.setText('Evaluating…')
+
+    def edit_variable(self, item, column):
+        data = item.data(0, Qt.UserRole + 1)
+        if column != 1 or not data or not self.active_debugger.paused:
+            return
+        if self.session_client.active and (not self.session_client.can_control
+                or not self.shared_debug.state.get('capabilities', {}).get('supportsSetVariable')):
+            return
+        value, accepted = QInputDialog.getText(self, 'Edit variable', data['name'], text=data['value'])
+        if accepted:
+            self.active_debugger.view_request('setVariable', {'variablesReference': data['reference'],
+                'name': data['name'], 'value': value}, lambda _body: self.refresh_variable_frame())
+
+    def refresh_variable_frame(self):
+        if self.frame_id is not None and self.active_debugger.paused:
+            self.active_debugger.view_request('scopes', {'frameId': self.frame_id}, self.show_scopes)
 
     def update_breakpoints(self, editor):
         editor.verified_breakpoints.clear()
-        if self.debug_controller.running:
-            self.debug_controller.set_breakpoints(editor.path, editor.breakpoints)
+        if self.active_debugger.running:
+            self.active_debugger.set_breakpoints(editor.path, editor.breakpoints)
 
     def show_verified_breakpoints(self, result):
         for index in range(self.tabs.count()):

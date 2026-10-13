@@ -1,0 +1,30 @@
+name: openbexi-ide-v05-rc2
+
+services:
+  ide:
+    image: openbexi-ide:0.5.0rc2
+    pull_policy: never
+    platform: linux/amd64
+    init: true
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:${OPENBEXI_V05_PORT:-6086}:6080"
+    shm_size: 256m
+    mem_limit: 3g
+    pids_limit: 512
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - workspace:/workspace
+      - preferences:/home/tester
+    healthcheck:
+      test: ["CMD", "python", "-I", "/opt/test-lab/health.py"]
+      interval: 5s
+      timeout: 5s
+      start_period: 45s
+      retries: 12
+    stop_grace_period: 20s
+
+volumes:
+  workspace:
+  preferences:

@@ -57,7 +57,7 @@ if os.name == "nt":
 
 
 class ProcessTree:
-    """Keep an owned Windows Job handle or an isolated POSIX process group."""
+    """Keep an owned Windows Job handle or an isolated POSIX session."""
 
     def __init__(self, pid: int):
         if pid <= 0 or pid == os.getpid():
@@ -67,8 +67,8 @@ class ProcessTree:
         self.closed = False
         if os.name == "nt":
             self._create_windows_job(pid)
-        elif os.getpgid(pid) != pid:
-            raise RuntimeError("The child must have its own process group")
+        elif os.getsid(pid) != pid:
+            raise RuntimeError("The child must have its own process session")
 
     def _create_windows_job(self, pid):
         job = kernel.CreateJobObjectW(None, None)
@@ -95,16 +95,41 @@ class ProcessTree:
     def close(self):
         if self.closed:
             return
-        self.closed = True
         if os.name == "nt":
             if self.job and not kernel.CloseHandle(self.job):
                 raise ctypes.WinError(ctypes.get_last_error())
             self.job = None
         else:
-            try:
-                os.killpg(self.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
+            # debugpy starts the debuggee in a second group inside its launcher's
+            # session. Freeze every owned group before killing: killing only the
+            # launcher group misses the program and its subprocesses.
+            groups = set()
+            for _ in range(16):
+                identifiers = self.process_ids()
+                if identifiers is None:
+                    raise OSError('Owned process session cannot be inspected')
+                found = set()
+                for identifier in identifiers:
+                    try:
+                        if os.getsid(identifier) == self.pid:
+                            found.add(os.getpgid(identifier))
+                    except ProcessLookupError:
+                        pass
+                new = found - groups
+                if not new:
+                    break
+                for group in new:
+                    try:
+                        os.killpg(group, signal.SIGSTOP)
+                    except ProcessLookupError:
+                        pass
+                groups.update(new)
+            for group in groups:
+                try:
+                    os.killpg(group, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+        self.closed = True
 
     def active_count(self):
         """Count owned processes; unknown ownership prevents early token reuse."""
@@ -148,7 +173,7 @@ class ProcessTree:
         for entry in proc.iterdir():
             if entry.name.isdigit():
                 try:
-                    if os.getpgid(int(entry.name)) == self.pid:
+                    if os.getsid(int(entry.name)) == self.pid:
                         # An exited child can remain a zombie until its paused
                         # Python parent reaps it. It cannot execute or hold a slot.
                         state = (entry / 'stat').read_bytes().rsplit(b')', 1)[1].split()[0]

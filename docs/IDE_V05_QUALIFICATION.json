@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "project": "openbexi_ide",
+  "version": "0.5.0rc2",
+  "release_accepted": false,
+  "base_commit": "71a8120881e61ed9d50aac2c5fb49fcf51aba586",
+  "source_snapshot": ".qualification/ide-v0.5/candidate-v05rc2/source",
+  "snapshot_record": {
+    "path": ".qualification/ide-v0.5/candidate-v05rc2/snapshot.json",
+    "sha256": "54ded4bba1570ea7c2b216730441ad9993bba44911eb533172e6160ba3d069f4"
+  },
+  "wheel": {
+    "path": ".qualification/ide-v0.5/candidate-v05rc2/dist/openbexi_ide-0.5.0rc2-py3-none-any.whl",
+    "sha256": "ebff8452c700b0cd963cb13f7a60b509195ed73919173061bb5092156ddc5d12"
+  },
+  "source_overlay": {
+    "pyproject.toml": "8a1c7a3ca1b3fa4f4948f218a4e2d3e59508d507916fdc28aee6d9a8f5872da5",
+    "README.md": "f2292f21b55265ecec7f1024073559865eb6dbc519531aa1faab9748e3ccb869",
+    "ROADMAP.md": "85a8339734e21bed099d5aab8e80c74471f667e119cf4f953e6a34f8a48c011a",
+    "src/openbexi_ide/app.py": "0b6d3784aa41c629f88aa89dea49d4a1e76bc83a0c5627eefdeac671847e9b36",
+    "src/openbexi_ide/editor.py": "76c979564896aee99dca2f19dd188101b5498c70ded4991dddeb26237a0fced4",
+    "src/openbexi_ide/session_client.py": "0db390e222ce7cd3ab7fd509bc2df772f0f964fa728b5eeb64dc65575e719f81",
+    "src/openbexi_ide/shared_debugger.py": "538745a5216b07e7e37f970e08cddb2ba89f58b611eb4679f247e289d1ce5b0d",
+    "src/openbexi_ide/source_view.py": "413ef2c931aa40284e889cc3f38985ce2c4d21194ba4e514f8dfba3c8a315e81",
+    "src/openbexi_ide/plugin_manager.py": "c7c01b9b30fe0560ac5666f3d5e7d02759aacfe82601426c953d56c9ace69339",
+    "src/openbexi_runtime/plugin_inventory.py": "874a8e923a92ea2aa16e266a3cc6db98ef1bf08bfc92224c179add7fb5e3b453",
+    "src/openbexi_runtime/shared_debug.py": "117f5ff8e969f8bfe7aff84bb54a2b90ca3290e418e9808e5da98d396459377a",
+    "src/openbexi_runtime/session.py": "28ca1ebe342d16872c7ba89b6174aa944f55d5e1c8c364eeb295520c1371cf53",
+    "src/openbexi_runtime/session_http.py": "2aee0a161aa19a4bb2e2ba0d72538bba8d237202d130480890d806291e13929a",
+    "src/openbexi_runtime/cli.py": "093d641187ef246f2c16e91a1da514576647426e50beade0d8d963d96effc0d6",
+    "tests/test_plugin_manager.py": "b6c33bbd4b2b1216f28e61b112d74d4ec38930f5b2976ad5fdef40cb81b9bcdd",
+    "tests/test_shared_debug.py": "a27994e474d9c826f6dc8eb5aee67f7c251d3c1271b3ac30b872269768c33ad2",
+    "tests/test_shared_debug_ui.py": "f2ecd11bd1e2d40bb7661f326eab65880f26681b36239b229bb7d9b497b08f29",
+    "tests/test_sessions.py": "d4fa8ea73534664196e4ca7128a086aacda43ab55302c23c3b76c3b49d762a82",
+    "docs/shared-debugging.md": "7db6955dc143ebcbd98491671f618e534c1791a0c740cfb2e857a90df12c6b0a",
+    "docs/V05_PROGRESS.md": "f967602065777143c7e1ac92ae4f13e49daf1576ec831f79be637a39ad3a09d7",
+    "docs/RESUME_V04.md": "f2b3172f9e73a8f5a0b09b987a45f0524c10cffb80936cc9c719d54db3716ce5",
+    "src/openbexi_ide/console.py": "4df50b5221b31be1646ccd897ddc51a77ff1be140e9b8fc238ad099285689bfb",
+    "src/openbexi_runtime/processes.py": "0d59aa976dacc7f2514b2595ae4c47e4312abae95641f9a82568bc8e2bc7ebed",
+    "tests/test_console.py": "f125b60c19128a1dc2eaeb9f897d8db95aacf0ef5224b6925a7b2c87f20d0bab",
+    "tests/test_menu_input.py": "f8eec2f99ab6d503f7a1e6ef4d7a2c7f6872cedb1c4b7613d7d6beadfe43d9a6",
+    "docker/Dockerfile": "f5e60bbf30d61dcb618f7bb721f98b79801e1368fa945923e7ef373a42387661",
+    "compose.v05.yaml": "3e359b60f23edb3700dc9b1ba3e72268eaa88821a76661086ae09837a3e29114",
+    "docs/IDE_V05_DOCKER.md": "0fbf6fdcb7e673afd5926f562367bb82d7d2ac981b83d9b36b28826c2c47bd5b"
+  },
+  "windows": {
+    "path": ".qualification/ide-v0.5/candidate-v05rc2/candidate-tests.xml",
+    "sha256": "c0a8c497f9fe78d8d70e80a522a31c957077bd77c0ecba97c2904e0da265c280",
+    "tests": 153,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "linux": {
+    "path": ".qualification/ide-v0.5/docker-rc2/20261013-085344-565100/tests.xml",
+    "sha256": "5325feceb430f57717e0b63880385478e276bb5d3e72dabfd4a93481fa0834fb",
+    "tests": 153,
+    "skipped": 9,
+    "failures": 0,
+    "errors": 0
+  },
+  "installed_linux_headless": {
+    "path": ".qualification/ide-v0.5/docker-rc2/20261013-085344-565100/installed-smoke.json",
+    "sha256": "55601d5ee5c9c7e2033783a31c6c08a6b2f9272b963ea4dcd3c93fd9b713fec9"
+  },
+  "installed_linux_desktop": {
+    "path": ".qualification/ide-v0.5/docker-rc2/20261013-085344-565100/installed-desktop.json",
+    "sha256": "061ff35d073629dec610248917b45ddf3047d83a0e5ef918a6e6cc5da7985099"
+  },
+  "docker": {
+    "image": "openbexi-ide:0.5.0rc2",
+    "id": "sha256:286d3aa543de6a5e56363f6cec8ee1e6bade8b7150ddb134c042856b722dea7d",
+    "url": "http://127.0.0.1:6086/vnc.html",
+    "health": "healthy"
+  },
+  "fixes": [
+    "Console output focus routes printable menu choices to enabled stdin; Send restores focus",
+    "POSIX debugpy process groups tracked within owned session before paused slot reuse",
+    "Docker image retains example publication test support"
+  ],
+  "scope": [
+    "Actual debugpy/HTTP/Qt controls and installed X11 clients",
+    "Windows suite includes eight real Docker Execution tests on recorded immutable image"
+  ],
+  "execution_image": "sha256:280f64d0d798d06691354131d292e4fddd7a227c5f03381b8d70cdae501322dd",
+  "pending": [
+    "Actual noVNC pointer X-button and wheel interaction",
+    "Fresh Windows VM distribution qualification"
+  ],
+  "limitations": [
+    "Shared native SPELL DAP remains explicitly unavailable",
+    "Docker lab bounded SPELL fixture is independent of original native plugin acceptance"
+  ],
+  "retained_prior_attempts": [
+    "candidate-cee893ad7ecb4c5b8751e9296c34c7b8",
+    "docker-retained/20261013-083147-910600",
+    "docker-retained/20261013-084312-24500"
+  ]
+}

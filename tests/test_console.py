@@ -1,8 +1,37 @@
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QTextCursor
 from PySide6.QtTest import QTest
+from PySide6.QtWidgets import QApplication, QLineEdit
 
 from openbexi_ide.console import OutputConsole
+
+
+def test_running_input_routing_preserves_read_only_copy_and_disabled_input(app):
+    console, target = OutputConsole(), QLineEdit()
+    console.input_target = target
+    console.show(); target.show()
+    try:
+        console.append_output('Choose: ')
+        console.setFocus()
+        QTest.keyClicks(console, '42')
+        assert target.text() == '42' and console.toPlainText() == 'Choose: '
+        QTest.keyClick(console, Qt.Key_Backspace)
+        assert target.text() == '4'
+        sent = []
+        target.returnPressed.connect(lambda: sent.append(target.text()))
+        QTest.keyClick(console, Qt.Key_Return)
+        assert sent == ['4']
+        console.selectAll()
+        QTest.keyClick(console, Qt.Key_C, Qt.ControlModifier)
+        assert QApplication.clipboard().text() == 'Choose: '
+        assert target.text() == '4' and console.textCursor().hasSelection()
+        target.setEnabled(False)
+        QTest.keyClicks(console, '6')
+        QTest.keyClick(console, Qt.Key_Return)
+        assert target.text() == '4' and sent == ['4']
+        assert console.toPlainText() == 'Choose: '
+    finally:
+        console.close(); target.close()
 
 
 def test_read_select_scroll_and_resume_during_output(app):

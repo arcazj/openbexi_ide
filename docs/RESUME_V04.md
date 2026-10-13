@@ -1,7 +1,11 @@
 # Resume from openbexi_ide
 
-Current work continues in [V05_PROGRESS.md](V05_PROGRESS.md). The accepted v0.4
-baseline below is preserved; v0.5/v0.6 have not passed their release gates.
+Current work continues in [V05_PROGRESS.md](V05_PROGRESS.md). IDE v0.4 is the
+tested `0.4.0rc3` candidate at `71a8120`, awaiting actual live noVNC closure/wheel
+verification. IDE shared Python debugging and Windows packaging follow their
+independent v0.5/v0.6 roadmap. The accepted plugin v0.4 baseline below is
+preserved; its full v0.5 inventory currently qualifies 316 rows with 447 open.
+Neither repository's candidate/prerequisite evidence promotes final releases.
 
 ## Current handoff after v0.4
 

@@ -53,6 +53,8 @@ class Gutter(QWidget):
         self.editor.paint_gutter(event)
 
     def mousePressEvent(self, event):
+        if getattr(self.editor, 'source_snapshot', False):
+            return
         block = self.editor.firstVisibleBlock()
         while block.isValid():
             top = self.editor.blockBoundingGeometry(block).translated(self.editor.contentOffset()).top()
@@ -68,13 +70,14 @@ class CodeEditor(QPlainTextEdit):
     navigation_requested = Signal(str, int, int)
     productivity_message = Signal(str)
 
-    def __init__(self, path: Path, colors, parent=None):
+    def __init__(self, path: Path, colors, parent=None, *, payload=None, encoding=None):
         super().__init__(parent)
         self.path = path.resolve()
-        payload = self.path.read_bytes()
+        self.source_snapshot = payload is not None
+        payload = self.path.read_bytes() if payload is None else payload
         if len(payload) > 2_000_000:
             raise ValueError("This editor supports text files up to 2 MB")
-        self.encoding = tokenize.detect_encoding(io.BytesIO(payload).readline)[0]
+        self.encoding = encoding or tokenize.detect_encoding(io.BytesIO(payload).readline)[0]
         self.newline = "\r\n" if b"\r\n" in payload else "\n"
         self.disk_hash = hashlib.sha256(payload).digest()
         self.colors = colors

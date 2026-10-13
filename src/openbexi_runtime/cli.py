@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from importlib.metadata import PackageNotFoundError, version
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler
@@ -74,7 +75,11 @@ def emit(value):
 def parser():
     root = argparse.ArgumentParser(prog='openbexi', description=__doc__)
     root.add_argument('--connection', default='.session/client.json', help='Private connection credential file')
-    root.add_argument('--version', action='version', version='openbexi_ide 0.3.0')
+    try:
+        installed_version = version('openbexi-ide')
+    except PackageNotFoundError:
+        installed_version = 'source checkout'
+    root.add_argument('--version', action='version', version='openbexi_ide ' + installed_version)
     commands = root.add_subparsers(dest='command', required=True)
     local = commands.add_parser('run', help='Run a local Python/SPELL file without a session')
     local.add_argument('script')
@@ -135,7 +140,15 @@ def parser():
     submit = commands.add_parser('submit', help='Queue a procedure in the connected session')
     submit.add_argument('script')
     submit.add_argument('--language', choices=('python', 'spell'), default='python')
+    submit.add_argument('--debug', action='store_true', help='Use the shared Development debugpy adapter')
+    submit.add_argument('--continue-on-entry', action='store_true', help='Run to a breakpoint after debugger admission')
+    submit.add_argument('--breakpoints', default='{}', help='JSON mapping of relative Python paths to line arrays')
     submit.add_argument('--arguments', nargs=argparse.REMAINDER, default=[])
+    debug = commands.add_parser('debug', help='Send one controller-fenced standard DAP request')
+    debug.add_argument('procedure')
+    debug.add_argument('debug_command')
+    debug.add_argument('--revision', type=int, required=True, help='Revision from the latest shared stopped snapshot')
+    debug.add_argument('--arguments', default='{}', help='DAP argument JSON object')
     for name in ('pause', 'resume', 'stop'):
         item = commands.add_parser(name)
         item.add_argument('procedure', help='Procedure ID, or all')
@@ -316,7 +329,12 @@ def main(argv=None):
             route = '/' + args.command
             if args.command == 'submit':
                 route = '/run'
-                body.update(script=args.script, language=args.language, arguments=args.arguments)
+                body.update(script=args.script, language=args.language, arguments=args.arguments,
+                            debug=args.debug, stop_on_entry=not args.continue_on_entry,
+                            breakpoints=json.loads(args.breakpoints))
+            elif args.command == 'debug':
+                body.update(procedure=args.procedure, command=args.debug_command,
+                            revision=args.revision, arguments=json.loads(args.arguments))
             elif args.command == 'configure':
                 body['max_parallel'] = args.max_parallel
             elif args.command == 'handoff':

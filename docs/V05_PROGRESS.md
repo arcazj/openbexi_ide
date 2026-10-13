@@ -1,13 +1,19 @@
 # v0.5 prerequisites and current work
 
-The accepted baseline remains IDE v0.3 / plugin v0.4. Plugin v0.5 and v0.6 are
-open. This checkpoint adds the requested examples and console behavior, and the
-sibling plugin starts full inventory qualification. No v0.5/v0.6 release tag is
-justified by this checkpoint.
+The accepted baseline remains IDE v0.3 / plugin v0.4. The IDE v0.4 usability
+candidate is committed as `71a8120`: 70 applicable checks pass, one Windows
+symlink-permission check is skipped, and the installed distribution workflow
+passes. Actual noVNC X-button and wheel evidence remains unavailable. IDE v0.5
+adds [shared Development debugging](shared-debugging.md) and plugin management;
+the Windows distribution is recorded separately in
+[IDE v0.6 prerequisites](IDE_V06_DISTRIBUTION.md). Candidate work does not promote
+either repository's final releases.
 
-Latest conformance checkpoint: 82/763 rows qualify, including 40/66 COMMON rows.
-The remaining 681 rows and live noVNC verification keep the release open. See the
-continuation below and the sibling `conformance/COMMON.md` for current evidence.
+Latest sibling conformance checkpoint: 316/763 rows qualify, with 447 open.
+PY, DATA/FILES, FLOW and UI milestones and the final combined native regressions
+are committed as `ed973da`; independent distribution prerequisites and checkout
+evidence are committed as `a7c2a3e`. Both plugin release gates remain open. See
+the sibling `docs/V05_CONFORMANCE_QUALIFICATION.json` and `conformance/README.md`.
 
 ## Examples and console
 
@@ -96,7 +102,7 @@ inventory still reports no connected browser, so live X/wheel verification
 remains open.
 
 Read the sibling `conformance/README.md`, run its release gate, then continue the
-681 open rows in `conformance/coverage.json` (82/763 qualified). The 26 remaining
+447 open rows in `conformance/coverage.json` (316/763 qualified). The 26 remaining
 COMMON rows have service-family dependencies listed in `conformance/COMMON.md`.
 Keep independent positive, boundary,
 failure and recovery evidence, resolve all source/manual conflicts, and preserve

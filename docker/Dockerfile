@@ -30,6 +30,7 @@ RUN python -m pip wheel --no-deps --no-build-isolation --wheel-dir /opt/wheels /
     && python -m pip install --no-index --no-deps /opt/wheels/openbexi_ide-*.whl
 
 COPY docker /opt/test-lab
+COPY docker /opt/openbexi/docker
 COPY docker/index.html /usr/share/novnc/index.html
 RUN groupadd --gid 10003 tester \
     && useradd --uid 10003 --gid 10003 --create-home --shell /bin/bash tester \

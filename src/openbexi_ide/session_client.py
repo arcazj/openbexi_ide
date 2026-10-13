@@ -19,6 +19,8 @@ class SessionClient(QObject):
     output = Signal(object)
     error = Signal(str)
     submitted = Signal(str)
+    debug_result = Signal(object)
+    source_result = Signal(object)
     _completed = Signal(object)
 
     def __init__(self, parent=None):
@@ -52,14 +54,18 @@ class SessionClient(QObject):
 
     @property
     def command_pending(self):
-        return bool(self._pending - {'snapshot', 'renew'})
+        return bool(self._pending - {'snapshot', 'renew', 'source'})
 
     @property
-    def can_control(self):
+    def owns_control(self):
         owner = self.snapshot.get('controller') or {}
         return (self.state == 'joined' and self.healthy and self.identity.get('role') == 'developer'
                 and self.epoch is not None and self.epoch == self.snapshot.get('epoch')
-                and owner.get('id') == self.identity.get('client') and not self.command_pending)
+                and owner.get('id') == self.identity.get('client'))
+
+    @property
+    def can_control(self):
+        return self.owns_control and not self.command_pending
 
     @property
     def can_claim(self):
@@ -118,14 +124,31 @@ class SessionClient(QObject):
         job = {'generation': self._generation, 'kind': kind, 'url': self.url,
                'tls': self._tls,
                'path': path, 'body': body, 'token': self.identity.get('token') if token is None and kind != 'connect' else token}
-        try:
-            self._jobs.put_nowait(job)
-        except queue.Full:
-            self.error.emit('A session request is still pending; wait before trying again')
-            return False
+        if kind != 'renew':
+            try:
+                self._jobs.put_nowait(job)
+            except queue.Full:
+                self.error.emit('A session request is still pending; wait before trying again')
+                return False
         self._pending.add(kind)
+        if kind == 'renew':
+            # A slow inspection/evaluation must not block lease maintenance.
+            # At most one renewal is outstanding, still bound to this generation.
+            threading.Thread(target=self._renew, args=(job,), name='desktop-session-lease', daemon=True).start()
         self.changed.emit()
         return True
+
+    def _renew(self, job):
+        result = {'job': job}
+        try:
+            result['value'] = request(job['url'], job['path'], job['body'], job['token'], tls=job.get('tls'))
+        except (ValueError, OSError, KeyError, TypeError) as exc:
+            result['error'] = str(exc)
+            result['http_status'] = getattr(exc.__cause__, 'code', None)
+        try:
+            self._completed.emit(result)
+        except RuntimeError:
+            pass
 
     def _work(self, jobs):
         while True:
@@ -220,12 +243,20 @@ class SessionClient(QObject):
             self.epoch = None
         elif kind == 'run':
             self.submitted.emit(value['id'])
+        elif kind == 'debug':
+            sent = job['body']
+            if self.epoch == sent['epoch']:
+                self.debug_result.emit({'procedure': sent['procedure'], 'command': sent['command'],
+                    'arguments': sent['arguments'], 'revision': sent['revision'],
+                    'epoch': sent['epoch'], 'body': value.get('body', {}), 'debug': value.get('debug')})
+        elif kind == 'source':
+            self.source_result.emit(value)
         self.changed.emit()
 
     def _tick(self):
         if self.state != 'joined':
             return
-        if self.keep_control and self.can_control and time.monotonic() - self._last_renew >= self._lease_seconds / 3:
+        if self.keep_control and self.owns_control and time.monotonic() - self._last_renew >= self._lease_seconds / 3:
             self._enqueue('renew', '/renew', {'epoch': self.epoch})
         self._enqueue('snapshot', '/session?after=' + str(self._cursor))
 
@@ -234,6 +265,26 @@ class SessionClient(QObject):
             self.error.emit('Claim the controller token before executing session commands')
             return False
         return self._enqueue(kind, '/' + kind, {'epoch': self.epoch, **fields})
+
+    def submit(self, script, *, language='python', arguments=(), debug=False,
+               stop_on_entry=True, breakpoints=None):
+        return self.command('run', script=script, language=language, arguments=list(arguments),
+                            debug=debug, stop_on_entry=stop_on_entry, breakpoints=breakpoints or {})
+
+    def debug_command(self, procedure, command, arguments=None, revision=None):
+        row = next((p for p in self.snapshot.get('procedures', []) if p['id'] == procedure), None)
+        if not row or not row.get('debug'):
+            self.error.emit('Select a procedure with an active shared debugger')
+            return False
+        if revision is None:
+            revision = row['debug']['revision']
+        return self.command('debug', procedure=procedure, command=command,
+                            arguments=arguments or {}, revision=revision)
+
+    def fetch_source(self, procedure, path):
+        if self.state != 'joined' or not self.healthy:
+            return False
+        return self._enqueue('source', '/source', {'procedure': procedure, 'path': path})
 
     def disconnect(self):
         if not self.active or self.state == 'leaving':

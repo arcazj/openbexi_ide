@@ -67,7 +67,8 @@ remain open. See [its evidence](docs/NATIVE_SHARED_QUALIFICATION.json).
 
 ## v0.4 — usability and examples
 
-In progress. Add Python completion, definition and symbol navigation, and finish
+Candidate implementation is qualified in [v0.4 evidence](docs/IDE_V04_USABILITY.md).
+Add Python completion, definition and symbol navigation, and finish
 the deep Python, graphics and explicit original SPELL examples. Console history
 must stay readable while output arrives, with an explicit return to the latest
 output. Preserve edits and project files when publishing examples.
@@ -80,15 +81,18 @@ still open; an HTTP health check or offscreen Qt test does not close that gate.
 
 ## v0.5 — collaborative debugging
 
-In progress after v0.4. Connect the existing debugpy/DAP foundation to shared
+The candidate connects the existing debugpy/DAP foundation to shared
 Development sessions: shared breakpoints, threads, stack and variable views,
 controller stepping, prompt handling, and runtime plugin installation/removal UI.
 Use the same fenced controller lease and procedure/slot admission rules as Run.
 Monitoring stays read-only and approved Execution stays immutable.
+The implemented shared debugger is Python/debugpy; shared native SPELL DAP is
+explicitly unavailable. Its local native debugger remains qualified separately.
 
 Acceptance requires actual two-client debugging, handoff and stale-command
 rejection, safe disconnect/lease expiry, explicit recovery/resume, prompt
 handling, optional-plugin lifecycle, and ordinary Python after plugin removal.
+The earlier live noVNC gate still prevents final release promotion.
 
 ## v0.6 — installable distribution
 
@@ -103,7 +107,40 @@ checks, earlier-release upgrades, removal, and installed Python/SPELL Run/Debug
 workflows on the declared platforms. This project's release numbers are
 independent of the sibling SPELL plugin's v0.5/v0.6 milestones.
 
-## Later — plugin and product acceptance
+## v0.7 — service limits and resilience
+
+Bound concurrent HTTP handlers, reject overload without allocating more worker
+threads, and recover capacity when slow clients disconnect. Qualify malformed
+requests, identity revocation, lease expiry, output backpressure and owned child
+cleanup on Windows x64 and Linux Docker. Existing execution fencing remains the
+authority for admitting procedures.
+
+## v0.8 — diagnostics and recovery operations
+
+Provide a read-only CLI diagnostic report for the installed interpreter and
+optional backend inventory. Reports must avoid credentials, environment values,
+project contents and user paths. Document stopped-service backups, restoration
+to the same authority, explicit reconciliation and rollback. Restoring a backup
+must never imply that an uncertain external effect is safe to repeat.
+
+## v0.9 — release evidence and upgrade readiness
+
+Bind the supported-platform matrix, candidate artifacts and test reports in a
+machine-checked release dossier. Verify hashes, required evidence and open gates;
+missing or failed evidence prevents release acceptance. Exercise installation,
+upgrade, removal and ordinary Python after optional-plugin removal.
+
+## v1.0 — supported Windows and Docker IDE
+
+Promote only after the earlier milestone gates pass for one selected source and
+artifact set, including actual noVNC window/console input and wheel interaction,
+and a fresh Windows installation environment. Publish installation, operation,
+recovery and known-limit documentation. The initial supported scope is Python
+editing, local/shared debugging and optional runtime plugins on Windows x64 and
+Linux x86_64 Docker. Full native SPELL language conformance and other IDE-host
+compatibility retain their separate sibling-plugin acceptance records.
+
+## Plugin and product acceptance
 
 The optional local runtime extension contract is implemented and covered by 46
 regression tests. It adds installed backend discovery, local CLI selection,

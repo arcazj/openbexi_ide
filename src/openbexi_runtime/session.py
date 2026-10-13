@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections import deque
 from dataclasses import dataclass, field
 import codecs
+import copy
 import hashlib
 import os
 from pathlib import Path
@@ -58,6 +59,11 @@ class Procedure:
     input_queue: queue.Queue = field(default_factory=lambda: queue.Queue(maxsize=8))
     input_closed: bool = False
     thread: threading.Thread | None = None
+    debug: dict | None = None
+    debugger: object | None = None
+    debug_initial_breakpoints: dict = field(default_factory=dict)
+    debug_pending: tuple | None = None
+    stop_on_entry: bool = True
 
     def public(self):
         return {'id': self.id, 'script': self.script, 'language': self.language,
@@ -72,6 +78,7 @@ class Procedure:
                 'worker_pid': self.worker_pid,
                 'input_closed': self.input_closed,
                 'exit_code': self.exit_code, 'error': self.error,
+                'debug': copy.deepcopy(self.debug),
                 'threads': list(self.stacks.values())}
 
 
@@ -86,7 +93,7 @@ class Session:
             raise ValueError('max_parallel must be in 1..16')
         if type(lease_seconds) not in {int, float} or not 0.5 <= lease_seconds <= 300:
             raise ValueError('lease_seconds must be in 0.5..300')
-        interpreter_info(interpreter)
+        self.interpreter_report = interpreter_info(interpreter)
         self.interpreter, self.max_parallel = console_interpreter(interpreter), max_parallel
         self.lease_seconds, self.dss_url = lease_seconds, dss_url
         self.id = uuid.uuid4().hex
@@ -156,6 +163,8 @@ class Session:
                 'sequence': sequence, 'epoch': self.epoch, 'aliases': self.aliases, 'fences': self.fences,
                 'procedures': [{**{k: v for k, v in p.public().items() if k != 'threads'}, 'capture': str(p.spec.project),
                                 'arguments': list(p.spec.arguments),
+                                'debug_options': {'stop_on_entry': p.stop_on_entry,
+                                                  'breakpoints': p.debug_initial_breakpoints} if p.debug else None,
                                 'launched': p.process is not None or p.owner is not None or p.status in {'STARTING', 'RECOVERY_REQUIRED'}}
                                for p in self.procedures.values()]}
 
@@ -178,6 +187,14 @@ class Session:
                           capture_digest=row['capture_sha256'], fence=row['procedure_fence'],
                           release=row.get('release_id'), backend=row.get('backend'))
             p.status, p.exit_code, p.error = row['status'], row['exit_code'], row['error']
+            p.debug = row.get('debug')
+            if p.debug:
+                options = row.get('debug_options') or {}
+                p.stop_on_entry = options.get('stop_on_entry', True)
+                p.debug_initial_breakpoints = options.get('breakpoints', {})
+                p.debug.update(state='terminated' if p.status in TERMINAL else 'unavailable' if row['launched'] else 'queued',
+                               revision=p.debug.get('revision', 0) + 1,
+                               stack_frames=[], stacks={}, scopes={}, variables={}, threads=[])
             p.wants_run = False
             p.uncertain = row.get('uncertain_effects', False)
             if p.status not in TERMINAL:
@@ -318,7 +335,8 @@ class Session:
             self._dispatch()
             return {'max_parallel': max_parallel}
 
-    def submit(self, client, epoch, script, *, arguments=(), language='python'):
+    def submit(self, client, epoch, script, *, arguments=(), language='python',
+               debug=False, stop_on_entry=True, breakpoints=None):
         # Git capture can be slow. Authenticate first, prepare outside the
         # control lock, then recheck the live fence at atomic admission. Worker
         # checkpoints and revocation must remain responsive during preparation.
@@ -328,6 +346,16 @@ class Session:
                 raise SessionError('Session is not accepting procedures')
             if language not in {'python', 'spell'}:
                 raise SessionError('Language must be python or spell', 400)
+            if type(debug) is not bool or type(stop_on_entry) is not bool:
+                raise SessionError('Debug options must be booleans', 400)
+            if debug and self.execution_release:
+                raise SessionError('Execution releases are immutable; debugging requires Development', 403)
+            if debug and language != 'python':
+                raise SessionError('Shared native SPELL debugging is unavailable in this backend', 400)
+            if debug and self.interpreter_report.get('debugpy') != '1.8.22':
+                raise SessionError('Shared debugging requires debugpy 1.8.22 in the service interpreter', 400)
+            if breakpoints and not debug:
+                raise SessionError('Breakpoints require a debug submission', 400)
             if not isinstance(script, str) or not isinstance(arguments, (list, tuple)) or len(arguments) > 128:
                 raise SessionError('Invalid procedure arguments', 400)
             target = self.project / script
@@ -343,6 +371,9 @@ class Session:
             else:
                 spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments)).validate()
             logical = spec.script.relative_to(self.project).as_posix()
+            if debug:
+                from .shared_debug import validate_breakpoints
+                breakpoints = validate_breakpoints(spec.project, breakpoints or {})
         captured = None
         released = None
         backend = None
@@ -399,6 +430,11 @@ class Session:
                     {'provider': language, 'binding': backend} if backend is not None else 'python/3.13', digest)
                 if released:
                     procedure.release, procedure.version = self.execution_release, released['procedures'][logical]['version']
+            if debug:
+                from .shared_debug import initial_state, validate_breakpoints
+                procedure.debug_initial_breakpoints = validate_breakpoints(procedure.spec.project, breakpoints)
+                procedure.debug = initial_state()
+                procedure.stop_on_entry = stop_on_entry
             self.procedures[procedure.id] = procedure
             self.event('queued', procedure=procedure.id, script=logical, client=client['id'], epoch=epoch,
                        definition=procedure.definition, version=procedure.version, fence=procedure.fence,
@@ -421,8 +457,20 @@ class Session:
                 if procedure.process is None:
                     procedure.thread = threading.Thread(target=self._execute, args=(procedure,), daemon=True)
                     procedure.thread.start()
+                elif procedure.debugger:
+                    pending = procedure.debug_pending or ('continue', {'threadId': procedure.debug['thread_id']}, self.epoch)
+                    procedure.debug_pending = None
+                    if pending[2] != self.epoch:
+                        self._pause(procedure, 'STALE_DEBUG_REQUEST')
+                    else:
+                        procedure.debugger.resume(pending[0], pending[1])
 
     def _execute(self, procedure):
+        if procedure.debug:
+            from .shared_debug import SharedDebugger
+            with self.lock:
+                procedure.debugger = SharedDebugger(self, procedure)
+            return procedure.debugger.run()
         if procedure.backend is not None:
             from .shared_backends import execute
             return execute(self, procedure)
@@ -563,6 +611,13 @@ class Session:
         procedure.wants_run, procedure.reason = False, reason
         if procedure.status in TERMINAL or procedure.status == 'STOPPING':
             return
+        if procedure.debug:
+            procedure.debug_pending = None
+            if procedure.debugger and procedure.debugger.adapter:
+                procedure.status = 'PAUSING'
+                procedure.debugger.pause()
+                self.event('pause_requested', procedure=procedure.id, reason=reason)
+                return
         if procedure.process is None and procedure.owner is None:
             procedure.has_token, procedure.status = False, 'PAUSED'
         elif procedure.has_token:
@@ -587,6 +642,8 @@ class Session:
                 if action == 'pause':
                     self._pause(procedure)
                 elif action == 'resume':
+                    if procedure.debug and procedure.debug.get('state') == 'unavailable':
+                        raise SessionError('The debugger session cannot be restored; submit a new debug procedure')
                     procedure.wants_run, procedure.reason = True, 'WAITING_TOKEN'
                     self.event('resume_requested', procedure=procedure.id, client=client['id'], epoch=epoch)
                 else:
@@ -600,6 +657,165 @@ class Session:
                     self.event('stop_requested', procedure=procedure.id, client=client['id'], epoch=epoch)
             self._dispatch()
             return [p.public() for p in selected]
+
+    def debug_request(self, client, epoch, identifier, command, arguments=None, revision=None):
+        """Admit one DAP request at the live fence; never proxy arbitrary DAP."""
+        from .shared_debug import COMMANDS, CONTROL, source_path, validate_breakpoints
+        arguments = {} if arguments is None else arguments
+        with self.lock:
+            self._control(client, epoch)
+            if self.execution_release:
+                raise SessionError('Debugging requires Development', 403)
+            p = self.procedures.get(identifier)
+            if p is None:
+                raise SessionError('Procedure does not exist', 404)
+            if not p.debug or not p.debugger or p.status in TERMINAL or p.uncertain:
+                raise SessionError('This procedure has no active shared debugger')
+            if not isinstance(command, str) or command not in COMMANDS:
+                raise SessionError('Unsupported shared debugger request', 400)
+            if type(arguments) is not dict:
+                raise SessionError('Debugger arguments must be an object', 400)
+            arguments = copy.deepcopy(arguments)
+            debug, adapter = p.debug, p.debugger
+            if type(revision) is not int or revision != debug['revision']:
+                raise SessionError('Stale debugger snapshot revision')
+            allowed = {
+                'continue': {'threadId'}, 'next': {'threadId'}, 'stepIn': {'threadId'}, 'stepOut': {'threadId'},
+                'pause': {'threadId'}, 'threads': set(),
+                'stackTrace': {'threadId', 'startFrame', 'levels'}, 'scopes': {'frameId'},
+                'variables': {'variablesReference', 'start', 'count', 'filter'},
+                'exceptionInfo': {'threadId'}, 'setBreakpoints': {'source', 'breakpoints'},
+                'evaluate': {'expression', 'frameId', 'context'},
+                'setVariable': {'variablesReference', 'name', 'value'},
+                'setExpression': {'expression', 'value', 'frameId'}}
+            if set(arguments) - allowed[command]:
+                raise SessionError('Unsupported debugger argument', 400)
+            if command not in {'setBreakpoints', 'threads', 'pause'} and debug['state'] != 'paused':
+                raise SessionError('Wait for a stopped debugger snapshot')
+            thread_ids = {item['id'] for item in debug['threads']}
+            frame_ids = {frame['id'] for frames in debug['stacks'].values() for frame in frames}
+            variable_ids = {scope['variablesReference'] for scopes in debug['scopes'].values() for scope in scopes}
+            variable_ids.update(value['variablesReference'] for values in debug['variables'].values()
+                                for value in values if value.get('variablesReference'))
+            for key, valid in (('threadId', thread_ids), ('frameId', frame_ids), ('variablesReference', variable_ids)):
+                if key in arguments and (type(arguments[key]) is not int or arguments[key] not in valid):
+                    raise SessionError('Unknown or stale debugger handle')
+            required = {'stackTrace': 'threadId', 'scopes': 'frameId', 'variables': 'variablesReference',
+                        'setVariable': 'variablesReference', 'evaluate': 'frameId', 'setExpression': 'frameId',
+                        'exceptionInfo': 'threadId'}
+            if required.get(command) and required[command] not in arguments:
+                raise SessionError('Debugger request requires ' + required[command], 400)
+            for key in ('expression', 'name', 'value', 'context'):
+                if key in arguments and (not isinstance(arguments[key], str) or len(arguments[key]) > 8192):
+                    raise SessionError('Invalid debugger text argument', 400)
+            for key in ('startFrame', 'levels', 'start', 'count'):
+                if key in arguments and (type(arguments[key]) is not int or not 0 <= arguments[key] <= 512):
+                    raise SessionError('Debugger view exceeds its bound', 400)
+            if command == 'variables':
+                arguments['count'] = arguments.get('count') or 64
+                arguments.setdefault('start', 0)
+            elif command == 'stackTrace':
+                arguments['levels'] = arguments.get('levels') or 32
+                arguments.setdefault('startFrame', 0)
+            if command == 'setBreakpoints':
+                source = arguments.get('source')
+                points = arguments.get('breakpoints', [])
+                if type(source) is not dict or set(source) != {'path'} or type(points) is not list:
+                    raise SessionError('Invalid shared breakpoint source', 400)
+                if any(type(item) is not dict or set(item) != {'line'} for item in points):
+                    raise SessionError('Shared breakpoints accept line numbers', 400)
+                validated = validate_breakpoints(p.spec.project, {source['path']: [item['line'] for item in points]})
+                name, lines = next(iter(validated.items()))
+                arguments = {'source': {'path': str(source_path(p.spec.project, name))},
+                             'breakpoints': [{'line': line} for line in lines]}
+            if command in {'setVariable', 'setExpression'}:
+                capability = 'supportsSetVariable' if command == 'setVariable' else 'supportsSetExpression'
+                if not debug['capabilities'].get(capability):
+                    raise SessionError('The debugger backend does not support ' + command, 400)
+            if command == 'pause':
+                self._pause(p)
+                return {'accepted': True, 'debug': copy.deepcopy(debug)}
+            if command in CONTROL:
+                if p.status != 'PAUSED':
+                    raise SessionError('Wait for all threads and child processes to pause')
+                if p.debug_pending:
+                    raise SessionError('A debugger continuation is already waiting for an execution slot')
+                arguments.setdefault('threadId', debug['thread_id'])
+                if arguments['threadId'] not in thread_ids:
+                    raise SessionError('Wait for the current thread snapshot')
+                p.debug_pending = (command, arguments, epoch)
+                p.wants_run, p.reason = True, 'WAITING_TOKEN'
+                self.event('debug_requested', procedure=p.id, command=command, client=client['id'], epoch=epoch)
+                self._dispatch()
+                return {'accepted': True, 'debug': copy.deepcopy(debug)}
+            evaluates = command in {'evaluate', 'setVariable', 'setExpression'}
+            if evaluates:
+                if p.status != 'PAUSED' or p.debug_pending:
+                    raise SessionError('Wait for the debugger to settle before evaluating')
+                if sum(item.has_token for item in self.procedures.values()) >= self.max_parallel:
+                    raise SessionError('Evaluation requires an available execution slot')
+                p.has_token, p.status = True, 'RUNNING'
+                debug['state'], debug['all_threads_stopped'] = 'evaluating', False
+                adapter.evaluating = True
+            try:
+                future = adapter.send(command, arguments)
+            except BaseException:
+                if evaluates:
+                    adapter.finish_evaluation()
+                raise
+            if evaluates:
+                # This callback settles the real operation even when HTTP has
+                # timed out or its controller has been fenced in the meantime.
+                future.add_done_callback(lambda _result: adapter.finish_evaluation())
+            self.event('debug_requested', procedure=p.id, command=command, client=client['id'], epoch=epoch)
+        # Responses must not hold the authority lock: expiry and handoff remain
+        # effective even while debugpy is busy evaluating a controller request.
+        body = adapter.result(future)
+        with self.lock:
+            self._control(client, epoch)
+            if debug['revision'] != revision:
+                raise SessionError('Debugger response belongs to a stale snapshot')
+            body = adapter.cache(command, arguments, body)
+            if command in {'evaluate', 'setVariable', 'setExpression'}:
+                refreshed = adapter.invalidate('paused')
+                threading.Thread(target=adapter.refresh, args=(refreshed,), daemon=True).start()
+            return {'body': body, 'debug': copy.deepcopy(debug)}
+
+    def debug_source(self, identifier, name):
+        """Read one bounded source copy from the procedure's actual project."""
+        import io
+        import json
+        import tokenize
+        from .shared_debug import source_path
+        from .session_store import canonical
+        with self.lock:
+            p = self.procedures.get(identifier)
+            if p is None or not p.debug:
+                raise SessionError('Select a shared debug procedure', 404)
+            path = source_path(p.spec.project, name)
+            expected = None
+            if p.capture_digest:
+                manifest = json.loads(p.spec.project.with_suffix('.json').read_text(encoding='utf-8'))
+                if hashlib.sha256(canonical(manifest).encode()).hexdigest() != p.capture_digest:
+                    raise SessionError('Captured source manifest differs', 409)
+                expected = manifest['files'].get(name, {}).get('sha256')
+                if expected is None:
+                    raise SessionError('Source is outside the captured tree', 400)
+            with path.open('rb') as stream:
+                raw = stream.read(2_000_001)
+            if len(raw) > 2_000_000:
+                raise SessionError('Source view exceeds 2 MB', 413)
+            digest = hashlib.sha256(raw).hexdigest()
+            if expected is not None and digest != expected:
+                raise SessionError('Captured source bytes differ', 409)
+            try:
+                encoding = tokenize.detect_encoding(io.BytesIO(raw).readline)[0]
+                text = raw.decode(encoding)
+            except (SyntaxError, UnicodeError) as error:
+                raise SessionError('Source has an invalid declared Python encoding', 400) from error
+            return {'procedure': p.id, 'path': name, 'text': text,
+                    'sha256': digest, 'captured': bool(p.capture_digest),
+                    'capture_sha256': p.capture_digest}
 
     def input(self, client, epoch, identifier, text):
         with self.lock:
@@ -631,6 +847,8 @@ class Session:
                 raise SessionError('Worker credential rejected', 403)
             if procedure.backend is not None:
                 raise SessionError('Plugin workers cannot use Python checkpoints', 403)
+            if procedure.debug:
+                raise SessionError('Debug workers use the private adapter transport', 403)
             if bool(procedure.release) != isolated:
                 raise SessionError('Worker transport does not match its execution boundary', 403)
             self._expire()
@@ -679,6 +897,10 @@ class Session:
                     'durable': self.store is not None,
                     'storage_healthy': not self.storage_failed,
                     'execution_approved': bool(self.execution_release),
+                    'debug_capabilities': {
+                        'python': {'available': not self.execution_release and self.interpreter_report.get('debugpy') == '1.8.22',
+                                   'backend': 'debugpy', 'controller_only': True},
+                        'spell': {'available': False, 'reason': 'Shared native SPELL DAP is unavailable'}},
                     'release_id': self.execution_release,
                     'execution_profile': self.release_manifest['profile'] if self.release_manifest else None,
                     'approved_sources': ({name: self.release_manifest['source']['files'][name]['sha256']
