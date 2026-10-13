@@ -1,0 +1,11 @@
+{
+  "implementation": "CPython",
+  "version": "3.13.15",
+  "build": "20260814",
+  "platform": "windows-x86_64",
+  "provider": "Astral python-build-standalone",
+  "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.13.15%2B20260814-x86_64-pc-windows-msvc-install_only.tar.gz",
+  "sha256": "4ca61e4b09c2240cc50cc6910c90664051e93ab7caa2f48b3c6b3c070670c0bd",
+  "size": 47131996,
+  "upstream_metadata": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20260814"
+}
