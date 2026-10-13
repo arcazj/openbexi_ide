@@ -20,6 +20,7 @@ from .session_identity import unique_object
 from .session_store import canonical
 
 PROFILE = 'python-docker-offline/1'
+PLUGIN_PROFILE = 'plugin-docker-isolated/1'
 SCHEMA = 'openbexi.execution-release/1'
 IMAGE = re.compile(r'sha256:[0-9a-f]{64}')
 RUNTIME_PROBE = '''import hashlib, importlib.metadata as m, json, platform, sys
@@ -72,11 +73,17 @@ def probe_image(image, code, *arguments):
             docker('rm', '--force', info['Id'], timeout=5)
 
 
-def prepare(project, script, runtime_image, output, *, additional_procedures=()):
+def prepare(project, script, runtime_image, output, *, additional_procedures=(), backend=None):
     from .source_capture import capture
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     base = image_info(runtime_image)
+    binding = None
+    if backend:
+        from .shared_backends import bind_backend
+        binding = bind_backend(backend)
+        if binding.get('image') != runtime_image:
+            raise ValueError('Provider binding differs from the reviewed runtime image')
     source, source_digest, inventory = capture(project, script, output)
     context = output / 'context'
     context.mkdir()
@@ -113,6 +120,10 @@ def prepare(project, script, runtime_image, output, *, additional_procedures=())
     manifest = {'schema': SCHEMA, 'profile': PROFILE, 'image': image, 'base_image': base['Id'],
                 'source_digest': source_digest, 'source': inventory, 'runtime': runtime,
                 'procedures': procedures}
+    if backend:
+        manifest.update(profile=PLUGIN_PROFILE,backend=dict(provider=backend,binding=binding))
+        from .shared_backends import load_backend
+        load_backend(backend).for_release(manifest)
     release = digest(manifest)
     (output / 'release.json').write_text(canonical(manifest) + '\n', encoding='utf-8')
     return {'release': release, 'manifest': str(output / 'release.json'), 'image': image,
@@ -124,10 +135,20 @@ def digest(manifest):
 
 
 def validate(manifest):
-    if (type(manifest) is not dict or set(manifest) != {'schema', 'profile', 'image', 'base_image',
-            'source_digest', 'source', 'runtime', 'procedures'}
-            or manifest['schema'] != SCHEMA or manifest['profile'] != PROFILE):
+    plugin = type(manifest) is dict and manifest.get('profile') == PLUGIN_PROFILE
+    keys = {'schema', 'profile', 'image', 'base_image','source_digest','source','runtime','procedures'}
+    if plugin:
+        keys.add('backend')
+    if (type(manifest) is not dict or set(manifest) != keys
+            or manifest['schema'] != SCHEMA or manifest['profile'] not in {PROFILE,PLUGIN_PROFILE}):
         raise ValueError('Unsupported execution release manifest')
+    if plugin:
+        backend = manifest['backend']
+        if (type(backend) is not dict or set(backend) != {'provider','binding'}
+                or type(backend['provider']) is not str or re.fullmatch('[a-z][a-z0-9_-]{0,63}',backend['provider']) is None
+                or type(backend['binding']) is not dict or len(canonical(backend)) > 8192
+                or backend['binding'].get('image') != manifest['base_image']):
+            raise ValueError('Invalid immutable provider binding')
     for field in ('image', 'base_image'):
         if not isinstance(manifest[field], str) or IMAGE.fullmatch(manifest[field]) is None:
             raise ValueError('Release runtime image identity is invalid')
@@ -179,6 +200,9 @@ def read_manifest(path):
 def verify_image(manifest):
     """Recheck the image's actual source and interpreter before approving it."""
     image_info(manifest['image'])
+    if manifest['profile'] == PLUGIN_PROFILE:
+        from .shared_backends import load_backend
+        load_backend(manifest['backend']['provider']).for_release(manifest)
     probe = '''import hashlib, json, sys, tokenize
 from pathlib import Path
 root=Path('/release')

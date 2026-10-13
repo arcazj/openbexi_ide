@@ -182,12 +182,12 @@ class Session:
             p.uncertain = row.get('uncertain_effects', False)
             if p.status not in TERMINAL:
                 if row['launched']:
-                    if p.release:
-                        from .execution_container import recover_container
-                        recover_container(self.id, p.id)
-                    elif p.backend is not None:
+                    if p.backend is not None:
                         from .shared_backends import load_backend
                         load_backend(p.language).recover(self.id, p.id, p.backend)
+                    elif p.release:
+                        from .execution_container import recover_container
+                        recover_container(self.id, p.id)
                     p.status, p.reason, p.has_token, p.uncertain = 'RECOVERY_REQUIRED', 'UNCONFIRMED_SHUTDOWN', True, True
                 else:
                     p.status, p.reason = 'PAUSED', 'SERVICE_RESTARTED'
@@ -334,8 +334,9 @@ class Session:
             if self.execution_release:
                 script = Path(script).as_posix()
                 target = self.project / script
-                if script not in self.release_manifest['procedures'] or language != 'python':
-                    raise SessionError('Procedure is outside the approved Python release', 400)
+                approved_language = self.release_manifest.get('backend',{}).get('provider','python')
+                if script not in self.release_manifest['procedures'] or language != approved_language:
+                    raise SessionError('Procedure is outside the approved runtime release', 400)
                 if any(not isinstance(a, str) or '\0' in a for a in arguments):
                     raise SessionError('Invalid procedure arguments', 400)
                 spec = LaunchSpec(self.project, target, self.interpreter, tuple(arguments))
@@ -348,6 +349,9 @@ class Session:
         if self.execution_release:
             with self.lock:
                 released = self.authority.require(self.execution_release)
+            if 'backend' in released:
+                from .shared_backends import load_backend
+                backend = load_backend(language).for_release(released)
             captured = self.project, released['source_digest'], released['source']
         elif self.store:
             if language != 'python':

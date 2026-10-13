@@ -1,5 +1,20 @@
 # Resume from openbexi_ide
 
+## Current handoff after v0.4
+
+IDE 0.3 durable plugin Execution and plugin 0.4 GENERIC DSS drivers/modes are
+implemented and qualified. Read [PLUGIN_EXECUTION_SERVICE.md](PLUGIN_EXECUTION_SERVICE.md),
+[PLUGIN_EXECUTION_QUALIFICATION.json](PLUGIN_EXECUTION_QUALIFICATION.json) and the
+sibling plugin's `docs/DRIVER_RUNTIME.md` / `docs/DRIVER_QUALIFICATION.json` for
+the exact final scope and artifacts. Continue next with plugin v0.5's 763-row
+inventory, then v0.6 distribution. Full mission semantics, critical/scheduled
+commands, vendor-specific drivers and shared native debugger inspection are not
+promoted by the GENERIC simulator acceptance. Preserve all files described below.
+
+The remaining text is the historical handoff and prerequisite progression;
+its earlier statements that native Execution and v0.4 were open are superseded
+by the qualification records above.
+
 Handoff prepared on 2026-10-11. Open `C:/projects/openbexi_ide` in IntelliJ
 and keep `C:/projects/openbexi_spell_plugin` as its sibling repository. The old
 `C:/projects/openbexi_spell` IntelliJ project can be closed without moving or
@@ -156,6 +171,6 @@ It is safe to close the old IntelliJ project and resume from the existing
 ## Restart instruction
 
 > Read docs/RESUME_V04.md and the linked project instructions. Resume the IDE
-> v0.3 durable-service prerequisite, then plugin v0.4, continuing through plugin
+> accepted IDE v0.3 and plugin v0.4 evidence, then continue plugin v0.5 through
 > v0.6. Preserve the old local project and archive. Ask before removing
 > C:/projects/openbexi_spell. Test, update documentation and commit each phase.

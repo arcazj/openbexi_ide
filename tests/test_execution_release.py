@@ -41,3 +41,18 @@ def test_manifest_rejects_mutable_runtime_and_malformed_source(tmp_path):
         read_manifest(path)
     path.write_text(json.dumps(original))
     assert read_manifest(path) == original
+
+
+def test_plugin_manifest_binds_provider_to_reviewed_base_image():
+    original = manifest()
+    original.update(profile='plugin-docker-isolated/1',backend={
+        'provider':'example','binding':{'image':original['base_image']}})
+    assert validate(original) == original
+    for backend in ({'provider':'../provider','binding':{'image':original['base_image']}},
+                    {'provider':'example','binding':{'image':original['image']}},
+                    {'provider':'example','binding':{'image':original['base_image'],'payload':'x'*8192}},
+                    {'provider':'example','binding':{'image':original['base_image']},'extra':True}):
+        altered = copy.deepcopy(original)
+        altered['backend'] = backend
+        with pytest.raises(ValueError,match='provider binding'):
+            validate(altered)

@@ -74,7 +74,7 @@ def emit(value):
 def parser():
     root = argparse.ArgumentParser(prog='openbexi', description=__doc__)
     root.add_argument('--connection', default='.session/client.json', help='Private connection credential file')
-    root.add_argument('--version', action='version', version='openbexi_ide 0.2.0')
+    root.add_argument('--version', action='version', version='openbexi_ide 0.3.0')
     commands = root.add_subparsers(dest='command', required=True)
     local = commands.add_parser('run', help='Run a local Python/SPELL file without a session')
     local.add_argument('script')
@@ -112,10 +112,11 @@ def parser():
     reconcile = commands.add_parser('reconcile', help='Offline maintenance after verifying worker shutdown and external effects')
     reconcile.add_argument('--state-directory', required=True)
     reconcile.add_argument('--receipt', required=True, help='Identity-bound JSON with shutdown and effect settlement evidence')
-    prepare = commands.add_parser('release-prepare', help='Build an immutable Python release without approving it')
+    prepare = commands.add_parser('release-prepare', help='Build an immutable runtime release without approving it')
     prepare.add_argument('script')
     prepare.add_argument('--project', required=True)
     prepare.add_argument('--runtime-image', required=True, help='Exact local Linux amd64 Docker image ID')
+    prepare.add_argument('--backend', help='Installed shared provider for an isolated plugin release')
     prepare.add_argument('--output', required=True, help='New directory for retained source, recipe and manifest')
     prepare.add_argument('--procedure', action='append', default=[], help='Additional explicitly released Python procedure')
     approve = commands.add_parser('release-approve', help='Offline approval of reviewed source and runtime')
@@ -234,7 +235,7 @@ def main(argv=None):
         if args.command == 'release-prepare':
             from .execution_release import prepare
             emit(prepare(args.project, args.script, args.runtime_image, args.output,
-                         additional_procedures=args.procedure))
+                         additional_procedures=args.procedure,backend=args.backend))
             return 0
         if args.command in {'release-approve', 'release-revoke'}:
             from .execution_release import ReleaseAuthority, read_manifest, digest

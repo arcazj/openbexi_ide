@@ -9,7 +9,8 @@ Build a domain-neutral CPython 3.13 desktop IDE and CLI. Keep the Python runtime
 independent of Qt and SPELL. Reuse the existing tested launch, owned process-tree
 and real debugpy/DAP foundation; do not replace mature debugger/tooling APIs with
 an invented implementation. The repository split established v0.1.0; the current
-v0.2.0 baseline connects the desktop and CLI to the same session protocol.
+v0.3.0 baseline connects the desktop and CLI to the same durable session protocol,
+with approved immutable Python/plugin releases and fenced provider effects.
 
 Prioritize a beginner-friendly PyCharm-inspired, macOS-style desktop: subtle
 colours, generous spacing, rounded surfaces, thin borders, restrained shadows,

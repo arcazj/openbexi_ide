@@ -1,0 +1,81 @@
+{
+  "schema": "openbexi.plugin-execution-qualification/1",
+  "release": "0.3.0",
+  "release_accepted": true,
+  "qualified_utc": "2026-10-13T01:14:11.887240+00:00",
+  "scope": "Single-authority durable service with approved Python/plugin Execution and fenced provider effects",
+  "core_artifact": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\v0.4\\release-wheels-final\\openbexi_ide-0.3.0-py3-none-any.whl",
+    "sha256": "8509d3bc556f2b6044b682707ad83b61559673174a4c71dddfc5d97cd6cdcf75"
+  },
+  "tests": {
+    "core": {
+      "tests": 104,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "path": "C:\\projects\\openbexi_ide\\.qualification\\v0.4\\core-final.xml",
+      "sha256": "8ed5b6867995048a9f21d984c07212f217ec3c7091111d5fdc3b327f04940130"
+    },
+    "release_validation_supplement": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "path": "C:\\projects\\openbexi_ide\\.qualification\\v0.4\\release-validation-final.xml",
+      "sha256": "cdf74c3629da8c752e3a7df3856ebba7c840a9617c40286fa5f98ca9def8b25f"
+    },
+    "plugin": {
+      "tests": 204,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\v0.4\\plugin-final.xml",
+      "sha256": "8ac589497f0e44e374782453954acf49c5936a92da4fba1e4ad482eac6ee5cc6"
+    },
+    "legacy_native": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "path": "C:\\projects\\openbexi_ide\\.qualification\\v0.4\\native-legacy-final.xml",
+      "sha256": "8a923989bcf66947edcc6d93f0c3a5fb4153411770bbd60f0ee2caa8b3e53afe"
+    },
+    "installed_driver_native_kafka": {
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\v0.4\\installed-acceptance-01\\tests.xml",
+      "sha256": "416819044abf159df1d1e2550b56d96f77f639e657425ecf49242731ae6f3856"
+    }
+  },
+  "neutral_installed_evidence": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\v0.4\\core-installed-acceptance-01\\result.json",
+    "sha256": "92f40c91dfbb33c19f0fb0950cdfa6d424ba1d5ba4bb279640b9a19e3224560d"
+  },
+  "neutral_installed_checks": [
+    "fresh non-editable core without Qt or SPELL",
+    "CLI prepare and offline approval",
+    "unapproved release denied",
+    "immutable source despite changed host dependency",
+    "non-root read-only runtime without network or host mounts",
+    "real service kill stops owned container",
+    "restart fences old credentials",
+    "uncertainty hold and paused queue without replay"
+  ],
+  "driver_acceptance": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\docs\\DRIVER_QUALIFICATION.json",
+    "sha256": "5fe53440c55239b4983c1a36aa31709535236e5e233b44d510a231eaa518eebb"
+  },
+  "limits": [
+    "GENERIC simulator only; no operational procedure approval",
+    "Windows x64 service and Linux amd64 Docker; single durable authority",
+    "Trusted installed provider, service OS account and Docker administrator",
+    "Critical/scheduled TC, vendor Cortex, unused EV streams and full mission semantics remain v0.5",
+    "763-row inventory classifications are not promoted by this milestone",
+    "Independent reproducibility, transitive supplier audits and supported upgrades remain later gates",
+    "Private loopback driver RPC; local trusted DSS/Kafka qualification, not remote broker security",
+    "Shared native debugger inspection remains separate; old host image and JetBrains ZIP unchanged"
+  ]
+}

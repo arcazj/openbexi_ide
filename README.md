@@ -1,4 +1,4 @@
-# openbexi_ide v0.2
+# openbexi_ide v0.3
 
 Continuing development after the repository split: [resume v0.4](docs/RESUME_V04.md).
 
@@ -13,8 +13,9 @@ Python stacks, bounded locals and per-procedure output.
 
 Durable sessions also support [native shared SPELL Development](docs/NATIVE_SHARED_SERVICE.md)
 through an optional provider: captured Git sources, whole-container pause,
-fenced handoff, native prompts/results and restart holds. Operational native
-Execution and DSS integration remain release gates.
+fenced handoff, native prompts/results and restart holds. The
+[approved plugin Execution profile](docs/PLUGIN_EXECUTION_SERVICE.md) now adds
+immutable native releases and fenced effects through the optional DSS provider.
 
 ## Install and open
 
@@ -30,7 +31,7 @@ Python, Qt, debugpy, examples, shared sessions, a local DSS and the durable
 Python/mutual-TLS test profile are included. See the
 [Docker testing guide](docs/DOCKER_TESTING.md) for test steps, CLI commands,
 persistent files and automated checks. This tests the current implementation;
-IDE v0.3 acceptance is still in progress.
+the browser lab retains its separately built image and persistent user volumes.
 
 For a native Windows desktop:
 

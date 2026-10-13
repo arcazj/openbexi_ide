@@ -33,6 +33,15 @@ behaviour. Preserve exactly Development, read-only Monitoring and approved
 Execution. Operational admission uses one active logical procedure across
 versions/contexts, leases/fencing and holds on uncertain external effects.
 
+Complete for the recorded single-authority Windows x64 / Linux Docker profiles.
+The final [plugin Execution milestone](docs/PLUGIN_EXECUTION_SERVICE.md) extends
+the earlier slices below with immutable approved native runtimes, private
+service-owned effects, current-authority checks, original DSS driver integration,
+revocation and recovery. [Exact final evidence](docs/PLUGIN_EXECUTION_QUALIFICATION.json)
+records artifacts and tests. Supplier audits and independent rebuilds, distributed
+authorities and real-mission operational approval remain later product gates.
+The following paragraphs record the historical sequence of partial milestones.
+
 The [durable Development prerequisite](docs/DURABLE_SERVICE.md) now implements
 certificate identities/TLS, revocation, bounded durable output, separate control
 audit, committed Git captures, restart holds, logical alias reservations and
