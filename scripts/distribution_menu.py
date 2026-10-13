@@ -30,7 +30,8 @@ def main():
               'harness_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               'examples':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()
                           for p in args.examples.glob('*.py')},
-              'scope':'Actual installed offscreen Qt controls; copied packaged examples; no live noVNC claim'}
+              'qt_platform':app.platformName(),
+              'scope':f'Actual installed Qt controls using {app.platformName()}; copied packaged examples; no live noVNC claim'}
     try:
         for mode in ('Run', 'Debug'):
             project = evidence / (mode + ' examples with spaces')
@@ -48,6 +49,12 @@ def main():
                 raise AssertionError(view.console.toPlainText())
 
             def send(value, button):
+                # A graphics child can own the desktop focus. Direct QTest
+                # events bypass the window manager's real click activation.
+                # Model returning to the IDE before entering the next answer.
+                view.raise_()
+                view.activateWindow()
+                wait(view.isActiveWindow)
                 assert view.input.isEnabled() and view.send_button.isEnabled()
                 previous = view.console.toPlainText().count('Choose: ')
                 view.input.setText(value)
@@ -65,6 +72,9 @@ def main():
                 view.open_file(project/'test_menu.py')
                 (view.run_action if mode=='Run' else view.debug_action).trigger()
                 wait(lambda: 'Choose: ' in view.console.toPlainText())
+                view.raise_()
+                view.activateWindow()
+                wait(view.isActiveWindow)
                 view.console.setFocus()
                 QTest.keyClicks(view.console, '2')
                 assert view.input.text() == '2'
