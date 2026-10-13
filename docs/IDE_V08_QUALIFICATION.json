@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "project": "openbexi_ide",
+  "milestone": "v0.8",
+  "release_accepted": false,
+  "source_sha256": {
+    "src/openbexi_runtime/diagnostics.py": "365af6e74a803561a1547c83eb6419df741cb1dce9f43df0a9ab7328bff061a2",
+    "src/openbexi_runtime/cli.py": "b68794a7107d79a5c2ba063bad5f40e012dbf1c60f1e8bd0ff00efcc39896ccd",
+    "tests/test_diagnostics.py": "6b6f9fc2c25ce3b3a1f666d95eae110619ef4cf9a4442e8d57d64d286d143358"
+  },
+  "combined_regression_reports": {
+    "windows": {
+      "path": ".qualification/ide-v0.9/windows-later-checks.xml",
+      "sha256": "27e91c788d8e68de167b1feb0b92a391189b808da02ddb3d48f870e30d976568"
+    },
+    "linux": {
+      "path": ".qualification/ide-v0.9/linux-later-checks.xml",
+      "sha256": "cc5bc1217137526fe1aa9bd6a7b1b3ded5b747667d61353e0a8b85bac940f929"
+    }
+  },
+  "windows_passed": 60,
+  "linux_passed": 27,
+  "pending": [
+    "Integrated final artifact qualification",
+    "Actual noVNC pointer interaction",
+    "Fresh Windows installation environment"
+  ]
+}

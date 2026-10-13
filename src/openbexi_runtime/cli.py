@@ -81,6 +81,8 @@ def parser():
         installed_version = 'source checkout'
     root.add_argument('--version', action='version', version='openbexi_ide ' + installed_version)
     commands = root.add_subparsers(dest='command', required=True)
+    doctor = commands.add_parser('doctor', help='Read-only installation report without credentials or plugin imports')
+    doctor.add_argument('--desktop', action='store_true', help='Require the locked desktop dependencies')
     local = commands.add_parser('run', help='Run a local Python/SPELL file without a session')
     local.add_argument('script')
     local.add_argument('--project', default='.')
@@ -241,6 +243,11 @@ def main(argv=None):
             stream.reconfigure(encoding='utf-8', errors='replace')
     args = parser().parse_args(argv)
     try:
+        if args.command == 'doctor':
+            from .diagnostics import report
+            result = report(desktop=args.desktop)
+            emit(result)
+            return 0 if result['ready'] else 2
         if args.command == 'run':
             return run_local(args)
         if args.command == 'serve':
