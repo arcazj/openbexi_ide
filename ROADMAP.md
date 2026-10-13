@@ -65,6 +65,44 @@ completes the bounded native shared Development slice; shared native debugger
 inspection, approved native Execution, original DSS effects and full provenance
 remain open. See [its evidence](docs/NATIVE_SHARED_QUALIFICATION.json).
 
+## v0.4 — usability and examples
+
+In progress. Add Python completion, definition and symbol navigation, and finish
+the deep Python, graphics and explicit original SPELL examples. Console history
+must stay readable while output arrives, with an explicit return to the latest
+output. Preserve edits and project files when publishing examples.
+
+Acceptance requires installed desktop Python workflows, completion/navigation
+checks, close/shutdown checks, and actual X-button and mouse-wheel operation at
+the noVNC desktop. The existing examples and console prerequisite evidence is in
+[the current progress record](docs/V05_PROGRESS.md). Live noVNC verification is
+still open; an HTTP health check or offscreen Qt test does not close that gate.
+
+## v0.5 — collaborative debugging
+
+In progress after v0.4. Connect the existing debugpy/DAP foundation to shared
+Development sessions: shared breakpoints, threads, stack and variable views,
+controller stepping, prompt handling, and runtime plugin installation/removal UI.
+Use the same fenced controller lease and procedure/slot admission rules as Run.
+Monitoring stays read-only and approved Execution stays immutable.
+
+Acceptance requires actual two-client debugging, handoff and stale-command
+rejection, safe disconnect/lease expiry, explicit recovery/resume, prompt
+handling, optional-plugin lifecycle, and ordinary Python after plugin removal.
+
+## v0.6 — installable distribution
+
+In progress after v0.5. Produce a Windows installation artifact with locked
+dependencies, reproducible source/package identities, clean installation,
+upgrade and removal. Preserve user projects, settings and saved examples across
+upgrade/removal. Publish the supported platform/runtime matrix and installation
+instructions.
+
+Acceptance requires fresh installed artifacts, reproducibility and integrity
+checks, earlier-release upgrades, removal, and installed Python/SPELL Run/Debug
+workflows on the declared platforms. This project's release numbers are
+independent of the sibling SPELL plugin's v0.5/v0.6 milestones.
+
 ## Later — plugin and product acceptance
 
 The optional local runtime extension contract is implemented and covered by 46

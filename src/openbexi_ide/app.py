@@ -147,6 +147,9 @@ class MainWindow(QMainWindow):
         self.save_action = self.action("Save", self.save_current, "Ctrl+S")
         self.new_action = self.action("New Python File", self.new_file, "Ctrl+N")
         self.find_action = self.action("Find in File", self.show_find, "Ctrl+F")
+        self.completion_action = self.action("Complete Python name", lambda: self.editor_productivity('request_completion'), "Ctrl+Space")
+        self.definition_action = self.action("Go to Definition", lambda: self.editor_productivity('go_to_definition'), "F12")
+        self.symbols_action = self.action("Project Symbols…", lambda: self.editor_productivity('show_symbols'), "Ctrl+Shift+O")
         self.theme_action = self.action("Switch theme", self.toggle_theme)
         self.interpreter_action = self.action("Select Python Interpreter…", self.choose_interpreter)
         self.args_action = self.action("Script Arguments…", self.choose_arguments)
@@ -316,7 +319,8 @@ class MainWindow(QMainWindow):
             run_menu.addAction(action)
         run_menu.addAction(self.action('Reload Runtime Plugins', self.discover_backends))
         view_menu = self.menuBar().addMenu("View")
-        view_menu.addAction(self.find_action); view_menu.addAction(self.theme_action)
+        for action in (self.find_action, self.completion_action, self.definition_action, self.symbols_action, self.theme_action):
+            view_menu.addAction(action)
         session_menu = self.menuBar().addMenu("Session")
         session_menu.addAction(self.join_action)
         session_menu.addAction(self.disconnect_action)
@@ -431,6 +435,9 @@ class MainWindow(QMainWindow):
         except (OSError, ValueError, UnicodeError, SyntaxError) as error:
             self.report_error(str(error)); return None
         editor.document().modificationChanged.connect(lambda _modified: self.update_tab(editor))
+        editor.configure_project(self.project, self.editor_buffers)
+        editor.navigation_requested.connect(self.navigate_source)
+        editor.productivity_message.connect(lambda message: self.statusBar().showMessage(message, 8000))
         editor.breakpoints_changed.connect(lambda: self.update_breakpoints(editor))
         editor.cursorPositionChanged.connect(self.update_position)
         index = self.tabs.addTab(editor, path.name)
@@ -438,6 +445,20 @@ class MainWindow(QMainWindow):
         self.tabs.setCurrentIndex(index); self.editor_stack.setCurrentIndex(1)
         editor.setFocus(); self.refresh_busy()
         return editor
+
+    def editor_buffers(self):
+        return {self.tabs.widget(index).path: self.tabs.widget(index).toPlainText()
+                for index in range(self.tabs.count())}
+
+    def editor_productivity(self, method):
+        editor = self.current_editor()
+        if editor and editor.path.suffix == '.py':
+            getattr(editor, method)()
+
+    def navigate_source(self, path, line, column):
+        editor = self.open_file(Path(path))
+        if editor:
+            editor.goto_location(line, column)
 
     def update_tab(self, editor):
         index = self.tabs.indexOf(editor)
@@ -724,6 +745,10 @@ class MainWindow(QMainWindow):
                 logical = str(tab.path.relative_to(self.project)) if self.project else ''
                 tab.setReadOnly(read_only or logical in active_paths or logical.replace('\\', '/') in active_paths)
         self.send_button.setEnabled(self.input.isEnabled())
+        python_editor = bool(editor and editor.path.suffix == '.py')
+        self.completion_action.setEnabled(python_editor and not editor.isReadOnly())
+        self.definition_action.setEnabled(python_editor)
+        self.symbols_action.setEnabled(python_editor)
         for name, action in self.session_actions.items():
             action.setEnabled(getattr(self.session_panel, name).isEnabled())
 

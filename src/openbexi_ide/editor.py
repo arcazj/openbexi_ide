@@ -8,13 +8,16 @@ from pathlib import Path
 import tempfile
 import tokenize
 import stat
+import re
 
 from pygments.lexers import PythonLexer
 from pygments.token import Token
-from PySide6.QtCore import QRect, QSize, Qt, Signal
-from PySide6.QtGui import QColor, QPainter, QPen, QSyntaxHighlighter, QTextCharFormat, QTextFormat
-from PySide6.QtWidgets import QPlainTextEdit, QTextEdit, QWidget
+from PySide6.QtCore import QRect, QSize, QStringListModel, QThreadPool, Qt, Signal, Slot
+from PySide6.QtGui import QColor, QPainter, QPen, QSyntaxHighlighter, QTextCharFormat, QTextCursor, QTextFormat
+from PySide6.QtWidgets import QCompleter, QPlainTextEdit, QTextEdit, QWidget
 from .fonts import fixed_font
+from .navigation import word_at
+from .productivity import AnalysisJob, SymbolDialog
 
 
 class FileConflictError(OSError):
@@ -62,6 +65,8 @@ class Gutter(QWidget):
 
 class CodeEditor(QPlainTextEdit):
     breakpoints_changed = Signal()
+    navigation_requested = Signal(str, int, int)
+    productivity_message = Signal(str)
 
     def __init__(self, path: Path, colors, parent=None):
         super().__init__(parent)
@@ -76,6 +81,19 @@ class CodeEditor(QPlainTextEdit):
         self.breakpoints: set[int] = set()
         self.verified_breakpoints: dict[int, bool] = {}
         self.execution_line: int | None = None
+        self.project = self.path.parent
+        self._buffers = None
+        self._analysis_number = 0
+        self._analysis_stamp = None
+        self._analysis_jobs = {}
+        self._queued_analysis = None
+        self.symbol_dialog = None
+        self.completion_model = QStringListModel(self)
+        self.completer = QCompleter(self.completion_model, self)
+        self.completer.setWidget(self)
+        self.completer.setCompletionMode(QCompleter.PopupCompletion)
+        self.completer.setCaseSensitivity(Qt.CaseSensitive)
+        self.completer.activated.connect(self._insert_completion)
         self.gutter = Gutter(self)
         self.setFont(fixed_font())
         self.setTabStopDistance(self.fontMetrics().horizontalAdvance(" ") * 4)
@@ -86,8 +104,187 @@ class CodeEditor(QPlainTextEdit):
         self.blockCountChanged.connect(self.update_margin)
         self.updateRequest.connect(self.update_gutter)
         self.cursorPositionChanged.connect(self.highlight_line)
+        self.cursorPositionChanged.connect(self._hide_completion)
+        self.textChanged.connect(self._hide_completion)
         self.update_margin()
         self.highlight_line()
+
+    def configure_project(self, project: Path, buffers=None):
+        """Provide the project root and an optional GUI-thread buffer snapshot callback."""
+        self.project = Path(project).resolve()
+        self._buffers = buffers
+        self._analysis_number += 1
+        self._queued_analysis = None
+        self._hide_completion()
+        if self.symbol_dialog:
+            self.symbol_dialog.close()
+
+    def _hide_completion(self):
+        self.completer.popup().hide()
+
+    def hideEvent(self, event):
+        self._analysis_number += 1
+        self._queued_analysis = None
+        self._hide_completion()
+        if self.symbol_dialog:
+            self.symbol_dialog.close()
+        super().hideEvent(event)
+
+    def setReadOnly(self, read_only):
+        super().setReadOnly(read_only)
+        if read_only and hasattr(self, "completer"):
+            self._hide_completion()
+
+    def _cursor_coordinates(self):
+        cursor = self.textCursor()
+        # Qt positions count UTF-16 code units, including two for astral chars.
+        column = len(cursor.block().text().encode("utf-16-le")[:cursor.positionInBlock() * 2].decode("utf-16-le"))
+        return cursor.blockNumber() + 1, column
+
+    def _request_analysis(self, kind):
+        if self.path.suffix not in {".py", ".pyi"}:
+            self.productivity_message.emit("Python source assistance is available in .py and .pyi files.")
+            return
+        if kind == "completion" and self.isReadOnly():
+            self.productivity_message.emit("Completion is unavailable while this editor is read-only.")
+            return
+        self._hide_completion()
+        self._analysis_number += 1
+        number = self._analysis_number
+        source = self.toPlainText()
+        buffers = dict(self._buffers()) if self._buffers else {}
+        buffers[self.path] = source
+        self._analysis_stamp = (self.document().revision(), self.textCursor().position())
+        line, column = self._cursor_coordinates()
+        job = AnalysisJob(number, kind, self.project, buffers, self.path, source, line, column)
+        job.signals.finished.connect(self._analysis_finished)
+        self.productivity_message.emit("Reading Python source…")
+        # Repeated shortcuts keep at most one running and one latest request.
+        # A large project must not queue an unbounded number of source copies.
+        if self._analysis_jobs:
+            self._queued_analysis = job
+        else:
+            self._start_analysis(job)
+
+    def _start_analysis(self, job):
+        self._analysis_jobs[job.number] = job
+        QThreadPool.globalInstance().start(job)
+
+    def request_completion(self):
+        self._request_analysis("completion")
+
+    def go_to_definition(self):
+        self._request_analysis("definition")
+
+    def show_symbols(self):
+        self._request_analysis("symbols")
+
+    @Slot(int, str, object, str)
+    def _analysis_finished(self, number, kind, result, message):
+        self._analysis_jobs.pop(number, None)
+        if self._queued_analysis:
+            pending, self._queued_analysis = self._queued_analysis, None
+            self._start_analysis(pending)
+        if number != self._analysis_number:
+            return
+        if not self.isVisible():
+            return
+        if kind != "symbols" and self._analysis_stamp != (self.document().revision(), self.textCursor().position()):
+            return
+        if message:
+            self.productivity_message.emit(message)
+        if kind == "completion":
+            if self.isReadOnly():
+                return
+            if not result:
+                self.productivity_message.emit(message or "No static Python completions at this position.")
+                return
+            self.completion_model.setStringList([completion.name for completion in result])
+            line, column = self._cursor_coordinates()
+            prefix = word_at(self.toPlainText(), line, column, before=True).rsplit(".", 1)[-1]
+            self.completer.setCompletionPrefix(prefix)
+            self.completer.popup().setCurrentIndex(self.completer.completionModel().index(0, 0))
+            rect = self.cursorRect()
+            rect.setWidth(max(240, self.completer.popup().sizeHintForColumn(0) + 30))
+            self.completer.complete(rect)
+            self.productivity_message.emit(message or "Choose a completion with ↑/↓, then Enter or Tab. Escape closes.")
+        elif kind == "definition":
+            if result:
+                self._navigate(result)
+                self.productivity_message.emit(message or f"{result.path.name}:{result.line}")
+            else:
+                self.productivity_message.emit(message or "No static definition found inside this project.")
+        elif result is not None:
+            if self.symbol_dialog:
+                self.symbol_dialog.close()
+            self.symbol_dialog = SymbolDialog(self.project, result, self)
+            self.symbol_dialog.selected.connect(self._navigate)
+            dialog = self.symbol_dialog
+            dialog.destroyed.connect(lambda _object=None: self._symbol_dialog_closed(dialog))
+            self.symbol_dialog.show()
+            self.symbol_dialog.search.setFocus()
+            self.productivity_message.emit(message or "Project symbols are ready.")
+
+    def _symbol_dialog_closed(self, dialog):
+        if self.symbol_dialog is dialog:
+            self.symbol_dialog = None
+
+    def _navigate(self, symbol):
+        if symbol.path.is_relative_to(self.project):
+            self.navigation_requested.emit(str(symbol.path), symbol.line, symbol.column)
+
+    def goto_location(self, line, column=0):
+        block = self.document().findBlockByNumber(max(0, min(line - 1, self.blockCount() - 1)))
+        column = max(0, min(column, len(block.text())))
+        utf16_column = len(block.text()[:column].encode("utf-16-le")) // 2
+        cursor = self.textCursor()
+        cursor.setPosition(block.position() + utf16_column)
+        self.setTextCursor(cursor)
+        self.centerCursor()
+        self.setFocus()
+
+    def _insert_completion(self, completion):
+        if self.isReadOnly() or self._analysis_stamp != (self.document().revision(), self.textCursor().position()):
+            self._hide_completion()
+            return
+        cursor = self.textCursor()
+        line, column = self._cursor_coordinates()
+        current = cursor.block().text()
+        prefix = word_at(self.toPlainText(), line, column, before=True).rsplit(".", 1)[-1]
+        suffix = re.match(r"\w*", current[column:]).group()
+        start = cursor.position() - len(prefix.encode("utf-16-le")) // 2
+        end = cursor.position() + len(suffix.encode("utf-16-le")) // 2
+        cursor.beginEditBlock()
+        cursor.setPosition(start)
+        cursor.setPosition(end, QTextCursor.KeepAnchor)
+        cursor.insertText(completion)
+        cursor.endEditBlock()
+        self.setTextCursor(cursor)
+        self._hide_completion()
+
+    def keyPressEvent(self, event):
+        if self.completer.popup().isVisible():
+            if event.key() in {Qt.Key_Return, Qt.Key_Enter, Qt.Key_Tab}:
+                completion = self.completer.popup().currentIndex().data()
+                if completion:
+                    self._insert_completion(completion)
+                event.accept()
+                return
+            if event.key() == Qt.Key_Escape:
+                self._hide_completion()
+                event.accept()
+                return
+        if event.key() == Qt.Key_Space and event.modifiers() == Qt.ControlModifier:
+            self.request_completion()
+            event.accept()
+        elif event.key() == Qt.Key_F12 and event.modifiers() == Qt.NoModifier:
+            self.go_to_definition()
+            event.accept()
+        elif event.key() == Qt.Key_O and event.modifiers() == (Qt.ControlModifier | Qt.ShiftModifier):
+            self.show_symbols()
+            event.accept()
+        else:
+            super().keyPressEvent(event)
 
     def gutter_width(self):
         return 28 + self.fontMetrics().horizontalAdvance("9") * max(2, len(str(self.blockCount())))

@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "project": "openbexi_ide",
+  "version": "0.4.0rc3",
+  "release_accepted": false,
+  "base_commit": "53b7320051f3b224d74ae9e71afe1a93ded03ba1",
+  "source_snapshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-v0.4\\candidate-0ba96ac795d94575a3da52e0435e3be6\\source",
+  "wheel": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-v0.4\\candidate-0ba96ac795d94575a3da52e0435e3be6\\dist\\openbexi_ide-0.4.0rc3-py3-none-any.whl",
+    "sha256": "3b6c2bca32920f078e367df590af2e8e9081e476828fb8dce0369c5c3ec47ce7"
+  },
+  "source_overlay": {
+    "pyproject.toml": "52d11bb15439e4563e3d16333c5c97a0be4fb8543d8e5c0b3b57ec6dfa8aeebb",
+    "README.md": "4766cafb95570eaccc7aa640979c83aed4ab77292ec4dc7956d6a2e5620ac7ce",
+    "ROADMAP.md": "335fc2c4a6fd2c3ddead4817b01322386c6ce41be4cadabc65de9aa0200dfd8f",
+    "src/openbexi_ide/app.py": "55dd5a6197ab898976de0fcff23344978e19afbf4de5d10e87e748b5ef22174a",
+    "src/openbexi_ide/editor.py": "3574353a7e0fc49afba6953abaf314b64eae6821875a0ba9e1fa51295568f367",
+    "src/openbexi_ide/navigation.py": "b14850951c9ed1a10ed2203126f8382e07c99839b07cf9a552ee25451c3dc987",
+    "src/openbexi_ide/productivity.py": "0bdab0a1cd32966aa579eab7aa19a0b08f8fc95218449488fcfc3b42af59ceb7",
+    "src/openbexi_runtime/launch.py": "66ec8e74b7aca23b24244720ed9cc031b29d34ce48e13bd2108662460acea406",
+    "src/openbexi_runtime/processes.py": "7f36fbb5656aa4483ea8b0367653b34155e28600acaad0eeb00ed9efb1818083",
+    "tests/test_editor_productivity.py": "94550cf7ccfd136985e1dea2e818a70fbd4b30a404b791e22836042783800f2d",
+    "tests/test_runtime.py": "6bae247e7005c79b56e194b61687a4d55e3d1d5b703c1a05a8ca74cc6ade0077",
+    "tests/test_ui.py": "f2d13d67c165ac2727315419e31f9ee8076d31086f2febf1c2d52495f063be90",
+    "tests/test_debugger.py": "9a43cb42597734880a11130d6c2cf32350a68a0c4f5e76699dab1f78f6ab3daf",
+    "docs/IDE_V04_USABILITY.md": "3b1c2baaa5adcd5b0240b20a0e7416ec4f76076abf33a0980ca2115f2a53c4c7"
+  },
+  "qualification": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-v0.4\\candidate-0ba96ac795d94575a3da52e0435e3be6\\candidate-tests.xml",
+    "sha256": "df5ca781c045276d451f70b898d725338429c8620a149f2aad5e4cec783f6102",
+    "tests": 71,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "skip_reason": "Current Windows account cannot create symlinks"
+  },
+  "actual_concurrent_interpreter_probes": {
+    "report": "C:\\projects\\openbexi_ide\\.qualification\\ide-v0.4\\probe-ownership-final.xml",
+    "probes": 9,
+    "workers": 3,
+    "passed": true
+  },
+  "pending": [
+    "Actual noVNC X-button closure for IDE and graphics windows",
+    "Actual noVNC pointer wheel console scrolling up/down"
+  ],
+  "retained_prior_attempts": [
+    "candidate-85a1c4828f3646069e588d31bbe04d34",
+    "candidate-10bcfcb796734d74bc72fc222c7da2b0"
+  ],
+  "limitations": [
+    "Qt tests and installed offscreen workflows do not qualify browser pointer/wheel behavior",
+    "IDE versions are independent of the native SPELL plugin conformance and distribution milestones"
+  ]
+}

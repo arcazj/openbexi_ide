@@ -27,6 +27,12 @@ if os.name == "nt":
                     ("process_memory", ctypes.c_size_t), ("job_memory", ctypes.c_size_t),
                     ("peak_process_memory", ctypes.c_size_t), ("peak_job_memory", ctypes.c_size_t)]
 
+    class ThreadEntry(ctypes.Structure):
+        _fields_ = [('size', wintypes.DWORD), ('usage', wintypes.DWORD),
+                    ('thread', wintypes.DWORD), ('process', wintypes.DWORD),
+                    ('base_priority', wintypes.LONG), ('delta_priority', wintypes.LONG),
+                    ('flags', wintypes.DWORD)]
+
     kernel.CreateJobObjectW.argtypes = [ctypes.c_void_p, wintypes.LPCWSTR]
     kernel.CreateJobObjectW.restype = wintypes.HANDLE
     kernel.SetInformationJobObject.argtypes = [wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD]
@@ -39,6 +45,15 @@ if os.name == "nt":
     kernel.CloseHandle.restype = wintypes.BOOL
     kernel.WaitForSingleObject.argtypes = [wintypes.HANDLE, wintypes.DWORD]
     kernel.WaitForSingleObject.restype = wintypes.DWORD
+    kernel.CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+    kernel.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+    for function in (kernel.Thread32First, kernel.Thread32Next):
+        function.argtypes = [wintypes.HANDLE, ctypes.POINTER(ThreadEntry)]
+        function.restype = wintypes.BOOL
+    kernel.OpenThread.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel.OpenThread.restype = wintypes.HANDLE
+    kernel.ResumeThread.argtypes = [wintypes.HANDLE]
+    kernel.ResumeThread.restype = wintypes.DWORD
 
 
 class ProcessTree:
@@ -155,21 +170,12 @@ def _resume_created_process(pid):
     Popen closes the primary thread handle, so recover it using the documented
     Tool Help thread inventory. No user code can spawn a child before ResumeThread.
     """
-    class ThreadEntry(ctypes.Structure):
-        _fields_ = [('size', wintypes.DWORD), ('usage', wintypes.DWORD),
-                    ('thread', wintypes.DWORD), ('process', wintypes.DWORD),
-                    ('base_priority', wintypes.LONG), ('delta_priority', wintypes.LONG),
-                    ('flags', wintypes.DWORD)]
+    # Bind one stable ctypes structure/signature at module initialization. A
+    # per-call class races with other launches changing the shared DLL argtypes.
     snapshot = kernel.CreateToolhelp32Snapshot
-    snapshot.argtypes, snapshot.restype = [wintypes.DWORD, wintypes.DWORD], wintypes.HANDLE
     first, next_thread = kernel.Thread32First, kernel.Thread32Next
-    for function in (first, next_thread):
-        function.argtypes = [wintypes.HANDLE, ctypes.POINTER(ThreadEntry)]
-        function.restype = wintypes.BOOL
     open_thread = kernel.OpenThread
-    open_thread.argtypes, open_thread.restype = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD], wintypes.HANDLE
     resume = kernel.ResumeThread
-    resume.argtypes, resume.restype = [wintypes.HANDLE], wintypes.DWORD
     handle = snapshot(0x00000004, 0)  # TH32CS_SNAPTHREAD
     if handle == ctypes.c_void_p(-1).value:
         raise ctypes.WinError(ctypes.get_last_error())

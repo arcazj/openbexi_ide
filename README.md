@@ -1,4 +1,13 @@
-# openbexi_ide v0.3
+# openbexi_ide v0.4 release candidate
+
+The usability candidate adds **Ctrl+Space** Python name completion, **F12**
+project definition navigation, and **Ctrl+Shift+O** searchable project symbols.
+Analysis uses source syntax on a background worker and includes unsaved tabs.
+Console history stays readable during new output; **Latest output** resumes
+following the tail. The deep Python, interactive graphics and explicitly imported
+original SPELL examples are included. See [v0.4 qualification](docs/IDE_V04_USABILITY.md).
+Live noVNC X-button/mouse-wheel verification remains open, so the final v0.4 tag
+has not been accepted. IDE v0.5/v0.6 development follows its independent roadmap.
 
 Continuing development after the repository split: [resume v0.4](docs/RESUME_V04.md).
 

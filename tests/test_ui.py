@@ -30,7 +30,9 @@ def window(app, tmp_path):
 def wait_until(app, predicate, timeout=10):
     deadline = time.monotonic() + timeout
     while not predicate() and time.monotonic() < deadline:
-        app.processEvents(); QTest.qWait(10)
+        # Windows QTest.qWait holds the GIL; the real interpreter probe uses
+        # Python workers which need to make progress during this Qt test loop.
+        app.processEvents(); time.sleep(0.01)
     assert predicate(), "UI operation did not finish before its deadline"
 
 

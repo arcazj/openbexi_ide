@@ -65,6 +65,21 @@ def test_project_venv_without_gui_or_spell_dependencies_runs_plain_python(tmp_pa
     assert code == 0 and stdout.strip() == "clean environment", stderr
 
 
+def test_fast_interpreter_probes_finish_with_process_ownership(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    environment = tmp_path / 'fast-python'
+    subprocess.run([sys.executable, '-I', '-m', 'venv', '--without-pip', str(environment)],
+                   check=True, timeout=20)
+    python = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+    # A clean interpreter's probe can exit before a post-start job assignment.
+    # Exercise overlapping real probes and successful cleanup, without slowing
+    # or replacing the probe process to conceal that lifecycle race.
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        reports = list(pool.map(lambda _: interpreter_info(python), range(9)))
+    assert all(report['version'][:2] == [3, 13] and report['isolated']
+               and report['backends'] == [] for report in reports)
+
+
 def test_check_cancelled_and_invalid_launch_do_not_start_user_code(tmp_path):
     cancelled = threading.Event(); cancelled.set()
     with pytest.raises(RuntimeError, match="cancelled"):

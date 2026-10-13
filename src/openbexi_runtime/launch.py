@@ -33,16 +33,14 @@ def interpreter_info(executable: str | Path, require_debugger=False, cancel=None
         raise ValueError(f"Python interpreter does not exist: {interpreter}")
     if cancel is not None and cancel.is_set():
         raise RuntimeError("Interpreter check cancelled")
-    probe = subprocess.Popen(
+    from .processes import start_owned_process
+    probe, owner = start_owned_process(
         [str(interpreter), "-I", "-B", "-X", "utf8", str(Path(__file__).with_name('interpreter_probe.py'))],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8",
         env=clean_environment(), start_new_session=os.name != "nt",
         creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
     )
-    from .processes import ProcessTree
-    owner = None
     try:
-        owner = ProcessTree(probe.pid)
         deadline = time.monotonic() + 5
         while True:
             if cancel is not None and cancel.is_set():

@@ -16,7 +16,7 @@ from openbexi_runtime.processes import process_alive
 def wait_until(app, condition, timeout=30):
     deadline = time.monotonic() + timeout
     while not condition() and time.monotonic() < deadline:
-        app.processEvents(); QTest.qWait(10)
+        app.processEvents(); time.sleep(0.01)
     assert condition(), "Debugger did not reach the expected state"
 
 
