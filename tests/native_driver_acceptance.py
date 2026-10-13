@@ -39,6 +39,31 @@ def dss(tmp_path,monkeypatch):
         runtime.engine.close()
 
 
+@pytest.fixture
+def live_dss(dss):
+    """Supply real fresh packets while startup and native calls take arbitrary time."""
+    state = dss.engine.state()
+    dss.engine.control('RESUME',state['epoch'],state['revision'])
+    stopped, errors = threading.Event(), []
+
+    def tick():
+        try:
+            while not stopped.wait(.25):
+                dss.engine.advance()
+        except BaseException as error:
+            errors.append(error)
+
+    thread = threading.Thread(target=tick,name='native-acceptance-dss-clock')
+    thread.start()
+    try:
+        yield dss
+    finally:
+        stopped.set()
+        thread.join(5)
+        assert not thread.is_alive()
+        assert not errors, errors
+
+
 def test_original_native_driver_manager_rpc_binary_command(dss,tmp_path):
     project = tmp_path/'project'
     project.mkdir()
@@ -64,8 +89,9 @@ def test_original_native_driver_manager_rpc_binary_command(dss,tmp_path):
         assert all(row['acknowledgement']['execution_id'] == procedure.id for row in evidence['operations'])
 
 
-def test_original_time_timeouts_reject_invalid_values_and_recover(dss,tmp_path):
+def test_original_time_timeouts_reject_invalid_values_and_recover(live_dss,tmp_path):
     """Native TIME travels through original models, RPC and actual binary DSS."""
+    dss = live_dss
     project = tmp_path/'project'
     project.mkdir()
     git(project,'init','-q')
