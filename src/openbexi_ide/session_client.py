@@ -182,6 +182,12 @@ class SessionClient(QObject):
             return
         kind = job['kind']
         self._pending.discard(kind)
+        if kind == 'renew' and job['body'].get('epoch') != self.epoch:
+            # Renewals use a separate transport so slow debugger requests do
+            # not expire the lease. Their replies can arrive after release or
+            # a newer claim: neither success nor failure may replace that fence.
+            self.changed.emit()
+            return
         if kind == 'disconnect':
             if result.get('error'):
                 self.error.emit('Disconnect could not reach the service; its controller lease will expire')
