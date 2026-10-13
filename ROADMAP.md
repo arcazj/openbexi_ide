@@ -96,7 +96,10 @@ The earlier live noVNC gate still prevents final release promotion.
 
 ## v0.6 — installable distribution
 
-In progress after v0.5. Produce a Windows installation artifact with locked
+The v0.6.0rc1 candidate passed the recorded installation lifecycle and two
+identical Windows ZIP builds; see [distribution evidence](docs/IDE_V06_DISTRIBUTION.md).
+Final acceptance still requires the fresh Windows environment and live browser
+gates below. Produce a Windows installation artifact with locked
 dependencies, reproducible source/package identities, clean installation,
 upgrade and removal. Preserve user projects, settings and saved examples across
 upgrade/removal. Publish the supported platform/runtime matrix and installation
@@ -109,6 +112,8 @@ independent of the sibling SPELL plugin's v0.5/v0.6 milestones.
 
 ## v0.7 — service limits and resilience
 
+Implemented and qualified in the [v0.7 candidate](docs/IDE_V07_RESILIENCE.md).
+
 Bound concurrent HTTP handlers, reject overload without allocating more worker
 threads, and recover capacity when slow clients disconnect. Qualify malformed
 requests, identity revocation, lease expiry, output backpressure and owned child
@@ -117,13 +122,18 @@ authority for admitting procedures.
 
 ## v0.8 — diagnostics and recovery operations
 
+Implemented and qualified in the [v0.8 candidate](docs/IDE_V08_DIAGNOSTICS.md).
+
 Provide a read-only CLI diagnostic report for the installed interpreter and
 optional backend inventory. Reports must avoid credentials, environment values,
-project contents and user paths. Document stopped-service backups, restoration
-to the same authority, explicit reconciliation and rollback. Restoring a backup
+project contents and user paths. Document stopped-service backups, preservation
+of historical authority evidence, explicit reconciliation and rollback under a
+new authority identity. Restoring a backup
 must never imply that an uncertain external effect is safe to repeat.
 
 ## v0.9 — release evidence and upgrade readiness
+
+Implemented and qualified in the [v0.9 candidate](docs/IDE_V09_RELEASE.md).
 
 Bind the supported-platform matrix, candidate artifacts and test reports in a
 machine-checked release dossier. Verify hashes, required evidence and open gates;
@@ -131,6 +141,10 @@ missing or failed evidence prevents release acceptance. Exercise installation,
 upgrade, removal and ordinary Python after optional-plugin removal.
 
 ## v1.0 — supported Windows and Docker IDE
+
+The [v1.0.0rc3 candidate](docs/IDE_V1_RELEASE.md) passes the recorded Windows,
+Linux and installed upgrade/removal checks. Its [release dossier](docs/IDE_RELEASE_DOSSIER.json)
+still reports the live-browser and fresh-Windows gates as open.
 
 Promote only after the earlier milestone gates pass for one selected source and
 artifact set, including actual noVNC window/console input and wheel interaction,

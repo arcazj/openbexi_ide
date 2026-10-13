@@ -1,4 +1,10 @@
-# openbexi_ide v0.9.0rc1 ? release evidence checks candidate
+# openbexi_ide v1.0.0rc3 - Windows and Docker release candidate
+
+The [v1.0 candidate](docs/IDE_V1_RELEASE.md) combines the Windows installer,
+shared debugger, service limits and installed diagnostics. Its separate Docker
+desktop is at `http://127.0.0.1:6087/vnc.html`; start it with
+`docker compose -f compose.v1.yaml up -d --wait`.
+Final acceptance still requires the recorded live-browser and fresh-Windows gates.
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has

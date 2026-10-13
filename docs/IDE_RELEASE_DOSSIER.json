@@ -1,15 +1,92 @@
 {
   "schema": 1,
   "product": "openbexi_ide",
-  "version": "1.0.0rc1",
+  "version": "1.0.0rc3",
   "release_accepted": false,
-  "artifacts": {},
+  "artifacts": {
+    "ide_wheel": {
+      "path": ".qualification/ide-v1.0/candidate-v1rc3/dist/openbexi_ide-1.0.0rc3-py3-none-any.whl",
+      "sha256": "98d1a0842149f49d0f5933b20f2f2a384a509ddf9091f8bf3e1d12279cb25022"
+    },
+    "windows_bundle": {
+      "path": ".qualification/v1.0/windows-build-v1rc3-a/OpenBEXI-IDE-1.0.0rc3-windows-x64.zip",
+      "sha256": "fdd263e0eb48295689efa084a879e5d943d9bd5fd4658db7a48bb68d66c4a69b"
+    },
+    "docker_image_record": {
+      "path": ".qualification/ide-v1.0/docker-image-rc3.json",
+      "sha256": "3cca284b3ffdf3880165a548a3ccc3d02328edceb67cac9fe55cc86e95398f8a"
+    }
+  },
+  "source_snapshot": {
+    "path": ".qualification/ide-v1.0/candidate-v1rc3/snapshot.json",
+    "sha256": "a80ce265178ec7f3ba5e406af0237c95e74ab51e95c18c8383f94a3b94b58e0c"
+  },
+  "source_base_commit": "4bb735cd43b37c2151db3f0b5990f4f16a9cd6db",
   "gates": {
-    "windows_tests": {"status": "pending final candidate"},
-    "linux_tests": {"status": "pending final candidate"},
-    "installed_windows_lifecycle": {"status": "pending final candidate"},
-    "installed_docker_workflow": {"status": "pending final candidate"},
-    "browser_interaction": {"status": "pending connected browser control"},
-    "fresh_windows_install": {"status": "pending fresh Windows environment"}
-  }
+    "windows_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/ide-v1.0/candidate-v1rc3/candidate-tests.xml",
+        "sha256": "ef3cdb3c91e1c256f5552f14c8e5569fd67414e841b048d263e1b45b913f35d2"
+      },
+      "skip_explanation": "170 passed; one symlink test skipped because this Windows account cannot create symlinks. Eight actual Docker Execution tests ran with exact image280f64d0."
+    },
+    "linux_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/ide-v1.0/docker-rc3/20261013-093144-11400/tests.xml",
+        "sha256": "dc1afde8854b7a918984f8147af4765d862bcbb8ed3bb08be84ab01bfc50efd5"
+      },
+      "skip_explanation": "162 passed; eight Docker Execution tests skipped in the unprivileged container without a Docker socket (covered in Windows run), plus one Windows Job ownership test."
+    },
+    "installed_windows_lifecycle": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/v1.0/windows-lifecycle-v1rc3/result.json",
+        "sha256": "b9648ac8021b3e46cf5465a79f870ffa093ddadc5c5ef5ff2a63a1496a2e7483"
+      }
+    },
+    "installed_docker_workflow": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/ide-v1.0/docker-rc3-installed/rc3-installed/result.json",
+        "sha256": "a91a8dccacfb4596aa8cef7ee00c0a2194aa0428643ad87332b9bd16b391591d"
+      }
+    },
+    "browser_interaction": {
+      "status": "pending connected browser control",
+      "reason": "Available CUA surfaces empty; native control pipe unavailable. Actual noVNC X-button and wheel checks remain unqualified."
+    },
+    "fresh_windows_install": {
+      "status": "pending fresh Windows environment",
+      "reason": "Private-runtime install/upgrade/removal passed on this host; no fresh Windows VM or Sandbox is available."
+    }
+  },
+  "supplementary": {
+    "windows_distribution": {
+      "path": "docs/IDE_V10_QUALIFICATION.json",
+      "sha256": "baba5b37cde5db956f3e6d36e6cca6b56ea2cf2c29b1ba76484940eb57b9af16"
+    },
+    "linux_menu": {
+      "path": ".qualification/ide-v1.0/docker-rc3-installed/rc3-installed/menu/result.json",
+      "sha256": "657db9d17bfc2f59297641b26611d4a32ea99d9ed15c26f577506317303b6bbc"
+    },
+    "linux_installed_headless": {
+      "path": ".qualification/ide-v1.0/docker-rc3-installed/rc3-installed/installed-smoke.json",
+      "sha256": "b964368b277fc2d84f88abac98ebbb8b2b126349a9e5ff86253ed8247e4dc4a1"
+    },
+    "linux_installed_desktop": {
+      "path": ".qualification/ide-v1.0/docker-rc3-installed/rc3-installed/installed-desktop.json",
+      "sha256": "63c4bcc67ee3d50982e04c1a8bd753a2777487c9571e5170ae76fd319b0a2b60"
+    },
+    "linux_diagnostics": {
+      "path": ".qualification/ide-v1.0/docker-rc3-installed/rc3-installed/doctor.json",
+      "sha256": "83abf19998ac12a3afda0008a805dc8fb7102b89125cc2c199977a35f92ae752"
+    }
+  },
+  "remaining_scope": "Full native SPELL conformance and plugin v0.6 acceptance remain separate; this dossier cannot promote them."
 }
