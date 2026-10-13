@@ -24,6 +24,18 @@ Each candidate has separate workspace/preferences volumes. The preexisting
 desktop on port 6080 and its open windows remain preserved. Those older running
 processes do not acquire a new installed version when a new image is built.
 
+The sibling SPELL host has a separately tested **0.3.1.dev1** development
+candidate for early console answers and native child prompts. It preserves
+answers typed after question output but before the native input event. Its
+distinct package version allows the IDE's local-wheel installer to upgrade
+0.3.0. The actual Qt plugin manager, Run/Debug child answers, removal and ordinary
+Python afterward pass on this IDE's source at `3779d85`; all installed wheel
+members match the selected artifact. The project and preferences survive.
+The [host upgrade record](../../openbexi_spell_plugin/.qualification/v0.6/child-procedure-worktree/distribution/evidence/host-console-upgrade.json)
+binds the reproducible wheel and required child-development runtime image.
+This supplemental check does not replace the immutable IDE candidate's release
+dossier or qualify browser/fresh-Windows acceptance.
+
 ## Install on Windows
 
 Extract the candidate Windows ZIP and run `Install.cmd`. The package contains

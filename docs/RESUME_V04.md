@@ -19,6 +19,15 @@ Use their exact artifact identities and open gates. IDE candidate commits do
 not promote plugin releases. The text below retains the earlier v0.4 handoff;
 [V05_PROGRESS.md](V05_PROGRESS.md) is historical prerequisite evidence.
 
+The sibling's committed conformance checkpoint is now `6f82c2c`: 470 qualified
+requirements and 293 open. Further isolated commits fix native child startup
+and prompt ownership (`166caff`), early console input (`15c7dd1`), and a
+reproducible host 0.3.1.dev1 upgrade candidate (`4a4c8c9`). The actual Qt upgrade,
+Run/Debug child prompts, plugin removal and ordinary Python checks pass. See
+the supplemental host record in [the v1.0 release notes](IDE_V1_RELEASE.md).
+Their next composed runtime still requires its own build and regression evidence;
+these commits do not accept plugin v0.5/v0.6.
+
 ## Current handoff after v0.4
 
 IDE 0.3 durable plugin Execution and plugin 0.4 GENERIC DSS drivers/modes are
