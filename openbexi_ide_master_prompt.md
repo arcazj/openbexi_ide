@@ -1,6 +1,6 @@
 # openbexi_ide engineering master prompt
 
-For the project switch and remaining work, read [the v0.4 handoff](docs/RESUME_V04.md).
+For current artifacts and remaining work, read [the development handoff](docs/RESUME_V04.md).
 User requirement: preserve `C:/projects/openbexi_spell`; ask the user before
 removing it, after establishing it is no longer needed. Preserve the external
 legacy archive and local qualification artifacts as well.

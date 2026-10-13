@@ -1,11 +1,23 @@
 # Resume from openbexi_ide
 
-Current work continues in [V05_PROGRESS.md](V05_PROGRESS.md). IDE v0.4 is the
-tested `0.4.0rc3` candidate at `71a8120`, awaiting actual live noVNC closure/wheel
-verification. IDE shared Python debugging and Windows packaging follow their
-independent v0.5/v0.6 roadmap. The accepted plugin v0.4 baseline below is
-preserved; its full v0.5 inventory currently qualifies 316 rows with 447 open.
-Neither repository's candidate/prerequisite evidence promotes final releases.
+The current IDE candidate is **1.0.0rc3**, committed at `9877095`. Start from
+[the v1.0 release record](IDE_V1_RELEASE.md) and
+[the exact release dossier](IDE_RELEASE_DOSSIER.json). The console menu input
+fix, shared Python debugging, Windows packaging, service limits and diagnostics
+are implemented and tested. Final acceptance still needs actual noVNC X-button
+and wheel interaction, plus installation in a fresh Windows environment.
+
+The current candidate desktop is `http://127.0.0.1:6087/vnc.html`. The corrected
+v0.5 desktop uses port 6086; see [its launch instructions](IDE_V05_DOCKER.md).
+Port 6080 still serves the older running desktop. Preserve its open windows and
+volumes; visiting that address does not select the corrected candidate.
+
+SPELL work continues in the sibling repository's
+[conformance checkpoint](../../openbexi_spell_plugin/docs/V05_CONFORMANCE_QUALIFICATION.json)
+and [distribution progress](../../openbexi_spell_plugin/docs/V06_PROGRESS.md).
+Use their exact artifact identities and open gates. IDE candidate commits do
+not promote plugin releases. The text below retains the earlier v0.4 handoff;
+[V05_PROGRESS.md](V05_PROGRESS.md) is historical prerequisite evidence.
 
 ## Current handoff after v0.4
 

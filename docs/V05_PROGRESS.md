@@ -1,4 +1,8 @@
-# v0.5 prerequisites and current work
+# v0.5 prerequisite history
+
+This file retains the earlier prerequisite evidence. Current artifacts and
+remaining checks are in [the development handoff](RESUME_V04.md) and
+[the v1.0 candidate record](IDE_V1_RELEASE.md).
 
 The accepted baseline remains IDE v0.3 / plugin v0.4. The IDE v0.4 usability
 candidate is committed as `71a8120`: 70 applicable checks pass, one Windows
@@ -9,7 +13,7 @@ the Windows distribution is recorded separately in
 [IDE v0.6 prerequisites](IDE_V06_DISTRIBUTION.md). Candidate work does not promote
 either repository's final releases.
 
-Latest sibling conformance checkpoint: 316/763 rows qualify, with 447 open.
+Sibling conformance checkpoint at this stage: 316/763 rows qualify, with 447 open.
 PY, DATA/FILES, FLOW and UI milestones and the final combined native regressions
 are committed as `ed973da`; independent distribution prerequisites and checkout
 evidence are committed as `a7c2a3e`. Both plugin release gates remain open. See

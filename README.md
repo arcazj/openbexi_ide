@@ -30,7 +30,7 @@ Live noVNC X-button/mouse-wheel verification remains open, so the final v0.4 tag
 has not been accepted. The IDE releases follow their independent roadmap;
 candidate commits do not promote the sibling plugin's conformance releases.
 
-Continuing development after the repository split: [resume v0.4](docs/RESUME_V04.md).
+Current release artifacts and remaining work: [resume development](docs/RESUME_V04.md).
 
 A standalone CPython 3.13 IDE and headless CLI. The desktop has a project tree,
 tabbed editor, output and real debugpy debugger, with light/dark themes and a
