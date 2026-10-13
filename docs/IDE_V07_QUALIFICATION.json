@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "project": "openbexi_ide",
+  "milestone": "v0.7",
+  "release_accepted": false,
+  "source_sha256": {
+    "src/openbexi_runtime/bounded_http.py": "0c995b71194e994c16f51b62b877add726bbb19b6553f48dbd22f324b81229d8",
+    "src/openbexi_runtime/session_http.py": "94b0ee3d5b69f3e0eab4979e5a1e1aae35cd31a4398f23b1170d84fc33946ccd",
+    "tests/test_http_limits.py": "27bf286cabd37a55e419b6a65c9c13d7c46fdb59d5201933792d27a233aa80b3",
+    "tests/test_sessions.py": "eb5491d0d2c20ee78463edee5df0e2ea51470ef44c51efc69f4bcaa4d93ea7cd"
+  },
+  "combined_regression_reports": {
+    "windows": {
+      "path": ".qualification/ide-v0.9/windows-later-checks.xml",
+      "sha256": "27e91c788d8e68de167b1feb0b92a391189b808da02ddb3d48f870e30d976568"
+    },
+    "linux": {
+      "path": ".qualification/ide-v0.9/linux-later-checks.xml",
+      "sha256": "cc5bc1217137526fe1aa9bd6a7b1b3ded5b747667d61353e0a8b85bac940f929"
+    }
+  },
+  "windows_passed": 60,
+  "linux_passed": 27,
+  "pending": [
+    "Integrated final artifact qualification",
+    "Actual noVNC pointer interaction",
+    "Fresh Windows installation environment"
+  ]
+}

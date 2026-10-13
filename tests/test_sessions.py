@@ -158,7 +158,12 @@ def test_lease_expiry_fences_old_controller_and_requires_explicit_resume(tmp_pat
         epoch = claim(url, alice)
         identifier = submit(url, alice, epoch, 'one.py')
         procedure = session.procedures[identifier]
-        wait_for(lambda: procedure.status == 'RUNNING')
+        def started():
+            # Keep the intentionally short lease while a cold interpreter starts;
+            # expiry is tested after the worker has actually begun executing.
+            request(url, '/renew', {'epoch': epoch}, alice['token'])
+            return procedure.status == 'RUNNING'
+        wait_for(started)
         wait_for(lambda: session.controller is None and procedure.status == 'PAUSED')
         assert procedure.reason == 'CONTROLLER_EXPIRED' and not procedure.has_token
         with pytest.raises(ValueError, match='Stale'):

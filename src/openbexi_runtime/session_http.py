@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import json
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlsplit
 
 from .session import SessionError
+from .bounded_http import BoundedHTTPServer
 
 
 def _object(pairs):
@@ -17,11 +18,12 @@ def _object(pairs):
     return result
 
 
-class SessionServer(ThreadingHTTPServer):
+class SessionServer(BoundedHTTPServer):
     daemon_threads = True
     block_on_close = False
 
-    def __init__(self, address, session, *, tls_context=None, identities=None, worker_only=False):
+    def __init__(self, address, session, *, tls_context=None, identities=None, worker_only=False,
+                 max_handlers=32):
         if bool(tls_context) != bool(identities):
             raise ValueError('TLS requires explicit certificate identities')
         if address[0] not in {'127.0.0.1', 'localhost'} and not tls_context:
@@ -32,7 +34,7 @@ class SessionServer(ThreadingHTTPServer):
             raise ValueError('Remote identity requires a durable session directory')
         self.identities, self.worker_only = identities, worker_only
         self.session = session
-        super().__init__(address, Handler)
+        super().__init__(address, Handler, max_handlers=max_handlers)
         if tls_context:
             self.socket = tls_context.wrap_socket(self.socket, server_side=True, do_handshake_on_connect=False)
         else:
@@ -122,6 +124,15 @@ class Handler(BaseHTTPRequestHandler):
                           parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Nonfinite value')))
         if type(body) is not dict:
             raise SessionError('JSON object required', 400)
+        pending = [(body, 1)]
+        while pending:
+            value, depth = pending.pop()
+            if depth > 32:
+                raise SessionError('JSON nesting exceeds its bound', 400)
+            if isinstance(value, dict):
+                pending.extend((item, depth + 1) for item in value.values())
+            elif isinstance(value, list):
+                pending.extend((item, depth + 1) for item in value)
         return body
 
     def do_GET(self):
@@ -142,7 +153,7 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(200, self.server.session.snapshot(int(fields.get('after', ['0'])[0])))
         except SessionError as error:
             self.reply(error.status, {'error': str(error)})
-        except (ValueError, TypeError, KeyError):
+        except (ValueError, TypeError, KeyError, RecursionError):
             self.reply(400, {'error': 'Invalid request'})
 
     def do_POST(self):
@@ -188,5 +199,7 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(200, result)
         except SessionError as error:
             self.reply(error.status, {'error': str(error)})
+        except RecursionError:
+            self.reply(400, {'error': 'JSON nesting exceeds its bound'})
         except (ValueError, TypeError, KeyError, OSError) as error:
             self.reply(400, {'error': str(error)})
