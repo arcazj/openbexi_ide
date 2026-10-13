@@ -19,10 +19,11 @@ Use their exact artifact identities and open gates. IDE candidate commits do
 not promote plugin releases. The text below retains the earlier v0.4 handoff;
 [V05_PROGRESS.md](V05_PROGRESS.md) is historical prerequisite evidence.
 
-The sibling's committed conformance checkpoint is now `6f82c2c`: 470 qualified
-requirements and 293 open. Further isolated commits fix native child startup
-and prompt ownership (`166caff`), early console input (`15c7dd1`), and a
-reproducible host 0.3.1.dev1 upgrade candidate (`4a4c8c9`). The actual Qt upgrade,
+The sibling's committed conformance checkpoint is `6f82c2c`: 470 qualified
+requirements and 293 open. Its main branch now includes the early console input
+fix (`8127424`) and reproducible host 0.3.1.dev1 upgrade candidate (`a1b482a`).
+Native child startup and prompt ownership (`166caff`) remain in the next
+combined runtime's qualification branch. The actual Qt upgrade,
 Run/Debug child prompts, plugin removal and ordinary Python checks pass. See
 the supplemental host record in [the v1.0 release notes](IDE_V1_RELEASE.md).
 Their next composed runtime still requires its own build and regression evidence;
@@ -198,7 +199,9 @@ It is safe to close the old IntelliJ project and resume from the existing
 
 ## Restart instruction
 
-> Read docs/RESUME_V04.md and the linked project instructions. Resume the IDE
-> accepted IDE v0.3 and plugin v0.4 evidence, then continue plugin v0.5 through
-> v0.6. Preserve the old local project and archive. Ask before removing
-> C:/projects/openbexi_spell. Test, update documentation and commit each phase.
+> Read docs/RESUME_V04.md and the linked current release records. Continue the
+> IDE 1.0.0rc3 candidate's pending live-browser and fresh-Windows checks, and the
+> sibling plugin's full v0.5 conformance and v0.6 distribution work. Preserve the
+> qualified console fix, immutable candidate evidence, old local project and
+> archives. Ask before removing C:/projects/openbexi_spell. Test, update
+> documentation and commit each phase; promote releases only after their gates pass.
