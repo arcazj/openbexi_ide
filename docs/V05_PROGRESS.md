@@ -5,6 +5,10 @@ open. This checkpoint adds the requested examples and console behavior, and the
 sibling plugin starts full inventory qualification. No v0.5/v0.6 release tag is
 justified by this checkpoint.
 
+Latest conformance checkpoint: 82/763 rows qualify, including 40/66 COMMON rows.
+The remaining 681 rows and live noVNC verification keep the release open. See the
+continuation below and the sibling `conformance/COMMON.md` for current evidence.
+
 ## Examples and console
 
 `examples/test_Python_in_deep.py` has 15 asserted chapters covering major Python
@@ -75,8 +79,26 @@ passes. Do not replace the missing browser evidence with the Qt tests.
 
 ## Continue
 
+The subsequent sibling [COMMON milestone](../../openbexi_spell_plugin/conformance/COMMON.md)
+qualifies 40 of its 66 rows and resolves its two manual/source errata. The native
+wrapper now separates result/failure prompts, validates policies and handles
+configuration for functions absent from language.xml. Actual native IPC verifies
+silent text/item feedback while preserving data effects and system diagnostics.
+Six fresh native procedures verify abort, cleanup, error propagation, recovery
+and configuration isolation. The combined image passes all 168 TIME checks, ten
+native host tests and all nine driver tests; the latter evidence is
+`.qualification/v0.5/common-native-driver-final.xml`.
+
+The combined DSS development image is `openbexi-spell-dss:v05-common`, exact ID
+`sha256:34d20137501f19e34c46bda10022b7fd7eb2ff8b6a2aad47d9b6f6c65e643266`.
+The accepted v0.4 image and active browser lab were preserved. A fresh browser
+inventory still reports no connected browser, so live X/wheel verification
+remains open.
+
 Read the sibling `conformance/README.md`, run its release gate, then continue the
-721 open rows in `conformance/coverage.json`. Keep independent positive, boundary,
+681 open rows in `conformance/coverage.json` (82/763 qualified). The 26 remaining
+COMMON rows have service-family dependencies listed in `conformance/COMMON.md`.
+Keep independent positive, boundary,
 failure and recovery evidence, resolve all source/manual conflicts, and preserve
 the accepted v0.3/v0.4 artifacts. Full driver semantics, native control/recovery,
 databases, files, prompts, limits and specialized services still gate v0.5.
