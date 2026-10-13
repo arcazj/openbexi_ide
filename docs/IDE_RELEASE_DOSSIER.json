@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "product": "openbexi_ide",
+  "version": "1.0.0rc1",
+  "release_accepted": false,
+  "artifacts": {},
+  "gates": {
+    "windows_tests": {"status": "pending final candidate"},
+    "linux_tests": {"status": "pending final candidate"},
+    "installed_windows_lifecycle": {"status": "pending final candidate"},
+    "installed_docker_workflow": {"status": "pending final candidate"},
+    "browser_interaction": {"status": "pending connected browser control"},
+    "fresh_windows_install": {"status": "pending fresh Windows environment"}
+  }
+}

@@ -15,6 +15,7 @@
 !scripts/
 !scripts/qualify_installed.py
 !scripts/qualify_desktop_installed.py
+!scripts/check_release.py
 !docker/
 !docker/**
 **/__pycache__/

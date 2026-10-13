@@ -1,4 +1,4 @@
-# openbexi_ide v0.8.0rc1 ? installation diagnostics candidate
+# openbexi_ide v0.9.0rc1 ? release evidence checks candidate
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has
