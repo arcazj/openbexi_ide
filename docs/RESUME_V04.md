@@ -1,5 +1,8 @@
 # Resume from openbexi_ide
 
+Current work continues in [V05_PROGRESS.md](V05_PROGRESS.md). The accepted v0.4
+baseline below is preserved; v0.5/v0.6 have not passed their release gates.
+
 ## Current handoff after v0.4
 
 IDE 0.3 durable plugin Execution and plugin 0.4 GENERIC DSS drivers/modes are

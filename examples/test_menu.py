@@ -25,7 +25,7 @@ def main():
                   "1  Run all 39 Python qualification topics\n"
                   "2  List Python topics\n3  Run one Python topic\n"
                   "4  Start statistics graphic window\n5  Add a statistics point\n"
-                  "6  Close statistics graphic window\n0  Close windows and exit")
+                  "6  Close statistics graphic window\n7  Run Python in depth\n0  Close windows and exit")
             try: choice = input("Choose: ").strip()
             except (EOFError, KeyboardInterrupt): break
             if choice == "0": break
@@ -47,6 +47,10 @@ def main():
                     except (ValueError, OSError) as error: print(error)
                 else: print("Start the statistics window first")
             elif choice == "6": close_graphics()
+            elif choice == "7":
+                result = subprocess.run([sys.executable, "-I", "-B", "-u", "-X", "utf8",
+                                         str(directory / "test_Python_in_deep.py")])
+                print(f"Python in depth exit: {result.returncode}")
             else: print("Choose one of the listed numbers")
     finally:
         close_graphics()

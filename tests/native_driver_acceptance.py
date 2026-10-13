@@ -1,9 +1,11 @@
 """Explicit installed native driver/isolated worker/real DSS acceptance."""
+from contextlib import closing
 import threading
 import json
 import hashlib
 import sqlite3
 import time
+import os
 import pytest
 from dss.local import create_servers
 from openbexi_runtime.cli import request
@@ -13,13 +15,16 @@ from openbexi_runtime.execution_release import prepare,read_manifest,docker
 from test_execution_sessions import approve
 
 
+NATIVE_IMAGE = os.environ.get('OPENBEXI_NATIVE_TEST_IMAGE','openbexi-spell-dss:0.4.0')
+
+
 @pytest.fixture
 def dss(tmp_path,monkeypatch):
     runtime,tcp,http = create_servers(tmp_path/'dss.sqlite',0)
     threads = [threading.Thread(target=s.serve_forever) for s in (tcp,http)]
     for thread in threads:
         thread.start()
-    monkeypatch.setenv('OPENBEXI_SPELL_SHARED_IMAGE','openbexi-spell-dss:0.4.0')
+    monkeypatch.setenv('OPENBEXI_SPELL_SHARED_IMAGE',NATIVE_IMAGE)
     monkeypatch.setenv('OPENBEXI_SPELL_DSS_URL','http://127.0.0.1:' + str(http.server_port))
     monkeypatch.setenv('OPENBEXI_SPELL_DSS_TCP','127.0.0.1:' + str(tcp.server_address[1]))
     try:
@@ -59,6 +64,56 @@ def test_original_native_driver_manager_rpc_binary_command(dss,tmp_path):
         assert all(row['acknowledgement']['execution_id'] == procedure.id for row in evidence['operations'])
 
 
+def test_original_time_timeouts_reject_invalid_values_and_recover(dss,tmp_path):
+    """Native TIME travels through original models, RPC and actual binary DSS."""
+    project = tmp_path/'project'
+    project.mkdir()
+    git(project,'init','-q')
+    name = dss.database.telemetry[0]['item_id']
+    source = '''from spell.lib.registry import REGISTRY
+from spell.lib.adapter.utctime import TIME
+from spell.lib.exception import DriverException
+from spell.lang.functions import Display, Send, GetTM
+from spell.lang.modifiers import Timeout, Wait, Confirm, PromptUser
+from openbexi_dss_proxy.tc import descriptor
+from spell.utils.grpc_utils import UnpackValue
+tm,tc = REGISTRY['TM'],REGISTRY['TC']
+item = tm._createTmItem(TM_NAME)
+command = tc._createTcItem('CMD1')
+for value in (TIME(.000001), TIME(30), .5, 30):
+    wire = UnpackValue(descriptor(command,{Timeout:value}).config)
+    expected = value.rel() if isinstance(value,TIME) else value
+    assert wire['Timeout'] == expected
+for invalid in (TIME('2026-01-01'),TIME(0),TIME(-1),TIME(31),True,float('nan'),float('inf'),2**4096):
+    for operation in (lambda: tc._sendCommand(command,{Timeout:invalid}),
+                      lambda: tm._refreshItem(item,{Timeout:invalid,Wait:False})):
+        try: operation()
+        except DriverException: pass
+        else: raise AssertionError('Invalid timeout reached the service')
+assert Send(command='CMD1',config={Timeout:TIME(2),Confirm:False,PromptUser:False})
+assert GetTM(TM_NAME,{Timeout:TIME(.25),Wait:False}) is not None
+assert tm._refreshItem(item,{Timeout:TIME(30),Wait:False})[1]
+Display('NATIVE_TIME_TIMEOUT_PASS')
+'''.replace('TM_NAME',repr(name))
+    (project/'main.py').write_text(source)
+    commit(project)
+    with durable(project,tmp_path/'authority',lease_seconds=120) as (session,url):
+        actor = connect(session,url)
+        epoch = claim(url,actor)
+        # Fresh second executor proves the rejected requests leave no recovery
+        # hold or lingering original driver state; each run has exactly one TC.
+        for expected_commands in (1,2):
+            result = request(url,'/run',dict(epoch=epoch,script='main.py',language='spell'),actor['token'])
+            procedure = session.procedures[result['id']]
+            wait_for(lambda:procedure.status in {'COMPLETED','RECOVERY_REQUIRED','FAILED'},timeout=80)
+            output = ''.join(e.get('text','') for e in session.events if e.get('procedure') == procedure.id)
+            assert procedure.status == 'COMPLETED',(procedure.public(),output)
+            assert 'NATIVE_TIME_TIMEOUT_PASS' in output
+            assert dss.engine.state()['core']['commands_executed'] == expected_commands
+        receipts = dss.engine.evidence(dss.engine.state()['scenario_id'])['operations']
+        assert len(receipts) == 10 and all(row['ingress_delivery_count'] == 1 for row in receipts)
+
+
 @pytest.mark.parametrize('action',['handoff','revoke'])
 def test_native_release_authority_and_alias_admission(dss,tmp_path,action):
     project = tmp_path/'project'
@@ -69,7 +124,7 @@ def test_native_release_authority_and_alias_admission(dss,tmp_path,action):
     for name in ('main.py','alias.py'):
         (project/name).write_text(source)
     commit(project)
-    image = json.loads(docker('image','inspect','openbexi-spell-dss:0.4.0'))[0]['Id']
+    image = json.loads(docker('image','inspect',NATIVE_IMAGE))[0]['Id']
     prepared = prepare(project,'main.py',image,tmp_path/'prepared',backend='spell',additional_procedures=['alias.py'])
     manifest,state = read_manifest(prepared['manifest']),tmp_path/'authority'
     approve(state,manifest)
@@ -102,7 +157,7 @@ def test_native_release_authority_and_alias_admission(dss,tmp_path,action):
             wait_for(lambda:procedure.status in {'COMPLETED','RECOVERY_REQUIRED'},timeout=30)
             assert procedure.status == 'COMPLETED',procedure.public()
             assert dss.engine.state()['core']['commands_executed'] == 1
-            with sqlite3.connect(state/'driver-effects.sqlite') as db:
+            with closing(sqlite3.connect(state/'driver-effects.sqlite')) as db:
                 rows = db.execute('SELECT authority FROM effects WHERE procedure=?',(identifier,)).fetchall()
             assert any(json.loads(row[0])['controller_epoch']==next_epoch for row in rows)
     if action == 'revoke':
@@ -124,7 +179,7 @@ def test_approved_native_execution_uses_readonly_image_and_real_dss(dss,tmp_path
         "    try: Path(path).write_text('tamper')\n    except OSError: denied.append(path)\n"
         "assert len(denied)==3\nassert Send(command='CMD1')\nDisplay('APPROVED_NATIVE_COMPLETE')\n")
     commit(project)
-    image = json.loads(docker('image','inspect','openbexi-spell-dss:0.4.0'))[0]['Id']
+    image = json.loads(docker('image','inspect',NATIVE_IMAGE))[0]['Id']
     prepared = prepare(project,'main.py',image,tmp_path/'prepared',backend='spell')
     manifest = read_manifest(prepared['manifest'])
     state = tmp_path/'authority'

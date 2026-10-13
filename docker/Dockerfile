@@ -43,6 +43,6 @@ USER 10003:10003
 WORKDIR /workspace
 EXPOSE 6080
 LABEL org.opencontainers.image.title="OpenBEXI IDE test desktop" \
-      org.openbexi.scope="Development and Monitoring test fixture; v0.3 incomplete"
+      org.openbexi.scope="Python desktop and bounded DSS Development/Monitoring test fixture"
 ENTRYPOINT ["python", "-I", "/opt/test-lab/start.py"]
 CMD ["desktop"]

@@ -62,6 +62,9 @@ def initialize():
         run(['git', '-C', str(project), '-c', 'user.name=OpenBEXI Test Fixture',
              '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
              'commit', '-qm', 'Initial Docker test examples'])
+    # Existing workspace volumes keep edits; new examples get their own folder.
+    import runpy
+    runpy.run_path('/opt/test-lab/publish_examples.py')['publish']()
     target_certs = ROOT / 'certificates'
     if not target_certs.exists():
         # A terminated first start must not leave a partially initialized CA.

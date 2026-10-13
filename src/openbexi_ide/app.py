@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 
 from openbexi_runtime.launch import LaunchSpec, console_interpreter
 from .controller import ProbeTask, RunController
+from .console import OutputConsole
 from .debugger import DebugController
 from .editor import CodeEditor, FileConflictError
 from .fonts import configure_fonts, fixed_font
@@ -207,14 +208,17 @@ class MainWindow(QMainWindow):
         editor_layout.addWidget(self.editor_stack); editor_layout.addWidget(self.find)
         self.find.installEventFilter(self)
 
-        self.console = QPlainTextEdit(); self.console.setObjectName("consoleOutput")
-        self.console.setReadOnly(True); self.console.setMaximumBlockCount(5000)
+        self.console = OutputConsole(); self.console.setObjectName("consoleOutput")
         self.console.setFont(fixed_font())
         self.console.setPlaceholderText("Output appears here when you run a script.")
         self.input = QLineEdit(); self.input.setPlaceholderText("Send input to your running script…")
         self.input.returnPressed.connect(self.send_input)
         self.send_button = QPushButton("Send"); self.send_button.clicked.connect(self.send_input)
         input_row = QHBoxLayout(); input_row.addWidget(self.input); input_row.addWidget(self.send_button)
+        self.latest_output = QPushButton("Latest output")
+        self.latest_output.setToolTip("Return to the newest output and follow incoming lines")
+        self.latest_output.clicked.connect(self.console.show_latest)
+        input_row.addWidget(self.latest_output)
         console_panel = QWidget(); console_layout = QVBoxLayout(console_panel)
         console_layout.setContentsMargins(12, 8, 12, 10)
         console_layout.addWidget(self.console); console_layout.addLayout(input_row)
@@ -724,13 +728,7 @@ class MainWindow(QMainWindow):
             action.setEnabled(getattr(self.session_panel, name).isEnabled())
 
     def append_output(self, content):
-        cursor = self.console.textCursor(); cursor.movePosition(QTextCursor.End)
-        cursor.insertText(content); self.console.setTextCursor(cursor); self.console.ensureCursorVisible()
-        if self.console.document().characterCount() > 500_000:
-            cursor = QTextCursor(self.console.document())
-            cursor.setPosition(0)
-            cursor.setPosition(self.console.document().characterCount() - 400_000, QTextCursor.KeepAnchor)
-            cursor.removeSelectedText()
+        self.console.append_output(content)
 
     def run_finished(self, code):
         message = "Stopped" if self._stopping else f"Finished · exit {code}"
