@@ -4,6 +4,8 @@ from pathlib import Path
 import shutil
 import tempfile
 
+NATIVE_ONLY_TEST_SPELL = '2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05e6268d3323'
+
 
 def publish(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/projects')):
     files = sorted(p for p in source.iterdir() if p.is_file() and p.suffix in {'.py', '.md'})
@@ -27,6 +29,41 @@ def publish(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/pro
         staging.rename(destination)
         destinations.append(destination)
     return destinations
+
+
+def refresh_spell(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/projects')):
+    """Refresh the known shipped smoke example, preserving edited files and backups."""
+    destinations = publish(source, projects)
+    result = []
+    replacement = (source/'test_spell.py').read_bytes()
+    for destination in destinations:
+        target = destination.parent/'test_spell.py'
+        if target.is_symlink():
+            result.append(dict(path=str(target), status='preserved-symlink'))
+            continue
+        if target.exists():
+            original = target.read_bytes()
+            if original == replacement:
+                result.append(dict(path=str(target), status='current'))
+                continue
+            if hashlib.sha256(original).hexdigest() != NATIVE_ONLY_TEST_SPELL:
+                result.append(dict(path=str(target), status='preserved-edited-file'))
+                continue
+            backup = target.parent/('.test_spell-original-'+NATIVE_ONLY_TEST_SPELL[:12]+'.py')
+            if backup.exists():
+                if backup.is_symlink() or backup.read_bytes() != original:
+                    raise ValueError('Existing example backup differs: '+str(backup))
+            else:
+                with backup.open('xb') as stream:
+                    stream.write(original)
+            target.write_bytes(replacement)
+            status = 'refreshed-shipped-file'
+        else:
+            with target.open('xb') as stream:
+                stream.write(replacement)
+            status = 'added'
+        result.append(dict(path=str(target), status=status))
+    return dict(folders=list(map(str,destinations)), files=result)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "SPELL procedure examples; separate from immutable IDE rc3 and full plugin acceptance",
+  "sources": {
+    "examples/spell_native_child.py": "a054447714f431655f8a1bdba69ca72db1156397cb417ab451da4b9170ecc782",
+    "examples/spell_native_data.py": "2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05e6268d3323",
+    "examples/spell_native_parent.py": "f2633b64c181061ceffea9944a616e428629d27c7e18da560aa2a1a700b26ab4",
+    "examples/spell_native_prompt.py": "8c4e4a972840192c84f33d8f933b4faa27b87527722075732039dce1ddae963a",
+    "examples/spell_native_time.py": "3bdb4d5e491d2a05aaa425a9ae7aaddc87f5da700bc60c1bd84a85b6142a25a2",
+    "examples/spell_sdk_telemetry.py": "7f62058c007ca8e976bb5ef6d950ba11fcbd57e27e79d6c64667b82f52e78ddf",
+    "examples/test_spell.py": "bb892a7352463a68583ca0859b2603985507c49803dadb43095a9653d26f8396"
+  },
+  "reports": {
+    "sdk_baseline": {
+      "path": ".qualification/spell-examples/baseline-sdk/result.json",
+      "sha256": "b4d3ac1c477bc83e8c2f7f474d0df5e02a3d44c23bccedc8b906fe25bb82fc8f"
+    },
+    "windows": {
+      "path": ".qualification/spell-examples/windows.xml",
+      "sha256": "ef2441ce847066f131254a865a37c2eb485f55bcad6730ea7f49f4a7ed5719c4"
+    },
+    "linux_sdk": {
+      "path": ".qualification/spell-examples/c27e3cc08437470497c0aa86585bddf7/result.json",
+      "sha256": "a6947fb30f1ccec971a2ad1bdd33b1eff14f877d59522b022f4f6539dd16871f"
+    },
+    "native": {
+      "path": ".qualification/spell-examples/c194c940eed743bd878b63c6acb7ef99/result.json",
+      "sha256": "9de552da6c83eda49cd4a3cd52785c1c61ebeace1e0cdb47b1fb466ea677b6fa"
+    }
+  },
+  "checks": {
+    "windows": 6,
+    "linux_sdk": 4,
+    "native_procedures": 6
+  },
+  "release_accepted": false
+}
