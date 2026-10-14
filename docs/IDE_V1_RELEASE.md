@@ -1,5 +1,9 @@
 # Windows and Docker v1.0 candidate
 
+This is the historical rc3 record. The current desktop runs rc4 at port 6080;
+see [rc4 Docker and Windows qualification](IDE_RC4_DOCKER.md). The old containers
+listed below have been removed and their named volumes retained.
+
 Version 1.0.0rc3 is a release candidate. Final release acceptance remains false
 until actual browser interaction and a fresh Windows environment are qualified.
 The [machine-checked dossier](IDE_RELEASE_DOSSIER.json) records the exact artifacts,

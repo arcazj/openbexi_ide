@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "version": "1.0.0rc4",
+  "release_accepted": false,
+  "fresh_windows_accepted": false,
+  "source_commit": "9dd968e08a9aba12a1b20b9a39cb9457c145b54a",
+  "pair": {
+    "path": ".qualification/ide-rc4-windows/9f05196f32a446c09566632614565aca/result.json",
+    "sha256": "500da4199d1ec4ccc63b6b6d29a84b33c655df7d59a371f3c7b00b9f5cda35d3"
+  },
+  "artifact": {
+    "path": ".qualification/ide-rc4-windows/9f05196f32a446c09566632614565aca/a/OpenBEXI-IDE-1.0.0rc4-windows-x64.zip",
+    "sha256": "6a729a7a2208d3648d40f301371ba6aac081dc32d4c463a3148e44749ba59f1b"
+  },
+  "extraction": {
+    "path": ".qualification/rc4-extraction-9f05196f/extraction.json",
+    "sha256": "379570109b94ff68c54a7d5b750dbe8144a84c111822a7296ea1161adc6c014a"
+  },
+  "lifecycle": {
+    "path": ".qualification/rc4-installed-9f05196f/result.json",
+    "sha256": "80899d6dcdad4c1cdb6c947c77b434a06256d6cebabd4c934f1631d86694294c"
+  },
+  "checks": [
+    "Actual previous-version install then candidate upgrade; old interpreter retained",
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue",
+    "Installed Ctrl+Space insertion, F12 unsaved definition and read-only symbol navigation",
+    "Private runtime deep Python 15 chapters and graphics animation/controls/close",
+    "Run: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Debug: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Installed shared breakpoint, cached monitor variables and read-only source copy",
+    "Real 1.6-second evaluation retains explicitly reclaimed 1.2-second controller lease",
+    "Actual variable-edit dialog, Step Into/Out/Over and monitor cache updates",
+    "Fenced two-controller handoff, explicit Continue, input and completed shared output",
+    "Machine Python absent from PATH; Python environment injection ignored",
+    "Active bundled interpreter blocks uninstall before file deletion",
+    "Complete manifest-owned uninstall; project, saved example and preferences unchanged"
+  ],
+  "files": 7623,
+  "scope": "Two offline deterministic Windows assemblies; system tar extraction; actual rc3-to-rc4 upgrade and removal on the existing Windows host. Fresh Windows VM and optional native plugin acceptance remain separate.",
+  "retained_failure": {
+    "path": ".qualification/ide-rc4-windows/309ae116d1cd433f99afff6a3274200f/a.log",
+    "sha256": "3abb78d48df73d4c1e1d2a728b6f80227ebaf92355e2b2875ae5229ae5cae3d3"
+  },
+  "correction": "Use Windows extended paths for payload assembly and atomic py_compile cache writes."
+}

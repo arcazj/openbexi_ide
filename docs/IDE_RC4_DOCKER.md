@@ -34,3 +34,13 @@ volumes; no old projects or service data are deleted. Historical images and
 qualification records remain available. Exactly one replacement container,
 `openbexi-ide-ide-1`, is healthy on loopback port 6080. The rc3 release dossier is historical
 evidence and does not certify rc4; final v1.0 and full SPELL acceptance remain open.
+
+Windows rc4 is also packaged. Two offline assemblies from `9dd968e` produced
+identical ZIP bytes, SHA-256
+`6a729a7a2208d3648d40f301371ba6aac081dc32d4c463a3148e44749ba59f1b`.
+Windows system tar verified all 7,623 payload files. The actual rc3-to-rc4 upgrade,
+Run/Debug menus, shared debugging, active-process protection and removal pass
+14 lifecycle checks on this host. The builder now handles Windows paths longer
+than MAX_PATH during atomic bytecode creation and payload assembly. See the
+[Windows artifact and qualification record](IDE_RC4_WINDOWS_QUALIFICATION.json).
+This is not a fresh Windows machine qualification.

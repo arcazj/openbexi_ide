@@ -16,6 +16,9 @@ Replacement is complete: all 17 old IDE containers were removed, nine old named
 volumes retained, and one healthy rc4 desktop runs at port 6080. The final image,
 seven native procedures, five installed SDK checks and browser menu evidence are
 bound in [the rc4 qualification record](IDE_RC4_QUALIFICATION.json).
+Windows rc4 also has two identical offline ZIPs and 14 passing rc3-to-rc4
+upgrade/removal checks; [its record](IDE_RC4_WINDOWS_QUALIFICATION.json) binds
+the long-path builder correction, extracted payload and actual lifecycle.
 
 SPELL examples were fixed in `49edb66`. The browser's SDK lacks `spell.lib`, so
 `test_spell.py` now runs an explicitly labelled SDK mode there and retains its
