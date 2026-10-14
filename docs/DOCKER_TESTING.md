@@ -23,7 +23,8 @@ docker compose ps
 
 Open **[OpenBEXI IDE](http://localhost:6080/)**. The base address automatically
 opens the desktop; `http://127.0.0.1:6080/` also works.
-The IDE opens `hello.py`. The desktop underneath has visible launch buttons for
+The IDE opens `test_spell/spell_menu.py`. Keep **Python** selected and press Run.
+The desktop underneath has visible launch buttons for the **SPELL language menu**,
 Python, **SPELL / DSS — Alice**, Monitoring and a terminal. Closing an IDE leaves
 these buttons available. Right-click the background for the same choices.
 Double-click a window title to maximize it; Alt+Tab
@@ -46,6 +47,7 @@ existing Windows DSS/session services and bind only inside the container.
 | Desktop button | What to test |
 | --- | --- |
 | Python IDE | Editor, Run, console input, debugpy breakpoints/steps/variables, graphics |
+| SPELL language menu | Eleven language families, full feature catalogue, explicit runtime availability and local simulator tests |
 | SPELL / DSS — Alice / Shared developer — Bob | Shared Python or bounded SPELL; controller ownership, queue, slots, pause/resume, handoff |
 | Read-only monitor | Shared output/stacks with editing and execution controls disabled |
 | Durable Python | Python with captured committed Git sources, durable events and mutual TLS |

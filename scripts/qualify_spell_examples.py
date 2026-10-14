@@ -32,9 +32,9 @@ def main():
         parser.error('Native qualification needs --plugin-root for the independent DAP client')
     output = ROOT/'.qualification/spell-examples'/uuid.uuid4().hex
     project = output/'examples'
-    shutil.copytree(ROOT/'examples', project, ignore=shutil.ignore_patterns('__pycache__', '*.json'))
+    shutil.copytree(ROOT/'examples', project, ignore=shutil.ignore_patterns('__pycache__', '*_result.json', '*_results.json'))
     report = dict(passed=False, inputs={p.relative_to(ROOT).as_posix():sha(p)
-        for p in sorted((ROOT/'examples').rglob('*.py'))}, mode='sdk' if args.sdk_image else 'native')
+        for p in sorted((ROOT/'examples').rglob('*')) if p.is_file() and p.suffix in ('.py', '.json')}, mode='sdk' if args.sdk_image else 'native')
     report['harness_sha256'] = sha(Path(__file__))
     report['image'] = subprocess.check_output(['docker','image','inspect',args.sdk_image or args.native_image,
         '--format','{{.Id}}'], text=True).strip()
