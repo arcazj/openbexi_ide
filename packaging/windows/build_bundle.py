@@ -147,6 +147,14 @@ def source_snapshot(root, wheel, version, payload):
     return files
 
 
+def native_path(path):
+    value = str(path.resolve())
+    if os.name != 'nt' or value.startswith('\\\\?\\'):
+        return value
+    return ('\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\')
+            else '\\\\?\\' + value)
+
+
 def bytecode(payload):
     # Checked hashes and relative co_filename values make bytes independent of
     # output directory/mtime. Importlib fixes co_filename to the actual source
@@ -161,12 +169,6 @@ def bytecode(payload):
             compiled = Path(importlib.util.cache_from_source(str(source), optimization=''))
             # py_compile adds an atomic-write suffix to the cache name. Even
             # when source paths fit MAX_PATH, that temporary name may not.
-            def native_path(path):
-                value = str(path.resolve())
-                if os.name != 'nt' or value.startswith('\\\\?\\'):
-                    return value
-                return ('\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\')
-                        else '\\\\?\\' + value)
             py_compile.compile(native_path(source), cfile=native_path(compiled), dfile=source.relative_to(payload).as_posix(),
                                doraise=True, optimize=0, invalidation_mode=py_compile.PycInvalidationMode.CHECKED_HASH)
             count += 1
@@ -189,7 +191,7 @@ def main():
     archive = runtime_archive(args.cache.resolve(), lock)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    bundle = output / 'bundle'
+    bundle = Path(native_path(output / 'bundle'))
     payload = bundle / 'payload'
     payload.mkdir(parents=True)
     unpack_runtime(archive, payload)
