@@ -200,7 +200,7 @@ It is safe to close the old IntelliJ project and resume from the existing
 ## Restart instruction
 
 > Read docs/RESUME_V04.md and the linked current release records. Continue the
-> IDE 1.0.0rc3 candidate's pending live-browser and fresh-Windows checks, and the
+> IDE 1.0.0rc3 candidate's pending fresh-Windows check (13 browser checks passed), and the
 > sibling plugin's full v0.5 conformance and v0.6 distribution work. Preserve the
 > qualified console fix, immutable candidate evidence, old local project and
 > archives. Ask before removing C:/projects/openbexi_spell. Test, update

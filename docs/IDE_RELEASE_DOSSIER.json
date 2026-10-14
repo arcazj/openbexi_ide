@@ -58,12 +58,17 @@
       }
     },
     "browser_interaction": {
-      "status": "pending connected browser control",
-      "reason": "Available CUA surfaces empty; native control pipe unavailable. Actual noVNC X-button and wheel checks remain unqualified."
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/ide-v1.0/browser-0fb72ce4b9614fa89b2045a1136418c4/result.json",
+        "sha256": "1fcc8df82df4b6227cf70de7c1aea3d22e3509c27bfc9e7766063c1e73c8ccb6"
+      },
+      "limitation": "Busy Debug shutdown prints debugpy NoMoreMessages, then Stopped; the window and owned processes close successfully."
     },
     "fresh_windows_install": {
       "status": "pending fresh Windows environment",
-      "reason": "Private-runtime install/upgrade/removal passed on this host; no fresh Windows VM or Sandbox is available."
+      "reason": "Private-runtime install/upgrade/removal passed on this host. WindowsSandbox.exe is unavailable; Hyper-V is installed, but Get-VM is denied to this account. No accessible fresh Windows environment is available."
     }
   },
   "supplementary": {

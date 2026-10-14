@@ -71,7 +71,7 @@ tests**, with eight Docker Execution tests skipped inside its container and one
 Windows-only Job test skipped. The eight real Docker Execution tests run in the
 Windows suite. Installed X11 workflows, diagnostics, both Run/Debug menus and the
 actual Windows v0.6-to-v1.0 upgrade/removal lifecycle pass. The release checker
-reports only the live-browser and fresh-Windows gates as open.
+reports only the fresh-Windows gate as open.
 
 The installed Windows native SPELL lifecycle uses the previously qualified
 `0eadf2e3...` runtime. The later sibling `3434d53d...` DTA/telemetry checkpoint
@@ -90,9 +90,13 @@ Installed Linux menu tests initially failed a focus assertion when synthetic
 input targeted an inactive IDE after the graphics window opened. The harness
 now activates the IDE before input, while retaining the post-Send focus check.
 The installed X11/Openbox Run and Debug menus then pass all choices, nested input,
-graphics closure and exit. These Qt tests do not establish browser-level X-button
-or mouse-wheel operation. Available browser/native control surfaces are absent
-in this session, and no fresh Windows VM/Sandbox is available.
+graphics closure and exit. A separate real Edge/noVNC run now passes 13 browser
+checks: choices 1–6, Send/Enter and nested prompts, Run/Debug scrolling, and X
+buttons for IDE, graphics, shared-session and terminal windows. The report is
+bound in the release dossier. Busy Debug shutdown prints `NoMoreMessages` before
+`Stopped`, but closes the window and all owned target/debug adapter processes.
+Fresh Windows installation remains pending: Sandbox is unavailable, and this
+account cannot enumerate Hyper-V VMs.
 
 Use `openbexi doctor --desktop` for a bounded installed-runtime report. See
 [operations and recovery](OPERATIONS.md) before moving service state or restoring
