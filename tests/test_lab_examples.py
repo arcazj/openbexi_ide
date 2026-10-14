@@ -7,8 +7,8 @@ def test_spell_refresh_backs_up_shipped_file_and_preserves_user_edits(tmp_path):
     refresh = runpy.run_path(str(root/'docker/publish_examples.py'))['refresh_spell']
     source, projects = tmp_path/'source', tmp_path/'projects'
     source.mkdir()
-    new = (root/'examples/test_spell.py').read_bytes()
-    original = (root/'examples/spell_native_data.py').read_bytes()
+    new = (root/'examples/test_spell/test_spell.py').read_bytes()
+    original = (root/'examples/test_spell/spell_native_data.py').read_bytes()
     (source/'test_spell.py').write_bytes(new)
     demo, durable = projects/'demo', projects/'durable'
     demo.mkdir(parents=True)
@@ -29,9 +29,12 @@ def test_lab_example_refresh_preserves_existing_files_and_edits(tmp_path):
     source.mkdir()
     (source/'demo.py').write_text("print('first')\n")
     (source/'README.md').write_text('Example instructions\n')
+    (source/'test_spell').mkdir()
+    (source/'test_spell/feature_catalog.json').write_text('{"rows": []}\n')
     project = projects/'demo'; project.mkdir(parents=True)
     (project/'demo.py').write_text('user project contents\n')
     first, = publish(source,projects)
+    assert (first/'test_spell/feature_catalog.json').read_text() == '{"rows": []}\n'
     assert first.parent == project and (first/'demo.py').read_text() == "print('first')\n"
     (first/'demo.py').write_text('edited example\n')
     assert publish(source,projects) == [first]

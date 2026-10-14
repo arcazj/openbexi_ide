@@ -11,6 +11,7 @@ from PySide6.QtWidgets import QApplication, QGridLayout, QLabel, QPushButton, QV
 
 VIEWS = (
     ('local', 'Python IDE', 'Local Run, Debug and graphics'),
+    ('spell', 'SPELL language menu', 'Open test_spell/spell_menu.py, then Run'),
     ('alice', 'SPELL / DSS — Alice', 'Shared developer; open dss_demo.py'),
     ('monitor', 'Read-only monitor', 'Watch shared output and live stacks'),
     ('bob', 'Shared developer — Bob', 'Test controller handoff and queues'),
@@ -65,7 +66,7 @@ class Desktop(QWidget):
             self.addAction(action)
         layout.addLayout(grid)
         layout.addSpacing(20)
-        self.status = QLabel('SPELL test: open Alice, claim control, open dss_demo.py, choose SPELL plugin, then Run.')
+        self.status = QLabel('SPELL examples: open the SPELL language menu, keep Python selected, then Run. The console identifies the available runtime profile.')
         self.status.setWordWrap(True)
         layout.addWidget(self.status)
         layout.addStretch()
@@ -109,7 +110,7 @@ def main():
     desktop.show()
     QTimer.singleShot(0, lambda: Path('/tmp/openbexi-desktop.pid').write_text(str(os.getpid())))
     if '--no-initial-ide' not in sys.argv:
-        QTimer.singleShot(0, lambda: desktop.launch('local'))
+        QTimer.singleShot(0, lambda: desktop.launch('spell'))
     return app.exec()
 
 

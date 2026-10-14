@@ -1,7 +1,7 @@
-name: openbexi-ide-test
+name: openbexi-ide
 
 x-test-image: &test-image
-  image: openbexi-ide-test:current
+  image: openbexi-ide:1.0.0rc4
   platform: linux/amd64
   build:
     context: .
@@ -12,6 +12,7 @@ x-test-image: &test-image
 services:
   ide:
     <<: *test-image
+    network_mode: bridge
     init: true
     ports:
       - "127.0.0.1:${OPENBEXI_DESKTOP_PORT:-6080}:6080"
@@ -34,6 +35,7 @@ services:
 
   tests:
     <<: *test-image
+    network_mode: bridge
     profiles: [tests]
     init: true
     command: ["test"]

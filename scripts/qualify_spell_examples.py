@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import uuid
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +34,7 @@ def main():
     project = output/'examples'
     shutil.copytree(ROOT/'examples', project, ignore=shutil.ignore_patterns('__pycache__', '*.json'))
     report = dict(passed=False, inputs={p.relative_to(ROOT).as_posix():sha(p)
-        for p in sorted((ROOT/'examples').glob('*.py'))}, mode='sdk' if args.sdk_image else 'native')
+        for p in sorted((ROOT/'examples').rglob('*.py'))}, mode='sdk' if args.sdk_image else 'native')
     report['harness_sha256'] = sha(Path(__file__))
     report['image'] = subprocess.check_output(['docker','image','inspect',args.sdk_image or args.native_image,
         '--format','{{.Id}}'], text=True).strip()
@@ -61,8 +62,10 @@ def main():
                 subprocess.run(['docker','cp',name+':/evidence/linux.xml',str(output/'linux.xml')],
                     check=True,capture_output=True)
                 assert result.returncode == state['State']['ExitCode'] == 0, (result.stdout+result.stderr).decode(errors='replace')
-                assert b'4 passed' in result.stdout
-                report['checks'] = 4
+                suites = list(ET.parse(output/'linux.xml').getroot().iter('testsuite'))
+                assert sum(int(s.attrib['tests']) for s in suites) == 5
+                assert not any(int(s.attrib[k]) for s in suites for k in ('failures','errors','skipped'))
+                report['checks'] = 5
             finally:
                 if created:
                     subprocess.run(['docker','rm','-f',name],check=True,capture_output=True)
@@ -76,10 +79,11 @@ def main():
                      ('spell_native_time.py', [], 'SPELL_TIME_PASS'),
                      ('spell_native_prompt.py', ['0','1'], 'SPELL_PROMPT_PASS [True, False]'),
                      ('spell_native_child.py', ['1'], 'SPELL_CHILD_PASS choice=False'),
-                     ('spell_native_parent.py', ['0','1'], 'SPELL_PARENT_PASS choice=False')]
+                     ('spell_native_parent.py', ['0','1'], 'SPELL_PARENT_PASS choice=False'),
+                     ('spell_menu.py', ['13','0'], 'SPELL_MENU_COMPLETE checks=11 failures=0')]
             report['cases'] = {}
             for filename, answers, marker in cases:
-                client = host.Client(project)
+                client = host.Client(project/'test_spell')
                 try:
                     client.launch(filename,noDebug=True)
                     client.request('configurationDone')

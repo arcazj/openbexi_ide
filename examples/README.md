@@ -1,5 +1,10 @@
 # Example workspace
 
+All SPELL procedures are under **test_spell/**. Open `test_spell/spell_menu.py`
+for the interactive language menu and complete feature catalogue; see
+[SPELL procedure instructions](test_spell/README.md). The new Docker desktop
+also provides a **SPELL language menu** launcher.
+
 Select **Python** for ordinary Python examples. `test_Python.py` retains the
 39-topic reference suite; `test_Python_in_deep.py` adds 15 readable, independently
 asserted chapters covering language constructs, advanced objects, generics,
@@ -27,7 +32,7 @@ imports `spell.lib` and runs the original native data, time and shared-data chec
 You can also use the host runner from an interpreter with `openbexi-spell-host`:
 
 ```powershell
-python -m openbexi_spell_host.runner --project ./examples --program ./examples/test_spell.py
+python -m openbexi_spell_host.runner --project ./examples/test_spell --program ./examples/test_spell/test_spell.py
 ```
 
 The configured Docker runtime must be available. The accepted local image is

@@ -1,10 +1,14 @@
-# openbexi_ide v1.0.0rc3 - Windows and Docker release candidate
+# openbexi_ide v1.0.0rc4 - Docker release candidate
 
-The [v1.0 candidate](docs/IDE_V1_RELEASE.md) combines the Windows installer,
-shared debugger, service limits and installed diagnostics. Its separate Docker
-desktop is at `http://127.0.0.1:6087/vnc.html`; start it with
-`docker compose -f compose.v1.yaml up -d --wait`.
-Final acceptance still requires the recorded live-browser and fresh-Windows gates.
+The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Start it with
+`docker compose up -d --build --wait ide`. It contains the latest IDE source and
+all SPELL procedures under `test_spell/`, with a dedicated language-menu launcher.
+The menu exercises available features and lists all 763 reference entries;
+unsupported features are explicitly reported. See [the procedures](examples/test_spell/README.md).
+
+The [earlier rc3 qualification](docs/IDE_V1_RELEASE.md) retains the Windows bundle
+and 13 passing browser checks. It does not certify this new Docker image. Final
+v1.0 acceptance still needs installation in a fresh Windows environment.
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has
@@ -26,8 +30,7 @@ Analysis uses source syntax on a background worker and includes unsaved tabs.
 Console history stays readable during new output; **Latest output** resumes
 following the tail. The deep Python, interactive graphics and explicitly imported
 original SPELL examples are included. See [v0.4 qualification](docs/IDE_V04_USABILITY.md).
-Live noVNC X-button/mouse-wheel verification remains open, so the final v0.4 tag
-has not been accepted. The IDE releases follow their independent roadmap;
+Live noVNC X-button/mouse-wheel checks passed on rc3. The IDE releases follow their independent roadmap;
 candidate commits do not promote the sibling plugin's conformance releases.
 
 Current release artifacts and remaining work: [resume development](docs/RESUME_V04.md).

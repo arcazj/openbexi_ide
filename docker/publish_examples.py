@@ -8,11 +8,12 @@ NATIVE_ONLY_TEST_SPELL = '2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05
 
 
 def publish(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/projects')):
-    files = sorted(p for p in source.iterdir() if p.is_file() and p.suffix in {'.py', '.md'})
+    files = sorted(p for p in source.rglob('*') if p.is_file() and p.suffix in {'.py', '.md', '.json'}
+                   and '__pycache__' not in p.parts)
     digest = hashlib.sha256()
     for path in files:
-        digest.update(path.name.encode() + b'\0' + path.read_bytes())
-    name = 'examples-v05-' + digest.hexdigest()[:12]
+        digest.update(path.relative_to(source).as_posix().encode() + b'\0' + path.read_bytes())
+    name = 'examples-' + digest.hexdigest()[:12]
     destinations = []
     for project in ('demo', 'durable'):
         parent = projects / project
@@ -25,7 +26,9 @@ def publish(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/pro
             continue
         staging = Path(tempfile.mkdtemp(prefix='.examples-preparing-', dir=parent))
         for path in files:
-            shutil.copyfile(path, staging / path.name)
+            target = staging / path.relative_to(source)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, target)
         staging.rename(destination)
         destinations.append(destination)
     return destinations
@@ -35,7 +38,8 @@ def refresh_spell(source=Path('/opt/openbexi/examples'), projects=Path('/workspa
     """Refresh the known shipped smoke example, preserving edited files and backups."""
     destinations = publish(source, projects)
     result = []
-    replacement = (source/'test_spell.py').read_bytes()
+    script = source/'test_spell/test_spell.py'
+    replacement = (script if script.is_file() else source/'test_spell.py').read_bytes()
     for destination in destinations:
         target = destination.parent/'test_spell.py'
         if target.is_symlink():
