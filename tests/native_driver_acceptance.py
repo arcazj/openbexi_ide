@@ -266,6 +266,18 @@ def test_native_driver_failure_and_freeze_boundaries(dss,tmp_path,fault):
 
 
 def test_original_factory_instantiates_every_family_and_uses_native_models(dss,tmp_path,monkeypatch):
+    from openbexi_spell_dss.ground import Ground
+    from openbexi_spell_dss.journal import Journal
+    from openbexi_spell_dss.transport import Transport
+
+    # LRM p69 permits updating an existing GCS resource. Configure that resource
+    # administratively before the native procedure, using the real persisted store.
+    host,port = os.environ['OPENBEXI_SPELL_DSS_TCP'].rsplit(':',1)
+    with closing(Transport(os.environ['OPENBEXI_SPELL_DSS_URL'],(host,int(port)))) as transport:
+        with closing(Journal(tmp_path/'authority/driver-effects.sqlite')) as journal:
+            ground = Ground(transport,journal)
+            ground.update(lambda state:state['resources'].update(fixture=21))
+            resource_namespace = ground.namespace
     accounts = tmp_path/'simulator-accounts.json'
     accounts.write_text(json.dumps({'qualification':hashlib.sha256(b'simulator-only').hexdigest()}))
     monkeypatch.setenv('OPENBEXI_SPELL_DSS_USERS',str(accounts))
@@ -279,6 +291,7 @@ from spell.lang.modifiers import Host
 for family in ['CONFIG','TM','TC','EV','PCS','MEM','RSC','TASK','RNG','USER','TIME']:
     assert type(REGISTRY[family]).__module__.startswith('openbexi_dss_proxy.')
 REGISTRY['EV'].raiseEvent('Native family event')
+assert REGISTRY['RSC'].getResource('fixture', False) == 21
 assert REGISTRY['RSC'].setResource('fixture', 42, False)
 assert REGISTRY['RSC'].getResource('fixture', False) == 42
 assert REGISTRY['MEM'].createGoldenImage('GENERIC', 'native-snapshot')
@@ -309,3 +322,7 @@ Display('ALL_NATIVE_DRIVER_FAMILIES_COMPLETE')
         assert procedure.status == 'COMPLETED',(procedure.public(),output)
         assert 'ALL_NATIVE_DRIVER_FAMILIES_COMPLETE' in output
         assert dss.engine.state()['core']['commands_executed'] == 1
+    with closing(sqlite3.connect(tmp_path/'authority/driver-effects.sqlite')) as database:
+        persisted = json.loads(database.execute('SELECT state FROM ground WHERE namespace=?',
+            (resource_namespace,)).fetchone()[0])
+        assert persisted['resources']['fixture'] == 42

@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "scope": "Installed IDE rc4 and composed SPELL packages: complete native/shared/original-driver/Kafka acceptance, not full release acceptance",
+  "tests": 49,
+  "image": "sha256:2a18e4f10a028df06785a2b6326ee1a3b42fcdba6073b9b051916574ef656b66",
+  "result": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\qualification-resource-fixture\\result.json",
+    "sha256": "88520e358db3e21dfff028eb2bbe1904a8b3739e8d7f1e508f4321c68e74f046"
+  },
+  "junit": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\qualification-resource-fixture\\tests.xml",
+    "sha256": "c3f0e05f26e768c3b993dd85af8b868e4fd8e9acaa3532260db6e9c14cb00938"
+  },
+  "strict_record": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\host-delivery\\476ae64d1c0e4b97b5d060ab653e9446\\driver-qualified.json",
+    "sha256": "d1ebabd8a6b48bcd3d7fd5a06bca3faf8e8572cede47d9d9b15b27003ea097ae"
+  },
+  "installation": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\result.json",
+    "sha256": "92431c9682ae8d7e6cb703e74b4da592c3903598b9856ed99d135df7797e30ff"
+  },
+  "pip_check": {
+    "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\pip-check.log",
+    "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+  },
+  "test_source": {
+    "path": "C:\\projects\\openbexi_ide\\tests\\native_driver_acceptance.py",
+    "sha256": "d5f23538621522a5178fa6a86ddcfc37b3bd0ef59050db2482a65577202615c6"
+  },
+  "retained_failure": {
+    "result": {
+      "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\qualification\\result.json",
+      "sha256": "3ee6e63357da13a277367915e23daf9455dab322d0d892cfdc550d0bdf2b0e93"
+    },
+    "junit": {
+      "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\qualification\\tests.xml",
+      "sha256": "2452bc49b348f2649a87306f0c3dfffaae74c8daf5b2257c94224d6cc33efecf"
+    },
+    "state": {
+      "path": "C:\\projects\\openbexi_spell_plugin\\.qualification\\driver-install\\0998609d5e1d4cce810531cef0ea678d\\failed-resource-fixture\\authority\\session.sqlite3",
+      "sha256": "a2e30660baf3d7140beb405f4eba919cb15f1a972b447146722e7af7226bb108"
+    },
+    "reason": "The family smoke test attempted to create a missing GCS resource via SPELL SetResource; LRM p69 permits updates of existing resources. The corrected fixture administratively seeds 21, the native procedure reads 21 and updates/reads 42, and a separate SQLite read verifies persisted 42. No runtime or package bytes changed."
+  },
+  "full_release_accepted": false
+}
