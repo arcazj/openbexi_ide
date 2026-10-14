@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "version": "1.0.0rc4",
+  "source_commit": "21948f3",
+  "image": "sha256:a73538066ea1eb5ae497f1c8ea6e47f3d298d074c66da36e9ab83adc4fa9aace",
+  "container": "openbexi-ide-ide-1",
+  "url": "http://127.0.0.1:6080/vnc.html",
+  "ide_wheel_sha256": "dd7128eec2c542402296f4c8e22b4c07157cf826de78a06bebb06135b5f936ec",
+  "final_v1_accepted": false,
+  "full_spell_conformance": false,
+  "removal": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-replacement\\56c74ce28c724901beae32c177cbe4a8\\result.json",
+    "sha256": "c9be0ac23a53287cd1fbacdd8b0eacaa7ca9877412a09baf284d7673d07a8894"
+  },
+  "browser": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-rc4-browser\\dbbd1ddbe16646f485a6d494d65c7b06\\result.json",
+    "sha256": "d20324e5102d4c1980e3efed4c874cc6c8edfdd4c22e0585f8dcc79b38bbb9e4"
+  },
+  "sdk_examples": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\spell-examples\\6f616bc43c6347a488146ffd343d2f00\\result.json",
+    "sha256": "799ca05fec1a52269a2b6ae4868ae2eb37921e170be9d30e5943b5d56ff88b4c"
+  },
+  "native_examples": {
+    "path": "C:\\projects\\openbexi_ide\\.qualification\\spell-examples\\bd9561bdabe9423eba9b5a3a09696be0\\result.json",
+    "sha256": "99d25b3b1601db35be60df89f3022aa07130c8bfd4dc149d74a3568fbfa07c41"
+  },
+  "artifacts": {
+    "build.log": "eee8cbfd09d6816b3ee4ef10eeae6cd97696972174777115bc0c956f26699015",
+    "container.json": "b62c9f61c91654cc2061fcaa8ec548a4016115e2d623ebdaa49187523d5486ef",
+    "image.json": "4c487b47da1393ffebb572f3bcc6ec0f024e9954c33c973649b3a764b9f4ccf8",
+    "source-commit.txt": "992b856ef065f53e54398e5e739328403ecbce28318db269f14f1d37d9f82a24",
+    "installed/installed-controller.png": "fddbf55165000899ac83f49ec44311818a7b6ce3beeb31ca6dcc7b2643474f87",
+    "installed/installed-desktop.json": "85a95ddbc488e7f76799c58dac06baa9174ef9c40ed13f8e2a1274583001155d",
+    "installed/installed-dss-66a6c99216f1408daf2a7b0b0357a80b.sqlite": "2f6ebf81c8f354bde0f553d21c04f0e9b420e9d305c1ffe25288ec2728230c19",
+    "installed/installed-monitor.png": "46bc524134f732421e54e4e50bfeb47b253e2b5b1e5305e00b4a6c7dfa670129",
+    "installed/installed-smoke.json": "01687c12877838f430606ff401fbb128f40e055e45018db89524858a06644fcd",
+    "installed/installed-desktop-fc82c9b6fc01468eb209da2849f03c66/Alice.ini": "b4dd854b063cb48539f04f1f96b9a05c35db08a603c9cf383a503b914116af92",
+    "installed/installed-desktop-fc82c9b6fc01468eb209da2849f03c66/dss.sqlite": "5b8752250d6a85a5f3111c1622c5cd34f6a1d4feea96a07bd4aeccd21285e112",
+    "installed/installed-desktop-fc82c9b6fc01468eb209da2849f03c66/Reader.ini": "b4dd854b063cb48539f04f1f96b9a05c35db08a603c9cf383a503b914116af92",
+    "installed/installed-project/first.py": "2691abe1f9e16b03705ac168ee1cdd14899168c216c09ef784a0d935c205f59d",
+    "installed/installed-project/second.py": "c50a3f2ade079fcccbaf16dcc033a760e32d31594427d1e4df8acdb7c31049a9",
+    "installed/installed-desktop-fc82c9b6fc01468eb209da2849f03c66/project/python.py": "192524e1f5cfe78041ca9e2b7263602ed214c4fb9568473680008530bffe40ec",
+    "installed/installed-desktop-fc82c9b6fc01468eb209da2849f03c66/project/spell.py": "2d8905801c430a1faff12ecf98fb1d21e0b2ff2786c4b88eabafa5d58d59df62"
+  },
+  "examples": {
+    "test_spell/feature_catalog.json": "2e7f07bac18a84f713c38abe0d76274f1544d33a44de16cde32e47926bf14abe",
+    "test_spell/README.md": "8e2c3d534c9fc8843e1ad8e3ba0a47d305576bb4a4298682ba19d5fc928c950e",
+    "test_spell/spell_menu.py": "9f099ab5fb4b1cb33b7300a79b93f8e5fef76cfba815306cbcfe1485e32ae72c",
+    "test_spell/spell_native_child.py": "a054447714f431655f8a1bdba69ca72db1156397cb417ab451da4b9170ecc782",
+    "test_spell/spell_native_data.py": "2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05e6268d3323",
+    "test_spell/spell_native_parent.py": "f2633b64c181061ceffea9944a616e428629d27c7e18da560aa2a1a700b26ab4",
+    "test_spell/spell_native_prompt.py": "8c4e4a972840192c84f33d8f933b4faa27b87527722075732039dce1ddae963a",
+    "test_spell/spell_native_time.py": "3bdb4d5e491d2a05aaa425a9ae7aaddc87f5da700bc60c1bd84a85b6142a25a2",
+    "test_spell/spell_sdk_telemetry.py": "7f62058c007ca8e976bb5ef6d950ba11fcbd57e27e79d6c64667b82f52e78ddf",
+    "test_spell/test_spell.py": "bb892a7352463a68583ca0859b2603985507c49803dadb43095a9653d26f8396"
+  },
+  "source_suites": {
+    "windows": {
+      "report": {
+        "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-rc4-windows.xml",
+        "sha256": "6f0aecaab4a2833dbde8dd444926a640f9d1f4c2024545375ef7d0775d175dd2"
+      },
+      "tests": 177,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9
+    },
+    "linux": {
+      "report": {
+        "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-rc4-build\\72446da394db409b89ee2801560b352e\\linux\\tests.xml",
+        "sha256": "f6d52ab64c8cdd3b67fb7ff90e689b0c320ca092a0ae6b01efef0f4821d1fcf2"
+      },
+      "tests": 177,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9
+    },
+    "scope": "Full suites preceded the native-menu output/constant correction. IDE/runtime source is unchanged; final examples passed five installed SDK tests, seven native procedures and actual browser Run/Debug. Final image installed headless and X11 checks also pass."
+  }
+}

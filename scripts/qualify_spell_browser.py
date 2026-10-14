@@ -74,8 +74,10 @@ def main():
             canvas=page.locator('canvas').bounding_box()
             assert canvas['width']==1600 and canvas['height']==1000
             def click(name):
+                # Let noVNC repaint and the window manager finish layout changes.
+                page.wait_for_timeout(250)
                 x,y,w,h=read()['geometry'][name]
-                page.mouse.click(canvas['x']+x+w/2,canvas['y']+y+h/2)
+                page.mouse.click(canvas['x']+x+w/2,canvas['y']+y+h/2,delay=150)
             def answer(text, enter=False):
                 click('input')
                 wait(lambda s:s['input_enabled'] and s['input_focused'],'input-focused')

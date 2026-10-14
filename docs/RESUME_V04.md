@@ -12,6 +12,10 @@ environment; this account cannot access Hyper-V VMs and has no Sandbox.
 The user requested one replacement desktop at `http://127.0.0.1:6080/vnc.html`
 and removal of all older IDE containers. Preserve their named volumes and
 retained evidence. `compose.yaml` now selects rc4 with a fresh workspace.
+Replacement is complete: all 17 old IDE containers were removed, nine old named
+volumes retained, and one healthy rc4 desktop runs at port 6080. The final image,
+seven native procedures, five installed SDK checks and browser menu evidence are
+bound in [the rc4 qualification record](IDE_RC4_QUALIFICATION.json).
 
 SPELL examples were fixed in `49edb66`. The browser's SDK lacks `spell.lib`, so
 `test_spell.py` now runs an explicitly labelled SDK mode there and retains its
@@ -39,6 +43,14 @@ Run/Debug child prompts, plugin removal and ordinary Python checks pass. See
 the supplemental host record in [the v1.0 release notes](IDE_V1_RELEASE.md).
 Their next composed runtime still requires its own build and regression evidence;
 these commits do not accept plugin v0.5/v0.6.
+
+Follow-up work has resumed in the plugin's
+`.qualification/v0.6/followup-integrated-worktree`. Commit `e6f9d52` records two
+passing independent native rebuilds from `2c3ded9`, including the shutdown fix,
+with identical wheel/native bytes. Fresh images from that wheel also pass their
+installed integrity checks (image run `7fdd41dd10854458a0db745e4ad242a9`); native
+language and host/workflow regressions remain required. Child close/kill donor
+`4543128` is qualified separately and is excluded from this image composition.
 
 ## Current handoff after v0.4
 

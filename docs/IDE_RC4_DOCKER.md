@@ -14,10 +14,23 @@ The Windows source suite passes 168 tests; nine are skipped: this account cannot
 create symlinks, and eight Docker Execution tests require a separately selected
 exact image. The focused example/publisher suite passes seven tests, including
 cancelled and confirmed commands against a fresh DSS and preservation of edits.
-Fresh Docker and browser results will be recorded separately for this candidate.
+The Linux suite also passes 168 tests with nine platform/profile skips. These
+full suites precede the final native-menu correction; IDE/runtime code is
+unchanged. The final image passes five installed SDK checks, all seven native
+procedures against the separately selected native runtime, and actual Edge/noVNC
+Run, Debug, Send/Enter, catalogue browsing, scrolling both ways and titlebar X.
+Its installed headless and X11 collaboration checks pass as well.
 
-The user requested removal of all prior IDE containers. Their named workspace,
+Source commit `21948f3` produces image
+`sha256:a73538066ea1eb5ae497f1c8ea6e47f3d298d074c66da36e9ab83adc4fa9aace`.
+The native menu uses SPELL Display and its original NOACTION value (64); the
+bounded SDK uses 0. Native run-all passes seven demonstrations and reports four
+unavailable; SDK run-all passes six and reports five unavailable. Retained failed
+attempts document the corrections. See [exact evidence](IDE_RC4_QUALIFICATION.json).
+
+All 17 prior IDE containers have been removed. Their nine named workspace,
 preferences and evidence volumes are retained. The new Compose project uses new
 volumes; no old projects or service data are deleted. Historical images and
-qualification records remain available. The rc3 release dossier is historical
+qualification records remain available. Exactly one replacement container,
+`openbexi-ide-ide-1`, is healthy on loopback port 6080. The rc3 release dossier is historical
 evidence and does not certify rc4; final v1.0 and full SPELL acceptance remain open.
