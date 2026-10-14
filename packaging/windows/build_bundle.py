@@ -11,6 +11,7 @@ import hashlib
 import io
 import importlib.util
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
 import py_compile
@@ -158,7 +159,15 @@ def bytecode(payload):
     for tree in (payload / 'runtime/Lib', payload / 'examples'):
         for source in sorted(tree.rglob('*.py')):
             compiled = Path(importlib.util.cache_from_source(str(source), optimization=''))
-            py_compile.compile(str(source), cfile=str(compiled), dfile=source.relative_to(payload).as_posix(),
+            # py_compile adds an atomic-write suffix to the cache name. Even
+            # when source paths fit MAX_PATH, that temporary name may not.
+            def native_path(path):
+                value = str(path.resolve())
+                if os.name != 'nt' or value.startswith('\\\\?\\'):
+                    return value
+                return ('\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\')
+                        else '\\\\?\\' + value)
+            py_compile.compile(native_path(source), cfile=native_path(compiled), dfile=source.relative_to(payload).as_posix(),
                                doraise=True, optimize=0, invalidation_mode=py_compile.PycInvalidationMode.CHECKED_HASH)
             count += 1
     return {'implementation': 'CPython', 'version': '3.13.15', 'optimization': 0,
