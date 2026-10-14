@@ -49,7 +49,11 @@ Follow-up work has resumed in the plugin's
 passing independent native rebuilds from `2c3ded9`, including the shutdown fix,
 with identical wheel/native bytes. Fresh images from that wheel also pass their
 installed integrity checks (image run `7fdd41dd10854458a0db745e4ad242a9`); native
-language and host/workflow regressions remain required. Child close/kill donor
+DATA (24 checks) and FILES (36 checks) pass on fresh DSS image
+`sha256:05250401718be55f148c687e6cc3a7964ce0bde8ac7d190fb6dba7796b39a53f`.
+The remaining 22 language suites, recorder/recovery and host/workflow regressions
+remain required; continue with `conformance/run_data_race.py --image` using that
+exact image and the runbook's unchanged commands. Child close/kill donor
 `4543128` is qualified separately and is excluded from this image composition.
 
 ## Current handoff after v0.4
