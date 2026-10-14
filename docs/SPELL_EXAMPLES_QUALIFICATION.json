@@ -27,6 +27,10 @@
     "native": {
       "path": ".qualification/spell-examples/c194c940eed743bd878b63c6acb7ef99/result.json",
       "sha256": "9de552da6c83eda49cd4a3cd52785c1c61ebeace1e0cdb47b1fb466ea677b6fa"
+    },
+    "running_desktops": {
+      "path": ".qualification/spell-examples/publication-f1648ba8e0ba443c8e2fed9e010a0509/result.json",
+      "sha256": "3c8581ade800b48d1bc75ab6f42733451a6fc58b9fc9b4f2f9a05f44337edea3"
     }
   },
   "checks": {

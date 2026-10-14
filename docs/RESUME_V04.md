@@ -4,13 +4,23 @@ The current IDE candidate is **1.0.0rc3**, committed at `9877095`. Start from
 [the v1.0 release record](IDE_V1_RELEASE.md) and
 [the exact release dossier](IDE_RELEASE_DOSSIER.json). The console menu input
 fix, shared Python debugging, Windows packaging, service limits and diagnostics
-are implemented and tested. Final acceptance still needs actual noVNC X-button
-and wheel interaction, plus installation in a fresh Windows environment.
+are implemented and tested. The actual noVNC gate now passes 13 checks, committed
+as `db44911`. Final acceptance still needs installation in a fresh Windows
+environment; this account cannot access Hyper-V VMs and has no Sandbox.
 
 The current candidate desktop is `http://127.0.0.1:6087/vnc.html`. The corrected
 v0.5 desktop uses port 6086; see [its launch instructions](IDE_V05_DOCKER.md).
 Port 6080 still serves the older running desktop. Preserve its open windows and
 volumes; visiting that address does not select the corrected candidate.
+
+SPELL examples were fixed in `49edb66`. The browser's SDK lacks `spell.lib`, so
+`test_spell.py` now runs an explicitly labelled SDK mode there and retains its
+native mode under the original backend. Six Windows tests, four installed Linux
+checks and six native procedures pass; see [the evidence](SPELL_EXAMPLES_QUALIFICATION.json).
+The four running desktops have the corrected smoke example and the additional
+procedures in `demo/examples-v05-520a34af2e86` (also under `durable`). Unmodified
+shipped root files were backed up and refreshed; edited files and windows were
+preserved. These workspace additions do not replace the immutable rc3 artifacts.
 
 SPELL work continues in the sibling repository's
 [conformance checkpoint](../../openbexi_spell_plugin/docs/V05_CONFORMANCE_QUALIFICATION.json)
