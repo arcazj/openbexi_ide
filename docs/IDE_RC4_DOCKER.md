@@ -44,3 +44,10 @@ Run/Debug menus, shared debugging, active-process protection and removal pass
 than MAX_PATH during atomic bytecode creation and payload assembly. See the
 [Windows artifact and qualification record](IDE_RC4_WINDOWS_QUALIFICATION.json).
 This is not a fresh Windows machine qualification.
+
+The [rc4 release dossier](IDE_RC4_RELEASE_DOSSIER.json) now binds the Windows
+artifact, Docker image, installed workflows and actual browser checks. All eight
+Docker execution tests pass against the final immutable rc4 image. Combined with
+the original Windows suite, this gives 176 passes and one symlink-permission
+skip. `scripts/check_release.py` reports only the fresh Windows installation gate
+as pending; it continues to reject final release acceptance.

@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "product": "openbexi_ide",
+  "version": "1.0.0rc4",
+  "release_accepted": false,
+  "artifacts": {
+    "ide_wheel": {
+      "path": ".qualification/rc4-release/openbexi_ide-1.0.0rc4-py3-none-any.whl",
+      "sha256": "dd7128eec2c542402296f4c8e22b4c07157cf826de78a06bebb06135b5f936ec"
+    },
+    "windows_bundle": {
+      "path": ".qualification/ide-rc4-windows/9f05196f32a446c09566632614565aca/a/OpenBEXI-IDE-1.0.0rc4-windows-x64.zip",
+      "sha256": "6a729a7a2208d3648d40f301371ba6aac081dc32d4c463a3148e44749ba59f1b"
+    },
+    "docker_image_record": {
+      "path": ".qualification/ide-rc4-build/973f5094eff84f75b60d3db83fa694ed/image.json",
+      "sha256": "4c487b47da1393ffebb572f3bcc6ec0f024e9954c33c973649b3a764b9f4ccf8"
+    }
+  },
+  "gates": {
+    "windows_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/rc4-release/windows-combined.xml",
+        "sha256": "418157e0dcfc31650b3732dc2f7512bf958c5eb34e6b4c53af623c13a4266b60"
+      },
+      "skip_explanation": "176 passed; one Windows symlink permission skip. Aggregate replaces exactly the eight Docker skips with the passing immutable rc4 execution run."
+    },
+    "linux_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/ide-rc4-build/72446da394db409b89ee2801560b352e/linux/tests.xml",
+        "sha256": "f6d52ab64c8cdd3b67fb7ff90e689b0c320ca092a0ae6b01efef0f4821d1fcf2"
+      },
+      "skip_explanation": "168 passed; eight Docker execution tests require a host Docker socket and are covered on Windows; one Windows Job test is platform-specific."
+    },
+    "installed_windows_lifecycle": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/rc4-installed-9f05196f/result.json",
+        "sha256": "80899d6dcdad4c1cdb6c947c77b434a06256d6cebabd4c934f1631d86694294c"
+      }
+    },
+    "installed_docker_workflow": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/ide-rc4-build/973f5094eff84f75b60d3db83fa694ed/installed/installed-desktop.json",
+        "sha256": "85a95ddbc488e7f76799c58dac06baa9174ef9c40ed13f8e2a1274583001155d"
+      }
+    },
+    "browser_interaction": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/rc4-release/browser-binding.json",
+        "sha256": "d95bd145c4981c46b121228a1570ef33c71937fba1f1cfa662af7dec07cd878c"
+      }
+    },
+    "fresh_windows_install": {
+      "status": "pending fresh Windows environment",
+      "reason": "Windows Sandbox unavailable; current account cannot enumerate Hyper-V VMs; awaiting an accessible fresh machine."
+    }
+  },
+  "supplementary": {
+    "windows_aggregate": {
+      "path": ".qualification/rc4-release/windows-combined.json",
+      "sha256": "0541cd4c26c09394bdf94143a9b35697fbb043dcd3ad2dd43012457da6a5b702"
+    },
+    "windows_distribution": {
+      "path": "docs/IDE_RC4_WINDOWS_QUALIFICATION.json",
+      "sha256": "4db6f7d3626aa9b44864143722097d908b34911ab56c287a236ef38ab4332d54"
+    },
+    "docker_and_examples": {
+      "path": "docs/IDE_RC4_QUALIFICATION.json",
+      "sha256": "e6b3d07b0f9114d6a2b6338e295271bed514cc33edfbe345528f64dc5dbe5aad"
+    },
+    "installed_headless": {
+      "path": ".qualification/ide-rc4-build/973f5094eff84f75b60d3db83fa694ed/installed/installed-smoke.json",
+      "sha256": "01687c12877838f430606ff401fbb128f40e055e45018db89524858a06644fcd"
+    }
+  },
+  "remaining_scope": "Fresh Windows qualification is required for IDE v1.0 acceptance. Native SPELL plugin conformance and distribution qualification remain separate."
+}
