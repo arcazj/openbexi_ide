@@ -90,7 +90,11 @@ def main():
                     for answer in answers:
                         prompt = client.event('openbexi/inputRequest')
                         client.request('openbexi/input',text=answer,promptId=prompt['promptId'])
-                    assert client.event('exited')['exitCode'] == 0, filename
+                    exit_code = client.event('exited')['exitCode']
+                    if filename == 'spell_menu.py':
+                        menu = json.loads(client.read_file('spell_menu_results.json'))
+                        (output/'native-menu-results.json').write_text(json.dumps(menu,indent=2)+'\n')
+                    assert exit_code == 0, filename
                     client.event('terminated')
                     text = ''.join(m['body']['output'] for m in client.transcript if m.get('event')=='output')
                     assert marker in text, text

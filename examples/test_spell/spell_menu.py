@@ -32,6 +32,15 @@ CATALOG = json.loads(Path(__file__).with_name('feature_catalog.json').read_text(
 RESULTS = []
 
 
+def say(text, *, flush=False):
+    # The original embedded interpreter routes Display to the procedure console;
+    # Python's stdout is an ASCII process stream and is not forwarded reliably.
+    if NATIVE:
+        api.Display(text)
+    else:
+        print(text, flush=flush)
+
+
 class Unavailable(Exception):
     pass
 
@@ -57,7 +66,8 @@ def demo(family):
             assert str(error) == 'handled example'
     elif family == 'COMMON':
         assert int(constants.ABORT | constants.SKIP) & int(constants.ABORT)
-        assert int(constants.NOACTION) == 0
+        # The original language and bounded SDK have different constant values.
+        assert int(constants.NOACTION) == (64 if NATIVE else 0)
         api.Display('Explicit constants, common modifiers and notification', Notify=True)
     elif family == 'TIME':
         now = TIME(TIME(NOW).value()) if NATIVE else TIME(NOW)
@@ -130,7 +140,7 @@ def run_case(name, operation):
     except Exception as error:
         row.update(status='FAIL', reason=type(error).__name__ + ': ' + str(error))
     RESULTS.append(row)
-    print(row['status'] + ' ' + name + (': ' + row['reason'] if 'reason' in row else ''), flush=True)
+    say(row['status'] + ' ' + name + (': ' + row['reason'] if 'reason' in row else ''), flush=True)
     Path('spell_menu_results.json').write_text(json.dumps({
         'profile': PROFILE, 'scope': 'Selected demonstrations; not full language conformance',
         'results': RESULTS,
@@ -140,12 +150,13 @@ def run_case(name, operation):
 def catalogue(family='ALL'):
     rows = [row for row in CATALOG['rows'] if family == 'ALL' or row['package'] == family]
     if not rows:
-        print('Unknown family. Choose ' + ', '.join(FAMILIES))
+        say('Unknown family. Choose ' + ', '.join(FAMILIES))
         return
-    print('Historical native catalogue — these are NOT SDK or menu test results.')
+    say('Historical native catalogue - these are NOT SDK or menu test results.')
     for row in rows:
-        print(f"{row['package']:7} {row['native_status']:9} {row['name']} [{row['id']}]")
-    print(f'{len(rows)} reference entries. Source commit: {CATALOG["source_commit"]}')
+        line = f"{row['package']:7} {row['native_status']:9} {row['name']} [{row['id']}]"
+        say(line)
+    say(f'{len(rows)} reference entries. Source commit: {CATALOG["source_commit"]}')
 
 
 def native_procedure(name):
@@ -162,20 +173,20 @@ def send_simulator_command():
 
 
 def main():
-    print('SPELL language menu — profile: ' + PROFILE, flush=True)
-    print('763 reference entries across 11 families. PASS applies only to the selected demonstration.')
+    say('SPELL language menu - profile: ' + PROFILE, flush=True)
+    say('763 reference entries across 11 families. PASS applies only to the selected demonstration.')
     if '--all' in sys.argv[1:]:
         for family in FAMILIES:
             run_case(family, lambda family=family: demo(family))
     else:
         while True:
             for index, family in enumerate(FAMILIES, 1):
-                print(f'{index:2}. {family} demonstration')
-            print('12. Reference catalogue\n13. Run all non-command demonstrations\n'
+                say(f'{index:2}. {family} demonstration')
+            say('12. Reference catalogue\n13. Run all non-command demonstrations\n'
                   '14. Native successive prompts\n15. Native parent/child workflow\n'
                   '16. Send one local simulator command (confirmation required)\n0. Exit', flush=True)
             try:
-                choice = ask('Choose 0–16:')
+                choice = ask('Choose 0-16:')
             except EOFError:
                 break
             if choice == '0':
@@ -194,9 +205,9 @@ def main():
             elif choice == '16':
                 run_case('Send CMD1', send_simulator_command)
             else:
-                print('Invalid choice; enter a number from 0 to 16.', flush=True)
+                say('Invalid choice; enter a number from 0 to 16.', flush=True)
     failed = sum(row['status'] == 'FAIL' for row in RESULTS)
-    print(f'SPELL_MENU_COMPLETE checks={len(RESULTS)} failures={failed}', flush=True)
+    say(f'SPELL_MENU_COMPLETE checks={len(RESULTS)} failures={failed}', flush=True)
     return int(bool(failed))
 
 
