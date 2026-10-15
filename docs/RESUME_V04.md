@@ -9,6 +9,10 @@ are implemented and tested. The actual noVNC gate now passes 13 checks, committe
 as `db44911`. Final acceptance still needs installation in a fresh Windows
 environment; this account cannot access Hyper-V VMs and has no Sandbox.
 
+The IDE [v1.0.0rc4 prerelease](https://github.com/arcazj/openbexi_ide/releases/tag/v1.0.0rc4)
+is published, with an annotated tag at `cf9baca`, the Windows bundle, wheel,
+qualification records and checksums. Stable v1.0 acceptance remains open.
+
 The user requested one replacement desktop at `http://127.0.0.1:6080/vnc.html`
 and removal of all older IDE containers. Preserve their named volumes and
 retained evidence. `compose.yaml` now selects rc4 with a fresh workspace.

@@ -1,5 +1,11 @@
 # IDE 1.0.0rc4 Docker candidate
 
+Published as the [v1.0.0rc4 prerelease](https://github.com/arcazj/openbexi_ide/releases/tag/v1.0.0rc4)
+on 2026-10-15. The annotated tag selects `cf9baca`; runtime and packaging
+sources are unchanged from the qualified builds below. Release assets include
+the Windows ZIP, IDE wheel, qualification records and SHA-256 checksums.
+Fresh Windows installation remains required for stable acceptance.
+
 The default `compose.yaml` builds the latest source as `openbexi-ide:1.0.0rc4`
 and starts one desktop at <http://127.0.0.1:6080/vnc.html>. Its fresh workspace
 opens `test_spell/spell_menu.py`. All SPELL procedure examples are in that folder.
