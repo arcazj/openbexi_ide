@@ -31,26 +31,26 @@ preserved. Their named volumes remain after container removal. Rc4 groups all
 procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogue.
 
 SPELL work continues in the sibling repository's
-[conformance checkpoint](../../openbexi_spell_plugin/docs/CHILD_CONFORMANCE_QUALIFICATION.json)
-and [distribution progress](../../openbexi_spell_plugin/docs/V06_PROGRESS.md).
-Use their exact artifact identities and open gates. IDE candidate commits do
-not promote plugin releases. The text below retains the earlier v0.4 handoff;
-[V05_PROGRESS.md](V05_PROGRESS.md) is historical prerequisite evidence.
+[accepted checkpoint](../../openbexi_spell_plugin/docs/CHILD_CONFORMANCE_QUALIFICATION.json)
+and [plan through stable v1.0](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
+Both repositories' `master` histories are pushed to GitHub. The plugin's latest
+published checkpoint is `64ea2a5`: 473 qualified requirements, 290 open, with the
+GENERIC driver scope tagged `v0.4.0`. No full v0.5/v0.6 release is accepted.
 
-The sibling's current checkpoint has 473 qualified requirements and
-290 open. Both repositories' `master` histories are pushed to GitHub, and the
-plugin's accepted GENERIC driver scope is tagged `v0.4.0`. The execution target
-now extends through stable v1.0; use the plugin's
-[release plan](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
+The next candidate is in `C:/obranging`, branch `release/ranging-integration`.
+It combines timed defaults, ranging catalog/state corrections and child argument
+checks. Two offline native builds and two driver builds are identical; focused
+ranging and child-argument checks pass. The Windows HTTP rejection fix also
+passes 22 tests from an independently built, privately installed SDK wheel.
 
-The combined runtime was qualified in `C:/obstable`, branch `release/stable-v1`.
-Its child lifecycle corrections have two identical offline native builds,
-installed host/driver checks and corrected shared-package metadata. All 29
-existing language/recovery suites passed (1,597 raw checks) on DSS image
-`sha256:2a18e4f10a028df06785a2b6326ee1a3b42fcdba6073b9b051916574ef656b66`.
-The current checkpoint binds that complete sequence to the source and runtime.
-Continue with the 290 open language requirements, then the remaining release
-gates. Keep earlier evidence. No full v0.5/v0.6 acceptance is implied.
+The full candidate regression stopped at duplicate prompt answers: the second
+answer sometimes wins despite being sent after the first. Its preceding ten
+suites passed. A separate child-mode diagnostic passed eight cases and found
+that a child awaiting a prompt did not abort on `CMD_ABORT`. Answer-order work
+continues in `C:/obprompt_order`; child diagnostics are in `C:/obevents`.
+Keep the retained failures, repair the prompt controls, rebuild and repeat the
+affected gates before promoting the candidate. Final installed-host workflows
+and the remaining language requirements still precede stable v1.0.
 
 ## Current handoff after v0.4
 
