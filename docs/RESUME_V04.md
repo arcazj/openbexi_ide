@@ -32,33 +32,28 @@ preserved. Their named volumes remain after container removal. Rc4 groups all
 procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogue.
 
 SPELL work continues in the sibling repository's
-[accepted checkpoint](../../openbexi_spell_plugin/docs/CHILD_CONFORMANCE_QUALIFICATION.json)
+[current checkpoint](../../openbexi_spell_plugin/docs/LANGUAGE_CHECKPOINT.json)
 and [plan through stable v1.0](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
-Both repositories' `master` histories are pushed to GitHub. The plugin's latest
-published checkpoint is `64ea2a5`: 473 qualified requirements, 290 open, with the
-GENERIC driver scope tagged `v0.4.0`. No full v0.5/v0.6 release is accepted.
+The plugin checkpoint `cb1d453` is pushed to GitHub `master`: **480 qualified /
+283 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
+simulator; full v0.5/v0.6 and stable v1.0 remain open.
 
-The active candidate is in `C:/obprompt_control`, branch
-`conformance/prompt-controls`, following the retained `C:/obranging` integration.
-It combines timed defaults, ranging corrections and child argument checks.
-The Windows HTTP rejection fix separately passes 22 tests from an independently
-built, privately installed SDK wheel.
+The rebuilt runtime passes all 33 native suites (1,646 raw checks), 55 focused
+prompt controls, 14 child lifecycle checks and 510 local tests plus 64 subtests.
+Two offline native/driver rebuilds match. Native prompt ordering and abort
+cancellation are corrected; the retained debugger trace explains the former
+command-mutex/GIL deadlock. The separate Windows HTTP fix also has installed SDK
+wheel evidence. Exact artifacts and historical failures are linked in the
+checkpoint; final installed-host workflows still need qualification.
 
-The first prompt-control rebuild passed all 24 conflicting-answer trials and
-ten timed-prompt cases, but child abort still failed. GDB identified a command
-mutex/GIL deadlock when cancellation woke Python before finishing its abort.
-The revised native fix is frozen at `96c65f4`: finish cancellation before waking
-the procedure and suppress duplicate abort dispatch. Its first offline build
-passes; the second is running. Retained failure and debugger records are in the
-plugin's `conformance/evidence/prompt_controls_first_candidate.json` and
-`prompt_abort_deadlock.json`.
-
-Next: verify matching rebuilds, nine child modes, 12 independent prompt-abort
-trials, 24 conflicting-answer trials, ten timed prompts and 14 child lifecycle
-controls; then run all 33 language suites and the local tests. The checkpoint
-recorder requires these prompt controls before coverage can be refreshed. Keep
-earlier worktrees and evidence. Full language coverage, final installed-host
-workflows and operational qualification still precede stable v1.0.
+The completed checkpoint worktree is `C:/obprompt_control`. Next work continues
+in `C:/obchild_start` (eight failed-load/recovery diagnostics pass; no new row
+promoted) and `C:/obdatabase_scope`. The latter has a verified p79 SCDB method
+scope proof, and six native database-format diagnostics: three fail on documented
+octal values. Preserve their raw evidence and fix the observed
+cause before further qualification. Continue all 763 language requirements,
+then final packaging/host, operational, RC and stable gates. Keep existing
+worktrees, named volumes and qualification artifacts.
 
 ## Current handoff after v0.4
 
