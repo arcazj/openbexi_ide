@@ -12,8 +12,9 @@ environment; this account cannot access Hyper-V VMs and has no Sandbox.
 The user requested one replacement desktop at `http://127.0.0.1:6080/vnc.html`
 and removal of all older IDE containers. Preserve their named volumes and
 retained evidence. `compose.yaml` now selects rc4 with a fresh workspace.
-Replacement is complete: all 17 old IDE containers were removed, nine old named
-volumes retained, and one healthy rc4 desktop runs at port 6080. The final image,
+At qualification, all 17 old IDE containers were removed, nine old named
+volumes retained, and one healthy rc4 desktop served port 6080. Check current
+container state before treating that historical observation as live. The final image,
 seven native procedures, five installed SDK checks and browser menu evidence are
 bound in [the rc4 qualification record](IDE_RC4_QUALIFICATION.json).
 Windows rc4 also has two identical offline ZIPs and 14 passing rc3-to-rc4
@@ -37,20 +38,27 @@ Both repositories' `master` histories are pushed to GitHub. The plugin's latest
 published checkpoint is `64ea2a5`: 473 qualified requirements, 290 open, with the
 GENERIC driver scope tagged `v0.4.0`. No full v0.5/v0.6 release is accepted.
 
-The next candidate is in `C:/obranging`, branch `release/ranging-integration`.
-It combines timed defaults, ranging catalog/state corrections and child argument
-checks. Two offline native builds and two driver builds are identical; focused
-ranging and child-argument checks pass. The Windows HTTP rejection fix also
-passes 22 tests from an independently built, privately installed SDK wheel.
+The active candidate is in `C:/obprompt_control`, branch
+`conformance/prompt-controls`, following the retained `C:/obranging` integration.
+It combines timed defaults, ranging corrections and child argument checks.
+The Windows HTTP rejection fix separately passes 22 tests from an independently
+built, privately installed SDK wheel.
 
-The full candidate regression stopped at duplicate prompt answers: the second
-answer sometimes wins despite being sent after the first. Its preceding ten
-suites passed. A separate child-mode diagnostic passed eight cases and found
-that a child awaiting a prompt did not abort on `CMD_ABORT`. Answer-order work
-continues in `C:/obprompt_order`; child diagnostics are in `C:/obevents`.
-Keep the retained failures, repair the prompt controls, rebuild and repeat the
-affected gates before promoting the candidate. Final installed-host workflows
-and the remaining language requirements still precede stable v1.0.
+The first prompt-control rebuild passed all 24 conflicting-answer trials and
+ten timed-prompt cases, but child abort still failed. GDB identified a command
+mutex/GIL deadlock when cancellation woke Python before finishing its abort.
+The revised native fix is frozen at `96c65f4`: finish cancellation before waking
+the procedure and suppress duplicate abort dispatch. Its first offline build
+passes; the second is running. Retained failure and debugger records are in the
+plugin's `conformance/evidence/prompt_controls_first_candidate.json` and
+`prompt_abort_deadlock.json`.
+
+Next: verify matching rebuilds, nine child modes, 12 independent prompt-abort
+trials, 24 conflicting-answer trials, ten timed prompts and 14 child lifecycle
+controls; then run all 33 language suites and the local tests. The checkpoint
+recorder requires these prompt controls before coverage can be refreshed. Keep
+earlier worktrees and evidence. Full language coverage, final installed-host
+workflows and operational qualification still precede stable v1.0.
 
 ## Current handoff after v0.4
 
