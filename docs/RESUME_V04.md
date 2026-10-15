@@ -31,33 +31,26 @@ preserved. Their named volumes remain after container removal. Rc4 groups all
 procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogue.
 
 SPELL work continues in the sibling repository's
-[conformance checkpoint](../../openbexi_spell_plugin/docs/V05_CONFORMANCE_QUALIFICATION.json)
+[conformance checkpoint](../../openbexi_spell_plugin/docs/CHILD_CONFORMANCE_QUALIFICATION.json)
 and [distribution progress](../../openbexi_spell_plugin/docs/V06_PROGRESS.md).
 Use their exact artifact identities and open gates. IDE candidate commits do
 not promote plugin releases. The text below retains the earlier v0.4 handoff;
 [V05_PROGRESS.md](V05_PROGRESS.md) is historical prerequisite evidence.
 
-The sibling's committed conformance checkpoint is `6f82c2c`: 470 qualified
-requirements and 293 open. Its main branch now includes the early console input
-fix (`8127424`) and reproducible host 0.3.1.dev1 upgrade candidate (`a1b482a`).
-Native child startup and prompt ownership (`166caff`) remain in the next
-combined runtime's qualification branch. The actual Qt upgrade,
-Run/Debug child prompts, plugin removal and ordinary Python checks pass. See
-the supplemental host record in [the v1.0 release notes](IDE_V1_RELEASE.md).
-Their next composed runtime still requires its own build and regression evidence;
-these commits do not accept plugin v0.5/v0.6.
+The sibling's current checkpoint has 473 qualified requirements and
+290 open. Both repositories' `master` histories are pushed to GitHub, and the
+plugin's accepted GENERIC driver scope is tagged `v0.4.0`. The execution target
+now extends through stable v1.0; use the plugin's
+[release plan](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
 
-Follow-up work has resumed in the plugin's
-`.qualification/v0.6/followup-integrated-worktree`. Commit `e6f9d52` records two
-passing independent native rebuilds from `2c3ded9`, including the shutdown fix,
-with identical wheel/native bytes. Fresh images from that wheel also pass their
-installed integrity checks (image run `7fdd41dd10854458a0db745e4ad242a9`); native
-DATA (24 checks) and FILES (36 checks) pass on fresh DSS image
-`sha256:05250401718be55f148c687e6cc3a7964ce0bde8ac7d190fb6dba7796b39a53f`.
-The remaining 22 language suites, recorder/recovery and host/workflow regressions
-remain required; continue with `conformance/run_data_race.py --image` using that
-exact image and the runbook's unchanged commands. Child close/kill donor
-`4543128` is qualified separately and is excluded from this image composition.
+The combined runtime was qualified in `C:/obstable`, branch `release/stable-v1`.
+Its child lifecycle corrections have two identical offline native builds,
+installed host/driver checks and corrected shared-package metadata. All 29
+existing language/recovery suites passed (1,597 raw checks) on DSS image
+`sha256:2a18e4f10a028df06785a2b6326ee1a3b42fcdba6073b9b051916574ef656b66`.
+The current checkpoint binds that complete sequence to the source and runtime.
+Continue with the 290 open language requirements, then the remaining release
+gates. Keep earlier evidence. No full v0.5/v0.6 acceptance is implied.
 
 ## Current handoff after v0.4
 
@@ -230,8 +223,8 @@ It is safe to close the old IntelliJ project and resume from the existing
 ## Restart instruction
 
 > Read docs/RESUME_V04.md and the linked current release records. Continue the
-> IDE 1.0.0rc3 candidate's pending fresh-Windows check (13 browser checks passed), and the
-> sibling plugin's full v0.5 conformance and v0.6 distribution work. Preserve the
+> IDE 1.0.0rc4 candidate's pending fresh-Windows check (13 browser checks passed), and the
+> sibling plugin's release sequence through stable v1.0. Preserve the
 > qualified console fix, immutable candidate evidence, old local project and
 > archives. Ask before removing C:/projects/openbexi_spell. Test, update
 > documentation and commit each phase; promote releases only after their gates pass.
