@@ -34,26 +34,27 @@ procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogu
 SPELL work continues in the sibling repository's
 [current checkpoint](../../openbexi_spell_plugin/docs/LANGUAGE_CHECKPOINT.json)
 and [plan through stable v1.0](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
-The plugin checkpoint `cb1d453` is pushed to GitHub `master`: **480 qualified /
-283 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
+The plugin checkpoint `e024bf2` is pushed to GitHub `master`: **483 qualified /
+280 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
 simulator; full v0.5/v0.6 and stable v1.0 remain open.
 
-The rebuilt runtime passes all 33 native suites (1,646 raw checks), 55 focused
-prompt controls, 14 child lifecycle checks and 510 local tests plus 64 subtests.
-Two offline native/driver rebuilds match. Native prompt ordering and abort
-cancellation are corrected; the retained debugger trace explains the former
-command-mutex/GIL deadlock. The separate Windows HTTP fix also has installed SDK
-wheel evidence. Exact artifacts and historical failures are linked in the
-checkpoint; final installed-host workflows still need qualification.
+The runtime passes all 33 native suites (1,646 raw checks), 55 focused prompt
+controls, 14 child lifecycle checks and eight additional startup/recovery
+controls. The latest local suite passes 538 tests plus 64 subtests. Two offline
+native/driver rebuilds match. The new checkpoint adds only two bounded StartProc
+return clauses and the documented page-79 SCDB existence method. Exact artifacts,
+source scope and historical failures are linked in the checkpoint. Final
+installed-host workflows still need qualification.
 
-The completed checkpoint worktree is `C:/obprompt_control`. Next work continues
-in `C:/obchild_start` (eight failed-load/recovery diagnostics pass; no new row
-promoted) and `C:/obdatabase_scope`. The latter has a verified p79 SCDB method
-scope proof, and six native database-format diagnostics: three fail on documented
-octal values. Preserve their raw evidence and fix the observed
-cause before further qualification. Continue all 763 language requirements,
+The published worktrees are `C:/obprompt_control` and `C:/obchild_start`.
+Active work continues in `C:/obdatabase_scope`: a legacy octal-value correction
+passes 24 native value/import checks, 20 user-database checks, two prompt controls
+and seven evidence-verifier tests. Its declared diagnostic overlay is excluded
+from the 483-row runtime; composed packaging and qualification remain required.
+Retain both original failure traces. Continue all 763 language requirements,
 then final packaging/host, operational, RC and stable gates. Keep existing
-worktrees, named volumes and qualification artifacts.
+worktrees, named volumes and qualification artifacts. Current local task details
+are in the plugin's `.qualification/RESUME_STABLE.json`.
 
 ## Current handoff after v0.4
 
