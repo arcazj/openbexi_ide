@@ -102,5 +102,11 @@
       "sha256": "6f8473dc58895797c613f4234abfc86e4845003f4ca6c8aa9778c01923ea4c3c"
     }
   },
-  "remaining_scope": "Only fresh Windows installation remains pending for stable acceptance. Native SPELL language/operational qualification is independent."
+  "remaining_scope": "Fresh Windows installation remains unverified and is disclosed as a release limitation. Native SPELL language/operational qualification is independent.",
+  "publication": {
+    "tag": "1.0",
+    "title": "OpenBEXI IDE 1.0",
+    "branch": "master",
+    "decision": "Explicit user instruction to publish after the outstanding fresh-Windows installation check was disclosed. Publication retains the pending conformance gate and does not certify a fresh Windows machine."
+  }
 }

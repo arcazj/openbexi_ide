@@ -1,10 +1,22 @@
-# IDE 1.0.0 final qualification
+# OpenBEXI IDE 1.0
 
 Final 1.0.0 Windows and Docker artifacts are prepared from `0091150`, which
 changes rc4 release metadata without changing the Python application sources.
-The GitHub stable release and `v1.0.0` tag remain pending the fresh-Windows gate.
+The release is published from `master` with Git tag `1.0` and package version
+`1.0.0`, at the user's explicit request after the pending fresh-Windows check
+was disclosed. That validation remains outstanding; publication does not
+change its test status.
 The [release dossier](IDE_1_0_0_RELEASE_DOSSIER.json) records the exact artifacts
 and all five completed gates. The published rc4 prerelease remains available.
+
+## Downloads
+
+- [Windows x64 offline ZIP](https://github.com/arcazj/openbexi_ide/releases/download/1.0/OpenBEXI-IDE-1.0.0-windows-x64.zip): extract and run `Install.cmd`; includes CPython and desktop dependencies.
+- [Linux amd64 Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/1.0/openbexi-ide-1.0.0-linux-amd64.tar.gz): load the exact tested image with Docker.
+- [SHA-256 checksums](https://github.com/arcazj/openbexi_ide/releases/download/1.0/SHA256SUMS.txt).
+- [All release assets](https://github.com/arcazj/openbexi_ide/releases/tag/1.0), including the Python wheel and qualification records.
+
+## Verification
 
 Windows passes 176 source tests, including all eight Docker Execution checks;
 one symlink-permission test is skipped. Linux passes 168 tests with nine
@@ -36,9 +48,9 @@ The script verifies every payload file and runs installation, Run/Debug,
 console menus, shared debugging, removal, and user-file preservation using the
 bundled runtime. It rejects the existing development machine and retains all
 logs. Return the resulting evidence directory, including `fresh-windows.json`.
-That result must match this ZIP before the final gate is accepted and the
-stable release/tag are published.
+That result must match this ZIP before the outstanding fresh-Windows gate can
+be recorded as passed. The release dossier retains its pending status.
 
-The IDE and native SPELL plugin have separate release gates. SPELL work remains
-on hold until this IDE release is complete, as requested. Review of
+The IDE and native SPELL plugin have separate release gates. SPELL work resumes
+after this IDE publication, as requested. Review of
 `access_programs.cyber` is deferred to SPELL's operational 1.0 release.

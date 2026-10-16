@@ -1,36 +1,32 @@
 # Resume from openbexi_ide
 
-## Active priority: final IDE 1.0 before SPELL
+## Current release: OpenBEXI IDE 1.0
 
-The user requested completion of the IDE stable release before returning to
-SPELL. Final 1.0.0 artifacts and evidence are prepared in `C:/obide_v1`, on
-[release/v1.0.0](https://github.com/arcazj/openbexi_ide/tree/release/v1.0.0).
-See that branch's [final dossier](https://github.com/arcazj/openbexi_ide/blob/release/v1.0.0/docs/IDE_1_0_0_RELEASE_DOSSIER.json)
-and [fresh-Windows instructions](https://github.com/arcazj/openbexi_ide/blob/release/v1.0.0/docs/IDE_1_0_0_RELEASE.md).
+The user explicitly requested publication from `master` with tag `1.0` after
+being informed that fresh-Windows installation validation remains outstanding.
+The [release](https://github.com/arcazj/openbexi_ide/releases/tag/1.0) includes the
+Windows ZIP, complete Linux Docker image tar.gz, Python wheel, release notes,
+qualification records and checksums. Package version is `1.0.0`. The
+[release record](IDE_1_0_0_RELEASE.md) and [dossier](IDE_1_0_0_RELEASE_DOSSIER.json)
+retain the pending fresh-Windows gate; publication does not mark that test passed.
+
 Windows passes 176 tests with one symlink-permission skip; Linux passes 168
-with nine documented skips. All 14 actual rc4-to-1.0 installed lifecycle checks,
+with nine documented skips. All 14 rc4-to-1.0 installed lifecycle checks,
 browser interaction and installer ownership checks pass. Independent Windows
-ZIPs match. A complete Docker image archive is prepared for the GitHub draft.
-
-The release checker reports only `fresh_windows_install` as pending. This
-account still cannot enumerate Hyper-V VMs. The standalone fresh-Windows
-harness rejects the existing development machine. A separate fresh environment
-or its matching retained qualification result is needed before stable acceptance,
-publication and the `v1.0.0` tag. Do not replace this gate with same-host evidence.
-
-The actual desktop now serves the final 1.0.0 image at port 6080:
+ZIPs match. Prepared artifact/evidence files remain in `C:/obide_v1/.qualification/v1-final`.
+The actual desktop serves port 6080 using image
 `sha256:6206c08b3beb7bc3bca5cd348fb6f9164ce1de53ac9853121025f821a4c149e7`.
-The published IDE rc4 and plugin v0.4 releases remain available. Keep older
-named volumes and evidence. Local final-release details are in
-`.qualification/RESUME_IDE_V1.json`.
+Local publication details are in `.qualification/RESUME_IDE_V1.json`.
+Preserve historical evidence, images and named volumes.
 
-SPELL remains at the accepted 483-row checkpoint. Its new candidate passed
-most regression suites but exposed an ASan use-after-free in native IPC mailbox
-queue publication/removal; preserve the crash, not just passing reruns.
-The diagnostic correction and deterministic probes are in `C:/obipc_mailbox`;
-they are not packaged or qualified. Details remain in the plugin's
-`.qualification/RESUME_STABLE.json`. Resume only after the IDE release is done.
-The user deferred `access_programs.cyber` review to SPELL's operational 1.0.
+The next task is SPELL. Its accepted checkpoint remains 483 qualified and 280
+open. A later candidate exposed an ASan use-after-free in native IPC mailbox
+queue publication/removal. The retained crash and regression sessions are in
+the plugin's `.qualification/RESUME_STABLE.json`. Diagnostic correction and
+deterministic probes are in `C:/obipc_mailbox`; the first build needs the
+`-llog4cplus` probe-link dependency before validation can proceed. The diagnostic
+is not packaged or qualified. Preserve the crash rather than retrying it away.
+Review of `access_programs.cyber` remains deferred to SPELL operational 1.0.
 
 ## Historical rc4 handoff
 

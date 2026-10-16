@@ -1,4 +1,9 @@
-# openbexi_ide v1.0.0 - final release qualification
+# OpenBEXI IDE 1.0
+
+Download the [Windows ZIP](https://github.com/arcazj/openbexi_ide/releases/download/1.0/OpenBEXI-IDE-1.0.0-windows-x64.zip),
+[Linux Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/1.0/openbexi-ide-1.0.0-linux-amd64.tar.gz),
+or [release notes and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/1.0).
+The Git tag is `1.0`; the package version is `1.0.0`.
 
 The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Start it with
 `docker compose up -d --build --wait ide`. It contains the latest IDE source and
@@ -6,10 +11,9 @@ all SPELL procedures under `test_spell/`, with a dedicated language-menu launche
 The menu exercises available features and lists all 763 reference entries;
 unsupported features are explicitly reported. See [the procedures](examples/test_spell/README.md).
 
-Version 1.0.0 is being qualified from the published rc4 sources. The
-[rc4 qualification](docs/IDE_RC4_DOCKER.md) retains its Windows, Docker and browser
-evidence. Final 1.0 artifacts require their own verification, including installation
-in a fresh Windows environment, before the stable GitHub release is published.
+The [1.0 release record](docs/IDE_1_0_0_RELEASE.md) documents passing Windows,
+Linux, installed-workflow and browser checks. Fresh-Windows installation
+validation remains outstanding and is disclosed as a release limitation.
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has
