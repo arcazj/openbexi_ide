@@ -19,10 +19,10 @@ The actual desktop serves port 6080 using image
 Local publication details are in `.qualification/RESUME_IDE_V1.json`.
 Preserve historical evidence, images and named volumes.
 
-SPELL continues from verified checkpoint `221e145` on GitHub
-`master`: **499 qualified / 264 open** language requirements. The reproduced
-runtime includes coherent context status snapshots and a prompt transition fix
-that prevents the confirmed answer/acknowledgment deadlock. The accepted plugin
+SPELL continues from verified checkpoint `43d618f` on GitHub
+`master`: **523 qualified / 240 open** language requirements. The reproduced
+runtime includes wait interruption and PROC reload corrections, retaining
+the prior context snapshot and prompt transition fixes. The accepted plugin
 release is still `v0.4.0`; full v0.5 requires all 763 original requirements.
 Review of `access_programs.cyber` remains deferred to SPELL operational 1.0.
 
@@ -66,21 +66,19 @@ procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogu
 SPELL work continues in the plugin's
 [current checkpoint](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/LANGUAGE_CHECKPOINT.json)
 and [plan through stable v1.0](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/STABLE_RELEASE_PLAN.md).
-Checkpoint `221e145` is pushed to GitHub `master`: **499 qualified /
-264 open** requirements. The accepted release remains `v0.4.0`; full v0.5/v0.6
+Checkpoint `43d618f` is pushed to GitHub `master`: **523 qualified /
+240 open** requirements. The accepted release remains `v0.4.0`; full v0.5/v0.6
 and stable v1.0 remain open.
 
-All 40 native suites pass (1,789 raw checks), together with focused prompt and
+All 44 native suites pass (1,837 raw checks), together with focused prompt and
 child lifecycle controls. The local suite passes
-704 tests plus 64 subtests.
-Independent offline native/driver builds match. Twelve additions qualify native
-legacy comparison, the two Python sections, child failure policies and positional
-relative/absolute waits. Source-level race probes and native debugger evidence
-for the context/prompt corrections remain retained with all earlier failures.
+782 tests plus 64 subtests.
+Independent offline native/driver builds match. Twenty-four additions qualify
+wait interruption/resumption, interval progress messages, procedure metadata and
+lifetime, and predefined ARGS/IVARS containers. The retained observer correction
+proves socket order independently of test-client callback scheduling.
 
-The verified worktree is `C:/obprompt_composed`. The next wait-control tests
-are in `C:/obwait_controls`; they are excluded from this published checkpoint
-until their native observations and report validators pass. Continue the
+The verified worktree is `C:/obwait_proc_composed`. Continue the
 remaining language contracts, then final packaging/host, operational, RC and
 stable gates. Preserve existing worktrees, named volumes and evidence. Local
 task details are in the plugin's `.qualification/RESUME_STABLE.json`.
