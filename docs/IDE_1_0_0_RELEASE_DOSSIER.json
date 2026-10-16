@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "product": "openbexi_ide",
+  "version": "1.0.0",
+  "release_accepted": false,
+  "source_freeze_commit": "0091150cf6dacd1bed6d90f71ffc84f5fd26afdf",
+  "artifacts": {
+    "ide_wheel": {
+      "path": ".qualification/v1-final/wheels/openbexi_ide-1.0.0-py3-none-any.whl",
+      "sha256": "cc1fe3f09aebc313f6935a9b2bf080eb1074d7833ccdc22aa7c95407efd76af2"
+    },
+    "windows_bundle": {
+      "path": ".qualification/v1-final/windows-a/OpenBEXI-IDE-1.0.0-windows-x64.zip",
+      "sha256": "3f4cc40490bfc128f79949bbb5d030484a2a2e82a773f1638bdeb51dd3906a56"
+    },
+    "docker_image_record": {
+      "path": ".qualification/v1-final/image.json",
+      "sha256": "23bcb988dd20b57a66f500e98b334786f3b2096ca8291f38eca87bc96ac36078"
+    }
+  },
+  "gates": {
+    "windows_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/v1-final/windows-tests.xml",
+        "sha256": "876c1160e6b8faf4545e52bb2d9f89ed6153e4ea98e731d341db597da7b0302d"
+      },
+      "skip_explanation": "176 passed; one Windows symlink-permission skip. Includes all eight Docker Execution checks against final image."
+    },
+    "linux_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": ".qualification/v1-final/linux-evidence/20261016-001128-44800/tests.xml",
+        "sha256": "11eb1c00898a9507e35f5db46c9c385db6df6b25a2a839c3dcc745faae588ae0"
+      },
+      "skip_explanation": "168 passed; eight Docker socket/profile tests are covered on Windows; one Windows Job ownership test is platform-specific."
+    },
+    "installed_windows_lifecycle": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/v1-final/windows-lifecycle/result.json",
+        "sha256": "ecf4aff8435b8f57b077a8d400aafd8ac02c46ad516b5357ebf5c27646d081d8"
+      }
+    },
+    "installed_docker_workflow": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/v1-final/linux-evidence/20261016-001128-44800/installed-desktop.json",
+        "sha256": "fa7fb2354c4adab4ebd0dbe1c322a42ac15a32ef76fee07d9206849ba71ee55d"
+      }
+    },
+    "browser_interaction": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": ".qualification/v1-final/browser-binding.json",
+        "sha256": "c84b13402b6665b1df810e8dae46528fe3e359c924a3d0212a6eeda2fe90cf3e"
+      }
+    },
+    "fresh_windows_install": {
+      "status": "pending fresh Windows environment",
+      "reason": "This account cannot access Hyper-V VMs. The standalone fresh-Windows harness rejects the development machine; no separate environment has been supplied."
+    }
+  },
+  "supplementary": {
+    "independent_windows_builds": [
+      {
+        "path": ".qualification/v1-final/windows-a/build.json",
+        "sha256": "bb429cf3ddd341c3530958e1b4cb982b202cad2a8e143f7f196b98bda8e5490e"
+      },
+      {
+        "path": ".qualification/v1-final/windows-b/build.json",
+        "sha256": "56a98f367deea47ae9e55418d651696b2e75f05ff2a717d19ef1c9e91999d18d"
+      }
+    ],
+    "windows_extraction": {
+      "path": ".qualification/v1-final/extraction/extraction.json",
+      "sha256": "774102256ef3a25715e3b3d1533d53cb412e5c6836126f6defa4922ec84d96f1"
+    },
+    "installer_ownership_checks": {
+      "path": ".qualification/v1-final/installer-checks/result.json",
+      "sha256": "40fed0a5e95069a1d5292e1be58d49d8a110ec1a45bf2402339234ef2eef35ce"
+    },
+    "installed_headless": {
+      "path": ".qualification/v1-final/linux-evidence/20261016-001128-44800/installed-smoke.json",
+      "sha256": "807c5c3c94c7ac4a0301a4787c0c250372901a8cd331994efce0861b334bb37d"
+    },
+    "fresh_windows_harness": {
+      "path": "scripts/qualify_fresh_windows.ps1",
+      "sha256": "d8f0de53a7f6ccbb541df1bda2ab3601e1d4e01e68d0f198e2f3ff3940a4d000"
+    }
+  },
+  "remaining_scope": "Only fresh Windows installation remains pending for stable acceptance. Native SPELL language/operational qualification is independent."
+}
