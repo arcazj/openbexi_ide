@@ -1,7 +1,7 @@
 name: openbexi-ide
 
 x-test-image: &test-image
-  image: openbexi-ide:1.0.0rc4
+  image: openbexi-ide:1.0.0
   platform: linux/amd64
   build:
     context: .

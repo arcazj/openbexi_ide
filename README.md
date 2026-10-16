@@ -1,4 +1,4 @@
-# openbexi_ide v1.0.0rc4 - Docker release candidate
+# openbexi_ide v1.0.0 - final release qualification
 
 The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Start it with
 `docker compose up -d --build --wait ide`. It contains the latest IDE source and
@@ -6,9 +6,10 @@ all SPELL procedures under `test_spell/`, with a dedicated language-menu launche
 The menu exercises available features and lists all 763 reference entries;
 unsupported features are explicitly reported. See [the procedures](examples/test_spell/README.md).
 
-The [earlier rc3 qualification](docs/IDE_V1_RELEASE.md) retains the Windows bundle
-and 13 passing browser checks. It does not certify this new Docker image. Final
-v1.0 acceptance still needs installation in a fresh Windows environment.
+Version 1.0.0 is being qualified from the published rc4 sources. The
+[rc4 qualification](docs/IDE_RC4_DOCKER.md) retains its Windows, Docker and browser
+evidence. Final 1.0 artifacts require their own verification, including installation
+in a fresh Windows environment, before the stable GitHub release is published.
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has
