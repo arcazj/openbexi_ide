@@ -16,6 +16,10 @@
     "docker_image_record": {
       "path": ".qualification/v1-final/image.json",
       "sha256": "23bcb988dd20b57a66f500e98b334786f3b2096ca8291f38eca87bc96ac36078"
+    },
+    "docker_archive": {
+      "path": ".qualification/v1-final/openbexi-ide-1.0.0-linux-amd64.tar.gz",
+      "sha256": "0d280a9a07146ec49b1d48c725555711a20d3a8d3915a4a0ce87e80a91d20a4b"
     }
   },
   "gates": {
@@ -58,7 +62,7 @@
       "format": "json",
       "report": {
         "path": ".qualification/v1-final/browser-binding.json",
-        "sha256": "c84b13402b6665b1df810e8dae46528fe3e359c924a3d0212a6eeda2fe90cf3e"
+        "sha256": "e63d5d254969e6e7b428699e81c9cc0e7402c585aaec06e29ffb54eb3b9cc1f1"
       }
     },
     "fresh_windows_install": {
@@ -92,6 +96,10 @@
     "fresh_windows_harness": {
       "path": "scripts/qualify_fresh_windows.ps1",
       "sha256": "d8f0de53a7f6ccbb541df1bda2ab3601e1d4e01e68d0f198e2f3ff3940a4d000"
+    },
+    "docker_archive_verification": {
+      "path": ".qualification/v1-final/docker-archive.json",
+      "sha256": "6f8473dc58895797c613f4234abfc86e4845003f4ca6c8aa9778c01923ea4c3c"
     }
   },
   "remaining_scope": "Only fresh Windows installation remains pending for stable acceptance. Native SPELL language/operational qualification is independent."
