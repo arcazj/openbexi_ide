@@ -19,12 +19,11 @@ The actual desktop serves port 6080 using image
 Local publication details are in `.qualification/RESUME_IDE_V1.json`.
 Preserve historical evidence, images and named volumes.
 
-SPELL continues from verified checkpoint `75e8736` on GitHub
-`master`: **487 qualified / 276 open** language requirements. The IPC mailbox
-queue lifetime correction is packaged in the reproduced runtime and passes the
-complete native regression sequence. Original sanitizer failures and deterministic
-race probes remain retained. The accepted plugin release is still `v0.4.0`;
-full language, final installed-host and operational gates remain open.
+SPELL continues from verified checkpoint `221e145` on GitHub
+`master`: **499 qualified / 264 open** language requirements. The reproduced
+runtime includes coherent context status snapshots and a prompt transition fix
+that prevents the confirmed answer/acknowledgment deadlock. The accepted plugin
+release is still `v0.4.0`; full v0.5 requires all 763 original requirements.
 Review of `access_programs.cyber` remains deferred to SPELL operational 1.0.
 
 ## Historical rc4 handoff
@@ -67,25 +66,24 @@ procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogu
 SPELL work continues in the plugin's
 [current checkpoint](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/LANGUAGE_CHECKPOINT.json)
 and [plan through stable v1.0](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/STABLE_RELEASE_PLAN.md).
-Checkpoint `75e8736` is pushed to GitHub `master`: **487 qualified /
-276 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
-simulator; full v0.5/v0.6 and stable v1.0 remain open.
+Checkpoint `221e145` is pushed to GitHub `master`: **499 qualified /
+264 open** requirements. The accepted release remains `v0.4.0`; full v0.5/v0.6
+and stable v1.0 remain open.
 
-The runtime passes all 35 native suites (1,678 raw checks), 55 focused prompt
-controls and 14 child lifecycle checks. The local suite passes
-582 tests plus 64 subtests. Independent offline native/driver builds match.
-Four additions cover packaged database octal values and bounded nonblocking,
-manual and automatic/manual clauses. The native IPC mailbox response/cancellation
-queue lifetime correction also passes its retained differential sanitizer probes.
-Exact artifacts and retained failures are
-linked in the checkpoint; final installed-host workflows remain open.
+All 40 native suites pass (1,789 raw checks), together with focused prompt and
+child lifecycle controls. The local suite passes
+704 tests plus 64 subtests.
+Independent offline native/driver builds match. Twelve additions qualify native
+legacy comparison, the two Python sections, child failure policies and positional
+relative/absolute waits. Source-level race probes and native debugger evidence
+for the context/prompt corrections remain retained with all earlier failures.
 
-The verified worktree is `C:/obdatabase_scope`. The next isolated comparison
-experiment is in `C:/oblegacy_compare`; it is excluded from the published runtime
-until native and package qualification complete. Continue the remaining language
-contracts, then final packaging/host, operational, RC and stable gates. Preserve
-existing worktrees, named volumes and evidence. Local task details are in the
-plugin's `.qualification/RESUME_STABLE.json`.
+The verified worktree is `C:/obprompt_composed`. The next wait-control tests
+are in `C:/obwait_controls`; they are excluded from this published checkpoint
+until their native observations and report validators pass. Continue the
+remaining language contracts, then final packaging/host, operational, RC and
+stable gates. Preserve existing worktrees, named volumes and evidence. Local
+task details are in the plugin's `.qualification/RESUME_STABLE.json`.
 
 ## Current handoff after v0.4
 
