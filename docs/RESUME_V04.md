@@ -19,13 +19,12 @@ The actual desktop serves port 6080 using image
 Local publication details are in `.qualification/RESUME_IDE_V1.json`.
 Preserve historical evidence, images and named volumes.
 
-The next task is SPELL. Its accepted checkpoint remains 483 qualified and 280
-open. A later candidate exposed an ASan use-after-free in native IPC mailbox
-queue publication/removal. The retained crash and regression sessions are in
-the plugin's `.qualification/RESUME_STABLE.json`. Diagnostic correction and
-deterministic probes are in `C:/obipc_mailbox`; the first build needs the
-`-llog4cplus` probe-link dependency before validation can proceed. The diagnostic
-is not packaged or qualified. Preserve the crash rather than retrying it away.
+SPELL continues from verified checkpoint `75e8736` on GitHub
+`master`: **487 qualified / 276 open** language requirements. The IPC mailbox
+queue lifetime correction is packaged in the reproduced runtime and passes the
+complete native regression sequence. Original sanitizer failures and deterministic
+race probes remain retained. The accepted plugin release is still `v0.4.0`;
+full language, final installed-host and operational gates remain open.
 Review of `access_programs.cyber` remains deferred to SPELL operational 1.0.
 
 ## Historical rc4 handoff
@@ -65,30 +64,28 @@ shipped root files were backed up and refreshed; edited files and windows were
 preserved. Their named volumes remain after container removal. Rc4 groups all
 procedures under `test_spell/` and adds `spell_menu.py` and the feature catalogue.
 
-SPELL work continues in the sibling repository's
-[current checkpoint](../../openbexi_spell_plugin/docs/LANGUAGE_CHECKPOINT.json)
-and [plan through stable v1.0](../../openbexi_spell_plugin/docs/STABLE_RELEASE_PLAN.md).
-The plugin checkpoint `e024bf2` is pushed to GitHub `master`: **483 qualified /
-280 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
+SPELL work continues in the plugin's
+[current checkpoint](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/LANGUAGE_CHECKPOINT.json)
+and [plan through stable v1.0](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/STABLE_RELEASE_PLAN.md).
+Checkpoint `75e8736` is pushed to GitHub `master`: **487 qualified /
+276 open** requirements. The accepted release remains `v0.4.0` for the GENERIC
 simulator; full v0.5/v0.6 and stable v1.0 remain open.
 
-The runtime passes all 33 native suites (1,646 raw checks), 55 focused prompt
-controls, 14 child lifecycle checks and eight additional startup/recovery
-controls. The latest local suite passes 538 tests plus 64 subtests. Two offline
-native/driver rebuilds match. The new checkpoint adds only two bounded StartProc
-return clauses and the documented page-79 SCDB existence method. Exact artifacts,
-source scope and historical failures are linked in the checkpoint. Final
-installed-host workflows still need qualification.
+The runtime passes all 35 native suites (1,678 raw checks), 55 focused prompt
+controls and 14 child lifecycle checks. The local suite passes
+582 tests plus 64 subtests. Independent offline native/driver builds match.
+Four additions cover packaged database octal values and bounded nonblocking,
+manual and automatic/manual clauses. The native IPC mailbox response/cancellation
+queue lifetime correction also passes its retained differential sanitizer probes.
+Exact artifacts and retained failures are
+linked in the checkpoint; final installed-host workflows remain open.
 
-The published worktrees are `C:/obprompt_control` and `C:/obchild_start`.
-Active work continues in `C:/obdatabase_scope`: a legacy octal-value correction
-passes 24 native value/import checks, 20 user-database checks, two prompt controls
-and seven evidence-verifier tests. Its declared diagnostic overlay is excluded
-from the 483-row runtime; composed packaging and qualification remain required.
-Retain both original failure traces. Continue all 763 language requirements,
-then final packaging/host, operational, RC and stable gates. Keep existing
-worktrees, named volumes and qualification artifacts. Current local task details
-are in the plugin's `.qualification/RESUME_STABLE.json`.
+The verified worktree is `C:/obdatabase_scope`. The next isolated comparison
+experiment is in `C:/oblegacy_compare`; it is excluded from the published runtime
+until native and package qualification complete. Continue the remaining language
+contracts, then final packaging/host, operational, RC and stable gates. Preserve
+existing worktrees, named volumes and evidence. Local task details are in the
+plugin's `.qualification/RESUME_STABLE.json`.
 
 ## Current handoff after v0.4
 
