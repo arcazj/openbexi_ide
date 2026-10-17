@@ -18,6 +18,19 @@ menu** for the 39 Python topics, 15 in-depth chapters and graphics. The selected
 backend is visible in the IDE toolbar. `--runtime spell` also selects it from
 the installed CLI. See the [workspace guide](../examples/README.md).
 
+The desktop opens the Python IDE and `hello.py`. Each local editor tab keeps its
+own runtime choice. New files default to Python; imports of an installed
+backend's declared modules select that backend, so the SPELL examples select
+SPELL automatically. You can override the selection for each tab. Opening
+`hello.py` from a SPELL tab uses the ordinary Python worker and avoids starting
+the native executor and simulator.
+
+Interpreter selection validates CPython before changing the saved setting.
+Selecting a package installer such as `pip3.13` shows a Python executable hint
+and keeps the working interpreter. Saved pip selections recover to the project's
+Python environment, or the installed desktop Python when no project environment
+exists.
+
 Build from explicit, already-qualified native and desktop images:
 
 ```powershell

@@ -5,6 +5,13 @@ launch/process ownership, DAP framing, the CLI and the shared-session server.
 The core imports no SPELL package at startup. GUI dependencies are an optional
 desktop extra; a headless wheel uses the standard library.
 
+Local runtime selection belongs to an editor file. Optional backend descriptors
+may declare `sourceModules`, a list of top-level Python module names. A static
+import scan suggests the unique matching installed backend; other files use
+Python. No procedure code is executed by this scan. An explicit toolbar choice
+overrides the suggestion for that file. Shared-session runtime selection remains
+under its existing controller and server capability rules.
+
 The v0.2 desktop uses a bounded background HTTP queue and queued Qt signals; no
 network request runs on the GUI thread. It shares CLI authentication, fencing,
 slots, cooperative pauses and source admission. Desktop identities are issued

@@ -1,0 +1,152 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "file": "debug_demo",
+      "debug": false,
+      "passed": true,
+      "output": "Values: [3, 5, 8]; total: 16\n"
+    },
+    {
+      "file": "debug_demo",
+      "debug": true,
+      "passed": true,
+      "output": "Values: [3, 5, 8]; total: 16\n"
+    },
+    {
+      "file": "graphics_demo",
+      "debug": false,
+      "passed": true,
+      "output": "Statistics window opened\nStatistics window closed\n"
+    },
+    {
+      "file": "graphics_demo",
+      "debug": true,
+      "passed": true,
+      "output": "Statistics window opened\nStatistics window closed\n"
+    },
+    {
+      "file": "graphics_tkinter",
+      "debug": false,
+      "passed": true,
+      "output": "TK_GRAPHICS_OPEN\nTK_GRAPHICS_CLOSED\n"
+    },
+    {
+      "file": "graphics_tkinter",
+      "debug": true,
+      "passed": true,
+      "output": "TK_GRAPHICS_OPEN\nTK_GRAPHICS_CLOSED\n"
+    },
+    {
+      "file": "session_first.py + session_second.py",
+      "passed": true,
+      "parallel": 2,
+      "procedures": [
+        {
+          "id": "f935f098bce04f118cdb653164008d46",
+          "script": "test_python_support/session_first.py",
+          "language": "python",
+          "source_sha256": "7940b4295eed6f2992d3994bbba69979cd086d2e60ed65c81c273ea633f29758",
+          "status": "COMPLETED",
+          "definition_id": null,
+          "version_id": null,
+          "capture_sha256": null,
+          "procedure_fence": 0,
+          "release_id": null,
+          "backend": null,
+          "uncertain_effects": false,
+          "pause_reason": null,
+          "has_token": false,
+          "pid": 122,
+          "worker_pid": 122,
+          "input_closed": false,
+          "exit_code": 0,
+          "error": null,
+          "debug": null,
+          "threads": [
+            {
+              "id": "140294646444928",
+              "name": "MainThread",
+              "stack": [
+                {
+                  "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                  "line": 5,
+                  "function": "count",
+                  "locals": {
+                    "number": "99"
+                  }
+                },
+                {
+                  "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                  "line": 9,
+                  "function": "<module>",
+                  "locals": {
+                    "__name__": "__main__",
+                    "__doc__": "Submit with session_second.py to exercise configurable parallelism.",
+                    "__package__": "",
+                    "__loader__": "None",
+                    "__spec__": "None",
+                    "__file__": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                    "__cached__": "None",
+                    "__builtins__": "<dict>",
+                    "time": "<module>",
+                    "count": "<function>"
+                  }
+                }
+              ],
+              "paused": false
+            }
+          ]
+        },
+        {
+          "id": "7fdf6665d47e472c9cf9a86121a7da76",
+          "script": "test_python_support/session_second.py",
+          "language": "python",
+          "source_sha256": "dbfedef92a87bd0f02e07a6480af480ed76a43443552ad643eb8820015abed50",
+          "status": "COMPLETED",
+          "definition_id": null,
+          "version_id": null,
+          "capture_sha256": null,
+          "procedure_fence": 0,
+          "release_id": null,
+          "backend": null,
+          "uncertain_effects": false,
+          "pause_reason": null,
+          "has_token": false,
+          "pid": 128,
+          "worker_pid": 128,
+          "input_closed": false,
+          "exit_code": 0,
+          "error": null,
+          "debug": null,
+          "threads": [
+            {
+              "id": "139779706475392",
+              "name": "MainThread",
+              "stack": [
+                {
+                  "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_second.py",
+                  "line": 3,
+                  "function": "<module>",
+                  "locals": {
+                    "__name__": "__main__",
+                    "__doc__": "None",
+                    "__package__": "",
+                    "__loader__": "None",
+                    "__spec__": "None",
+                    "__file__": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_second.py",
+                    "__cached__": "None",
+                    "__builtins__": "<dict>",
+                    "time": "<module>",
+                    "number": "99"
+                  }
+                }
+              ],
+              "paused": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

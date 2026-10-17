@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "ide_version": "1.1.2",
+  "cases": [
+    {
+      "from": "spell_menu.py",
+      "runtime": "python",
+      "completed_seconds": 0.13136020000092685
+    },
+    {
+      "from": "command_wait_telemetry.py",
+      "runtime": "python",
+      "completed_seconds": 0.12560180001310073
+    },
+    {
+      "from": "spell_native_prompt.py",
+      "runtime": "python",
+      "completed_seconds": 0.11891230000765063
+    }
+  ],
+  "manual_override_preserved": true
+}

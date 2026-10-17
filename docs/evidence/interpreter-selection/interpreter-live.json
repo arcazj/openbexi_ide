@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "version": "1.1.2",
+  "interpreter": "/usr/local/bin/python3.13",
+  "pip_rejection": "pip3.13 installs packages; select a Python executable. Select /usr/local/bin/python3.13 instead."
+}

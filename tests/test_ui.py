@@ -36,6 +36,46 @@ def wait_until(app, predicate, timeout=10):
     assert predicate(), "UI operation did not finish before its deadline"
 
 
+def test_runtime_follows_file_and_hello_keeps_plain_python(window, app):
+    # Metadata stands in for the plugin; hello uses the real Python worker.
+    if window.backend_probe:
+        window.backend_probe.cancel.set()
+    window.backend_epoch += 1
+    window.backend_choices = [{'id':'spell', 'label':'SPELL', 'sourceModules':['spell']}]
+    window.populate_backends()
+    spell = window.project/'procedure.py'
+    spell.write_text("from spell.lang.functions import Display\nDisplay('ready')\n")
+    window.open_file(spell)
+    assert window.language.currentData() == 'spell'
+    window.open_file(window.project/'hello.py')
+    assert window.language.currentData() == 'python'
+    window.run_action.trigger()
+    wait_until(app, lambda: not window.run_controller.running)
+    assert window.run_controller.spec.language == 'python'
+    assert 'Hello from ordinary Python' in window.console.toPlainText()
+    assert not (window.project/'.openbexi/runs').exists()
+    window.open_file(spell)
+    assert window.language.currentData() == 'spell'
+    window.language.setCurrentIndex(window.language.findData('python'))
+    window.open_file(window.project/'hello.py')
+    window.open_file(spell)
+    assert window.language.currentData() == 'python', 'Explicit choice must survive tab switches'
+    window.populate_backends()
+    assert window.language.currentData() == 'python', 'Plugin refresh must preserve the choice'
+
+
+def test_mentions_of_spell_do_not_select_a_plugin(window):
+    if window.backend_probe:
+        window.backend_probe.cancel.set()
+    window.backend_epoch += 1
+    window.backend_choices = [{'id':'spell', 'label':'SPELL', 'sourceModules':['spell']}]
+    window.populate_backends()
+    script = window.project/'notes.py'
+    script.write_text("# from spell import anything\nprint('import spell')\n")
+    window.open_file(script)
+    assert window.language.currentData() == 'python'
+
+
 def test_open_edit_save_and_external_change_protection(window):
     editor = window.open_file(window.project / "hello.py")
     QTest.keyClick(editor, Qt.Key_End, Qt.ControlModifier)

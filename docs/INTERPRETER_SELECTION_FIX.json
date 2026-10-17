@@ -1,0 +1,215 @@
+{
+  "passed": true,
+  "ide_version": "1.1.2",
+  "candidate_image": "sha256:eff9cd2d6dcc855ff1e39c2676f1d23c89e9b6f73244245fe7eae086a36e277e",
+  "wheel_sha256": "42263e55835fff610a0782419a632ae6a35eb0d1358aa3d8035ac80e518eea2d",
+  "changes": [
+    "Reject pip launchers and recover saved pip selections",
+    "Validate a new interpreter asynchronously before persisting it",
+    "Retain previous interpreter on failed or cancelled selection",
+    "Refresh automatic runtime after editing imports before Run/Debug",
+    "Preserve explicit per-file runtime choices and CLI missing-backend messages"
+  ],
+  "checks": {
+    "interpreter-final-windows.xml": {
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interpreter-final-linux.xml": {
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interpreter-ui-final.json": {
+      "passed": true,
+      "ide_version": "1.1.2",
+      "cases": [
+        {
+          "from": "spell_menu.py",
+          "runtime": "python",
+          "completed_seconds": 0.13136020000092685
+        },
+        {
+          "from": "command_wait_telemetry.py",
+          "runtime": "python",
+          "completed_seconds": 0.12560180001310073
+        },
+        {
+          "from": "spell_native_prompt.py",
+          "runtime": "python",
+          "completed_seconds": 0.11891230000765063
+        }
+      ],
+      "manual_override_preserved": true
+    },
+    "interpreter-graphics.json": {
+      "passed": true,
+      "cases": [
+        {
+          "file": "debug_demo",
+          "debug": false,
+          "passed": true,
+          "output": "Values: [3, 5, 8]; total: 16\n"
+        },
+        {
+          "file": "debug_demo",
+          "debug": true,
+          "passed": true,
+          "output": "Values: [3, 5, 8]; total: 16\n"
+        },
+        {
+          "file": "graphics_demo",
+          "debug": false,
+          "passed": true,
+          "output": "Statistics window opened\nStatistics window closed\n"
+        },
+        {
+          "file": "graphics_demo",
+          "debug": true,
+          "passed": true,
+          "output": "Statistics window opened\nStatistics window closed\n"
+        },
+        {
+          "file": "graphics_tkinter",
+          "debug": false,
+          "passed": true,
+          "output": "TK_GRAPHICS_OPEN\nTK_GRAPHICS_CLOSED\n"
+        },
+        {
+          "file": "graphics_tkinter",
+          "debug": true,
+          "passed": true,
+          "output": "TK_GRAPHICS_OPEN\nTK_GRAPHICS_CLOSED\n"
+        },
+        {
+          "file": "session_first.py + session_second.py",
+          "passed": true,
+          "parallel": 2,
+          "procedures": [
+            {
+              "id": "f935f098bce04f118cdb653164008d46",
+              "script": "test_python_support/session_first.py",
+              "language": "python",
+              "source_sha256": "7940b4295eed6f2992d3994bbba69979cd086d2e60ed65c81c273ea633f29758",
+              "status": "COMPLETED",
+              "definition_id": null,
+              "version_id": null,
+              "capture_sha256": null,
+              "procedure_fence": 0,
+              "release_id": null,
+              "backend": null,
+              "uncertain_effects": false,
+              "pause_reason": null,
+              "has_token": false,
+              "pid": 122,
+              "worker_pid": 122,
+              "input_closed": false,
+              "exit_code": 0,
+              "error": null,
+              "debug": null,
+              "threads": [
+                {
+                  "id": "140294646444928",
+                  "name": "MainThread",
+                  "stack": [
+                    {
+                      "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                      "line": 5,
+                      "function": "count",
+                      "locals": {
+                        "number": "99"
+                      }
+                    },
+                    {
+                      "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                      "line": 9,
+                      "function": "<module>",
+                      "locals": {
+                        "__name__": "__main__",
+                        "__doc__": "Submit with session_second.py to exercise configurable parallelism.",
+                        "__package__": "",
+                        "__loader__": "None",
+                        "__spec__": "None",
+                        "__file__": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_first.py",
+                        "__cached__": "None",
+                        "__builtins__": "<dict>",
+                        "time": "<module>",
+                        "count": "<function>"
+                      }
+                    }
+                  ],
+                  "paused": false
+                }
+              ]
+            },
+            {
+              "id": "7fdf6665d47e472c9cf9a86121a7da76",
+              "script": "test_python_support/session_second.py",
+              "language": "python",
+              "source_sha256": "dbfedef92a87bd0f02e07a6480af480ed76a43443552ad643eb8820015abed50",
+              "status": "COMPLETED",
+              "definition_id": null,
+              "version_id": null,
+              "capture_sha256": null,
+              "procedure_fence": 0,
+              "release_id": null,
+              "backend": null,
+              "uncertain_effects": false,
+              "pause_reason": null,
+              "has_token": false,
+              "pid": 128,
+              "worker_pid": 128,
+              "input_closed": false,
+              "exit_code": 0,
+              "error": null,
+              "debug": null,
+              "threads": [
+                {
+                  "id": "139779706475392",
+                  "name": "MainThread",
+                  "stack": [
+                    {
+                      "file": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_second.py",
+                      "line": 3,
+                      "function": "<module>",
+                      "locals": {
+                        "__name__": "__main__",
+                        "__doc__": "None",
+                        "__package__": "",
+                        "__loader__": "None",
+                        "__spec__": "None",
+                        "__file__": "/tmp/python-desktop-_qgj4obi/project/test_python_support/session_second.py",
+                        "__cached__": "None",
+                        "__builtins__": "<dict>",
+                        "time": "<module>",
+                        "number": "99"
+                      }
+                    }
+                  ],
+                  "paused": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "interpreter-live.json": {
+      "passed": true,
+      "version": "1.1.2",
+      "interpreter": "/usr/local/bin/python3.13",
+      "pip_rejection": "pip3.13 installs packages; select a Python executable. Select /usr/local/bin/python3.13 instead."
+    }
+  },
+  "evidence": {
+    "interpreter-final-windows.xml": "a03c42c5e54ec682c75965ccd6c599b50ad4c1bbd9ee434b72ca38cbba795889",
+    "interpreter-final-linux.xml": "78362d9e3fd99369d3d57e57542088de809051564ac9e5947de6e4a4df4fcd9b",
+    "interpreter-ui-final.json": "c5416e81fc14c869ec54fb19fe9b35a8f70eda52d633307e48a2ed7a3f66dc69",
+    "interpreter-graphics.json": "e7aabca56f6f14e651fe153735ad55eb52493736008f87df1724034424e6655d",
+    "interpreter-live.json": "e3aad86404fcb929b9c86be1a79f57132ccd2446d29ec6efd15e051c293c9d8c"
+  },
+  "deployment": "Installed wheel in the running desktop without terminating user windows; saved demo interpreter corrected to /usr/local/bin/python3.13. Existing windows keep in-memory code until reopened."
+}

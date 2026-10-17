@@ -26,6 +26,10 @@ def describe():
             if type(grace) is not int or not 100 <= grace <= 10000:
                 raise ValueError('Graceful-stop timeout must be 100 to 10000 milliseconds')
             value['gracefulStopMilliseconds'] = grace
+            modules = value.get('sourceModules', [])
+            if (not isinstance(modules, list) or not all(isinstance(name, str)
+                    and re.fullmatch(r'[a-zA-Z_]\w*', name) for name in modules)):
+                raise ValueError('sourceModules must list top-level Python module names')
             json.dumps(value, allow_nan=False)
             seen.add(identifier)
             backends.append(value)

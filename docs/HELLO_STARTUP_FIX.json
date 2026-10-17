@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "ide_version": "1.1.1",
+  "cause": "Window-wide SPELL selection carried into ordinary Python tabs",
+  "behavior": "Each local file keeps its chosen runtime; optional backend sourceModules guide static import detection; desktop initially opens Python hello.py",
+  "previous_python_seconds": [
+    0.10352219999185763,
+    0.1074576000100933,
+    0.1073616000066977
+  ],
+  "prior_current_runtime_comparison": [
+    {
+      "language": "python",
+      "first_output_seconds": 0.1026817999954801,
+      "completed_seconds": 0.1038094999967143,
+      "output": "HELLO_TIMING_RESULT\n"
+    },
+    {
+      "language": "python",
+      "first_output_seconds": 0.09885569999460131,
+      "completed_seconds": 0.10016669999458827,
+      "output": "HELLO_TIMING_RESULT\n"
+    },
+    {
+      "language": "python",
+      "first_output_seconds": 0.0963497000047937,
+      "completed_seconds": 0.09750569998868741,
+      "output": "HELLO_TIMING_RESULT\n"
+    },
+    {
+      "language": "spell",
+      "first_output_seconds": null,
+      "completed_seconds": 9.272491200012155,
+      "output": "SPELL run files: /tmp/tmpllrcofqo/.openbexi/runs/ef4088af41384602973dd75908076302\n"
+    }
+  ],
+  "installed_ui": {
+    "passed": true,
+    "ide_version": "1.1.1",
+    "cases": [
+      {
+        "from": "spell_menu.py",
+        "runtime": "python",
+        "completed_seconds": 0.10733969998545945
+      },
+      {
+        "from": "command_wait_telemetry.py",
+        "runtime": "python",
+        "completed_seconds": 0.10780180001165718
+      },
+      {
+        "from": "spell_native_prompt.py",
+        "runtime": "python",
+        "completed_seconds": 0.10840530000859872
+      }
+    ],
+    "manual_override_preserved": true
+  },
+  "live_ui": {
+    "passed": true,
+    "ide_version": "1.1.1",
+    "cases": [
+      {
+        "from": "spell_menu.py",
+        "runtime": "python",
+        "completed_seconds": 0.15623630001209676
+      },
+      {
+        "from": "command_wait_telemetry.py",
+        "runtime": "python",
+        "completed_seconds": 0.11656799999764189
+      },
+      {
+        "from": "spell_native_prompt.py",
+        "runtime": "python",
+        "completed_seconds": 0.17095709999557585
+      }
+    ],
+    "manual_override_preserved": true
+  },
+  "tests": {
+    "hello-windows.xml": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "hello-linux.xml": {
+      "tests": 180,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9
+    }
+  },
+  "native_run_and_debug_passed": true,
+  "host_tests": {
+    "passed": 24,
+    "subtests_passed": 7
+  },
+  "candidate_image": "sha256:527b0c2cf28018de6bad7f75ba907a20149f9a94a26357ec6f53f3c34d0cdd90",
+  "test_image": "sha256:4ac485d6f05c7aacc7ca75c161df6d3046fda7f41d3d5b2b545f01bc35a8f418",
+  "deployment": "Installed the tested IDE and host wheels in the running desktop, updated its launcher, and opened a new Python window without terminating existing user windows",
+  "wheels": {
+    "openbexi_ide-1.1.1-py3-none-any.whl": "482063bb46714f9d0b7bb91c06ef22faeae4c7e8787ffb3812edfc54e535c3e6",
+    "openbexi_spell_host-0.3.1.dev2-py3-none-any.whl": "bb2fdbb78a154a5ba62a6438a74d81f17618645267aa930927c698c7edab7840"
+  },
+  "evidence": {
+    "hello-windows.xml": "1a44bd99c73d94673cedb240f5619a7220d7f521b5ede190da47ddf11ccac7dd",
+    "hello-linux.xml": "0d6a0f11f46fe3e42598e8e6e5293c747f6bd1d0b54ad69538bc37719ab2196c",
+    "hello-runtime.json": "e5b6c757dc8e3b744f3612e1aeb8afa9a03226a1ba0e9d0672f54fcfaf56ec27",
+    "hello-live.json": "c3028d61b6e884e4bf0090f8edfeedde288a8faa7157881d6f6a434cb9a10c80",
+    "hello-native.json": "771cb1d5370fbde0ccd1fc1b12f0a9aea7968f8f415b22cbe59c8766687a3725"
+  },
+  "limitations": [
+    "Timings are local observations, not a guarantee for every machine.",
+    "Existing in-memory IDE windows keep their original code until closed; newly opened windows use the fix.",
+    "Eight Docker Execution tests and the Windows-specific ownership test are skipped in the Linux suite; prior learning qualification covers them separately."
+  ]
+}

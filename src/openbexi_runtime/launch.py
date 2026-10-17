@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import time
@@ -20,11 +21,24 @@ def console_interpreter(executable: str | Path) -> Path:
     # POSIX venv executables are symlinks. Resolving them selects the base
     # interpreter and silently loses the chosen environment and its packages.
     path = Path(os.path.abspath(executable))
+    reject_package_installer(path)
     if not (path.parent.parent / 'pyvenv.cfg').is_file():
         path = path.resolve()
+    reject_package_installer(path)
     if path.name.lower() == "pythonw.exe":
         path = path.with_name("python.exe")
     return path
+
+
+def reject_package_installer(path: Path) -> None:
+    """Catch a common file-picker mistake before executing or remembering it."""
+    if not re.fullmatch(r'pip(?:\d+(?:\.\d+)*)?(?:-script\.py|\.exe|\.cmd|\.bat|\.py)?',
+                        path.name, re.IGNORECASE):
+        return
+    candidates = ('python.exe', 'python3.13', 'python3', 'python')
+    sibling = next((path.with_name(name) for name in candidates if path.with_name(name).is_file()), None)
+    hint = f' Select {sibling} instead.' if sibling else ' Select python or python3.13 instead.'
+    raise ValueError(f'{path.name} installs packages; select a Python executable.' + hint)
 
 
 def interpreter_info(executable: str | Path, require_debugger=False, cancel=None, language='python') -> dict:

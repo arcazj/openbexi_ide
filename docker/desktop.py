@@ -111,7 +111,7 @@ def main():
     desktop.show()
     QTimer.singleShot(0, lambda: Path('/tmp/openbexi-desktop.pid').write_text(str(os.getpid())))
     if '--no-initial-ide' not in sys.argv:
-        QTimer.singleShot(0, lambda: desktop.launch('spell'))
+        QTimer.singleShot(0, lambda: desktop.launch('local'))
     return app.exec()
 
 

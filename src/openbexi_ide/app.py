@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 from pathlib import Path
 import sys
@@ -87,6 +88,10 @@ class MainWindow(QMainWindow):
         self.backend_choices = []
         self.backend_epoch = 0
         self.backend_probe = None
+        self.interpreter_epoch = 0
+        self.interpreter_probe = None
+        self.pending_interpreter = None
+        self.file_runtimes = {}
         self.theme = self.settings.value("theme", "light")
         if self.theme not in THEMES:
             self.theme = "light"
@@ -137,6 +142,7 @@ class MainWindow(QMainWindow):
         self.make_toolbar()
         self.make_menus()
         self.language.currentIndexChanged.connect(self.refresh_busy)
+        self.language.currentIndexChanged.connect(self.remember_runtime)
         self.position_label = QLabel("Development")
         self.position_label.setObjectName("muted")
         self.statusBar().addPermanentWidget(self.position_label)
@@ -302,7 +308,7 @@ class MainWindow(QMainWindow):
         toolbar.addWidget(spacer)
         self.language = QComboBox()
         self.language.addItem("Python", "python")
-        self.language.setToolTip("Runtime for Run and Debug; plugins belong to the selected interpreter")
+        self.language.setToolTip("Runtime for this file's Run and Debug; your selection is remembered for this tab")
         self.language_action = toolbar.addWidget(self.language)
         self.session_button = QPushButton("Local workspace")
         self.session_button.clicked.connect(self.show_session)
@@ -469,6 +475,7 @@ class MainWindow(QMainWindow):
             self.report_error("Stop the script before changing projects"); return False
         if not self.confirm_unsaved():
             return False
+        self.cancel_interpreter_selection()
         while self.tabs.count():
             widget = self.tabs.widget(0)
             self.tabs.removeTab(0); widget.deleteLater()
@@ -487,12 +494,19 @@ class MainWindow(QMainWindow):
                 self.interpreter = console_interpreter(candidate); break
         key = "interpreter/" + hashlib.sha256(str(folder).encode()).hexdigest()
         remembered = self.settings.value(key, "")
+        interpreter_error = None
         if remembered and Path(remembered).is_file():
-            self.interpreter = Path(remembered)
+            try:
+                self.interpreter = console_interpreter(remembered)
+            except ValueError as error:
+                interpreter_error = str(error)
+                self.settings.setValue(key, str(self.interpreter))
         self.interpreter_button.setToolTip(str(self.interpreter))
         self.discover_backends()
         self.statusBar().showMessage("Choose a Python file from the project")
         self.set_busy(False)
+        if interpreter_error:
+            self.report_error(interpreter_error)
         return True
 
     def open_tree_item(self, index):
@@ -545,7 +559,39 @@ class MainWindow(QMainWindow):
     def tab_changed(self, _index):
         self.update_position()
         if hasattr(self, "input"):
+            self.select_editor_runtime()
             self.refresh_busy()
+
+    def remember_runtime(self, _index):
+        editor = self.current_editor()
+        if editor and not self.session_client.active and self.language.currentData():
+            self.file_runtimes[editor.path] = self.language.currentData()
+
+    def select_editor_runtime(self):
+        editor = self.current_editor()
+        if not editor or self.is_busy() or self.session_client.active:
+            return
+        selected = self.file_runtimes.get(editor.path)
+        if selected is None:
+            selected = 'python'
+            try:
+                tree = ast.parse(editor.toPlainText())
+            except (SyntaxError, ValueError):
+                tree = None
+            imports = set()
+            for node in ast.walk(tree) if tree else ():
+                if isinstance(node, ast.Import):
+                    imports.update(alias.name.split('.')[0] for alias in node.names)
+                elif isinstance(node, ast.ImportFrom) and node.module and not node.level:
+                    imports.add(node.module.split('.')[0])
+            matches = [backend['id'] for backend in self.backend_choices
+                       if imports.intersection(backend.get('sourceModules', []))]
+            if len(matches) == 1:
+                selected = matches[0]
+        index = self.language.findData(selected)
+        previous = self.language.blockSignals(True)
+        self.language.setCurrentIndex(max(0, index))
+        self.language.blockSignals(previous)
 
     def update_position(self):
         if not hasattr(self, "position_label"):
@@ -624,12 +670,46 @@ class MainWindow(QMainWindow):
             return
         filename, _ = QFileDialog.getOpenFileName(self, "Select CPython 3.13 interpreter", str(self.interpreter.parent))
         if filename:
-            self.interpreter = console_interpreter(filename)
-            self.interpreter_button.setToolTip(str(self.interpreter))
-            if self.project:
-                key = "interpreter/" + hashlib.sha256(str(self.project).encode()).hexdigest()
-                self.settings.setValue(key, str(self.interpreter))
-            self.discover_backends()
+            self.cancel_interpreter_selection()
+            try:
+                candidate = console_interpreter(filename)
+            except ValueError as error:
+                self.report_error(str(error)); return
+            self.pending_interpreter = (self.project, candidate)
+            self.interpreter_probe = ProbeTask(self.interpreter_epoch, candidate)
+            self.interpreter_probe.signals.done.connect(self.interpreter_selected)
+            self.statusBar().showMessage('Checking Python interpreter…')
+            QThreadPool.globalInstance().start(self.interpreter_probe)
+
+    def cancel_interpreter_selection(self):
+        if self.interpreter_probe:
+            self.interpreter_probe.cancel.set()
+        self.interpreter_epoch += 1
+        self.pending_interpreter = None
+        self.interpreter_probe = None
+
+    def interpreter_selected(self, epoch, info, error):
+        if epoch != self.interpreter_epoch or self.pending_interpreter is None:
+            return
+        project, candidate = self.pending_interpreter
+        self.pending_interpreter = None
+        self.interpreter_probe = None
+        if error:
+            self.report_error('Select a Python executable. ' + error); return
+        if project != self.project or self.is_busy():
+            self.statusBar().showMessage('Interpreter selection was cancelled; select it again after the script stops.', 8000)
+            return
+        self.interpreter = candidate
+        self.interpreter_button.setToolTip(str(candidate))
+        if self.project:
+            key = "interpreter/" + hashlib.sha256(str(self.project).encode()).hexdigest()
+            self.settings.setValue(key, str(candidate))
+        if self.backend_probe:
+            self.backend_probe.cancel.set()
+        self.backend_epoch += 1
+        self.backends_discovered(self.backend_epoch, info, '')
+        self.show_interpreter(info)
+        self.statusBar().showMessage('Python interpreter selected', 4000)
 
     def discover_backends(self):
         if self.is_busy():
@@ -657,6 +737,7 @@ class MainWindow(QMainWindow):
 
     def populate_backends(self):
         selected = self.language.currentData()
+        previous = self.language.blockSignals(True)
         self.language.clear()
         self.language.addItem('Python', 'python')
         if self.session_client.active:
@@ -668,6 +749,9 @@ class MainWindow(QMainWindow):
                 self.language.addItem(backend['label'], backend['id'])
         index = self.language.findData(selected)
         self.language.setCurrentIndex(max(0, index))
+        self.language.blockSignals(previous)
+        self.select_editor_runtime()
+        self.refresh_busy()
 
     def choose_arguments(self):
         dialog = ArgumentsDialog(self.arguments, self)
@@ -704,6 +788,7 @@ class MainWindow(QMainWindow):
             self.session_client.command('run', script=str(editor.path.relative_to(self.project)),
                                         arguments=list(self.arguments), language=self.language.currentData())
             return
+        self.select_editor_runtime()
         for index in range(self.tabs.count()):
             other = self.tabs.widget(index)
             if other.document().isModified() and not self.save_editor(other):
@@ -743,6 +828,7 @@ class MainWindow(QMainWindow):
         editor = self.current_editor()
         if not editor or not self.project or self.is_busy():
             return
+        self.select_editor_runtime()
         for index in range(self.tabs.count()):
             other = self.tabs.widget(index)
             if other.document().isModified() and not self.save_editor(other):
@@ -868,6 +954,7 @@ class MainWindow(QMainWindow):
         self.frame_id = None
         for index in range(self.tabs.count()):
             self.tabs.widget(index).show_execution_line(None)
+        self.select_editor_runtime()
         self.refresh_busy()
         if self._close_requested:
             self.close()
@@ -1074,6 +1161,7 @@ class MainWindow(QMainWindow):
             self.session_client.disconnect()
             event.ignore(); return
         self.settings.sync()
+        self.cancel_interpreter_selection()
         if self.backend_probe:
             self.backend_probe.cancel.set()
         self.backend_epoch += 1
@@ -1095,11 +1183,16 @@ def main(argv=None):
     app.setStyle("Fusion")
     configure_fonts(app)
     window = MainWindow(args.project)
+    if args.file:
+        if args.runtime:
+            window.file_runtimes[args.file.resolve()] = args.runtime
+        window.open_file(args.file)
     if args.runtime:
         def select_runtime(*_):
             index = window.language.findData(args.runtime)
             if index >= 0:
-                window.language.setCurrentIndex(index)
+                if not args.file:
+                    window.language.setCurrentIndex(index)
             else:
                 window.statusBar().showMessage('Runtime is not installed: ' + args.runtime, 10000)
         if window.backend_probe:
@@ -1107,8 +1200,6 @@ def main(argv=None):
         select_runtime()
     if args.theme and window.theme != args.theme:
         window.toggle_theme()
-    if args.file:
-        window.open_file(args.file)
     window.show()
     if args.session_info:
         window.join_shared_session(user=args.user, role=args.role, invite_file=args.session_info)
