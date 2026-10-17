@@ -16,7 +16,8 @@ COPY --from=native /bridge/ /bridge/
 COPY --from=spell_plugin host_runtime/python/ /opt/host/
 COPY --from=spell_plugin src/dss/ /opt/spell-native/lib/python3.13/site-packages/dss/
 COPY --from=spell_plugin host_plugin/ /opt/native-host-package/
-RUN python -m pip wheel --no-deps --no-build-isolation -w /opt/wheels /opt/native-host-package \
+RUN rm -f /opt/wheels/openbexi_spell_host-*.whl \
+    && python -m pip wheel --no-deps --no-build-isolation -w /opt/wheels /opt/native-host-package \
     && python -m pip install --no-index --no-deps /opt/wheels/openbexi_spell_host-*.whl \
     && printf '%s\n' '#!/opt/spell-native/bin/python' 'from spell_native.launcher import main' 'raise SystemExit(main())' > /opt/spell-native/bin/spell-native \
     && chmod 755 /opt/spell-native/bin/spell-native

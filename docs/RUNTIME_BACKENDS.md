@@ -36,6 +36,26 @@ An adapter can emit `openbexi/inputRequest` with `text`, `choices` and
 `openbexi/input` request with a `text` argument. Prompt semantics belong to the
 backend; the neutral host displays and forwards them.
 
+### Optional procedure workspace
+
+A descriptor may set `procedureWorkspace: true`. Local Run then uses the
+backend's DAP adapter with `noDebug: true`; Debug uses the same adapter with
+breakpoints. The CLI runner and ordinary Python worker are unchanged.
+
+The adapter emits `openbexi/procedure` events with a `kind` discriminator:
+`source` (source path, text, character offset and completion flag), `line`
+(source, line, current flag, native timestamp, item/value/status and details),
+`status`, `prompt`, `promptClosed`, or `reminder`. Procedure/root identifiers
+scope child status and prompt ownership. The GUI only associates results with
+provided project source snapshots. A `prompt` provides its ID, text, optional
+`choices` as label/value pairs, and `inputType` (text, number, date, password).
+Only non-secret defaults may be presented as `defaultHint`.
+
+The existing `openbexi/inputRequest` enables input. Answers include `promptId`
+and `text`; only one submission may be in flight. Prompt closure clears input
+only for its matching ID. The plugin translates native notifications into this
+neutral presentation protocol without importing its library into the GUI.
+
 Use Run → Reload Runtime Plugins after installing or removing a package. The
 toolbar lists local backends separately from the v0.2 server's shared-session
 runtime choices. CLI selection is `openbexi run FILE --language BACKEND_ID`.

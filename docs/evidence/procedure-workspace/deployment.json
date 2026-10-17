@@ -1,0 +1,17 @@
+{
+  "container": "openbexi-ide-v1-final-desktop",
+  "image": "sha256:6c71e0e74b1be154cadded7877a5181272f06190e559d5a5d194a596869d9ddd",
+  "volumes": {
+    "/workspace": "openbexi-v1-final-workspace",
+    "/home/tester": "openbexi-v1-final-preferences"
+  },
+  "url": "http://127.0.0.1:6080/vnc.html?autoconnect=1&resize=remote",
+  "http_status": 200,
+  "health_check": "passed: launcher, noVNC, VNC, DSS, shared and durable services",
+  "previous_container_retained_stopped": "openbexi-ide-pre-workspace-20261017",
+  "windows_environment": "C:/projects/openbexi_ide/.venv",
+  "installed_versions": {
+    "openbexi-ide": "1.2.0.dev1",
+    "openbexi-spell-host": "0.3.1.dev3"
+  }
+}

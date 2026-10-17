@@ -1,5 +1,16 @@
 # openbexi_ide roadmap
 
+## Current development priority — procedure execution workspace
+
+Delivered the SPELL GUI User Manual-inspired procedure table, current-line
+highlighting, procedure history and embedded prompts in local Run and Debug.
+The implementation and exact validation scope are recorded in
+[Procedure workspace](docs/PROCEDURE_WORKSPACE.md). The sibling plugin's v0.6
+packaging and release qualification remain paused at the user's explicit request.
+Earlier milestone sections below retain their historical candidate status;
+the published IDE 1.0 release record and current workspace evidence supersede
+those older handoff statements.
+
 ## v0.1 — standalone IDE and collaborative CLI
 
 Reuse the tested desktop editor/runtime/debugger. Establish a fresh independent

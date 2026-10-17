@@ -28,6 +28,7 @@ from .session_panel import JoinDialog, SessionPanel
 from .shared_debugger import SharedDebugController
 from .plugin_manager import PluginManager
 from .source_view import SourceView
+from .procedure_workspace import ProcedureWorkspace
 
 
 def icon(kind: str, color: str) -> QIcon:
@@ -125,6 +126,11 @@ class MainWindow(QMainWindow):
         self.debug_controller.input_requested.connect(self.show_backend_prompt)
         self.make_actions()
         self.make_workspace()
+        self.procedure_workspace = ProcedureWorkspace(self.debug_controller, self)
+        self.output_tabs.addTab(self.procedure_workspace, 'Procedures')
+        self.procedure_workspace.attention.connect(self.show_procedure_workspace)
+        self.procedure_workspace.navigate.connect(self.open_procedure_line)
+        self.procedure_workspace.location_changed.connect(self.highlight_procedure_line)
         self.source_view = None
         self._source_pending = None
         self._source_latest = None
@@ -797,9 +803,16 @@ class MainWindow(QMainWindow):
         self.append_output(f"Running {editor.path.name}\n\n")
         self._stopping = False
         try:
-            self.run_controller.start(LaunchSpec(self.project, editor.path, self.interpreter,
-                                                 self.arguments, self.language.currentData()))
+            spec = LaunchSpec(self.project, editor.path, self.interpreter,
+                              self.arguments, self.language.currentData())
+            backend = next((item for item in self.backend_choices if item['id'] == spec.language), {})
+            if backend.get('procedureWorkspace'):
+                self.procedure_workspace.begin(spec, 'Run')
+                self.debug_controller.start(spec, no_debug=True)
+            else:
+                self.run_controller.start(spec)
         except (OSError, ValueError, RuntimeError) as error:
+            self.procedure_workspace.finish(-1)
             self.report_error(str(error)); self.set_busy(False)
 
     def debug_script(self):
@@ -839,16 +852,38 @@ class MainWindow(QMainWindow):
         self.append_output(f"Debugging {editor.path.name}\n\n")
         breakpoints = {self.tabs.widget(i).path: self.tabs.widget(i).breakpoints for i in range(self.tabs.count())}
         try:
-            self.debug_controller.start(LaunchSpec(self.project, editor.path, self.interpreter,
-                                                   self.arguments, self.language.currentData()), breakpoints)
+            spec = LaunchSpec(self.project, editor.path, self.interpreter, self.arguments, self.language.currentData())
+            backend = next((item for item in self.backend_choices if item['id'] == spec.language), {})
+            if backend.get('procedureWorkspace'):
+                self.procedure_workspace.begin(spec, 'Debug')
+            self.debug_controller.start(spec, breakpoints)
         except (OSError, ValueError, RuntimeError) as error:
+            self.procedure_workspace.finish(-1)
             self.report_error(str(error)); self.refresh_busy()
+
+    def show_procedure_workspace(self):
+        self.output_tabs.setCurrentWidget(self.procedure_workspace)
+        if self.vertical.sizes()[-1] < 650:
+            self.vertical.setSizes([max(150, self.vertical.height() - 650), 650])
+
+    def open_procedure_line(self, path, line):
+        if path and path.is_file() and self.project and path.is_relative_to(self.project):
+            editor = self.open_file(path)
+            if editor:
+                editor.goto_location(line, 0)
+
+    def highlight_procedure_line(self, path, line):
+        for index in range(self.tabs.count()):
+            editor = self.tabs.widget(index)
+            editor.show_execution_line(line if editor.path == path else None)
 
     def stop_script(self):
         if self.session_client.active and not self.is_busy():
             self.session_panel.control('stop')
             return
         self._stopping = True
+        if self.procedure_workspace.active_run:
+            self.procedure_workspace.active_run.aborted = True
         self.statusBar().showMessage("Stopping script…")
         self.run_controller.stop()
         self.debug_controller.stop()
@@ -887,7 +922,8 @@ class MainWindow(QMainWindow):
         if hasattr(self, "input"):
             input_ready = any(process.state() == process.ProcessState.Running
                               for process in (self.run_controller.process, self.debug_controller.terminal))
-            self.input.setEnabled(input_ready or self.debug_controller.input_pending)
+            self.input.setEnabled(input_ready or (self.debug_controller.input_pending and
+                                                   self.debug_controller.answer_pending is None))
         paused = self.debug_controller.running and self.debug_controller.paused
         for action in (self.continue_action, self.over_action, self.into_action, self.out_action):
             action.setEnabled(paused)
@@ -899,7 +935,7 @@ class MainWindow(QMainWindow):
         for index in range(self.tabs.count()):
             self.tabs.widget(index).setReadOnly(busy)
         if busy:
-            self.statusBar().showMessage("Debugging · local development" if self.debug_controller.running
+            self.statusBar().showMessage("Debugging · local development" if self.debug_controller.running and not self.debug_controller.no_debug
                                          else "Running · local development")
         self.join_action.setEnabled(not busy and not self.session_client.active)
         self.disconnect_action.setEnabled(self.session_client.active and self.session_client.state != 'leaving')

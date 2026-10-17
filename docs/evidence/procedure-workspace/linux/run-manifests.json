@@ -1,0 +1,32 @@
+{
+  "4e31036b6bfa4b0bbd45d9b5fb6424cd": {
+    "run": "4e31036b6bfa4b0bbd45d9b5fb6424cd",
+    "image": "packaged-native-desktop:sha256:84950784961b68813c6634897c96256af21b5071d17ede7a52d205ec4c6db015",
+    "inputs": {
+      "child.py": "1ecc38ccac1000063271ebc6ec5730cd007343278f34154d0f2320755b45d3f3",
+      "preferences.ini": "167844c604c966b54aa61fbca3ac87a1bb9b990cc444605098d157ba2d865112",
+      "procedure.py": "4e67389c942ad4dd011f8598c2dbefe7fd4786f9440bd1515aa6e0e1757c53fa"
+    },
+    "artifacts": {
+      "driver.sqlite": "2a8607af9f9f417cddf0aa0aa20a42ad80dea59e94102addf36b01eeb6dd1e01",
+      "dss.sqlite": "3638f5ecb0eff917e1174f915d9362af88264473335658d0ca88d82f4f284ae8",
+      "simulator.json": "2ce2dcb499dae316699d8ad3f43965aba9ed271a29ccfda812c2960e69eceb45"
+    },
+    "deleted_in_snapshot": []
+  },
+  "a00e2ee157784e5aae08fccfb5b1f477": {
+    "run": "a00e2ee157784e5aae08fccfb5b1f477",
+    "image": "packaged-native-desktop:sha256:84950784961b68813c6634897c96256af21b5071d17ede7a52d205ec4c6db015",
+    "inputs": {
+      "child.py": "1ecc38ccac1000063271ebc6ec5730cd007343278f34154d0f2320755b45d3f3",
+      "preferences.ini": "8e9e651db06f6c9620bb730bce2b8575d1bc6a2bbefbd974961d21c33c493567",
+      "procedure.py": "4e67389c942ad4dd011f8598c2dbefe7fd4786f9440bd1515aa6e0e1757c53fa"
+    },
+    "artifacts": {
+      "driver.sqlite": "0a1f588694e0963782e5bbb40a7b5780970bd9361a34a5cde3bae92dc0108e57",
+      "dss.sqlite": "2d1428e1ceb2d182e6ec5ff5ec79ef143577753a55ffb4439b69eeb7386aa2e5",
+      "simulator.json": "cdd6a0570ce0a1428e7cc773c5172bececc6b7271499914abf098b846e6c0774"
+    },
+    "deleted_in_snapshot": []
+  }
+}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openbexi-ide"
-version = "1.1.2"
+version = "1.2.0.dev1"
 description = "Standalone CPython 3.13 desktop IDE with optional domain plugins"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"

@@ -1,5 +1,12 @@
 # Native learning desktop
 
+The current local Development desktop adds the
+[procedure execution workspace](PROCEDURE_WORKSPACE.md): captured code/results,
+current-line highlighting, session history and embedded prompts. Its installed
+IDE is `1.2.0.dev1` with native host `0.3.1.dev3`. The delivery manifest records
+the images and retained evidence; the v0.5 references below describe the
+original learning baseline. SPELL v0.6 remains paused.
+
 The IDE 1.1 learning update combines the installed Python desktop with the
 published v0.5 original native SPELL runtime. The companion host adapter adds
 an explicit packaged-desktop backend; Windows and JetBrains continue to use

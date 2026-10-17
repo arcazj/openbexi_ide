@@ -21,9 +21,9 @@ if NATIVE:
     from spell.lib.adapter.utctime import TIME, NOW
 else:
     from openbexi_spell_plugin.runtime import activate
-    from spell import lang as api
-    from spell import lang as constants
-    from spell.lang import TIME, NOW
+    import openbexi_spell as api
+    import openbexi_spell as constants
+    from openbexi_spell import TIME, NOW
     activate()
 
 PROFILE = 'original-native' if NATIVE else 'browser-sdk'

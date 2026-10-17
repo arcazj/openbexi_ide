@@ -22,6 +22,8 @@ class DebugController(QObject):
     threads_changed = Signal(object)
     breakpoints_verified = Signal(object)
     input_requested = Signal(object)
+    procedure_event = Signal(object)
+    prompt_answered = Signal(str, str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -48,15 +50,23 @@ class DebugController(QObject):
         self.pending = {}
         self.input_pending = False
         self.backend = None
+        self.no_debug = False
+        self.prompt_id = None
+        self.answer_pending = None
+        self.answer_requests = {}
 
     @property
     def running(self):
         return self.active
 
-    def start(self, spec: LaunchSpec, breakpoints=None):
+    def start(self, spec: LaunchSpec, breakpoints=None, *, no_debug=False):
         if self.active or any(p.state() != QProcess.NotRunning for p in (self.adapter, self.terminal)):
             raise RuntimeError("Stop the current debugger before starting another")
         self.spec = spec.validate()
+        self.no_debug = no_debug
+        self.backend = None
+        self.prompt_id = self.answer_pending = None
+        self.answer_requests = {}
         self.breakpoints = {str(Path(path).resolve()): sorted(set(lines))
                             for path, lines in (breakpoints or {}).items()}
         self.epoch += 1
@@ -101,7 +111,7 @@ class DebugController(QObject):
         if self.backend:
             self.request('launch', {'name': self.spec.script.name, 'type': self.spec.language,
                 'request': 'launch', 'program': str(self.spec.script), 'project': str(self.spec.project),
-                'args': list(self.spec.arguments), 'stopOnEntry': False})
+                'args': list(self.spec.arguments), 'stopOnEntry': False, 'noDebug': self.no_debug})
             return
         self.request("launch", {"name": self.spec.script.name, "type": "python", "request": "launch",
             "program": self.spec.worker_arguments()[0], "args": self.spec.worker_arguments()[1:],
@@ -142,6 +152,16 @@ class DebugController(QObject):
             if not pending:
                 return
             command, callback, _ = pending
+            answered = self.answer_requests.pop(message.get('request_seq'), None)
+            if answered is not None:
+                self.answer_pending = None
+                error = '' if message.get('success') else message.get('message', 'Answer rejected')
+                if not error and (self.prompt_id or '') == answered:
+                    self.prompt_id = None
+                    self.input_pending = False
+                self.prompt_answered.emit(answered, error)
+                self.state_changed.emit(True)
+                return
             if not message.get("success"):
                 error = f"{command}: {message.get('message', 'Debugger request failed')}"
                 if command in {"initialize", "launch", "configurationDone"}:
@@ -160,6 +180,13 @@ class DebugController(QObject):
                 self.reply(message, False, message="This reverse request is not supported")
         else:
             event, body = message.get("event"), message.get("body", {})
+            if event == 'openbexi/procedure' and self.backend:
+                if body.get('kind') == 'promptClosed' and body.get('promptId') == self.prompt_id:
+                    self.prompt_id = None
+                    self.input_pending = False
+                    self.state_changed.emit(True)
+                self.procedure_event.emit(body)
+                return
             if event == "initialized":
                 self.configure()
             elif event == "output" and body.get("category") != "telemetry":
@@ -179,6 +206,7 @@ class DebugController(QObject):
                 self.exit_code = body.get("exitCode", 0)
             elif event == 'openbexi/inputRequest' and self.backend:
                 self.input_pending = True
+                self.prompt_id = body.get('promptId')
                 self.input_requested.emit(body)
                 self.state_changed.emit(True)
             elif event == "terminated":
@@ -189,7 +217,7 @@ class DebugController(QObject):
                 QTimer.singleShot(grace, lambda: self.force_end(epoch))
 
     def configure(self):
-        for path, lines in self.breakpoints.items():
+        for path, lines in ({} if self.no_debug else self.breakpoints).items():
             self.set_breakpoints(path, lines)
         self.request("setExceptionBreakpoints", {"filters": ["uncaught"]})
         # Requests are ordered on one adapter stream; configurationDone follows
@@ -264,9 +292,17 @@ class DebugController(QObject):
         if self.terminal.state() == QProcess.Running:
             self.terminal.write((text + "\n").encode("utf-8"))
         elif self.backend and self.input_pending:
-            self.request('openbexi/input', {'text': text})
-            self.input_pending = False
-            self.state_changed.emit(True)
+            self.answer_prompt(self.prompt_id, text)
+
+    def answer_prompt(self, identifier, text):
+        if not self.input_pending or identifier != self.prompt_id or self.answer_pending is not None:
+            return False
+        sequence = self.request('openbexi/input', {'text': text, **({'promptId': identifier} if identifier else {})})
+        if sequence is None:
+            return False
+        self.answer_pending = identifier or ''
+        self.answer_requests[sequence] = identifier or ''
+        return True
 
     def close_input(self):
         self.terminal.closeWriteChannel()
@@ -276,6 +312,10 @@ class DebugController(QObject):
         for sequence, (command, _callback, started) in list(self.pending.items()):
             if now - started > (30 if command == "launch" else 10):
                 self.pending.pop(sequence, None)
+                if sequence in self.answer_requests:
+                    identifier = self.answer_requests.pop(sequence)
+                    self.answer_pending = None
+                    self.prompt_answered.emit(identifier, 'The answer request timed out. Check the procedure state before retrying.')
                 if command in {"initialize", "launch", "configurationDone"}:
                     self.fail(f"Debugger timed out during {command}"); return
                 self.error.emit(f"Debugger request timed out: {command}")
@@ -308,6 +348,8 @@ class DebugController(QObject):
     def stop(self):
         if not self.active:
             return
+        if not self.terminated and self.exit_code == 0:
+            self.exit_code = 130
         self.stopping = True
         if self.validating:
             self.probe.cancel.set()
@@ -329,6 +371,8 @@ class DebugController(QObject):
         if self.active and not self.validating and all(p.state() == QProcess.NotRunning for p in (self.adapter, self.terminal)):
             self.active = self.paused = False
             self.input_pending = False
+            self.prompt_id = self.answer_pending = None
+            self.answer_requests.clear()
             self.timer.stop(); self.pending.clear()
             self.state_changed.emit(False)
             self.finished.emit(self.exit_code)

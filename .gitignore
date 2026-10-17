@@ -1,6 +1,8 @@
 .venv/
 .qualification/
 .session/
+.openbexi/editor/
+examples/test_spell/spell_menu_results.json
 var/
 build/
 dist/

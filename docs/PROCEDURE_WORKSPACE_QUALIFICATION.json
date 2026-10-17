@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-17",
+  "scope": "Local Development procedure GUI delivery; not release or operational acceptance",
+  "v0_6_status": "paused at user request",
+  "manual": {
+    "document": "SPELL - GUI User Manual - 2.4.4.pdf",
+    "sections": [
+      "3.2.1",
+      "3.2.6",
+      "5.4"
+    ]
+  },
+  "features": [
+    "Code/results table with actual source snapshots and native results",
+    "Current-line highlight and follow for root and visible child procedures",
+    "Per-session history, up to 100 runs, retained source and output",
+    "Embedded prompts with Commit, Reset, Abort and prompt ownership checks"
+  ],
+  "source_bases": {
+    "openbexi_ide": "58b143ed1f3d09243c7d0318640d38bd1d07550c",
+    "openbexi_spell_plugin": "47b40b5b7feb3d9529e28504a4fcbe9c42ead116"
+  },
+  "source_sha256": {
+    "ide": {
+      "docker/native-desktop.Dockerfile": "dbb5b0dcb8957e88460fd589f1c856c019d390b0964210c2b396f339cbcbfa91",
+      "examples/test_spell/spell_menu.py": "adb01f836150f2a199bf18ac65e1f90b5bd24ed3673f2c4ea944099a6b7debd2",
+      "pyproject.toml": "d900c3153c22d480721d8eaf86f1c24b6370c6c5cc87cacfdbde1306199678c1",
+      "scripts/qualify_procedure_workspace.py": "deae711de9d5568f720b3e202300d5638a447ebeeaf9225708e15659209fd9c7",
+      "scripts/qualify_spell_browser.py": "c1c32e38691e4f8fcd005c7ae304e098f80dcb09043923bf5da9213b9cdc463d",
+      "src/openbexi_ide/app.py": "f2bd633f97c308c4956f40978d715466aec5c0648dba86bb3b5c9a6401ffada0",
+      "src/openbexi_ide/debugger.py": "144cfcd66eb3edc5ecd36f0b90a1cb1a58ce432bbed89be8181b868f45a7c239",
+      "src/openbexi_ide/procedure_workspace.py": "03022962af554f5af69ec44c33dfa5d1459a29d769df6b8b9170d8611c73ca41",
+      "tests/test_procedure_workspace.py": "0984f2734e328c227dff2416dfc7c11da97172106ec4c359dfbf9b7c2d819e8f"
+    },
+    "plugin": {
+      "editor_support/README.md": "688a853056a07352ed11e8507f3df71c84dc1b55b6d18ed1df8cb583896ffd55",
+      "editor_support/test_export_spell_editor.py": "6189bde624cf9b9a4bde3c1967fd62ceee40a8b4f0f0377b2e13d30af036dfec",
+      "host_plugin/pyproject.toml": "d4130ea82d6ae71c6f79837af3a010474bf06e19e01cadbd44a551f6dd3b0c9b",
+      "host_plugin/src/openbexi_spell_host/__init__.py": "db3b396d1c014b9ce14249c604492bd6e61864f0013a77cd1674ff4154c66160",
+      "host_plugin/src/openbexi_spell_host/container.py": "415fb7bd9957f8c0f48b579142ff020987295efb56c05a287603724e82e08592",
+      "host_plugin/src/openbexi_spell_host/dap.py": "45e642b1c2e1d663f5930f99ef1d398be2a2e39ac2f4ac978b13437eeb54382d",
+      "host_plugin/src/openbexi_spell_host/presentation.py": "a40ed17854214134ed4005372d3cdd2f0ca13fb8d1942d9ee9e846e1a3a9ac57",
+      "host_plugin/tests/test_presentation.py": "0bd7c796ee07940f056d19063363a75a103210e6b507ca5f32e2e1427c9cc8f9",
+      "host_plugin/tests/test_prompt_sound.py": "f9e452ab2b83bb4a24fbaf378d472b2d9735d68f73e09fad2985b9a6886f320d",
+      "host_runtime/Dockerfile.workspace": "f8df6419781ad26f85fc5aa5b2ffbb1e6e409f5b87b1e66f8b33788fcfad94d8",
+      "host_runtime/Dockerfile.workspace.dockerignore": "e57a56ddb38988f2980bc2ae98b6ac4bb5e6accd6470d9cea1162963e8861f8e",
+      "host_runtime/python/adapter.py": "61e9fee9d41df8fe2ff4b6a72787b256c040dcf94914f264d1af6bf2ac6a676b",
+      "host_runtime/tests/test_children.py": "8ca6fc68552f3b3a38c57c29db826a928a6fc44db82081ea0078d1b821c119af",
+      "host_runtime/tests/test_notifications.py": "110214ffa82b16632d2fb3cfe4a1bfb90db970b29a899f272164583e96e21544",
+      "host_runtime/tests/test_prompts.py": "4c62afce340b0010a621c5890e76c48faa8977ca6ea0cc0b8734ee3abb930627",
+      "host_runtime/tests/test_status_order.py": "85091b0a12a9fda457d6737b8fce22c35763644b1a9bc1f74b7c29cc7a537c4c",
+      "jetbrains/build.py": "f5887bb6013ecd1229859ef454510d9d766d4ceebcbd0d661241c2ff3fa5aaaf",
+      "jetbrains/qualification/HostQualification.java": "038a1a4dea3c6e57366b33991ff6cacec1479e46dc085a8ad125e2d0587d7558",
+      "jetbrains/qualify.py": "9bde44dff653da368320b9b337c73253e12b85fda3d5239ccbdb6c5183f0b104",
+      "jetbrains/resources/META-INF/plugin.xml": "8afa40687707c7876a2853bd59266498cfb532870b10ab1a830e535a94add534",
+      "jetbrains/src/org/openbexi/spell/DapClient.java": "bbfa473b28910f1a09dd6d34debd4766ccaed2438d8204f2d7ccccfcb27f607f",
+      "jetbrains/src/org/openbexi/spell/SpellActions.java": "e69e8fa2aa3d632381813550fecc284dcf65c864fcc42dbb09ad21bcbe9735e8",
+      "jetbrains/src/org/openbexi/spell/SpellConfigurable.java": "4c657eba2ce16f314397cfd9a15ccde10caa9d49f8def2b183098856d7b9b182",
+      "jetbrains/src/org/openbexi/spell/SpellDebugProcess.java": "6800f697b50e88581b9cdea0421050a5acb0eb2c21c47bc34cebfe0f8e90a7cf",
+      "jetbrains/src/org/openbexi/spell/SpellEditorLibrary.java": "d1b5528a288c2c0750c6636b3e9e8fa48a9790b8a18347b5c274520826e4837a",
+      "jetbrains/src/org/openbexi/spell/SpellEditorSupport.java": "76ac34a5e9521cd9b750ffad9b752fbd3d145657b6b6605a9463a3e86cb951e2",
+      "jetbrains/src/org/openbexi/spell/SpellEditorSyncAction.java": "52c6670b398fbd23c211b4c0ce6c8ee41e4ae9eb59ff1aefa80d6874109ec753",
+      "jetbrains/src/org/openbexi/spell/SpellLaunch.java": "4fbe92e2de7ea5df344360eca9d4220ae32fedb3fa214746e1240f0e59f7a949",
+      "jetbrains/src/org/openbexi/spell/SpellToolWindow.java": "f04d2de7a9a646846bd3574c8d1ad14b67f3fdfa4ea6ac6eb352417353441312",
+      "jetbrains/src/org/openbexi/spell/SpellWorkspace.java": "000c808d0f9990d7ac90b2e1741b18abbe1076a177e32bd88cbfb607a85bc779",
+      "jetbrains/src/org/openbexi/spell/SpellWorkspaceActions.java": "7aa4cd9fb323cc53ef8f6967100be87783558c68f262d2bddbf06bc5ac4da52c",
+      "scripts/export_spell_editor.py": "5e0da2376943cf22c7aee67cd9f3baae54304a365a50c973a5bdf9782191cdf0"
+    }
+  },
+  "artifacts": {
+    "openbexi_ide-1.2.0.dev1-py3-none-any.whl": "5af5486252a7e0a882d9a916cc48e79d8f51b1f2186d5b467930d6154ecb95c3",
+    "openbexi_spell_host-0.3.1.dev3-py3-none-any.whl": "9886dee5f84e4fa0690c059c7670b334faf8ed60133ab52edc78606e4e4c4909"
+  },
+  "images": {
+    "native": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+    "desktop": "sha256:6c71e0e74b1be154cadded7877a5181272f06190e559d5a5d194a596869d9ddd",
+    "native_tag": "openbexi-spell-host:0.3.1-dev3",
+    "desktop_tag": "openbexi-ide:1.2.0-dev1-workspace"
+  },
+  "deployment": {
+    "container": "openbexi-ide-v1-final-desktop",
+    "image": "sha256:6c71e0e74b1be154cadded7877a5181272f06190e559d5a5d194a596869d9ddd",
+    "volumes": {
+      "/workspace": "openbexi-v1-final-workspace",
+      "/home/tester": "openbexi-v1-final-preferences"
+    },
+    "url": "http://127.0.0.1:6080/vnc.html?autoconnect=1&resize=remote",
+    "http_status": 200,
+    "health_check": "passed: launcher, noVNC, VNC, DSS, shared and durable services",
+    "previous_container_retained_stopped": "openbexi-ide-pre-workspace-20261017",
+    "windows_environment": "C:/projects/openbexi_ide/.venv",
+    "installed_versions": {
+      "openbexi-ide": "1.2.0.dev1",
+      "openbexi-spell-host": "0.3.1.dev3"
+    }
+  },
+  "tests": {
+    "windows-full": {
+      "tests": 199,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 189,
+      "seconds": 656.977,
+      "failures_detail": [
+        {
+          "test": "tests.test_shared_debug_ui::test_shared_desktops_breakpoint_edit_step_cached_monitor_and_handoff",
+          "message": "AssertionError: Shared desktop condition did not arrive"
+        }
+      ],
+      "skip_reasons": [
+        "Set OPENBEXI_EXECUTION_TEST_IMAGE to an exact Docker image ID",
+        "This account cannot create symlinks"
+      ],
+      "report": "docs/evidence/procedure-workspace/windows-full.xml"
+    },
+    "windows-shared-recheck": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 10.639,
+      "failures_detail": [],
+      "skip_reasons": [],
+      "report": "docs/evidence/procedure-workspace/windows-shared-recheck.xml"
+    },
+    "windows-final-focused": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 17,
+      "seconds": 22.48,
+      "failures_detail": [],
+      "skip_reasons": [],
+      "report": "docs/evidence/procedure-workspace/windows-final-focused.xml"
+    },
+    "linux-full": {
+      "tests": 199,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 190,
+      "seconds": 324.094,
+      "failures_detail": [],
+      "skip_reasons": [
+        "Set OPENBEXI_EXECUTION_TEST_IMAGE to an exact Docker image ID",
+        "Windows worker Job ownership; POSIX cleanup is tested through parent ownership"
+      ],
+      "report": "docs/evidence/procedure-workspace/linux-full.xml"
+    },
+    "linux-final-focused": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 17,
+      "seconds": 18.775,
+      "failures_detail": [],
+      "skip_reasons": [],
+      "report": "docs/evidence/procedure-workspace/linux-final-focused.xml"
+    }
+  },
+  "native_workflows": {
+    "windows": "docs/evidence/procedure-workspace/windows/result.json",
+    "linux_x11": "docs/evidence/procedure-workspace/linux/result.json",
+    "cases": "Run and Debug; five prompts each, native items, current line, two sources, Stop/rerun, four history entries and ordinary Python afterward",
+    "windows_image_label_note": "The raw report defaulted its display label to packaged-desktop when OPENBEXI_SPELL_IMAGE was unset. The retained actual run manifests identify Docker image 0518192b4748. The harness now records actual runtime_images."
+  },
+  "intellij": {
+    "manifest": "../openbexi_spell_plugin/docs/JETBRAINS_WORKSPACE_QUALIFICATION.json",
+    "final_checks_passed": 9,
+    "zip_sha256": "1f1ad591bf86cc14375cc666896d888b794bb165f2e2585244410c69f7ace15e",
+    "installed_jar_sha256": "86a07c436a3f260de8f5f12f84c268035fe147e253742dc2525b3995ec9a279d"
+  },
+  "validation_notes": [
+    "Full suites precede final small follow/Stop changes; both final platforms then pass 17 focused checks and installed native Run/Debug workflows.",
+    "Windows full suite: one shared-debug UI timeout, independently rerun passed; initial failure is retained.",
+    "Plugin workspace suites: 87 tests plus 33 subtests passed. Historic conformance report guards reject changed adapter source as intended; original report hashes were preserved.",
+    "Final Linux focused test invocation initially used an incomplete copied examples fixture; correcting the fixture yielded 17 passes."
+  ],
+  "limits": [
+    "History is per IDE session, not persistent history browsing.",
+    "Full native interaction checks cover Yes/No, text, numeric and list prompts; date/password controls rely on native validation.",
+    "Actual X11 UI and HTTP health were checked; no new browser-click qualification was available.",
+    "Independent fresh-Windows OS installation and wider release qualification remain open.",
+    "Shared Monitoring and approved Execution are outside this local GUI scope; eight explicit execution tests are skipped without a pinned approved image."
+  ],
+  "evidence_sha256": {
+    "docs/evidence/procedure-workspace/deployment.json": "fba477117729d478fc6e43e01352bdbfd1936a3df984ccb9b6fa904f09d52022",
+    "docs/evidence/procedure-workspace/linux/debug-prompt.png": "3282c2256e653064b088a1bbcc1faad8554921fa1bd73f97298b9c074246d483",
+    "docs/evidence/procedure-workspace/linux/debug-results.png": "558927eecd4743ebbe32dd8ee22d36cc1cff6afce69c4f521f3a7ea3233a6c3e",
+    "docs/evidence/procedure-workspace/linux/result.json": "9499f7a91807327a8d31289e2d6a35b1aba25496aa39a0a43bf6e70744b1fa16",
+    "docs/evidence/procedure-workspace/linux/run-manifests.json": "0b28ed10c3b8745bb88828d0e7edcf61c6c38748129f473dc8e26f8e3c7047db",
+    "docs/evidence/procedure-workspace/linux/run-prompt-dark.png": "24a3adadb7ef50e7edc18860df2ea5fc678ff58d764a2bbc351b4aada5b0f260",
+    "docs/evidence/procedure-workspace/linux/run-prompt.png": "a059ec7541d56c9cc1ceecde0f64af4c8bda9dcaf04ea7303272cc98e4dea672",
+    "docs/evidence/procedure-workspace/linux/run-results.png": "f3e72a97e07374495b72078b82d362505990f0e6d5750e3d4ce29b33fbea171d",
+    "docs/evidence/procedure-workspace/linux-final-focused.xml": "81910d9fc46b91bf36b2937039b83d3b7cfff034376ae326205c4549888350d3",
+    "docs/evidence/procedure-workspace/linux-full.xml": "e22b6182724fbeeef36e698bc4e8bb39f0858a449a724be7e262836f3144a6cb",
+    "docs/evidence/procedure-workspace/windows/debug-prompt.png": "901173e4b4e504f28c49b29538867d992b1375b9d049c466038c9188b6334128",
+    "docs/evidence/procedure-workspace/windows/debug-results.png": "a44c9681ff36904803929636e6860d795f1252f708e0d396ea769ee54b82067a",
+    "docs/evidence/procedure-workspace/windows/result.json": "328702a8cac46f6eaf347ce4dc5e3630755dac8e877206db082959393314f32b",
+    "docs/evidence/procedure-workspace/windows/run-manifests.json": "38c13ea5a88e0e08eb988d0f553fa9f1adc9304f6b1b3583d5a033f83991fbad",
+    "docs/evidence/procedure-workspace/windows/run-prompt-dark.png": "beaba8da0a13c57516185150aed8f42662094cf0315fecb6d656b43aa40fd385",
+    "docs/evidence/procedure-workspace/windows/run-prompt.png": "e817f1f7ad4a0a49435496f1d0a30d356eeaa0d76db0bb40994ad520d924c9d7",
+    "docs/evidence/procedure-workspace/windows/run-results.png": "220d050a47b1d495b067dd7f32b559879e9905ac921327a75b98d470b459e9b8",
+    "docs/evidence/procedure-workspace/windows-final-focused.xml": "f1407bcce7798cc8dbca8e2a7fbd23c81292c0bf5930f7edb63faf40a55a75bd",
+    "docs/evidence/procedure-workspace/windows-full.xml": "e796cc478bf4062f34991d38533df391466fbef30eafc4a16eb63580fb703ad4",
+    "docs/evidence/procedure-workspace/windows-shared-recheck.xml": "27337a34cfb4e03c9119c369c489aa47049aeacfaeefa9cb8dc0e3ff1dd39ebe"
+  }
+}

@@ -6,3 +6,5 @@ packaging/windows/*.ps1 text eol=lf
 scripts/qualify_fresh_windows.ps1 text eol=lf
 *.pdf binary
 *.zip binary
+# Preserve captured report bytes so recorded evidence hashes survive checkout.
+docs/evidence/procedure-workspace/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

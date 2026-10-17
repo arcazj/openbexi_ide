@@ -1,5 +1,19 @@
 # Resume from openbexi_ide
 
+## Current priority: procedure workspace (2026-10-17)
+
+The user explicitly prioritized a SPELL GUI User Manual-like execution table,
+current-line highlighting, procedure history and embedded prompts. See
+[the workspace delivery record](PROCEDURE_WORKSPACE.md) for current code,
+installed artifacts and validation. The small SDK import change is supporting
+editor compatibility work, not the main GUI requirement.
+
+SPELL v0.6 remains **paused at the user's request**. Do not resume its packaging,
+upgrade, platform or release qualification from the older instructions below.
+The GUI is a local Development update with independent validation. Preserve the
+published v0.5 evidence and all retained images/volumes. This update does not
+close the independent fresh-Windows OS installation gate for IDE 1.0.
+
 ## Current release: OpenBEXI IDE 1.0
 
 The user explicitly requested publication from `master` with tag `1.0` after

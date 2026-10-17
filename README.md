@@ -1,5 +1,11 @@
 # OpenBEXI IDE 1.0
 
+The current local development update adds a [procedure workspace](docs/PROCEDURE_WORKSPACE.md)
+for native SPELL Run and Debug: code/results tables, current-line highlighting,
+session history and embedded prompts. The matching IntelliJ workspace candidate
+is also available. SPELL v0.6 release qualification remains paused at the user's
+request; this GUI update does not promote that release.
+
 Download the [Windows ZIP](https://github.com/arcazj/openbexi_ide/releases/download/1.0/OpenBEXI-IDE-1.0.0-windows-x64.zip),
 [Linux Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/1.0/openbexi-ide-1.0.0-linux-amd64.tar.gz),
 or [release notes and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/1.0).
