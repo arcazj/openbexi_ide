@@ -1085,6 +1085,7 @@ def main(argv=None):
     parser.add_argument("--project", type=Path, help="Project folder to open")
     parser.add_argument("--file", type=Path, help="File inside the project to edit")
     parser.add_argument("--theme", choices=THEMES, help="Light or dark theme")
+    parser.add_argument('--runtime', help='Select an installed runtime backend, for example spell')
     parser.add_argument('--session-info', type=Path, help='Private session invitation JSON')
     parser.add_argument('--user', default='Developer', help='Shared-session display name')
     parser.add_argument('--role', choices=('developer', 'monitor'), default='developer')
@@ -1094,6 +1095,16 @@ def main(argv=None):
     app.setStyle("Fusion")
     configure_fonts(app)
     window = MainWindow(args.project)
+    if args.runtime:
+        def select_runtime(*_):
+            index = window.language.findData(args.runtime)
+            if index >= 0:
+                window.language.setCurrentIndex(index)
+            else:
+                window.statusBar().showMessage('Runtime is not installed: ' + args.runtime, 10000)
+        if window.backend_probe:
+            window.backend_probe.signals.done.connect(select_runtime)
+        select_runtime()
     if args.theme and window.theme != args.theme:
         window.toggle_theme()
     if args.file:

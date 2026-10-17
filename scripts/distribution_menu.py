@@ -69,7 +69,8 @@ def main():
                 wait(lambda: view.console.toPlainText().count('Choose: ') > previous)
 
             try:
-                view.open_file(project/'test_menu.py')
+                menu_path = project/'test_python_support/python_menu.py'
+                view.open_file(menu_path if menu_path.is_file() else project/'test_menu.py')
                 (view.run_action if mode=='Run' else view.debug_action).trigger()
                 wait(lambda: 'Choose: ' in view.console.toPlainText())
                 view.raise_()

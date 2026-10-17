@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "selected_runtime": "spell",
+  "console": "Running command_wait_telemetry.py\n\nStep initial: Confirm the synthetic payload is disabled\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSample 1: payload enabled=False, expected=False\nStep enable: Send CMD1 and wait for payload telemetry to become enabled\nBuilding command 'CMD1'\nSending command 'CMD1'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': True\nSample 1: payload enabled=True, expected=True\nStep disable: Send CMD2 and confirm payload telemetry returns to disabled\nSending command 'CMD2'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSample 1: payload enabled=False, expected=False\nSPELL_COMMAND_TELEMETRY_PASS\nSPELL run files: /tmp/learning-ui-eyfqgzem/project/.openbexi/runs/67ec1fc959f14f548bac5fb1928e3394\n\nFinished \u00b7 exit 0\n"
+}

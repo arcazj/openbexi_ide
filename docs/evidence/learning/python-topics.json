@@ -1,0 +1,356 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "file": "python_async.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[async] async def, await, concurrent tasks, async for, and async with.\n  async tasks and gather: [0, 1, 4, 9]\n  async generator and comprehension: [0, 1, 2]\n  async context manager: 'async resource'\n\nAll runtime checks passed: 3 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_async_runtime.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[async-runtime] Async queues, locks, to_thread, cancellation, and newer structured-concurrency APIs.\n  async Queue + Lock: [7]\n  asyncio.to_thread: 42\n  task cancellation: True\n  TaskGroup: [0, 1, 2]\n  asyncio.timeout: True\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_binary_data.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[binary-data] struct packing, byte order, mmap, buffer access, and ctypes scalar interop.\n  struct pack/unpack: (16909060, -2)\n  ctypes scalar: (42, True)\n  memory-mapped file: b'ABC3456789'\n\nAll runtime checks passed: 3 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_builtin_protocols.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[builtin-protocols] Built-ins, memory views, callable iterators, slices, formatting, and protocols.\n  divmod: (3, 2)\n  three-argument pow: 1\n  round: 3.142\n  min/max/sum: (1, 3, 6)\n  reversed: [3, 2, 1]\n  slice.indices: (4, -1, -1)\n  format protocol: '0x00ff'\n  ascii escaping: \"'caf\\\\xe9'\"\n  iter(callable, sentinel): [1, 2, 3]\n  memoryview zero-copy mutation: b'aZc'\n  dict views are dynamic: ['a', 'b']\n  zip(strict=True): [(1, 'a'), (2, 'b')]\n  zip strict detects unequal lengths: True\n\nAll runtime checks passed: 13 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_classes.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[classes] Classes, inheritance, super, properties, methods, and duck typing.\n  inheritance and classmethod: (True, 'mixed')\n  property setter: 'Fido'\n  overridden method: 'Rex says woof'\n  class attribute and staticmethod: ('animal', False)\n  polymorphism and duck typing: ['Rex says woof', 'beep']\n  property validation: 'name cannot be blank'\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_code_execution.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[code-execution] compile, eval, exec, AST parsing, code objects, and dynamic namespaces.\n  compile + eval: 18\n  compile + exec: 14\n  code object filename: '<runtime-statement>'\n  AST module: 'Module'\n  AST traversal: 1\n  AST unparse returns source: True\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_collections.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[collections] Lists, tuples, dictionaries, sets, mutation, identity, and unpacking.\n  shared mutable reference: True\n  copy has independent outer list: [1, 2, 3]\n  list equality versus identity: (True, False)\n  slice assignment: [1, 20, 30, 4]\n  delete and pop: (4, [1, 30])\n  tuple and starred unpacking: (10, [20, 30], 40)\n  parallel assignment swap: (40, 10)\n  dict get with default: 'unknown'\n  dict merge and unpacking: 37\n  dict union (Python 3.9+): {'a': 1, 'b': 2}\n  dictionary iteration preserves insertion order: ['name', 'age', 'language']\n  set union, intersection, difference, symmetric difference: ({1, 2, 3, 4}, {3}, {1, 2}, {1, 2, 4})\n  immutable frozenset as a dict key: 'pair'\n\nAll runtime checks passed: 13 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_collections_runtime.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[collections-runtime] deque, ChainMap, Counter arithmetic, defaultdict, and queue primitives.\n  deque operations: [2, 0, 1]\n  ChainMap lookup: (1, 2)\n  Counter arithmetic: Counter({'b': 3, 'c': 2, 'a': 1})\n  defaultdict factory: {'x': [1]}\n  thread-safe queue: 7\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_comprehensions.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[comprehensions] List, set, dict, nested comprehensions, and generator expressions.\n  filtered list comprehension: [0, 4, 16]\n  set comprehension: {0, 1, 2}\n  dict comprehension: {0: 0, 1: 1, 2: 4}\n  nested comprehension: [(0, 0), (0, 1), (1, 0), (1, 1)]\n  lazy generator expression: 14\n  any and all: (True, True)\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_compression.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[compression] gzip, bz2, lzma, ZIP, and TAR compression/archive round trips.\n  gzip: b'Python runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\n'\n  bz2: b'Python runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\n'\n  lzma: b'Python runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\n'\n  ZIP archive: b'Python runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\n'\n  TAR archive: b'Python runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\nPython runtime validation\\n'\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_context_managers.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[context-managers] with, file I/O, pathlib, and both forms of custom context manager.\n  with closes file: True\n  iterate text file: ['first line', 'second line']\n  binary file I/O: b'\\x00\\x01\\x02'\n  temporary files cleaned up: False\n  contextmanager yields a resource: 'resource'\n  cleanup also runs after exceptions: ['acquire', 'release']\n  __enter__ and __exit__ protocol: 'class resource'\n  class context manager lifecycle: ['enter', 'exit']\n\nAll runtime checks passed: 8 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_control_flow.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[control-flow] if/elif/else, conditional expressions, loops, break, and continue.\n  if / elif / else: 'B'\n  conditional expression: 'odd'\n  for, range, continue, break: [0, 1, 3, 4]\n  while / else on normal completion: 0\n  for / else when no break occurs: 'no even number'\n  enumerate: [(1, 'a'), (2, 'b')]\n  zip: [('a', 1), ('b', 2)]\n  assignment expression :=: 4\n\nAll runtime checks passed: 8 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_dataclasses.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[dataclasses] Dataclasses, enums, and special methods for Python's object protocols.\n  dataclass generated equality: True\n  dataclass serialization: {'x': 2, 'y': 3}\n  operator overloading __add__: demo_dataclasses.<locals>.Vector(x=3, y=7)\n  __iter__, __len__, __getitem__: ((2, 3), 2, 2)\n  callable object __call__: demo_dataclasses.<locals>.Vector(x=4, y=6)\n  __str__ and generated __repr__: ('(2, 3)', 'demo_dataclasses.<locals>.Vector(x=2, y=3)')\n  frozen dataclass is hashable: 'point'\n  default_factory avoids shared lists: []\n  enum name and value: ('READY', 'ready')\n\nAll runtime checks passed: 9 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_datetime_context.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[datetime-context] timezone-aware datetime, monotonic clocks, context variables, and URL parsing.\n  timezone-aware datetime: datetime.timedelta(0)\n  ISO datetime round trip: datetime.datetime(2026, 10, 6, 21, 0, tzinfo=datetime.timezone.utc)\n  date arithmetic across leap day: datetime.date(2024, 3, 1)\n  monotonic clock does not go backward: True\n  ContextVar: 'abc'\n  URL parse/query: ('https', 'example.invalid', ['2'])\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_diagnostics.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[diagnostics] logging, warnings, traceback, inspect, disassembly, GC, weakrefs, and tracemalloc.\n  logging: 'runtime ok'\n  warnings capture: (1, <class 'RuntimeWarning'>)\n  traceback formatting: True\n  inspect.signature: ['a', 'b']\n  bytecode disassembly: True\n  weak reference before collection: True\n  weak reference after collection: None\n  tracemalloc snapshot: True\n\nAll runtime checks passed: 8 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_exceptions.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[exceptions] raise, custom exceptions, chaining, try/except/else/finally, and assert.\n  exception chaining: True\n  except and finally: ['except', 'finally']\n  else runs after successful try: 36\n  explicit raise: 'age cannot be negative'\n  assert statement example: True\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_filesystem.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[filesystem] os/pathlib filesystem APIs, descriptors, metadata, traversal, globbing, and shutil.\n  environment variable round trip: 'active'\n  pathlib text I/O: 'alpha\\nbeta\\n'\n  stat reports size: True\n  path properties: ('one.txt', '.txt', 'one')\n  low-level file descriptor I/O: b'abc'\n  shutil.copy2: 'alpha\\nbeta\\n'\n  shutil.move: (False, True)\n  recursive glob: ['moved.txt', 'one.txt']\n  os.walk traverses nested directories: True\n  os.scandir lists entries: True\n  symbolic link: 'alpha\\nbeta\\n'\n\nAll runtime checks passed: 11 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_functions.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[functions] Parameters, defaults, annotations, first-class functions, and recursion.\n  positional-only, default, keyword-only: 'Hello, Ada.'\n  *args, **kwargs, call unpacking: ((1, 2), {'name': 'Ada'})\n  fresh mutable defaults: ([1], [2])\n  recursive function: 120\n  lambda and first-class function: 12\n  sorted with key function: ['fig', 'pear', 'apple']\n  map and filter: [4, 6]\n\nAll runtime checks passed: 7 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_imports.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[imports] Module discovery, packages, dynamic imports, module specs, and cleanup.\n  dynamic standard-library import: 7.0\n  find_spec finds json: True\n  temporary package import: 42\n  package metadata: 'runtime_pkg_b5aa1793a40844708c3f8a4097fca378'\n  module spec exists: True\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_iterators.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[iterators] Iteration protocol, next, generator functions, and yield from.\n  iter and next: (10, 20, 'done')\n  custom iterator protocol: [3, 2, 1]\n  generator resumes after yield: (0, [1, 4])\n  exhausted generator: []\n  yield from delegation: [0, 1, 4, 9, 16]\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_modern_python.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[modern-python] Version-gated modern Python features that cannot be parsed by every Python 3.9+ runtime.\n  ExceptionGroup + except*: [('value', 1), ('type', 1)]\n  tomllib: 42\n  PEP 695 type alias: True\n  Python 3.13+ runtime: True\n\nAll runtime checks passed: 4 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_multiprocessing.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[multiprocessing] Spawned process, IPC pipe, process identity, exit status, and cleanup.\n  multiprocessing start method exists: True\n  multiprocessing worker status: 'ok'\n  multiprocessing IPC result: 49\n  multiprocessing exit code: 0\n\nAll runtime checks passed: 4 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_networking.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[networking] IP address handling, DNS API shape, loopback TCP sockets, and socket options.\n  IP address classification: (4, True)\n  getaddrinfo returns candidates: True\n  loopback TCP echo: b'PYTHON'\n  loopback server received payload: [b'python']\n\nAll runtime checks passed: 4 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_numeric_library.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[numeric-library] Fractions, Decimal contexts, statistics, cmath, arrays, heaps, bisect, and itertools.\n  Fraction arithmetic: Fraction(1, 2)\n  Decimal context precision: Decimal('0.142857')\n  statistics: (2.5, 2)\n  complex math: 2j\n  array module: [1, 2, 3, 4]\n  bisect: [1, 3, 4, 5]\n  heapq: [1, 3, 5]\n  itertools chain: [1, 2, 3, 4]\n  itertools product: [('A', 'A'), ('A', 'B')]\n  functools.reduce: 24\n  deterministic random generator: [6, 0, 4]\n\nAll runtime checks passed: 11 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_object_model.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[object-model] Descriptors, slots, ABCs, metaclasses, MRO, dynamic attributes, and proxy mappings.\n  data descriptor: 25\n  __slots__ removes instance __dict__: False\n  descriptor validation: 'value must be positive'\n  metaclass class creation hook: True\n  abstract base class: 16\n  method resolution order: 'left'\n  MRO includes both bases: ['Child', 'Left', 'Right']\n  __getattr__ fallback: 'computed:missing'\n  SimpleNamespace: {'a': 1, 'b': 2}\n  mapping proxy reflects source: {'answer': 42, 'extra': 1}\n  mapping proxy is read-only: True\n\nAll runtime checks passed: 11 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_pattern_matching.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[pattern-matching] Structural pattern matching, available starting with Python 3.10.\n  mapping and class patterns with guard: 'adult: Ada'\n  failed guard falls through: 'other'\n  sequence pattern and captures: 'pair: 2, 3'\n  OR pattern: 'affirmative'\n  wildcard pattern: 'other'\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_runtime.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[runtime] Interpreter metadata, encodings, limits, recursion, frames, and runtime knobs.\n  Python major version: 3\n  implementation name exists: True\n  platform implementation exists: True\n  sys.executable is configured: True\n  filesystem encoding exists: True\n  default text encoding: 'utf-8'\n  native word-size integer limit: True\n  float runtime metadata: True\n  integer runtime metadata: True\n  object size is measurable: True\n  byte order is valid: True\n  prefix is configured: True\n  base prefix is configured: True\n  recursion limit can be changed: 1001\n  thread switch interval is positive: True\n  frame function name: 'demo_runtime'\n  GIL runtime state is boolean: True\n\nAll runtime checks passed: 17 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_scope_and_decorators.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[scope-and-decorators] Local, enclosing, and global scope; closures; function decorators.\n  global rebinding: 1\n  closure and nonlocal: (1, 2)\n  custom decorator: 10\n  decorator preserves metadata: 'add'\n  memoization decorator: 55\n  memoization reuses results: True\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_security_primitives.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[security-primitives] hashing, HMAC, secure tokens, Base64, UUIDs, and TLS context construction.\n  SHA-256: 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'\n  HMAC verify: True\n  Base64: b'runtime'\n  secrets token length: 16\n  UUID round trip: UUID('ac162dcb-ab99-44e4-9be3-b79f535d848f')\n  TLS client context: True\n\nAll runtime checks passed: 6 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_serialization.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[serialization] pickle, SQLite transactions, rows, and representative persistent data formats.\n  pickle round trip: {'name': 'Ada', 'values': [1, 2, 3], 'active': True}\n  SQLite create/insert/query: [('a', 1), ('b', 2)]\n  SQLite rollback: 1\n\nAll runtime checks passed: 3 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_signals.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[signals] Signal enumeration and handler inspection without sending disruptive signals.\n  signal module exposes SIGINT: True\n  SIGINT handler is inspectable: True\n  valid signal set contains SIGINT: True\n\nAll runtime checks passed: 3 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_stdlib.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[stdlib] Module imports and useful standard-library facilities.\n  imported math module: True\n  JSON serialization round trip: {'name': 'Ada', 'skills': ['Python', 'math']}\n  regular expressions: ['12', '34']\n  Counter: 3\n  defaultdict: {'a': ['apple', 'ant'], 'b': ['boat']}\n  date arithmetic: '2024-02-29'\n  Decimal arithmetic: Decimal('0.3')\n\nAll runtime checks passed: 7 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_stdlib_import_sweep.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[stdlib-import-sweep] Import a broad, side-effect-safe cross-section of the Python standard library.\n  standard-library import sweep loaded modules: True\n  standard-library import sweep attempted: 86\n  standard-library modules imported: 86/86\n\nAll runtime checks passed: 2 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_strings.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[strings] Unicode strings, indexing, slicing, formatting, and bytes.\n  indexing and negative indexing: ('P', 'n')\n  slicing and stride: ('yth', 'nohtyP', 'Pto')\n  string methods: 'Hello World'\n  split and join: 'red-green-blue'\n  replacement and membership: ('Jython', True)\n  f-string formatting: 'Python: 3.14'\n  raw string: 'a\\\\nb'\n  multiline string: ['first', 'second']\n  Unicode and bytes round trip: 'caf\u00e9'\n  bytes index is an integer: 65\n  mutable bytearray: b'bat'\n\nAll runtime checks passed: 11 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_subprocess.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[subprocess] Child interpreter execution, environment inheritance, stdout/stderr, and return codes.\n  current process id is positive: True\n  subprocess stdout: ['yes', '3']\n  subprocess return code: 0\n  subprocess nonzero status: 7\n  subprocess stderr: 'problem'\n\nAll runtime checks passed: 5 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_text_io.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[text-io] In-memory streams, CSV, INI parsing, text wrapping, shell lexing, and redirects.\n  StringIO: 'hello'\n  BytesIO: b'\\x00\\x01'\n  CSV round trip: [['name', 'value'], ['answer', '42']]\n  ConfigParser: (True, 4)\n  textwrap: ['alpha beta', 'gamma']\n  shlex: ['command', '--name', 'Ada Lovelace']\n  stdout/stderr redirection: ('out\\n', 'err\\n')\n\nAll runtime checks passed: 7 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_threading_runtime.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[threading-runtime] Thread lifecycle, locks, events, barriers, thread-local state, and queues.\n  thread event: True\n  thread terminates: False\n  thread result/local storage: [(25, 'worker-5')]\n  thread barrier releases all parties: [0, 1]\n\nAll runtime checks passed: 4 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_threads.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[threads] Standard-library thread pool, futures, and orderly executor shutdown.\n  thread pool map preserves input order: [0, 1, 4, 9]\n  future result: 25\n\nAll runtime checks passed: 2 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    },
+    {
+      "file": "python_types.py",
+      "passed": true,
+      "exits": [
+        0
+      ],
+      "errors": [],
+      "output": "Python 3.13.15 (CPython) runtime validation\nExecutable: /usr/local/bin/python3.13\nPlatform: Linux-7.0.14-linuxkit-x86_64-with-glibc2.41\n\n[types] Assignment, numeric types, None, conversions, and operators.\n  int, float, bool, None: (7, 2.5, True, None)\n  complex numbers: (3+2j)\n  arbitrary precision integers: True\n  arithmetic + - * / // % **: (9, 5, 14, 3.5, 3, 1, 49)\n  bitwise & | ^ << >> ~: (2, 7, 5, 6, 3, -1)\n  comparison and boolean operators: True\n  short circuit fallback: 'default'\n  truthiness: (False, True, False)\n  type conversion: (42, 2.5, '7')\n  isinstance: True\n  None identity: True\n  augmented assignment: 10\n\nAll runtime checks passed: 12 check(s), 1 topic(s), 0 optional capability check(s) skipped.\n"
+    }
+  ]
+}

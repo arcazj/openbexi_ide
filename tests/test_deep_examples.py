@@ -8,7 +8,7 @@ from openbexi_runtime.launch import LaunchSpec
 from test_runtime import capture
 
 
-EXAMPLES = Path(__file__).resolve().parents[1] / 'examples'
+EXAMPLES = Path(__file__).resolve().parents[1] / 'examples/test_python_support'
 
 
 def test_python_in_depth_runs_all_chapters_and_streams():

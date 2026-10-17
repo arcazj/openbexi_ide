@@ -74,7 +74,7 @@ def test_read_only_telemetry_example_with_real_dss(tmp_path, monkeypatch, filena
             code, output, errors = capture(LaunchSpec(tmp_path, script),
                 'invalid\n12\nTIME\n1\n14\n15\n16\nno\n16\nSEND CMD1\n0\n')
             assert code == 0, errors + output
-            assert 'Invalid choice' in output and 'Historical native catalogue' in output
+            assert 'Invalid choice' in output and 'Published native v0.5 catalogue' in output
             assert 'PASS Send CMD1' in output
             assert runtime.engine.state()['core']['commands_executed'] == before + 1
             return

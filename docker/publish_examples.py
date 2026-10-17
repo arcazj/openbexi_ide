@@ -1,75 +1,98 @@
-"""Add a versioned example folder without replacing a user's project files."""
+"""Publish the learning collection, preserving edited files in explicit backups."""
 import hashlib
+import json
 from pathlib import Path
+import re
 import shutil
 import tempfile
+import uuid
 
-NATIVE_ONLY_TEST_SPELL = '2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05e6268d3323'
+
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def generated_digest(folder):
+    """Recognize the old publisher's exact content-addressed folders."""
+    value = hashlib.sha256()
+    for path in sorted(folder.rglob('*')):
+        if path.is_symlink():
+            return None
+        if not path.is_file():
+            continue
+        if path.suffix not in {'.py', '.md', '.json'} or '__pycache__' in path.parts:
+            return None
+        value.update(path.relative_to(folder).as_posix().encode() + b'\0' + path.read_bytes())
+    return value.hexdigest()[:12]
 
 
 def publish(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/projects')):
-    files = sorted(p for p in source.rglob('*') if p.is_file() and p.suffix in {'.py', '.md', '.json'}
-                   and '__pycache__' not in p.parts)
-    digest = hashlib.sha256()
-    for path in files:
-        digest.update(path.relative_to(source).as_posix().encode() + b'\0' + path.read_bytes())
-    name = 'examples-' + digest.hexdigest()[:12]
-    destinations = []
-    for project in ('demo', 'durable'):
-        parent = projects / project
-        if not parent.is_dir():
+    source, projects = source.resolve(), projects.resolve()
+    legacy = json.loads(Path(__file__).with_name('legacy-example-hashes.json').read_text())
+    shipped = {path.relative_to(source).as_posix(): path for path in sorted(source.rglob('*'))
+               if path.is_file() and path.suffix in {'.py', '.md', '.json'} and '__pycache__' not in path.parts}
+    reports = []
+    for name in ('demo', 'durable'):
+        project = projects / name
+        if not project.is_dir() or project.is_symlink():
             continue
-        destination = parent / name
-        if destination.exists():
-            # Never repair or replace an existing folder: it may contain edits.
-            destinations.append(destination)
-            continue
-        staging = Path(tempfile.mkdtemp(prefix='.examples-preparing-', dir=parent))
-        for path in files:
-            target = staging / path.relative_to(source)
+        state = project / '.openbexi'
+        if state.is_symlink():
+            raise ValueError('Example state directory cannot be a symbolic link')
+        state.mkdir(exist_ok=True)
+        previous_path = state/'example-installation.json'
+        if previous_path.is_symlink():
+            raise ValueError('Example installation record cannot be a symbolic link')
+        previous = json.loads(previous_path.read_text()) if previous_path.is_file() else {}
+        backups = state / 'example-backups' / uuid.uuid4().hex
+        report = {'project': str(project), 'installed': [], 'preserved': [], 'kept_edits': [], 'removed_generated': []}
+
+        def backup(path):
+            relative = path.relative_to(project)
+            target = backups / relative
+            if not target.resolve().is_relative_to(project.resolve()):
+                raise ValueError('Example backup escapes project')
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path, target)
-        staging.rename(destination)
-        destinations.append(destination)
-    return destinations
+            shutil.move(str(path), target)
+            report['preserved'].append(str(target.relative_to(project)))
 
-
-def refresh_spell(source=Path('/opt/openbexi/examples'), projects=Path('/workspace/projects')):
-    """Refresh the known shipped smoke example, preserving edited files and backups."""
-    destinations = publish(source, projects)
-    result = []
-    script = source/'test_spell/test_spell.py'
-    replacement = (script if script.is_file() else source/'test_spell.py').read_bytes()
-    for destination in destinations:
-        target = destination.parent/'test_spell.py'
-        if target.is_symlink():
-            result.append(dict(path=str(target), status='preserved-symlink'))
-            continue
-        if target.exists():
-            original = target.read_bytes()
-            if original == replacement:
-                result.append(dict(path=str(target), status='current'))
+        for relative, original in shipped.items():
+            target = project / relative
+            if any(part.is_symlink() for part in (target, *target.parents)):
+                raise ValueError('Example destination cannot contain a symbolic link: ' + str(target))
+            if target.exists():
+                if target.is_file() and digest(target) == digest(original):
+                    continue
+                if previous.get('files', {}).get(relative) == digest(original):
+                    report['kept_edits'].append(relative)
+                    continue
+                backup(target)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.example-', delete=False) as stream:
+                temporary = Path(stream.name)
+                stream.write(original.read_bytes())
+            temporary.replace(target)
+            report['installed'].append(relative)
+        for relative in legacy:
+            target = project / relative
+            if relative not in shipped and target.is_file() and not target.is_symlink():
+                backup(target)
+        for folder in sorted(project.iterdir()):
+            match = re.fullmatch(r'examples-([0-9a-f]{12})', folder.name)
+            if not match or not folder.is_dir() or folder.is_symlink():
                 continue
-            if hashlib.sha256(original).hexdigest() != NATIVE_ONLY_TEST_SPELL:
-                result.append(dict(path=str(target), status='preserved-edited-file'))
-                continue
-            backup = target.parent/('.test_spell-original-'+NATIVE_ONLY_TEST_SPELL[:12]+'.py')
-            if backup.exists():
-                if backup.is_symlink() or backup.read_bytes() != original:
-                    raise ValueError('Existing example backup differs: '+str(backup))
+            if not folder.resolve().is_relative_to(project.resolve()):
+                raise ValueError('Generated examples escape project')
+            if generated_digest(folder) == match[1]:
+                shutil.rmtree(folder)
+                report['removed_generated'].append(folder.name)
             else:
-                with backup.open('xb') as stream:
-                    stream.write(original)
-            target.write_bytes(replacement)
-            status = 'refreshed-shipped-file'
-        else:
-            with target.open('xb') as stream:
-                stream.write(replacement)
-            status = 'added'
-        result.append(dict(path=str(target), status=status))
-    return dict(folders=list(map(str,destinations)), files=result)
+                backup(folder)
+        manifest = dict(schema=1, files={name:digest(path) for name,path in shipped.items()}, report=report)
+        (state/'example-installation.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
+        reports.append(report)
+    return reports
 
 
 if __name__ == '__main__':
-    for destination in publish():
-        print(destination)
+    print(json.dumps(publish(), indent=2))

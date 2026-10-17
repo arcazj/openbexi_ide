@@ -1,0 +1,23 @@
+{
+  "README.md": "48cc69febb88d5040c81da2cdf1ace00f2743df49626b8c316b988e631a30e5e",
+  "debug_demo.py": "a118d3b2c3f90666d95b7af3c3a4a05beb8c85cc314455aa7d70e35701c25d56",
+  "graphics_demo.py": "ddf8d8b8862b99231456e0b81ed52ffd5d4cb9695ea1be4da3c11d31e6648206",
+  "hello.py": "21ef69c983ecc2a55e81a7f2cf4d1b0aa045910c13f9e5d2054141c749aaaf9d",
+  "session_first.py": "7940b4295eed6f2992d3994bbba69979cd086d2e60ed65c81c273ea633f29758",
+  "session_second.py": "dbfedef92a87bd0f02e07a6480af480ed76a43443552ad643eb8820015abed50",
+  "test_Python.py": "1d34c925cfae0227561c9619740c5931e48558cf81f3cd08d8a7f5b01a3fd7e7",
+  "test_Python_in_deep.py": "2ed5bcc13905fa5c7147c00ff4a14d0a90242b69ab75a2ec247a937034ddc997",
+  "test_menu.py": "ec4126c0c17c7af937c006b16b7b99336f3b196e700f8aee8e4005cb5252a239",
+  "test_spell/README.md": "8e2c3d534c9fc8843e1ad8e3ba0a47d305576bb4a4298682ba19d5fc928c950e",
+  "test_spell/feature_catalog.json": "2e7f07bac18a84f713c38abe0d76274f1544d33a44de16cde32e47926bf14abe",
+  "test_spell/spell_menu.py": "6ecb2237de15747c6241a848288fbe5824113b0941c6631126e177b6d93a159f",
+  "test_spell/spell_native_child.py": "a054447714f431655f8a1bdba69ca72db1156397cb417ab451da4b9170ecc782",
+  "test_spell/spell_native_data.py": "2009d8e2f5ef2f45aea85ccde8958ee4f4c5303ac1dbcb8b781d05e6268d3323",
+  "test_spell/spell_native_parent.py": "f2633b64c181061ceffea9944a616e428629d27c7e18da560aa2a1a700b26ab4",
+  "test_spell/spell_native_prompt.py": "8c4e4a972840192c84f33d8f933b4faa27b87527722075732039dce1ddae963a",
+  "test_spell/spell_native_time.py": "3bdb4d5e491d2a05aaa425a9ae7aaddc87f5da700bc60c1bd84a85b6142a25a2",
+  "test_spell/spell_sdk_telemetry.py": "7f62058c007ca8e976bb5ef6d950ba11fcbd57e27e79d6c64667b82f52e78ddf",
+  "test_spell/test_spell.py": "bb892a7352463a68583ca0859b2603985507c49803dadb43095a9653d26f8396",
+  "dss_demo.py": "generated-by-previous-desktop-startup",
+  "test_spell_result.json": "generated-smoke-result"
+}

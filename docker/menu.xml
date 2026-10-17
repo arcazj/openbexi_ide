@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_menu xmlns="http://openbox.org/3.4/menu">
   <menu id="root-menu" label="OpenBEXI testing">
+    <item label="Native SPELL learning menu"><action name="Execute"><command>openbexi-lab spell</command></action></item>
+    <item label="Python learning menu"><action name="Execute"><command>openbexi-lab python</command></action></item>
     <item label="Local Python IDE — Run and Debug"><action name="Execute"><command>openbexi-lab local</command></action></item>
     <separator label="Shared Python / bounded SPELL + DSS"/>
     <item label="Developer Alice"><action name="Execute"><command>openbexi-lab alice</command></action></item>

@@ -1,7 +1,7 @@
 """An animated dashboard with signal history, distribution and a phase portrait.
 
 Requires PySide6-Essentials in the selected interpreter. No SPELL or server.
-The optional stdin JSON commands are used by test_menu.py for start/update/close.
+The optional stdin JSON commands are used by python_menu.py for start/update/close.
 """
 import argparse
 import json

@@ -52,17 +52,12 @@ def initialize():
         project.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree('/opt/openbexi/examples', project)
         (project / '.gitignore').write_text('__pycache__/\n*.pyc\n.openbexi/\n')
-        if name == 'demo':
-            (project / 'dss_demo.py').write_text(
-                'from spell.lang import Display, GetTM, BuildTC, Send\n'
-                'Display("DSS development test")\nDisplay(str(GetTM("TM1")))\n'
-                'Send(BuildTC("CMD1"))\nDisplay("Binary DSS command complete")\n')
         run(['git', 'init', '-q', str(project)])
         run(['git', '-C', str(project), 'add', '.'])
         run(['git', '-C', str(project), '-c', 'user.name=OpenBEXI Test Fixture',
              '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
              'commit', '-qm', 'Initial Docker test examples'])
-    # Existing workspace volumes keep edits; new examples get their own folder.
+    # Install the organized collection and retain every replaced file in backups.
     import runpy
     runpy.run_path('/opt/test-lab/publish_examples.py')['publish']()
     target_certs = ROOT / 'certificates'

@@ -75,13 +75,19 @@ For a native Windows desktop:
 
 ```powershell
 ./install.ps1 -Python C:/path/to/python.exe
-./start.ps1 -Project examples -File examples/test_menu.py
+./start.ps1 -Project examples -File examples/test_python_support/python_menu.py
 ```
 
 The installer creates `.venv` and installs the locked Windows x64 desktop
-dependencies. `examples/test_menu.py` exercises 39 Python topics and opens,
+dependencies. `examples/test_python_support/python_menu.py` exercises 39 Python topics and opens,
 updates and closes a statistics window. The source launchers are `run_ide.py`
 and `run_cli.py`; use `python -I` with either.
+
+The [native learning desktop](docs/LEARNING_DESKTOP.md) adds the original SPELL
+runtime with a disposable DSS, 24 SPELL procedures, 47 Python procedures/entry
+points, two graphics demos, and menus. Its workspace root contains `hello.py`,
+`README.md`, `test_spell/` and `test_python_support/`. This is the IDE 1.1 update;
+SPELL v0.6 qualification and release remain a separate milestone.
 
 For a headless installation, the core has no GUI dependencies:
 

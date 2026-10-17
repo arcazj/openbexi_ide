@@ -1,0 +1,434 @@
+{
+  "schema": 1,
+  "procedures": [
+    {
+      "file": "debug_demo.py",
+      "purpose": "Click beside a line number to add a breakpoint, then choose Debug.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "graphics_demo.py",
+      "purpose": "An animated dashboard with signal history, distribution and a phase portrait.",
+      "runtime": "CPython 3.13 + PySide6 6.10.3",
+      "expected": "Window opens, updates and closes; process exits 0",
+      "arguments": [
+        "--close-after",
+        "2000"
+      ],
+      "interaction": "Use controls and close the window",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "graphics_tkinter.py",
+      "purpose": "A standard-library Tkinter animation with pause, resume and clean shutdown.",
+      "runtime": "CPython 3.13 + Tkinter/Tk",
+      "expected": "Window opens, updates and closes; process exits 0",
+      "arguments": [
+        "--close-after",
+        "2000"
+      ],
+      "interaction": "Use controls and close the window",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_async.py",
+      "purpose": "async def, await, concurrent tasks, async for, and async with.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_async_runtime.py",
+      "purpose": "Async queues, locks, to_thread, cancellation, and newer structured-concurrency APIs.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_binary_data.py",
+      "purpose": "struct packing, byte order, mmap, buffer access, and ctypes scalar interop.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_builtin_protocols.py",
+      "purpose": "Built-ins, memory views, callable iterators, slices, formatting, and protocols.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_classes.py",
+      "purpose": "Classes, inheritance, super, properties, methods, and duck typing.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_code_execution.py",
+      "purpose": "compile, eval, exec, AST parsing, code objects, and dynamic namespaces.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_collections.py",
+      "purpose": "Lists, tuples, dictionaries, sets, mutation, identity, and unpacking.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_collections_runtime.py",
+      "purpose": "deque, ChainMap, Counter arithmetic, defaultdict, and queue primitives.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_comprehensions.py",
+      "purpose": "List, set, dict, nested comprehensions, and generator expressions.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_compression.py",
+      "purpose": "gzip, bz2, lzma, ZIP, and TAR compression/archive round trips.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_context_managers.py",
+      "purpose": "with, file I/O, pathlib, and both forms of custom context manager.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_control_flow.py",
+      "purpose": "if/elif/else, conditional expressions, loops, break, and continue.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_dataclasses.py",
+      "purpose": "Dataclasses, enums, and special methods for Python's object protocols.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_datetime_context.py",
+      "purpose": "timezone-aware datetime, monotonic clocks, context variables, and URL parsing.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_diagnostics.py",
+      "purpose": "logging, warnings, traceback, inspect, disassembly, GC, weakrefs, and tracemalloc.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_exceptions.py",
+      "purpose": "raise, custom exceptions, chaining, try/except/else/finally, and assert.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_filesystem.py",
+      "purpose": "os/pathlib filesystem APIs, descriptors, metadata, traversal, globbing, and shutil.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_functions.py",
+      "purpose": "Parameters, defaults, annotations, first-class functions, and recursion.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_imports.py",
+      "purpose": "Module discovery, packages, dynamic imports, module specs, and cleanup.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_iterators.py",
+      "purpose": "Iteration protocol, next, generator functions, and yield from.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_menu.py",
+      "purpose": "Interactive ordinary-Python qualification and graphics menu. No SPELL imports.",
+      "runtime": "CPython 3.13",
+      "expected": "Selected procedures pass and menu exits cleanly",
+      "arguments": [],
+      "interaction": "Choose numbered options; 0 exits",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_modern_python.py",
+      "purpose": "Version-gated modern Python features that cannot be parsed by every Python 3.9+ runtime.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_multiprocessing.py",
+      "purpose": "Spawned process, IPC pipe, process identity, exit status, and cleanup.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_networking.py",
+      "purpose": "IP address handling, DNS API shape, loopback TCP sockets, and socket options.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_numeric_library.py",
+      "purpose": "Fractions, Decimal contexts, statistics, cmath, arrays, heaps, bisect, and itertools.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_object_model.py",
+      "purpose": "Descriptors, slots, ABCs, metaclasses, MRO, dynamic attributes, and proxy mappings.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_pattern_matching.py",
+      "purpose": "Structural pattern matching, available starting with Python 3.10.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_runtime.py",
+      "purpose": "Interpreter metadata, encodings, limits, recursion, frames, and runtime knobs.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_scope_and_decorators.py",
+      "purpose": "Local, enclosing, and global scope; closures; function decorators.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_security_primitives.py",
+      "purpose": "hashing, HMAC, secure tokens, Base64, UUIDs, and TLS context construction.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_serialization.py",
+      "purpose": "pickle, SQLite transactions, rows, and representative persistent data formats.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_signals.py",
+      "purpose": "Signal enumeration and handler inspection without sending disruptive signals.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_stdlib.py",
+      "purpose": "Module imports and useful standard-library facilities.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_stdlib_import_sweep.py",
+      "purpose": "Import a broad, side-effect-safe cross-section of the Python standard library.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_strings.py",
+      "purpose": "Unicode strings, indexing, slicing, formatting, and bytes.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_subprocess.py",
+      "purpose": "Child interpreter execution, environment inheritance, stdout/stderr, and return codes.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_text_io.py",
+      "purpose": "In-memory streams, CSV, INI parsing, text wrapping, shell lexing, and redirects.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_threading_runtime.py",
+      "purpose": "Thread lifecycle, locks, events, barriers, thread-local state, and queues.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_threads.py",
+      "purpose": "Standard-library thread pool, futures, and orderly executor shutdown.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "python_types.py",
+      "purpose": "Assignment, numeric types, None, conversions, and operators.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "session_first.py",
+      "purpose": "Submit with session_second.py to exercise configurable parallelism.",
+      "runtime": "CPython 3.13; shared session for parallelism exercise",
+      "expected": "Independent first/second counters reach 99 and both procedures exit 0",
+      "arguments": [],
+      "interaction": "Submit both procedures to a shared session with max_parallel=2",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "session_second.py",
+      "purpose": "session_second",
+      "runtime": "CPython 3.13; shared session for parallelism exercise",
+      "expected": "Independent first/second counters reach 99 and both procedures exit 0",
+      "arguments": [],
+      "interaction": "Submit both procedures to a shared session with max_parallel=2",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "test_Python.py",
+      "purpose": "Validate Python language and standard-library capabilities in the isolated executor.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    },
+    {
+      "file": "test_Python_in_deep.py",
+      "purpose": "A runnable tour of Python 3.13, with assertions and visible results.",
+      "runtime": "CPython 3.13",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Console; temporary files cleaned up"
+    }
+  ]
+}

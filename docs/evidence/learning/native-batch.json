@@ -1,0 +1,235 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "test_spell",
+      "passed": true,
+      "output": "SPELL profile: original native runtime\nStep library: Inspect the configured original SPELL library\nOriginal SPELL library: /opt/spell-native/lib/python3.13/site-packages/spell/lib/__init__.py\nStep data: Exercise native typed data and procedure variables\nStep time: Check absolute and relative SPELL time\nTime arithmetic passed: 17-Oct-2026 18:22:51\nStep shared: Round-trip owned shared data and clean it up\nStep result: Export a result for the IDE run artifacts\nSPELL_EXAMPLE_PASS answer=42 native_data=True shared_data_cleaned=True\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/d2fadb9eac744d1fb0c694b571e57cde\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 13.358986100007314
+    },
+    {
+      "name": "spell_native_data",
+      "passed": true,
+      "output": "Step library: Inspect the configured original SPELL library\nOriginal SPELL library: /opt/spell-native/lib/python3.13/site-packages/spell/lib/__init__.py\nStep data: Exercise native typed data and procedure variables\nStep time: Check absolute and relative SPELL time\nTime arithmetic passed: 17-Oct-2026 18:23:04\nStep shared: Round-trip owned shared data and clean it up\nStep result: Export a result for the IDE run artifacts\nSPELL_EXAMPLE_PASS answer=42 native_data=True shared_data_cleaned=True\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/fc53d63a7e794ce0ad9deed6483a881a\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 13.242997800000012
+    },
+    {
+      "name": "spell_native_time",
+      "passed": true,
+      "output": "Step clock: Capture a UTC instant and calculate a duration\nStep wait: Wait for one tenth of a second\nStarting countdown. Time left 0.100005\nTarget time reached\nSPELL_TIME_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/addba05a6071413ebf3f5e018b3f2dcb\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 9.588444799999706
+    },
+    {
+      "name": "command_wait_telemetry",
+      "passed": true,
+      "output": "Step initial: Confirm the synthetic payload is disabled\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSample 1: payload enabled=False, expected=False\nStep enable: Send CMD1 and wait for payload telemetry to become enabled\nBuilding command 'CMD1'\nSending command 'CMD1'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': True\nSample 1: payload enabled=True, expected=True\nStep disable: Send CMD2 and confirm payload telemetry returns to disabled\nSending command 'CMD2'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSample 1: payload enabled=False, expected=False\nSPELL_COMMAND_TELEMETRY_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/2a8105563b7a4b2b9c25d063fb13a129\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.729982999997446
+    },
+    {
+      "name": "telemetry_for_loop",
+      "passed": true,
+      "output": "Last recorded value of 'TM.CORE.TICK: Deterministic dynamics tick': 4\nInitial simulator tick: 4\nStarting countdown. Time left 0.500001\nTarget time reached\nLast recorded value of 'TM.CORE.TICK: Deterministic dynamics tick': 6\nSample 1: 6\nSPELL_TELEMETRY_FOR_LOOP_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/dfc5f0c584474f1a8b65036f2f6e3949\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.14790580002591
+    },
+    {
+      "name": "telemetry_raw_engineering",
+      "passed": true,
+      "output": "Last recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28000\nSPELL_RAW_ENGINEERING_PASS raw=28000 engineering=28.0\nLast recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/f271fad328ab4ad2b1401938a06a1a78\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 9.271293300000252
+    },
+    {
+      "name": "telemetry_verify_conditions",
+      "passed": true,
+      "output": "Verifying telemetry conditions\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' bw 28.0 and 28.0\nVerifications succeeded\nVerifying telemetry conditions\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 0.0\nVerification 0 failed. Actual value: 28.0.\nVerification conditions superseded\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 28.0, \n    1 : Parameter 'TM.PAYLOAD.ENABLED: Payload enable state' = False, \nTelemetry expression evaluates to True\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 0.0, \n    1 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 28.0, \nVerification 0 failed. Actual value: 28.0.\nTelemetry expression evaluates to True\nSPELL_VERIFY_CONDITIONS_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/c77e470284ed4192a9b51ad1b6b8e14e\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 13.326383499981603
+    },
+    {
+      "name": "telemetry_timeout_recovery",
+      "passed": true,
+      "output": "Last recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nStarting countdown. Time left 0.100001\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nStarting countdown. Time left 0.100001\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nStarting countdown. Time left 0.100002\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nStarting countdown. Time left 0.100001\nTarget time reached\nEXPECTED_TIMEOUT: payload remained disabled after four samples\nLast recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nSPELL_TIMEOUT_RECOVERY_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/14638a40d01349489082efe9140c7765\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.65806529999827
+    },
+    {
+      "name": "command_setpoint",
+      "passed": true,
+      "output": "Sending command 'CMDNAME'\nExecution success\nVerifying telemetry conditions\n    0 : Parameter 'TM.PAYLOAD.SETPOINT: Payload command setpoint' = 2.5\nVerifications succeeded\nSPELL_COMMAND_SETPOINT_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/b3748e6eb6aa480b86c572f36d425925\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.373144000011962
+    },
+    {
+      "name": "command_group",
+      "passed": true,
+      "output": "Sending group of 3 element(s)\n    - 'CMD1'\n    - 'CMD2'\n    - 'CMD3'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSPELL_COMMAND_GROUP_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/33cf586490694283a622a4b37aa26dfc\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.352787499985425
+    },
+    {
+      "name": "command_rejection_recovery",
+      "passed": true,
+      "output": "Building command 'NO_SUCH_COMMAND'\nSPELL exception: DSS driver RPC failed ( StatusCode.INVALID_ARGUMENT )\nEXPECTED_REJECTION: unknown command\nSending command 'CMD1'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': True\nSPELL_COMMAND_REJECTION_RECOVERY_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/147071b2665f42c18e0af62168fef3d9\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.341982500016456
+    },
+    {
+      "name": "command_execution_failure",
+      "passed": true,
+      "output": "Sending command 'TC.SIMULATOR.SET_MODE'\nExecution success\nSending command 'CMD1'\nExecution failed\nSPELL exception: Command execution failed ( unknown )\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nEXPECTED_FAILURE: SAFE mode blocked payload enabling\nSending command 'TC.SIMULATOR.SET_MODE'\nExecution success\nSending command 'CMD1'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': True\nSPELL_EXECUTION_FAILURE_RECOVERY_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/863c6c02a0394f6baee4ecced19eb8d0\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.122797999996692
+    },
+    {
+      "name": "limits_and_ground_parameters",
+      "passed": true,
+      "output": "Injected value: TMparam = 25.0\n(LIMHELPER_Op) Result: {'Definition': {'LoRed': 10.0, 'LoYel': 20.0, 'HiYel': 30.0, 'HiRed': 40.0}}\nLast recorded value of 'TMparam: Declared bounded reference adaptation channel TMparam': 25.0\nInjected value: TMparam = 45.0\n{'GENERIC': {'Active': True, 'HiRed': 40.0, 'HiYel': 30.0, 'LoRed': 10.0, 'LoYel': 20.0, 'Type': 'HARDSOFT'}}\nSPELL_LIMITS_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/6d703fbf96d74e9aa9844209598429e4\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.21229600001243
+    },
+    {
+      "name": "resources_roundtrip",
+      "passed": true,
+      "output": "Setting global ground resource 'value' value to 0\nGround resource (global) changed\nGround resource (global) 'value' has a value of 0\nResource round trip: 0\nSetting global ground resource 'value' value to False\nGround resource (global) changed\nGround resource (global) 'value' has a value of False\nResource round trip: False\nSetting global ground resource 'value' value to 'hello'\nGround resource (global) changed\nGround resource (global) 'value' has a value of 'hello'\nResource round trip: 'hello'\nSetting global ground resource 'value' value to [1, 2]\nGround resource (global) changed\nGround resource (global) 'value' has a value of [1, 2]\nResource round trip: [1, 2]\nSetting global ground resource 'value' value to {'answer': 42}\nGround resource (global) changed\nGround resource (global) 'value' has a value of {'answer': 42}\nResource round trip: {'answer': 42}\nSPELL_RESOURCES_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/106b04347fec4575a2034d1ffc167d9a\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.552910200000042
+    },
+    {
+      "name": "ranging_lifecycle",
+      "passed": true,
+      "output": "Antennas: ['DSS-ANTENNA-1', 'DSS-ANTENNA-2']\nBasebands: ['DSS-BBE-1', 'DSS-BBE-2']\nSPELL_RANGING_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/23d19678f95d49fbbcf43f59e3504650\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.512222199991811
+    },
+    {
+      "name": "spell_all_features",
+      "passed": true,
+      "output": "Family: PY\nValue error\n - file '/tmp/openbexi-native-10etetnj/workspace/test_spell/spell_menu.py', line 64: handled example (error code 7) (fatal:false)\nPASS PY\nFamily: COMMON\nExplicit constants, common modifiers and notification\nPASS COMMON\nFamily: TIME\nStarting countdown. Time left 0.050003\nTarget time reached\nPASS TIME\nFamily: DATA\nPASS DATA\nFamily: FILES\nOpening file 'spell-menu-4a20c3818b3448159969450e2cc11929.txt' in mode write\nFile open\nClosing file: 'spell-menu-4a20c3818b3448159969450e2cc11929.txt'\nFile closed\nOpening file 'spell-menu-4a20c3818b3448159969450e2cc11929.txt' in mode read\nFile open\nClosing file: 'spell-menu-4a20c3818b3448159969450e2cc11929.txt'\nFile closed\nPASS FILES\nFamily: FLOW\nStep menu-flow: Native procedure step; child workflow is option 15\nPASS FLOW\nFamily: UI\nSPELL UI: text and Unicode caf\u00e9 \u2713\nNative Prompt is demonstrated by option 14; SDK menu input uses Python.\nPASS UI\nFamily: OBS\nLast recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nVerifying telemetry conditions\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 28.0\nVerifications succeeded\nPASS OBS\nFamily: CMD\nBuilding command 'CMD1'\nBuilt a native CMD1 using the real simulator catalogue\nPASS CMD\nFamily: LIMIT\nInjected value: TMparam = 25.0\n(LIMHELPER_Op) Result: {'Definition': {'Midpoint': 25.0, 'Tolerance': 5.0}}\nPASS LIMIT\nFamily: SPECIAL\nSetting global ground resource 'value' value to {'example': 42}\nGround resource (global) changed\nGround resource (global) 'value' has a value of {'example': 42}\nPASS SPECIAL\nSPELL_ALL_FAMILIES_PASS families=11\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/ff6b8180fcd44ad3a99d4d9bf0fe6cdc\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 31.38602410000749
+    },
+    {
+      "name": "spell_sdk_telemetry",
+      "passed": true,
+      "output": "Last recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nVerifying telemetry conditions\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 28.0\nVerifications succeeded\nSPELL profile: original native runtime; read-only telemetry\nCurrent value: 28.0\nSPELL_TELEMETRY_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/bb5b2718bc6d47d29b5cc36b6d6a079d\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 9.486344500008272
+    },
+    {
+      "name": "monitoring_driver_guard",
+      "passed": true,
+      "output": "Last recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSending command 'CMD1'\nExecution failed\nSPELL exception: DSS driver RPC failed ( StatusCode.PERMISSION_DENIED )\nEXPECTED_DENIAL: Monitoring driver rejected command\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSPELL_MONITORING_GUARD_PASS\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/85bd5f4739bd49c58f2a9f059951cfa4\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 9.762290900020162
+    },
+    {
+      "name": "spell_native_prompt",
+      "passed": true,
+      "output": "Step operator: Collect two operator decisions\nContinue the demonstration? (0=Yes, 1=No)\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL choices (enter the native option index): Y\u0004N\nSPELL prompt: Continue the demonstration? (0=Yes, 1=No)\nAnswer: 'Y'\nRecord the second choice? (0=Yes, 1=No)\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL choices (enter the native option index): Y\u0004N\nSPELL prompt: Record the second choice? (0=Yes, 1=No)\nAnswer: 'N'\nSPELL_PROMPT_PASS [True, False]\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/e88c9c30c68e4e5a87677fc80c330b74\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 11.866218000010122
+    },
+    {
+      "name": "spell_native_child",
+      "passed": true,
+      "output": "Step child-input: Collect the child answer\nChild: continue? (0=Yes, 1=No)\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL choices (enter the native option index): Y\u0004N\nSPELL prompt: Child: continue? (0=Yes, 1=No)\nAnswer: 'N'\nSPELL_CHILD_PASS choice=False\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/635f60ddc3db497bb5ebb29d4097541e\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 9.729967199993553
+    },
+    {
+      "name": "spell_native_parent",
+      "passed": true,
+      "output": "Step child: Run and wait for the child procedure\nStarting procedure test_spell/spell_native_child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child test_spell/spell_native_child#0 ===\n\"\"\"Child of spell_native_parent.py; can also run as a standalone procedure.\"\"\"\nimport spell.lib\nfrom spell.lang.constants import YES_NO\nfrom spell.lang.functions import Display, Prompt\nfrom spell.runtime import Step\n\nStep('child-input', 'Collect the child answer')\nchoice = Prompt('Child: continue? (0=Yes, 1=No)', Type=YES_NO)\nDisplay('SPELL_CHILD_PASS choice=' + str(choice))\n=== End child source ===\nWaiting for child procedure\nStep child-input: Collect the child answer\nChild: continue? (0=Yes, 1=No)\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL choices (enter the native option index): Y\u0004N\nSPELL prompt: Child: continue? (0=Yes, 1=No)\nAnswer: 'Y'\nSPELL_CHILD_PASS choice=True\nStep parent: Return control to the parent\nParent: finish this example? (0=Yes, 1=No)\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL choices (enter the native option index): Y\u0004N\nSPELL prompt: Parent: finish this example? (0=Yes, 1=No)\nAnswer: 'N'\nSPELL_PARENT_PASS choice=False\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/ff842e4e84a84659a58a9bc4a41b9d83\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 13.304101800022181
+    },
+    {
+      "name": "spell_menu",
+      "passed": true,
+      "output": "SPELL language menu - profile: original-native\n763 reference entries across 11 families. PASS applies only to the selected demonstration.\n 1. PY demonstration\n 2. COMMON demonstration\n 3. TIME demonstration\n 4. DATA demonstration\n 5. FILES demonstration\n 6. FLOW demonstration\n 7. UI demonstration\n 8. OBS demonstration\n 9. CMD demonstration\n10. LIMIT demonstration\n11. SPECIAL demonstration\n12. Reference catalogue\n13. Run all non-command demonstrations\n14. Native successive prompts\n15. Native parent/child workflow\n16. Command and telemetry workflow\n17. Choose a learning procedure\n18. Run all 11 native language families\n0. Exit\nChoose 0-18:\n\nSPELL choices (enter the native option index): \nSPELL prompt: Choose 0-18:\nAnswer: '18'\nStarting procedure test_spell/spell_all_features (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child test_spell/spell_all_features#0 ===\n\"\"\"Run demonstrations for all 11 SPELL families with the native DSS backend.\n\nThis is a teaching tour. feature_catalog.json separately maps all 763 qualified\nlanguage requirements to the published native v0.5 evidence.\n\"\"\"\nfrom pathlib import Path\nimport runpy\nfrom spell.lang.functions import Display\n\nmenu = runpy.run_path(str(Path(__file__).with_name('spell_menu.py')))\nfor family in menu['FAMILIES']:\n    Display('Family: ' + family)\n    menu['run_case'](family, lambda family=family: menu['demo'](family))\nassert len(menu['RESULTS']) == 11\nassert all(row['status'] == 'PASS' for row in menu['RESULTS']), menu['RESULTS']\nDisplay('SPELL_ALL_FAMILIES_PASS families=11')\n=== End child source ===\nWaiting for child procedure\nFamily: PY\nValue error\n - file '/tmp/openbexi-native-to3u2gtc/workspace/test_spell/spell_menu.py', line 64: handled example (error code 7) (fatal:false)\nPASS PY\nFamily: COMMON\nExplicit constants, common modifiers and notification\nPASS COMMON\nFamily: TIME\nStarting countdown. Time left 0.050003\nTarget time reached\nPASS TIME\nFamily: DATA\nPASS DATA\nFamily: FILES\nOpening file 'spell-menu-e0a7c1d9c61f4cf9b82db497569ca9c8.txt' in mode write\nFile open\nClosing file: 'spell-menu-e0a7c1d9c61f4cf9b82db497569ca9c8.txt'\nFile closed\nOpening file 'spell-menu-e0a7c1d9c61f4cf9b82db497569ca9c8.txt' in mode read\nFile open\nClosing file: 'spell-menu-e0a7c1d9c61f4cf9b82db497569ca9c8.txt'\nFile closed\nPASS FILES\nFamily: FLOW\nStep menu-flow: Native procedure step; child workflow is option 15\nPASS FLOW\nFamily: UI\nSPELL UI: text and Unicode caf\u00e9 \u2713\nNative Prompt is demonstrated by option 14; SDK menu input uses Python.\nPASS UI\nFamily: OBS\nLast recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nVerifying telemetry conditions\n    0 : Parameter 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage' = 28.0\nVerifications succeeded\nPASS OBS\nFamily: CMD\nBuilding command 'CMD1'\nBuilt a native CMD1 using the real simulator catalogue\nPASS CMD\nFamily: LIMIT\nInjected value: TMparam = 25.0\n(LIMHELPER_Op) Result: {'Definition': {'Midpoint': 25.0, 'Tolerance': 5.0}}\nPASS LIMIT\nFamily: SPECIAL\nSetting global ground resource 'value' value to {'example': 42}\nGround resource (global) changed\nGround resource (global) 'value' has a value of {'example': 42}\nPASS SPECIAL\nSPELL_ALL_FAMILIES_PASS families=11\nPASS All native families\n 1. PY demonstration\n 2. COMMON demonstration\n 3. TIME demonstration\n 4. DATA demonstration\n 5. FILES demonstration\n 6. FLOW demonstration\n 7. UI demonstration\n 8. OBS demonstration\n 9. CMD demonstration\n10. LIMIT demonstration\n11. SPECIAL demonstration\n12. Reference catalogue\n13. Run all non-command demonstrations\n14. Native successive prompts\n15. Native parent/child workflow\n16. Command and telemetry workflow\n17. Choose a learning procedure\n18. Run all 11 native language families\n0. Exit\nChoose 0-18:\n\nSPELL choices (enter the native option index): \nSPELL prompt: Choose 0-18:\nAnswer: '0'\nSPELL_MENU_COMPLETE checks=1 failures=0\nSPELL run files: /tmp/learning-collection-qkg2l75l/project/.openbexi/runs/1d91555c4c23475ebd2cb4424f33a425\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 45.461221999983536
+    },
+    {
+      "name": "stop_and_rerun",
+      "passed": true,
+      "output": "Last recorded value of 'TM.POWER.BUS_VOLTAGE: Synthetic DC bus voltage': 28.0\nSTOP_DEMO sample=0 voltage=28.0\n",
+      "errors": [],
+      "exits": [
+        130
+      ],
+      "seconds": 10.076176600006875
+    }
+  ]
+}

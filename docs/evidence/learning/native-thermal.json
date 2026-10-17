@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "command_temperature_ramp",
+      "passed": true,
+      "output": "Last recorded value of 'TM.PAYLOAD.TEMPERATURE: Payload temperature': 20.0\nSending command 'CMD1'\nExecution success\nStarting countdown. Time left 0.500001\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.TEMPERATURE: Payload temperature': 20.009\nAfter commanding: sample=1 temperature=20.009\nStarting countdown. Time left 0.500001\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.TEMPERATURE: Payload temperature': 20.017\nAfter commanding: sample=2 temperature=20.017\nStarting countdown. Time left 0.500001\nTarget time reached\nLast recorded value of 'TM.PAYLOAD.TEMPERATURE: Payload temperature': 20.029\nAfter commanding: sample=3 temperature=20.029\nSending command 'CMD2'\nExecution success\nLast recorded value of 'TM.PAYLOAD.ENABLED: Payload enable state': False\nSPELL_TEMPERATURE_RAMP_PASS samples=[20.0, 20.009, 20.017, 20.029]\nSPELL run files: /tmp/learning-collection-khlyny4k/project/.openbexi/runs/daf4436f7720479ebdb49065e696be59\n",
+      "errors": [],
+      "exits": [
+        0
+      ],
+      "seconds": 15.27394829998957
+    }
+  ]
+}

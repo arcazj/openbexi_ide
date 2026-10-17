@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": [
+    "second run rejected without interrupting first",
+    "Stop reaped adapter, bridge, listener and executor",
+    "rerun completed with fresh telemetry and no remaining native processes"
+  ],
+  "owned_processes": [
+    {
+      "pid": 10,
+      "command": "/opt/spell-native/bin/python -I /opt/host/adapter.py "
+    },
+    {
+      "pid": 31,
+      "command": "/opt/spell-native/lib/python3.13/site-packages/spell_native/bin/SPELL-Listener -c /tmp/spell-host-bjnwpou6/session/config/server/server.xml "
+    },
+    {
+      "pid": 48,
+      "command": "/opt/spell-native/lib/python3.13/site-packages/spell_native/bin/SPELL-Context -n example -s 9981 -c /tmp/spell-host-bjnwpou6/session/config/server/server.xml "
+    },
+    {
+      "pid": 54,
+      "command": "/bridge/spell-host-ipc 9980 "
+    },
+    {
+      "pid": 97,
+      "command": "/bridge/spell-host-ipc 41727 "
+    }
+  ]
+}

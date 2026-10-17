@@ -146,7 +146,7 @@ def test_normal_worker_exit_reaps_detached_user_child_on_windows(tmp_path):
 
 def test_complete_python_reference_suite(tmp_path):
     repository = Path(__file__).resolve().parents[1]
-    script = repository / "examples" / "test_Python.py"
+    script = repository / "examples/test_python_support/test_Python.py"
     code, stdout, stderr = capture(LaunchSpec(script.parent, script), timeout=60)
     assert code == 0, stderr + stdout[-3000:]
     assert "39 topic(s)" in stdout and "All runtime checks passed:" in stdout
@@ -159,7 +159,7 @@ def test_complete_python_reference_suite(tmp_path):
 
 
 def test_plain_python_graphic_window_opens_and_closes():
-    examples = Path(__file__).resolve().parents[1] / "examples"
+    examples = Path(__file__).resolve().parents[1] / "examples/test_python_support"
     code, stdout, stderr = capture(LaunchSpec(examples, examples / "graphics_demo.py",
                                   arguments=("--close-after", "150")))
     assert code == 0, stderr
@@ -167,8 +167,8 @@ def test_plain_python_graphic_window_opens_and_closes():
 
 
 def test_interactive_menu_runs_topic_and_starts_updates_closes_graphics():
-    examples = Path(__file__).resolve().parents[1] / "examples"
-    code, stdout, stderr = capture(LaunchSpec(examples, examples / "test_menu.py"),
+    examples = Path(__file__).resolve().parents[1] / "examples/test_python_support"
+    code, stdout, stderr = capture(LaunchSpec(examples, examples / "python_menu.py"),
                                   "3\ntypes\n4\n5\n72\n6\n0\n")
     assert code == 0, stderr
     assert "All runtime checks passed:" in stdout and "Qualification exit: 0" in stdout

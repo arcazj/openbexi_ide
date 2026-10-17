@@ -11,8 +11,9 @@ from PySide6.QtWidgets import QApplication, QGridLayout, QLabel, QPushButton, QV
 
 VIEWS = (
     ('local', 'Python IDE', 'Local Run, Debug and graphics'),
+    ('python', 'Python learning menu', '39 topics, in-depth chapters and graphics'),
     ('spell', 'SPELL language menu', 'Open test_spell/spell_menu.py, then Run'),
-    ('alice', 'SPELL / DSS — Alice', 'Shared developer; open dss_demo.py'),
+    ('alice', 'SPELL / DSS — Alice', 'Shared developer and controller handoff'),
     ('monitor', 'Read-only monitor', 'Watch shared output and live stacks'),
     ('bob', 'Shared developer — Bob', 'Test controller handoff and queues'),
     ('durable', 'Durable Python', 'Committed sources and persistent sessions'),
@@ -66,7 +67,7 @@ class Desktop(QWidget):
             self.addAction(action)
         layout.addLayout(grid)
         layout.addSpacing(20)
-        self.status = QLabel('SPELL examples: open the SPELL language menu, keep Python selected, then Run. The console identifies the available runtime profile.')
+        self.status = QLabel('The SPELL menu selects the original native runtime with its own synthetic DSS. The Python menu provides language topics and graphics. Choose Run or Debug in either IDE.')
         self.status.setWordWrap(True)
         layout.addWidget(self.status)
         layout.addStretch()

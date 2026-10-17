@@ -125,7 +125,8 @@ def main():
                                      '--stream', '3', '--delay', '0'], capture_output=True, text=True, timeout=60)
             (evidence / 'python-example.log').write_text(result.stdout + result.stderr, encoding='utf-8')
             assert result.returncode == 0 and '15 chapters passed' in result.stdout and result.stdout.count('  PASS') == 15
-            dashboard = runpy.run_path(str(example_root / 'graphics_demo.py'))['Dashboard']()
+            graphic = example_root/'test_python_support/graphics_demo.py'
+            dashboard = runpy.run_path(str(graphic if graphic.is_file() else example_root/'graphics_demo.py'))['Dashboard']()
             dashboard.show()
             application.processEvents()
             try:

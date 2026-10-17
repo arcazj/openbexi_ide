@@ -24,7 +24,8 @@ def main():
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=False)
     app=QApplication([])
     window=MainWindow(args.project,QSettings(str(args.output/'settings.ini'),QSettings.IniFormat))
-    window.open_file(args.project/'test_menu.py')
+    menu_path = args.project/'test_python_support/python_menu.py'
+    window.open_file(menu_path if menu_path.is_file() else args.project/'test_menu.py')
     window.show()
     events=[]
     types={QEvent.Type.Wheel,QEvent.Type.KeyPress,QEvent.Type.MouseButtonPress,QEvent.Type.Close}

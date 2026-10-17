@@ -41,7 +41,7 @@ def test_menu_send_and_return_all_options(app, tmp_path, debug):
         wait(lambda: view.console.toPlainText().count('Choose: ') > before)
 
     try:
-        view.open_file(project/'test_menu.py')
+        view.open_file(project/'test_python_support/python_menu.py')
         (view.debug_action if debug else view.run_action).trigger()
         wait(lambda: 'Choose: ' in view.console.toPlainText())
         view.console.setFocus()

@@ -113,19 +113,36 @@ def demo(family):
         api.Display('Native Prompt is demonstrated by option 14; SDK menu input uses Python.')
     elif family == 'OBS':
         if NATIVE:
-            raise Unavailable('This menu has no configured native DSS connection. Use the native driver qualification environment.')
+            value = api.GetTM('TM.POWER.BUS_VOLTAGE', Wait=False, HandleError=False)
+            assert value == 28.0
+            assert api.Verify('TM.POWER.BUS_VOLTAGE', constants.eq, 28.0,
+                              Wait=False, Retries=0, HandleError=False)
+            return
         value = api.GetTM('TM1', Wait=False)
         api.Display('TM1 = ' + str(value))
         assert api.Verify('TM1', -1000000, Op='GT')
         assert api.Verify('TM1', 1000000, Op='LT')
     elif family == 'CMD':
         if NATIVE:
-            raise Unavailable('Native command construction needs the configured native DSS catalogue.')
+            command = api.BuildTC('CMD1', HandleError=False)
+            assert command.name() == 'CMD1'
+            api.Display('Built a native CMD1 using the real simulator catalogue')
+            return
         command = api.BuildTC('CMD1')
         assert command.as_dict()['command_name'] == 'CMD1'
         api.Display('Built CMD1; nothing sent. Option 16 sends one simulator command.')
-    elif family in ('LIMIT', 'SPECIAL'):
-        raise Unavailable('Requires native DSS services beyond this desktop profile. Option 12 lists every reference feature and its native qualification status.')
+    elif family == 'LIMIT':
+        need_native()
+        try:
+            assert api.SetGroundParameter('TMparam', 25.0, HandleError=False)
+            assert api.SetLimits('TMparam', Midpoint=25.0, Tolerance=5.0, HandleError=False)
+            assert not api.IsAlarmed('TMparam', HandleError=False)
+        finally:
+            api.RestoreNormalLimits(HandleError=False)
+    elif family == 'SPECIAL':
+        need_native()
+        assert api.SetResource('value', {'example': 42}, HandleError=False)
+        assert api.GetResource('value', HandleError=False) == {'example': 42}
     else:
         raise ValueError('Unknown family: ' + family)
 
@@ -152,7 +169,7 @@ def catalogue(family='ALL'):
     if not rows:
         say('Unknown family. Choose ' + ', '.join(FAMILIES))
         return
-    say('Historical native catalogue - these are NOT SDK or menu test results.')
+    say('Published native v0.5 catalogue - separate from SDK or menu test results.')
     for row in rows:
         line = f"{row['package']:7} {row['native_status']:9} {row['name']} [{row['id']}]"
         say(line)
@@ -161,12 +178,14 @@ def catalogue(family='ALL'):
 
 def native_procedure(name):
     need_native()
-    assert api.StartProc(name, HandleError=False)
+    directory = Path(__file__).resolve().parent.relative_to(Path.cwd()).as_posix()
+    assert api.StartProc((directory + '/' if directory != '.' else '') + name, HandleError=False)
 
 
 def send_simulator_command():
     if NATIVE:
-        raise Unavailable('This command demonstration is for the local browser DSS simulator.')
+        native_procedure('command_wait_telemetry')
+        return
     if ask('Send one CMD1 to the local simulator? Type SEND CMD1 to confirm:') != 'SEND CMD1':
         raise Unavailable('Command cancelled; nothing sent.')
     assert api.Send(api.BuildTC('CMD1'))
@@ -184,9 +203,10 @@ def main():
                 say(f'{index:2}. {family} demonstration')
             say('12. Reference catalogue\n13. Run all non-command demonstrations\n'
                   '14. Native successive prompts\n15. Native parent/child workflow\n'
-                  '16. Send one local simulator command (confirmation required)\n0. Exit', flush=True)
+                  '16. Command and telemetry workflow\n17. Choose a learning procedure\n'
+                  '18. Run all 11 native language families\n0. Exit', flush=True)
             try:
-                choice = ask('Choose 0-16:')
+                choice = ask('Choose 0-18:')
             except EOFError:
                 break
             if choice == '0':
@@ -204,8 +224,22 @@ def main():
                 run_case(name, lambda: native_procedure(name))
             elif choice == '16':
                 run_case('Send CMD1', send_simulator_command)
+            elif choice == '17':
+                procedures = json.loads(Path(__file__).with_name('procedures.json').read_text())['procedures']
+                for index, row in enumerate(procedures, 1):
+                    say('%2d. %s: %s' % (index, row['file'], row['purpose']))
+                selected = ask('Procedure number (0 returns):')
+                if selected.isdigit() and 1 <= int(selected) <= len(procedures):
+                    row = procedures[int(selected)-1]
+                    filename = row['file']
+                    if row['arguments']:
+                        say('Run ' + filename + ' directly with this procedure argument: ' + ' '.join(row['arguments']))
+                        continue
+                    run_case(filename, lambda: native_procedure(Path(filename).stem))
+            elif choice == '18':
+                run_case('All native families', lambda: native_procedure('spell_all_features'))
             else:
-                say('Invalid choice; enter a number from 0 to 16.', flush=True)
+                say('Invalid choice; enter a number from 0 to 18.', flush=True)
     failed = sum(row['status'] == 'FAIL' for row in RESULTS)
     say(f'SPELL_MENU_COMPLETE checks={len(RESULTS)} failures={failed}', flush=True)
     return int(bool(failed))

@@ -1,0 +1,223 @@
+{
+  "schema": 1,
+  "procedures": [
+    {
+      "file": "command_execution_failure.py",
+      "purpose": "Observe a real SAFE-mode command failure, then recover in NOMINAL mode.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "command_group.py",
+      "purpose": "Send an ordered command group and check its final effect.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "command_rejection_recovery.py",
+      "purpose": "Reject an unknown command, catch its real driver exception, then recover.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "command_setpoint.py",
+      "purpose": "Send a typed command argument and verify the resulting engineering telemetry.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "command_temperature_ramp.py",
+      "purpose": "Command the payload ON and observe several changing temperature samples.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "command_wait_telemetry.py",
+      "purpose": "Native SPELL: command the synthetic payload, then wait for real telemetry.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "limits_and_ground_parameters.py",
+      "purpose": "Inject a ground parameter, configure alarm limits, then restore them.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "monitoring_driver_guard.py",
+      "purpose": "Read telemetry and prove that the driver rejects commanding in Monitoring.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [
+        "{\"LAB_MODE\":\"Monitoring\"}"
+      ],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "ranging_lifecycle.py",
+      "purpose": "Enable/disable the synthetic ranging service and inspect its catalogue.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "resources_roundtrip.py",
+      "purpose": "Write/read typed ground resources through the original driver.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_all_features.py",
+      "purpose": "Run demonstrations for all 11 SPELL families with the native DSS backend.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_menu.py",
+      "purpose": "Interactive SPELL language explorer. Run with Python in the browser desktop.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Selected procedures pass and menu exits cleanly",
+      "arguments": [],
+      "interaction": "Choose numbered options; 0 exits",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_native_child.py",
+      "purpose": "Child of spell_native_parent.py; can also run as a standalone procedure.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "Answer displayed Yes/No questions using native indices 0 or 1",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_native_data.py",
+      "purpose": "Original SPELL example. Select the installed native SPELL backend, then Run.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_native_parent.py",
+      "purpose": "Original native SPELL: run a child, then ask the parent's question.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "Answer displayed Yes/No questions using native indices 0 or 1",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_native_prompt.py",
+      "purpose": "Original native SPELL: answer two YES_NO prompts using the console.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "Answer displayed Yes/No questions using native indices 0 or 1",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_native_time.py",
+      "purpose": "Original native SPELL: relative time, absolute time and a short timed wait.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "spell_sdk_telemetry.py",
+      "purpose": "Read current TM1 from the browser lab DSS; sends no commands.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "stop_and_rerun.py",
+      "purpose": "Press Stop during this bounded loop, then Run again; each run starts fresh.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Owned native processes end; next run starts with fresh state",
+      "arguments": [],
+      "interaction": "Press Stop after samples appear; Run again",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "telemetry_for_loop.py",
+      "purpose": "Poll changing spacecraft time using a bounded for-loop; native SPELL + DSS.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "telemetry_raw_engineering.py",
+      "purpose": "Read raw/engineering values and qualified extended telemetry.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "telemetry_timeout_recovery.py",
+      "purpose": "Expected bounded wait timeout, followed by a successful telemetry read.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "telemetry_verify_conditions.py",
+      "purpose": "Verify true/false, AND/OR and boundary conditions without interactive recovery.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    },
+    {
+      "file": "test_spell.py",
+      "purpose": "SPELL smoke procedure for the browser SDK or original native backend.",
+      "runtime": "Native SPELL + synthetic GENERIC DSS",
+      "expected": "Exit 0 and assertions pass; native examples print a SPELL_*_PASS marker",
+      "arguments": [],
+      "interaction": "none",
+      "output": "Private native run artifacts"
+    }
+  ]
+}
