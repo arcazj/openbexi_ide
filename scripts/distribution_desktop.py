@@ -121,7 +121,8 @@ def main():
         if args.examples:
             example_root = args.examples.resolve()
             report['examples'] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in example_root.glob('*.py')}
-            result = subprocess.run([sys.executable, '-I', '-B', str(example_root / 'test_Python_in_deep.py'),
+            deep = example_root / 'test_python_support/test_Python_in_deep.py'
+            result = subprocess.run([sys.executable, '-I', '-B', str(deep if deep.is_file() else example_root / 'test_Python_in_deep.py'),
                                      '--stream', '3', '--delay', '0'], capture_output=True, text=True, timeout=60)
             (evidence / 'python-example.log').write_text(result.stdout + result.stderr, encoding='utf-8')
             assert result.returncode == 0 and '15 chapters passed' in result.stdout and result.stdout.count('  PASS') == 15

@@ -6,6 +6,7 @@ services:
     pull_policy: never
     platform: linux/amd64
     init: true
+    network_mode: bridge
     ports:
       - "127.0.0.1:${OPENBEXI_RC1_PORT:-6088}:6080"
     shm_size: 256m
