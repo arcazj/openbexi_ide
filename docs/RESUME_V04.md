@@ -19,12 +19,23 @@ The actual desktop serves port 6080 using image
 Local publication details are in `.qualification/RESUME_IDE_V1.json`.
 Preserve historical evidence, images and named volumes.
 
-SPELL continues from verified checkpoint `43d618f` on GitHub
-`master`: **523 qualified / 240 open** language requirements. The reproduced
-runtime includes wait interruption and PROC reload corrections, retaining
-the prior context snapshot and prompt transition fixes. The accepted plugin
-release is still `v0.4.0`; full v0.5 requires all 763 original requirements.
-Review of `access_programs.cyber` remains deferred to SPELL operational 1.0.
+SPELL **v0.5 is accepted and published** from GitHub `master` at
+[`ca1fefe`](https://github.com/arcazj/openbexi_spell_plugin/commit/ca1fefe3fec941305e6f2f88ea3c3a53db3a8975):
+**763 qualified / 0 open** original language requirements. All 61 native suites
+(2,157 raw checks), prompt/child lifecycle controls, repository tests and
+independent source/build reviews pass on the qualified GENERIC simulator runtime.
+The [release](https://github.com/arcazj/openbexi_spell_plugin/releases/tag/v0.5)
+includes the diagnostic wheels, runtime image, portable evidence and checksums.
+
+Continue with SPELL v0.6 production packaging, versioned upgrades, supported
+platforms and final installed OpenBEXI, IntelliJ IDEA and PyCharm workflows.
+Read the plugin's
+[acceptance manifest](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/V05_CONFORMANCE_QUALIFICATION.json)
+and [release plan](https://github.com/arcazj/openbexi_spell_plugin/blob/master/docs/STABLE_RELEASE_PLAN.md).
+The accepted v0.5 scope is Linux x86_64 / CPython 3.13.15 / GENERIC simulator;
+v0.6 and operational/stable qualification remain open. Preserve retained source,
+evidence, worktrees, images and named volumes. Review of `access_programs.cyber`
+remains deferred to SPELL operational 1.0.
 
 ## Historical rc4 handoff
 
@@ -83,7 +94,7 @@ remaining language contracts, then final packaging/host, operational, RC and
 stable gates. Preserve existing worktrees, named volumes and evidence. Local
 task details are in the plugin's `.qualification/RESUME_STABLE.json`.
 
-## Current handoff after v0.4
+## Historical handoff after v0.4
 
 IDE 0.3 durable plugin Execution and plugin 0.4 GENERIC DSS drivers/modes are
 implemented and qualified. Read [PLUGIN_EXECUTION_SERVICE.md](PLUGIN_EXECUTION_SERVICE.md),
