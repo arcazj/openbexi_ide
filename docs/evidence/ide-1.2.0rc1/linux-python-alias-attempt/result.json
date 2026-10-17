@@ -1,0 +1,11 @@
+{
+  "passed": false,
+  "version": "1.2.0rc1",
+  "python": "/usr/local/bin/python",
+  "prefix": "/usr/local",
+  "origin": "/usr/local/lib/python3.13/site-packages/openbexi_ide/app.py",
+  "script_sha256": "efc0d75502a0ea448e844e0de6518888e4f6895a09a41d64f6806fc94b2d7e0b",
+  "checks": [],
+  "scope": "Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence",
+  "error": "Traceback (most recent call last):\n  File \"/opt/rc1-checks/distribution_desktop.py\", line 63, in main\n    assert view.interpreter == Path(sys.executable), (view.interpreter, sys.executable)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (PosixPath('/usr/local/bin/python3.13'), '/usr/local/bin/python')\n"
+}

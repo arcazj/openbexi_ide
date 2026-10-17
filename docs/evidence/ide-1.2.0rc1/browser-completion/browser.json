@@ -1,0 +1,8 @@
+{
+  "browser_version": "155.0.4283.45",
+  "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "executable_sha256": "4bb4545b4ab80a3cf463a588ce570ca42de38fe6db16e3baeb0798ac75b4648b",
+  "url": "http://127.0.0.1:6088/vnc.html?autoconnect=1&resize=off",
+  "harness_sha256": "91484f1779328a9a29d66b6616ee9defc6a66c0ee44d2135f5803416cb9e3eb5",
+  "scope": "Real browser mouse/key/wheel events through noVNC; no Qt or X11 input injection"
+}

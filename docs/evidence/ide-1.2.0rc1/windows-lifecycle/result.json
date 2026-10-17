@@ -1,0 +1,21 @@
+{
+  "passed": false,
+  "release_accepted": false,
+  "version": "1.2.0rc1",
+  "bundle_manifest_sha256": "ca754ba5d1f06bea68dc1582c3c60da0f24592ed19430480f91924cf73b076c6",
+  "checks": [
+    "Actual previous-version install then candidate upgrade; old interpreter retained"
+  ],
+  "harness_sha256": "25795aacd2a3c5b5d3616cb6d975a51634f280b51bd16420f6dfd7f66baa1350",
+  "retained_harnesses": {
+    "distribution_qualify.py": "25795aacd2a3c5b5d3616cb6d975a51634f280b51bd16420f6dfd7f66baa1350",
+    "distribution_desktop.py": "efc0d75502a0ea448e844e0de6518888e4f6895a09a41d64f6806fc94b2d7e0b",
+    "distribution_shared_debug.py": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27",
+    "distribution_menu.py": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850"
+  },
+  "scope": "Private clean directory on existing Windows host; offscreen Qt, no actual noVNC or fresh VM claim",
+  "previous_version": "1.0.0",
+  "previous_manifest_sha256": "1a785d3acef2f956375c5ee48e8f98f8e095c0fcb33a61c765c4afc7de103f04",
+  "interpreter": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-ce1d11afc0862a96\\runtime\\python.exe",
+  "error": "RuntimeError('desktop failed (1); see desktop.log')"
+}

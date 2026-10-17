@@ -1,0 +1,26 @@
+{
+  "passed": false,
+  "cases": [
+    {
+      "mode": "Run",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: /tmp/rc1-evidence/native-workspace/project/.openbexi/runs/ba6ae40d72b8480790f32d20f4cbc183\n"
+    },
+    {
+      "mode": "Debug",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: /tmp/rc1-evidence/native-workspace/project/.openbexi/runs/fdc6994bd25c47289ac5905e361bf528\n"
+    }
+  ],
+  "platform": "linux",
+  "requested_image": "backend default",
+  "source_sha256": "4e67389c942ad4dd011f8598c2dbefe7fd4786f9440bd1515aa6e0e1757c53fa",
+  "error": "Traceback (most recent call last):\n  File \"/opt/rc1-checks/qualify_procedure_workspace.py\", line 112, in main\n    assert fresh is not run and fresh.prompt\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "console": "Running procedure.py\n\n\nDebugger timed out during launch\n\nFinished \u00b7 exit -1\n"
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "version": "1.2.0rc1",
+  "python": "/usr/local/bin/python3.13",
+  "prefix": "/usr/local",
+  "origin": "/usr/local/lib/python3.13/site-packages/openbexi_ide/app.py",
+  "script_sha256": "efc0d75502a0ea448e844e0de6518888e4f6895a09a41d64f6806fc94b2d7e0b",
+  "checks": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue"
+  ],
+  "scope": "Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence"
+}

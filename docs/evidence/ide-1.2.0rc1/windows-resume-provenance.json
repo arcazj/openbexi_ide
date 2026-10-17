@@ -1,0 +1,32 @@
+{
+  "original_harness_sha256": "25795aacd2a3c5b5d3616cb6d975a51634f280b51bd16420f6dfd7f66baa1350",
+  "adapted_harness_sha256": "bef11d24a3577623a7dfab081c2393a6544e5b015e1bc7a266c798bb97be166f",
+  "adaptation": "Only source-root and existing owned installation paths; all lifecycle assertions retained.",
+  "preexisting_state": {
+    "product": "OpenBEXI IDE",
+    "format": 1,
+    "current": "versions/1.2.0rc1-ce1d11afc0862a96",
+    "versions": [
+      {
+        "directory": "versions/1.0.0-7f57c34bbff163a8",
+        "manifest_sha256": "1a785d3acef2f956375c5ee48e8f98f8e095c0fcb33a61c765c4afc7de103f04"
+      },
+      {
+        "directory": "versions/1.2.0rc1-ce1d11afc0862a96",
+        "manifest_sha256": "ca754ba5d1f06bea68dc1582c3c60da0f24592ed19430480f91924cf73b076c6"
+      }
+    ],
+    "tools": {
+      "launch.ps1": "ad1d03cd27f98a52b92b64368ec9009e45d8380497c0c9ab5520e4a21fd382c1",
+      "common.ps1": "a2e7447e9430cb54d162afc8c2211de237b94c4915b0a2fa25911d14ded5b46b",
+      "uninstall.ps1": "b868193cffa91dfa45e8d4869748971e3d830e983afbd745a0054e7d4a1e4b30"
+    },
+    "shortcuts": [
+      {
+        "path": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\private Start menu\\OpenBEXI IDE.lnk",
+        "sha256": "323b2253105e9db4e40993b43bc933265cd9a4bc03455d126699f6d57ff2d3a7"
+      }
+    ]
+  },
+  "initial_upgrade_report_sha256": "242942f0553472516b54bcff9b5aa8bfaacfcacdcb9194ab212ee17bf2ec9c10"
+}

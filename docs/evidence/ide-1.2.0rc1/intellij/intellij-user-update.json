@@ -1,0 +1,10 @@
+{
+  "settings": {
+    "interpreter": "C:\\projects\\openbexi_ide\\.venv\\Scripts\\python.exe",
+    "image": "openbexi-spell-host:0.3.1-dev3"
+  },
+  "host_version": "0.3.1.dev3",
+  "editor_image": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+  "definition_files": 103,
+  "editor_errors": 0
+}

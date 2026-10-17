@@ -83,6 +83,25 @@ See `IDE_1_2_0_RC1_RELEASE_DOSSIER.json` for the exact candidate reports and
 `PROCEDURE_WORKSPACE_QUALIFICATION.json` for the earlier development evidence.
 Do not treat a development report as a new release-candidate test.
 
+- Linux unit/integration suite: **190 passed, 9 skipped** on the complete rerun.
+  The initial run had one TLS timeout; its focused recheck also passed (3 tests).
+- Windows suite: **189 passed, 9 skipped, 1 failed** in the complete run.
+  The failure was a shared-desktop timeout; the full affected module passed
+  on recheck (8 tests). A clean complete Windows rerun remains open.
+- The Windows native workspace passed Run and Debug with five prompts each,
+  child-source display, results, history, Stop/rerun and ordinary Python.
+  The installed Windows candidate also passed Python Run/Debug, interactive
+  menus, shared debugging and all 15 deep-Python example chapters with graphics.
+  Upgrade and manifest-owned uninstall passed; active-process uninstall was
+  refused and user projects, edited examples and preferences were preserved.
+- Actual Edge/noVNC inputs exercised Python Run, the native menu's embedded
+  prompt, answer submission, `Finished (0)`, and closing both windows.
+  Captures include the [prompt](https://github.com/arcazj/openbexi_ide/blob/v1.2.0rc1/docs/evidence/ide-1.2.0rc1/browser/006-native-prompt.png)
+  and [completed table](https://github.com/arcazj/openbexi_ide/blob/v1.2.0rc1/docs/evidence/ide-1.2.0rc1/browser-completion/000-connected.png).
+- **Known Linux native issue:** an immediate Run after Abort consistently
+  timed out during debugger launch in two installed-container checks. Run and
+  Debug prompt/result cases passed before that failure. Stop/rerun acceptance
+  on the packaged Linux native backend remains open; no fix is claimed here.
 - An IntelliJ `spell_menu.py` Debug session ended with `Failed (1)` at a prompt
   on 2026-10-17 without a retained diagnostic. Subsequent direct host and actual
   IntelliJ Run/Debug checks passed, including two successive embedded answers
@@ -102,5 +121,5 @@ The stable 1.2.0 promotion remains open. To exercise the fresh-Windows check on
 a separate fresh Windows x64 environment, use the supplied harness and ZIP hash:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File ./qualify_fresh_windows.ps1 -Archive ./OpenBEXI-IDE-1.2.0rc1-windows-x64.zip -ExpectedSha256 <published-zip-sha256> -ExpectedVersion 1.2.0rc1 -FreshWindows
+powershell -NoProfile -ExecutionPolicy Bypass -File ./qualify_fresh_windows.ps1 -Archive ./OpenBEXI-IDE-1.2.0rc1-windows-x64.zip -ExpectedSha256 04e8f9552e71c12831733d79bc5af921f4f0820e001f6899ba07a9c29fee87bd -ExpectedVersion 1.2.0rc1 -FreshWindows
 ```

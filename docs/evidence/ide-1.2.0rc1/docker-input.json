@@ -1,0 +1,5 @@
+{
+  "base_image": "sha256:6c71e0e74b1be154cadded7877a5181272f06190e559d5a5d194a596869d9ddd",
+  "base_alias": "openbexi-ide:1.2.0rc1-build-input",
+  "source_commit": "e4df8834c607faf68474a8f776af8c91c93adbc5"
+}

@@ -1,0 +1,186 @@
+[
+  {
+    "command": {
+      "operation": "click",
+      "x": 396,
+      "y": 197,
+      "label": "python-run",
+      "settle_ms": 1000
+    },
+    "time_ns": 1792276922830157400,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\001-python-run.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 1459,
+      "y": 126,
+      "label": "close-python-window",
+      "settle_ms": 600
+    },
+    "time_ns": 1792276965515733500,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\002-close-python-window.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 1311,
+      "y": 450,
+      "label": "open-spell-menu",
+      "settle_ms": 2000
+    },
+    "time_ns": 1792277024204592500,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\003-open-spell-menu.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "observe",
+      "label": "spell-runtime-ready",
+      "settle_ms": 500
+    },
+    "time_ns": 1792277111113198500,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\004-spell-runtime-ready.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 396,
+      "y": 197,
+      "label": "native-menu-run",
+      "settle_ms": 1500
+    },
+    "time_ns": 1792277173102680900,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\005-native-menu-run.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "observe",
+      "label": "native-prompt",
+      "settle_ms": 500
+    },
+    "time_ns": 1792277213668762000,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\006-native-prompt.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 810,
+      "y": 820,
+      "label": "focus-native-answer",
+      "settle_ms": 200
+    },
+    "time_ns": 1792277250581455300,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\007-focus-native-answer.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "type",
+      "text": "0",
+      "label": "native-exit-answer",
+      "settle_ms": 200
+    },
+    "time_ns": 1792277293401720400,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\008-native-exit-answer.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 490,
+      "y": 877,
+      "label": "commit-native-answer",
+      "settle_ms": 1500
+    },
+    "time_ns": 1792277364954348800,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser\\009-commit-native-answer.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  }
+]

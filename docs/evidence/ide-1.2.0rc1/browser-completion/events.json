@@ -1,0 +1,616 @@
+[
+  {
+    "kind": "console",
+    "level": "verbose",
+    "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://www.chromium.org/developers/design-documents/create-amazing-password-forms) %o"
+  },
+  {
+    "kind": "websocket",
+    "url": "ws://127.0.0.1:6088/websockify"
+  },
+  {
+    "kind": "sent",
+    "size": 12,
+    "sha256": "59ac080647b56a2a43715cdf9e630c46a968a87c9d8bec5b3128da31f1bde794"
+  },
+  {
+    "kind": "sent",
+    "size": 1,
+    "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+  },
+  {
+    "kind": "sent",
+    "size": 1,
+    "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+  },
+  {
+    "kind": "sent",
+    "size": 20,
+    "sha256": "a5d24e29fa7fa4438afc3741d21ee178b8770977b08846c5b8da64d02f77192a"
+  },
+  {
+    "kind": "sent",
+    "size": 100,
+    "sha256": "3ba037bb21ab71c3df6b0b34eb3208e4d7273f8a19cd305889c2abf8b78fe44a"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "4615d67d000aed8feab9cb09d20a03f7407432aaef3bb6711eba112a7c0f7735"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "console",
+    "level": "warning",
+    "text": "The resource http://127.0.0.1:6088/app/images/warning.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  },
+  {
+    "kind": "console",
+    "level": "warning",
+    "text": "The resource http://127.0.0.1:6088/app/images/error.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "76f43fb85a953bb40a55429dcaccfa9514663cf204a6ea16700534909b8ae9d0"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "00919708f41624981067def5dda86d87f7461995a5d9f05d6b5a01578e7ec7bb"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "76f43fb85a953bb40a55429dcaccfa9514663cf204a6ea16700534909b8ae9d0"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "console",
+    "level": "warning",
+    "text": "The resource http://127.0.0.1:6088/app/images/warning.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  },
+  {
+    "kind": "console",
+    "level": "warning",
+    "text": "The resource http://127.0.0.1:6088/app/images/error.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "42930c2ad2e17b30a919632a8acaf5b84b2554a72fdc39879242fa9f637bf5a5"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "020bbc985c7c783a241fe09840f4f5b142b81a476f1b7b5986b991f8b3531304"
+  },
+  {
+    "kind": "sent",
+    "size": 6,
+    "sha256": "42930c2ad2e17b30a919632a8acaf5b84b2554a72fdc39879242fa9f637bf5a5"
+  },
+  {
+    "kind": "sent",
+    "size": 10,
+    "sha256": "9eb5024f12807e4c2d9182a95c1bac67093a00f3905023f8c95a8038e42eacbb"
+  }
+]

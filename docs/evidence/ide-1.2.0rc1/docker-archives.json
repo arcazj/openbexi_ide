@@ -1,0 +1,14 @@
+{
+  "openbexi-ide:1.2.0rc1": {
+    "image": "sha256:fe526165b40b9f4e124a11990938a2ad595a8cf18f0443ac7deab846266fa4ac",
+    "artifact": "openbexi-ide-1.2.0rc1-linux-amd64.tar.gz",
+    "sha256": "f8cabe60e19b5250ad0d8491993350aed7b37ef1cb0f965dd340dccd3604c976",
+    "size": 568639156
+  },
+  "openbexi-spell-host:0.3.1-dev3": {
+    "image": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+    "artifact": "openbexi-spell-host-0.3.1-dev3-linux-amd64.tar.gz",
+    "sha256": "6e9b2078655e382204c36b6c8576d3c907f8c4e2228d301024c798b676918f01",
+    "size": 348414936
+  }
+}

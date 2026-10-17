@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "version": "1.2.0rc1",
+  "module_origin": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-2f2522abbd13818c\\runtime\\Lib\\site-packages\\openbexi_ide\\__init__.py",
+  "interpreter": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-2f2522abbd13818c\\runtime\\python.exe",
+  "checks": [
+    "Installed shared breakpoint, cached monitor variables and read-only source copy",
+    "Real 1.6-second evaluation retains explicitly reclaimed 1.2-second controller lease",
+    "Actual variable-edit dialog, Step Into/Out/Over and monitor cache updates",
+    "Fenced two-controller handoff, explicit Continue, input and completed shared output"
+  ],
+  "harness_sha256": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27",
+  "startup_lease_seconds": 30,
+  "stress_lease_seconds": 1.2,
+  "scope": "Installed private interpreter; real Qt/debugpy/HTTP peers offscreen"
+}

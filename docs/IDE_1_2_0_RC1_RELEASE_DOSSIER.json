@@ -1,0 +1,483 @@
+{
+  "schema": 1,
+  "product": "openbexi_ide",
+  "version": "1.2.0rc1",
+  "date": "2026-10-17",
+  "release_accepted": false,
+  "publication": "GitHub prerelease only; stable 1.0 remains latest",
+  "v0_6_status": "paused at user request",
+  "source": {
+    "ide_wheel_and_docker": "e4df8834c607faf68474a8f776af8c91c93adbc5",
+    "windows_bundle": "c7b8e8565ec9b067544a61a4647b12d60f9e69d1",
+    "note": "Source and package version are identical between these commits; the later commit corrects the grouped-example QA path and Compose network configuration.",
+    "companion_plugin": "11d5b3f0c472ea53f262c96552ddfef0ad30642f"
+  },
+  "artifacts": {
+    "ide_wheel": {
+      "path": "dist/1.2.0rc1/openbexi_ide-1.2.0rc1-py3-none-any.whl",
+      "sha256": "60d0f854745d3551fcf78c3a5e17ac42abe082c88e993d412c807bd05677fcae"
+    },
+    "windows_bundle": {
+      "path": "dist/1.2.0rc1/OpenBEXI-IDE-1.2.0rc1-windows-x64.zip",
+      "sha256": "04e8f9552e71c12831733d79bc5af921f4f0820e001f6899ba07a9c29fee87bd"
+    },
+    "docker_image_record": {
+      "path": "docs/evidence/ide-1.2.0rc1/docker-image.json",
+      "sha256": "065ca14ebec62599ec874d62babfa904d6488cd17306b938b4dc9572ec84e4bf"
+    }
+  },
+  "companion_artifacts": {
+    "openbexi-ide-1.2.0rc1-linux-amd64.tar.gz": {
+      "path": "dist/1.2.0rc1/openbexi-ide-1.2.0rc1-linux-amd64.tar.gz",
+      "sha256": "f8cabe60e19b5250ad0d8491993350aed7b37ef1cb0f965dd340dccd3604c976"
+    },
+    "openbexi-spell-0.3.1-workspace.1.zip": {
+      "path": "dist/1.2.0rc1/openbexi-spell-0.3.1-workspace.1.zip",
+      "sha256": "1f1ad591bf86cc14375cc666896d888b794bb165f2e2585244410c69f7ace15e"
+    },
+    "openbexi-spell-host-0.3.1-dev3-linux-amd64.tar.gz": {
+      "path": "dist/1.2.0rc1/openbexi-spell-host-0.3.1-dev3-linux-amd64.tar.gz",
+      "sha256": "6e9b2078655e382204c36b6c8576d3c907f8c4e2228d301024c798b676918f01"
+    },
+    "openbexi_spell_host-0.3.1.dev3-py3-none-any.whl": {
+      "path": "dist/1.2.0rc1/openbexi_spell_host-0.3.1.dev3-py3-none-any.whl",
+      "sha256": "9886dee5f84e4fa0690c059c7670b334faf8ed60133ab52edc78606e4e4c4909"
+    }
+  },
+  "gates": {
+    "windows_tests": {
+      "status": "open: full-run shared-desktop timeout; focused module recheck passed",
+      "format": "junit",
+      "report": {
+        "path": "docs/evidence/ide-1.2.0rc1/windows-tests.xml",
+        "sha256": "949a225a578d8a5b798afb35a84cd2364386c68196c57e012431d6019cb29141"
+      },
+      "counts": {
+        "tests": 199,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 9,
+        "passed": 189
+      },
+      "recheck": {
+        "path": "docs/evidence/ide-1.2.0rc1/windows-shared-recheck.xml",
+        "sha256": "1aa7a9fc35be95ea4a798afb06c5dfd22bf811d8286f7fc21f3f94a55c4391a4"
+      },
+      "recheck_counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 8
+      },
+      "skip_explanation": "8 execution-image opt-in tests and 1 symlink privilege test"
+    },
+    "linux_tests": {
+      "status": "passed",
+      "format": "junit",
+      "report": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-tests-rerun.xml",
+        "sha256": "2f61ceeb9e7009d93540186469318f22ebae8f9d4be061188325093bed29d9fc"
+      },
+      "counts": {
+        "tests": 199,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 9,
+        "passed": 190
+      },
+      "initial_report": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-tests.xml",
+        "sha256": "3cbcc8ecdc547e4041efc5aaa6cf795c609edbfed99632bd178e3b10dbf4b461"
+      },
+      "initial_counts": {
+        "tests": 199,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 9,
+        "passed": 189
+      },
+      "tls_recheck": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-tls-recheck.xml",
+        "sha256": "95479589acc0f650636b7dfd2160fc4ad5ce7b9a7650000e57f4ff0cee91449e"
+      },
+      "skip_explanation": "8 execution-image opt-in tests and 1 Windows-only Job ownership test"
+    },
+    "installed_windows_lifecycle": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/result.json",
+        "sha256": "f2b885a83e90d583033694605258d465d592ec4b23538f54ecde52bb80eaf118"
+      },
+      "scope": "Existing developer Windows host, real 1.0 -> initial RC -> final RC upgrade followed by installed checks and uninstall; not a fresh OS.",
+      "initial_report": {
+        "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/result.json",
+        "sha256": "242942f0553472516b54bcff9b5aa8bfaacfcacdcb9194ab212ee17bf2ec9c10"
+      },
+      "fixture_resume": {
+        "path": "docs/evidence/ide-1.2.0rc1/windows-resume-provenance.json",
+        "sha256": "9c4b2acf6ab5a1b31edba86f2d69d11fe612398febd7ed4586f2d991b4ec1f1a"
+      }
+    },
+    "installed_docker_workflow": {
+      "status": "open: repeatable native Run after Abort launch timeout",
+      "format": "json",
+      "report": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/installed-docker-workflow.json",
+        "sha256": "80fd5a5f9e3766f872cce8b30b374fb3c60e973a464d3cfe9e80e28dabd9653c"
+      },
+      "details": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/native-workspace/result.json",
+        "sha256": "3848ac59b97497b986148e0d00fcc81c7425d0194e75ee1531f3932bc37dfd00"
+      },
+      "initial_attempt": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-initial/native-workspace/result.json",
+        "sha256": "9d86ad2164b8c239d4bffac019ea229d658564faad3e6f4d0fcaa2a95a91e6d4"
+      },
+      "python_workflow": {
+        "path": "docs/evidence/ide-1.2.0rc1/linux-python-final/result.json",
+        "sha256": "5e4a3009fdbef2d7a85e7e7f1a880518e64370016bb61fd0128773fbe4a767e4"
+      },
+      "scope": "Actual installed Qt/X11; native Run and Debug each passed 5 prompts before immediate Stop/rerun failed. Separate Python Run/Debug passed using canonical interpreter path."
+    },
+    "browser_interaction": {
+      "status": "passed",
+      "format": "json",
+      "report": {
+        "path": "docs/evidence/ide-1.2.0rc1/browser-result.json",
+        "sha256": "6a4cd78197d56ed5a546ff61aa06c57b5f884a669628a79b3c84dc037ae82818"
+      }
+    },
+    "fresh_windows_install": {
+      "status": "pending independent fresh Windows x64 environment"
+    }
+  },
+  "additional_checks": {
+    "windows_native_workspace": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/result.json",
+      "sha256": "6295a1c339c0951b8c792267f21ac6d4a1e744ca5ef860f4a5774b798dcf5c9e"
+    },
+    "installed_versions": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-installed.json",
+      "sha256": "389562d4c825eeaaca1e64cec5d0efc29bde69385d7397514e688cd41f309720"
+    },
+    "intellij_investigation": {
+      "path": "docs/evidence/ide-1.2.0rc1/intellij/intellij-menu-investigation.json",
+      "sha256": "f2e7ee1b5992675b38f0b52e6e3f7261e61fc0a560edae74f22a458d90ca06d4"
+    }
+  },
+  "known_issues": [
+    "Linux packaged native backend: immediate Run after Abort timed out in both candidate checks.",
+    "Windows complete suite had a shared-desktop timeout; the affected full module passed separately.",
+    "Reported IntelliJ Failed (1) at prompt was not reproduced; root cause remains unconfirmed.",
+    "Independent fresh Windows OS acceptance has not been performed."
+  ],
+  "evidence_note": "Initial failed reports are retained byte-for-byte. Browser trace ZIPs are in the release evidence archive. Historical development and SPELL conformance reports were not rewritten.",
+  "evidence": {
+    "browser/001-python-run.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser/001-python-run.png",
+      "sha256": "431af558f765ada937e746ce4d96d3251c761e823cd7d4a5a7f5280e02d1ea42"
+    },
+    "browser/006-native-prompt.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser/006-native-prompt.png",
+      "sha256": "0567822c85be96099f7b5a20ccb9b710c735f8126b3aa9a4b8188144002fbce8"
+    },
+    "browser/actions.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser/actions.json",
+      "sha256": "ad52f422b1ebae6158c337bd81b1c5a978a270ec4ae4509f9d52142174e28604"
+    },
+    "browser/browser.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser/browser.json",
+      "sha256": "2bbedc52189ecad013e6f3624c4691fa883f2b1e4c5d80ac6d68e113df434938"
+    },
+    "browser/events.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser/events.json",
+      "sha256": "48703872a8c58c3b4f73f2be05d8da9368b9b93d58bdc28b71d515a9ea04ef89"
+    },
+    "browser-completion/000-connected.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/000-connected.png",
+      "sha256": "b5b21d548aa152edf6b5ae1ed8772427d2f3c6e8cea1cc4d10e385a1e960ab4d"
+    },
+    "browser-completion/001-native-output.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/001-native-output.png",
+      "sha256": "9339739bf6f3089ff6d945ea0f6753987a3613caafbfb166c2326ff72e7c87dd"
+    },
+    "browser-completion/002-close-completed-native-window.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/002-close-completed-native-window.png",
+      "sha256": "0fa36a9259677925ba6a80fa8c4ac80f985cb55dba582bc005e8e272faf29f4c"
+    },
+    "browser-completion/actions.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/actions.json",
+      "sha256": "7bdbb8d46f55a0249962ea1bea60fffc1b2956272687600e55bf90c4a86958e1"
+    },
+    "browser-completion/browser.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/browser.json",
+      "sha256": "2bbedc52189ecad013e6f3624c4691fa883f2b1e4c5d80ac6d68e113df434938"
+    },
+    "browser-completion/events.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-completion/events.json",
+      "sha256": "026c6b400688400cbf3728ef6fe6e5a5c141321c0759f60ef1e44a054f13ab1f"
+    },
+    "browser-result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/browser-result.json",
+      "sha256": "6a4cd78197d56ed5a546ff61aa06c57b5f884a669628a79b3c84dc037ae82818"
+    },
+    "docker-archives.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/docker-archives.json",
+      "sha256": "40398eed461013889c336e458864759215579d4c05b7641cc8446ca6139cd343"
+    },
+    "docker-image.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/docker-image.json",
+      "sha256": "065ca14ebec62599ec874d62babfa904d6488cd17306b938b4dc9572ec84e4bf"
+    },
+    "docker-input.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/docker-input.json",
+      "sha256": "5e2432278279502f3702763721854b6107e9fe0bff3c4e14435136c0c4f47c2f"
+    },
+    "harnesses/candidate.Dockerfile": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/candidate.Dockerfile",
+      "sha256": "87e03c2907d594ee72e2ddcd4918513493fb3758f80eddf759ba9fcefe1f6e48"
+    },
+    "harnesses/check_release.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/check_release.py",
+      "sha256": "dd3d0e78ef33e69bba53147d3e4d1c4798fecdba28b3d23106d257cd38e74985"
+    },
+    "harnesses/distribution_qualify_resume.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/distribution_qualify_resume.py",
+      "sha256": "bef11d24a3577623a7dfab081c2393a6544e5b015e1bc7a266c798bb97be166f"
+    },
+    "harnesses/export_images.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/export_images.py",
+      "sha256": "e19f1c3ecb70598ed65a98c719ad8e2e1023314f8775c6292b01dbb7bfb2f425"
+    },
+    "harnesses/finish_windows_lifecycle.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/finish_windows_lifecycle.py",
+      "sha256": "93404895470f40ff0415a01ad82ba0a8b351e893096d7fe44c762729ad41c33d"
+    },
+    "harnesses/linux_python_workflow.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/linux_python_workflow.py",
+      "sha256": "b6e6d82b82b22c339eeceee83e1c36494720a4d2e6225f7dd8357f49efd7b096"
+    },
+    "harnesses/linux_workflow.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/linux_workflow.py",
+      "sha256": "db311dad9dbdd39c5e3a751bf73b64db9ca0cf7385ba7417c234190662e13a9c"
+    },
+    "harnesses/prepare_docker.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/prepare_docker.py",
+      "sha256": "0049e4873f54f1c6540d341a336b1585764785fb61ecb4ac959974f587983817"
+    },
+    "harnesses/qualify_novnc_browser.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/qualify_novnc_browser.py",
+      "sha256": "91484f1779328a9a29d66b6616ee9defc6a66c0ee44d2135f5803416cb9e3eb5"
+    },
+    "harnesses/qualify_procedure_workspace.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/harnesses/qualify_procedure_workspace.py",
+      "sha256": "deae711de9d5568f720b3e202300d5638a447ebeeaf9225708e15659209fd9c7"
+    },
+    "intellij/intellij-menu-investigation.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/intellij/intellij-menu-investigation.json",
+      "sha256": "f2e7ee1b5992675b38f0b52e6e3f7261e61fc0a560edae74f22a458d90ca06d4"
+    },
+    "intellij/intellij-user-update.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/intellij/intellij-user-update.json",
+      "sha256": "aacf3e4824203fb6447600aef2ab5c643da72cdf7f9235dd863e11a73c3605d5"
+    },
+    "intellij/menu-reproduction.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/intellij/menu-reproduction.json",
+      "sha256": "21c92219a129e214f93100957ff9044e20b3157f3618672d14321987bfceaaba"
+    },
+    "linux-initial/installed-docker-workflow.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-initial/installed-docker-workflow.json",
+      "sha256": "80fd5a5f9e3766f872cce8b30b374fb3c60e973a464d3cfe9e80e28dabd9653c"
+    },
+    "linux-initial/native-workspace/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-initial/native-workspace/result.json",
+      "sha256": "9d86ad2164b8c239d4bffac019ea229d658564faad3e6f4d0fcaa2a95a91e6d4"
+    },
+    "linux-initial/native-workspace.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-initial/native-workspace.log",
+      "sha256": "d228b002ac6a8528d2b33e131bb4becd5529516eb7c76c0fec964d9af880b108"
+    },
+    "linux-native-recheck/installed-docker-workflow.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/installed-docker-workflow.json",
+      "sha256": "80fd5a5f9e3766f872cce8b30b374fb3c60e973a464d3cfe9e80e28dabd9653c"
+    },
+    "linux-native-recheck/native-workspace/failure.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/native-workspace/failure.png",
+      "sha256": "6a9c9106d372645078c7aac5d31b493c0020263e5355d2afdf49528a8b6721e4"
+    },
+    "linux-native-recheck/native-workspace/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/native-workspace/result.json",
+      "sha256": "3848ac59b97497b986148e0d00fcc81c7425d0194e75ee1531f3932bc37dfd00"
+    },
+    "linux-native-recheck/native-workspace.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-native-recheck/native-workspace.log",
+      "sha256": "d228b002ac6a8528d2b33e131bb4becd5529516eb7c76c0fec964d9af880b108"
+    },
+    "linux-python-alias-attempt/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-python-alias-attempt/result.json",
+      "sha256": "e347dc25a9a0ffd6f7731bc26bfa1eb4d3bd906c1d74a1a644e0100748c31934"
+    },
+    "linux-python-final/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-python-final/result.json",
+      "sha256": "5e4a3009fdbef2d7a85e7e7f1a880518e64370016bb61fd0128773fbe4a767e4"
+    },
+    "linux-tests-rerun.xml": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-tests-rerun.xml",
+      "sha256": "2f61ceeb9e7009d93540186469318f22ebae8f9d4be061188325093bed29d9fc"
+    },
+    "linux-tests.xml": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-tests.xml",
+      "sha256": "3cbcc8ecdc547e4041efc5aaa6cf795c609edbfed99632bd178e3b10dbf4b461"
+    },
+    "linux-tls-recheck.xml": {
+      "path": "docs/evidence/ide-1.2.0rc1/linux-tls-recheck.xml",
+      "sha256": "95479589acc0f650636b7dfd2160fc4ad5ce7b9a7650000e57f4ff0cee91449e"
+    },
+    "windows-build.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-build.json",
+      "sha256": "485b01dbfdc2d6384dd34cb125abcf76c5fde01dd89a89bae519da443f6949be"
+    },
+    "windows-desktop-recheck/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-desktop-recheck/result.json",
+      "sha256": "f3e8dbb5c7f413eef962a83a403e00f98e1b1f6a6f4772913b5f67a0ccdb35e0"
+    },
+    "windows-lifecycle/desktop/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/desktop/result.json",
+      "sha256": "5a7d801547487041eefaa2c3d2014dd0ae12820c3f6ab47dfe2e51b482d21af7"
+    },
+    "windows-lifecycle/desktop.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/desktop.log",
+      "sha256": "4aa4380d1aa4e66faf7cb5a93c4a1f59226f7c409f71e70f6089e7b70a05fdc1"
+    },
+    "windows-lifecycle/harnesses/distribution_desktop.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/harnesses/distribution_desktop.py",
+      "sha256": "efc0d75502a0ea448e844e0de6518888e4f6895a09a41d64f6806fc94b2d7e0b"
+    },
+    "windows-lifecycle/harnesses/distribution_menu.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/harnesses/distribution_menu.py",
+      "sha256": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850"
+    },
+    "windows-lifecycle/harnesses/distribution_qualify.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/harnesses/distribution_qualify.py",
+      "sha256": "25795aacd2a3c5b5d3616cb6d975a51634f280b51bd16420f6dfd7f66baa1350"
+    },
+    "windows-lifecycle/harnesses/distribution_shared_debug.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/harnesses/distribution_shared_debug.py",
+      "sha256": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27"
+    },
+    "windows-lifecycle/install-candidate.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/install-candidate.log",
+      "sha256": "1182367ff431dbaef146ae4dcf3ed196c12d141c29791f1109edf82ab194e259"
+    },
+    "windows-lifecycle/install-previous.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/install-previous.log",
+      "sha256": "f5f98e42efe7f0195b07a7fea75dcf275791cbdf70f67e6ee41d0579920686d4"
+    },
+    "windows-lifecycle/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle/result.json",
+      "sha256": "242942f0553472516b54bcff9b5aa8bfaacfcacdcb9194ab212ee17bf2ec9c10"
+    },
+    "windows-lifecycle-final/desktop/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/desktop/result.json",
+      "sha256": "ff8310878883a734c88421df12e3620f94d48b0243db3ddbf07cc0f1906aec20"
+    },
+    "windows-lifecycle-final/desktop.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/desktop.log",
+      "sha256": "ff8310878883a734c88421df12e3620f94d48b0243db3ddbf07cc0f1906aec20"
+    },
+    "windows-lifecycle-final/harnesses/distribution_desktop.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/harnesses/distribution_desktop.py",
+      "sha256": "00e54dd95697b09411c6bf487fcc0e538b0da4c669d02ea7d61b4693650af4f2"
+    },
+    "windows-lifecycle-final/harnesses/distribution_menu.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/harnesses/distribution_menu.py",
+      "sha256": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850"
+    },
+    "windows-lifecycle-final/harnesses/distribution_qualify.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/harnesses/distribution_qualify.py",
+      "sha256": "25795aacd2a3c5b5d3616cb6d975a51634f280b51bd16420f6dfd7f66baa1350"
+    },
+    "windows-lifecycle-final/harnesses/distribution_shared_debug.py": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/harnesses/distribution_shared_debug.py",
+      "sha256": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27"
+    },
+    "windows-lifecycle-final/install-candidate.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/install-candidate.log",
+      "sha256": "77525d76679a807b21701d9276438671a7f365745ac4cef37ea17ad774032c29"
+    },
+    "windows-lifecycle-final/launcher-help.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/launcher-help.log",
+      "sha256": "a3c939aa283236ac2048a7d7fdff259ac631a9b0668c516ef96789894a69aa9b"
+    },
+    "windows-lifecycle-final/menu/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/menu/result.json",
+      "sha256": "5c649b404370e194dc820b1a5e33336cfde86f5584c8c3da3bfe6521f1a18ec8"
+    },
+    "windows-lifecycle-final/menu.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/menu.log",
+      "sha256": "5c649b404370e194dc820b1a5e33336cfde86f5584c8c3da3bfe6521f1a18ec8"
+    },
+    "windows-lifecycle-final/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/result.json",
+      "sha256": "f2b885a83e90d583033694605258d465d592ec4b23538f54ecde52bb80eaf118"
+    },
+    "windows-lifecycle-final/shared-debug/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/shared-debug/result.json",
+      "sha256": "5640286500e963a8f24b8c97b64962e29a8bc0f31544ef597d18f28f1f3bf4e7"
+    },
+    "windows-lifecycle-final/shared-debug.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/shared-debug.log",
+      "sha256": "cdb8d371b90beeefb58259504e0df02719747cc63a9f8441026ebdba8e5c7fb6"
+    },
+    "windows-lifecycle-final/uninstall-active-refused.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/uninstall-active-refused.log",
+      "sha256": "bdf974d852ae4a7dca91d8487767203a24cd13e6206f92f3ea7fef1b979409cf"
+    },
+    "windows-lifecycle-final/uninstall.log": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-lifecycle-final/uninstall.log",
+      "sha256": "3cde9d372100c559a550a746113d9a7a3251cb626edf22fc7eb72ea518dad3a2"
+    },
+    "windows-native-installed.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-installed.json",
+      "sha256": "389562d4c825eeaaca1e64cec5d0efc29bde69385d7397514e688cd41f309720"
+    },
+    "windows-native-workspace/debug-prompt-dark.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/debug-prompt-dark.png",
+      "sha256": "64ed13e53a3692a1324d3496ff5040a34f5f83d8a0b7baae712b19f929a6d6bb"
+    },
+    "windows-native-workspace/debug-results.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/debug-results.png",
+      "sha256": "e404da08442bdec23da8c9da2e9e6dc1c027c7ee1496a18abfb6c82eefef4f32"
+    },
+    "windows-native-workspace/result.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/result.json",
+      "sha256": "6295a1c339c0951b8c792267f21ac6d4a1e744ca5ef860f4a5774b798dcf5c9e"
+    },
+    "windows-native-workspace/run-prompt.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/run-prompt.png",
+      "sha256": "50d3d8c66550ac35d1b0d81b7a145d56627bceeaa12bfc3bfbaba9dbd00d99b3"
+    },
+    "windows-native-workspace/run-results.png": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-native-workspace/run-results.png",
+      "sha256": "e8dd28c6ed745873cbea41878b4f1f24d134188a4eea6d3602519f88bb230a56"
+    },
+    "windows-package.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-package.json",
+      "sha256": "f088b709459850761ee582e9e120eb7e8722e336f4de46666a2eb173ed416015"
+    },
+    "windows-resume-provenance.json": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-resume-provenance.json",
+      "sha256": "9c4b2acf6ab5a1b31edba86f2d69d11fe612398febd7ed4586f2d991b4ec1f1a"
+    },
+    "windows-shared-recheck.xml": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-shared-recheck.xml",
+      "sha256": "1aa7a9fc35be95ea4a798afb06c5dfd22bf811d8286f7fc21f3f94a55c4391a4"
+    },
+    "windows-tests.xml": {
+      "path": "docs/evidence/ide-1.2.0rc1/windows-tests.xml",
+      "sha256": "949a225a578d8a5b798afb35a84cd2364386c68196c57e012431d6019cb29141"
+    }
+  }
+}

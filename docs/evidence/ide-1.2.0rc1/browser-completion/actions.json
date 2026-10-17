@@ -1,0 +1,50 @@
+[
+  {
+    "command": {
+      "operation": "click",
+      "x": 644,
+      "y": 584,
+      "label": "native-output",
+      "settle_ms": 500
+    },
+    "time_ns": 1792277644552232800,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser-completion\\001-native-output.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "click",
+      "x": 1458,
+      "y": 127,
+      "label": "close-completed-native-window",
+      "settle_ms": 500
+    },
+    "time_ns": 1792277658736244700,
+    "observation": {
+      "screenshot": "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\browser-completion\\002-close-completed-native-window.png",
+      "canvas": {
+        "x": 30,
+        "y": 40,
+        "width": 1600,
+        "height": 1000
+      },
+      "title": "1e160b7ccd83:0 - noVNC",
+      "text": "no\nVNC"
+    }
+  },
+  {
+    "command": {
+      "operation": "close"
+    },
+    "time_ns": 1792277669535275900
+  }
+]

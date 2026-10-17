@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-17",
+  "reported_session": "Debug spell_menu.py, started 2026-10-17 18:13:01 EDT, Failed (1)",
+  "reported_failure_reproduced": false,
+  "original_cause": "Unconfirmed: retained workspace output ends at the first prompt without an error diagnostic; original Debug tab was already closed.",
+  "source_changes": false,
+  "host_version": "0.3.1.dev3",
+  "image": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+  "checks": [
+    {
+      "mode": "Installed host DAP, debug",
+      "program": "examples/test_spell/spell_menu.py",
+      "answers": ["0"],
+      "native_exit_code": 0,
+      "host_exit_code": 0,
+      "transcript": "menu-reproduction.json",
+      "run": "6b5e3297a50b4732b06961f93425b091"
+    },
+    {
+      "mode": "User IntelliJ, SPELL Debug toolbar",
+      "started_local": "2026-10-17 18:21:27 EDT",
+      "answers_via_embedded_panel": ["1", "0"],
+      "observed_status": "Finished (0)",
+      "output": "SPELL_MENU_COMPLETE checks=1 failures=0",
+      "demonstration": "PY PASS",
+      "run": "ab49c05a063f41498d6bd63802ad9d8b"
+    },
+    {
+      "mode": "User IntelliJ, SPELL Run toolbar",
+      "started_local": "2026-10-17 18:23:13 EDT",
+      "answers_via_embedded_panel": ["0"],
+      "observed_status": "Finished (0)",
+      "output": "SPELL_MENU_COMPLETE checks=0 failures=0",
+      "run": "62305bc7b7364827ab50074fb203c637"
+    }
+  ],
+  "v0_6": "paused"
+}

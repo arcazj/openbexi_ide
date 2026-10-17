@@ -1,0 +1,26 @@
+{
+  "version": "1.2.0rc1",
+  "passed": true,
+  "image": "sha256:fe526165b40b9f4e124a11990938a2ad595a8cf18f0443ac7deab846266fa4ac",
+  "scope": "Bounded real Edge/noVNC smoke, not the older broad 1.0 browser acceptance suite",
+  "checks": [
+    "Python Run produced Hello and exit 0",
+    "Python window closed to launcher",
+    "Native SPELL menu opened from launcher",
+    "Code/results table, highlighted current line and history visible",
+    "Embedded Choose 0-18 prompt answered 0 using browser keyboard and Commit",
+    "Finished (0), answer 0 and SPELL_MENU_COMPLETE checks=0 failures=0 observed",
+    "Completed native window closed to launcher"
+  ],
+  "sessions": [
+    {
+      "directory": "browser",
+      "trace_sha256": "f5b8e2c1ee230f432f737252c7e53c796c3cb06aa4acd428c54b27a67fee7dab"
+    },
+    {
+      "directory": "browser-completion",
+      "trace_sha256": "e4c1fdac211941e4c7a1d4ac20a08fe9792c321fa09ceef050c2556d05441edc"
+    }
+  ],
+  "harness_note": "First session ended on a malformed observation command after Commit; finally retained its trace. A new browser session captured exit 0, output and window close and ended normally."
+}

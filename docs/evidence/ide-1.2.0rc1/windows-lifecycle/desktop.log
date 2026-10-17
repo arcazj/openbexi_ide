@@ -1,0 +1,26 @@
+{
+  "passed": false,
+  "version": "1.2.0rc1",
+  "python": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-ce1d11afc0862a96\\runtime\\python.exe",
+  "prefix": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-ce1d11afc0862a96\\runtime",
+  "origin": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\installation with spaces\\versions\\1.2.0rc1-ce1d11afc0862a96\\runtime\\Lib\\site-packages\\openbexi_ide\\app.py",
+  "script_sha256": "efc0d75502a0ea448e844e0de6518888e4f6895a09a41d64f6806fc94b2d7e0b",
+  "checks": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue",
+    "Installed Ctrl+Space insertion, F12 unsaved definition and read-only symbol navigation"
+  ],
+  "scope": "Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence",
+  "examples": {
+    "hello.py": "21ef69c983ecc2a55e81a7f2cf4d1b0aa045910c13f9e5d2054141c749aaaf9d"
+  },
+  "error": "Traceback (most recent call last):\n  File \"C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1\\windows-lifecycle\\harnesses\\distribution_desktop.py\", line 127, in main\n    assert result.returncode == 0 and '15 chapters passed' in result.stdout and result.stdout.count('  PASS') == 15\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}
+Traceback (most recent call last):
+  File "C:\projects\openbexi_ide\.qualification\ide-1.2.0rc1\windows-lifecycle\harnesses\distribution_desktop.py", line 167, in <module>
+    main()
+    ~~~~^^
+  File "C:\projects\openbexi_ide\.qualification\ide-1.2.0rc1\windows-lifecycle\harnesses\distribution_desktop.py", line 127, in main
+    assert result.returncode == 0 and '15 chapters passed' in result.stdout and result.stdout.count('  PASS') == 15
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,37 @@
+{
+  "version": "1.2.0rc1",
+  "image": "sha256:fe526165b40b9f4e124a11990938a2ad595a8cf18f0443ac7deab846266fa4ac",
+  "architecture": "amd64",
+  "os": "linux",
+  "created": "2026-10-17T22:31:57.2490849Z",
+  "user": "10003:10003",
+  "labels": {
+    "com.docker.compose.project": "openbexi-ide",
+    "com.docker.compose.service": "ide",
+    "com.docker.compose.version": "5.5.1",
+    "org.openbexi.scope": "Python desktop and bounded DSS Development/Monitoring test fixture",
+    "org.opencontainers.image.source": "https://github.com/arcazj/openbexi_ide",
+    "org.opencontainers.image.title": "OpenBEXI IDE test desktop",
+    "org.opencontainers.image.version": "1.2.0rc1"
+  },
+  "build_input": {
+    "base_image": "sha256:6c71e0e74b1be154cadded7877a5181272f06190e559d5a5d194a596869d9ddd",
+    "base_alias": "openbexi-ide:1.2.0rc1-build-input",
+    "source_commit": "e4df8834c607faf68474a8f776af8c91c93adbc5"
+  },
+  "archives": {
+    "openbexi-ide:1.2.0rc1": {
+      "image": "sha256:fe526165b40b9f4e124a11990938a2ad595a8cf18f0443ac7deab846266fa4ac",
+      "artifact": "openbexi-ide-1.2.0rc1-linux-amd64.tar.gz",
+      "sha256": "f8cabe60e19b5250ad0d8491993350aed7b37ef1cb0f965dd340dccd3604c976",
+      "size": 568639156
+    },
+    "openbexi-spell-host:0.3.1-dev3": {
+      "image": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+      "artifact": "openbexi-spell-host-0.3.1-dev3-linux-amd64.tar.gz",
+      "sha256": "6e9b2078655e382204c36b6c8576d3c907f8c4e2228d301024c798b676918f01",
+      "size": 348414936
+    }
+  },
+  "native_scope": "Packaged local Linux backend; the separate Windows/IntelliJ host image is unchanged."
+}
