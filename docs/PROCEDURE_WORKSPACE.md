@@ -1,9 +1,13 @@
 # Procedure execution workspace
 
-This local Development update follows the SPELL GUI User Manual 2.4.4 procedure
+This Development workspace follows the SPELL GUI User Manual 2.4.4 procedure
 presentation: sections 3.2.1 (tabular view), 3.2.6 (prompt inputs) and 5.4
-(procedure input). IDE package version is `1.2.0.dev1`; the companion native host
+(procedure input). IDE release candidate version is `1.2.0rc1`; the companion native host
 package is `0.3.1.dev3`. SPELL v0.6 remains paused at the user's request.
+
+The [release notes](IDE_1_2_0_RC1_RELEASE.md) describe the candidate artifacts.
+The development qualification below remains bound to its original `1.2.0.dev1`
+build; the release candidate has a separate dossier and retained checks.
 
 ## Using the desktop
 

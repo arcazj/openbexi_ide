@@ -1,0 +1,29 @@
+name: openbexi-ide-1-2-rc1
+
+services:
+  ide:
+    image: openbexi-ide:1.2.0rc1
+    pull_policy: never
+    platform: linux/amd64
+    init: true
+    ports:
+      - "127.0.0.1:${OPENBEXI_RC1_PORT:-6088}:6080"
+    shm_size: 256m
+    mem_limit: 3g
+    pids_limit: 512
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - workspace:/workspace
+      - preferences:/home/tester
+    healthcheck:
+      test: ["CMD", "python", "-I", "/opt/test-lab/health.py"]
+      interval: 5s
+      timeout: 5s
+      start_period: 45s
+      retries: 12
+    stop_grace_period: 20s
+
+volumes:
+  workspace:
+  preferences:

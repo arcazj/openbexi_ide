@@ -2,6 +2,7 @@
 .qualification/
 .session/
 .openbexi/editor/
+.openbexi/runs/
 examples/test_spell/spell_menu_results.json
 var/
 build/

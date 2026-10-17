@@ -2,6 +2,7 @@ param(
     [Parameter(Mandatory=$true)][string]$Archive,
     [Parameter(Mandatory=$true)][string]$ExpectedSha256,
     [Parameter(Mandatory=$true)][switch]$FreshWindows,
+    [string]$ExpectedVersion='1.0.0',
     [string]$Output=(Join-Path $env:TEMP ('openbexi-fresh-' + [Guid]::NewGuid().ToString('N').Substring(0,8)))
 )
 $ErrorActionPreference='Stop'
@@ -28,7 +29,7 @@ $tar=Join-Path $env:SYSTEMROOT 'System32\tar.exe'
 & $tar -xf $archivePath -C $bundle
 if ($LASTEXITCODE -ne 0) { throw 'Release extraction failed.' }
 $manifest=Get-Content -LiteralPath (Join-Path $bundle 'package.json') -Raw | ConvertFrom-Json
-if ($manifest.version -ne '1.0.0') { throw 'Expected final IDE 1.0.0 artifact.' }
+if ($manifest.version -ne $ExpectedVersion) { throw ('Expected IDE '+$ExpectedVersion+' artifact.') }
 foreach ($entry in $manifest.files.PSObject.Properties) {
     $file=Join-Path (Join-Path $bundle 'payload') $entry.Name
     if ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant() -ne $entry.Value) {
@@ -42,10 +43,10 @@ $lifecycle=Join-Path $root 'installed-workflow'
 & $python -I -B (Join-Path $source 'scripts\distribution_qualify.py') --bundle $bundle --output $lifecycle --shared-debug --console-menu
 if ($LASTEXITCODE -ne 0) { throw 'Fresh installed workflow failed; retained logs are in the output directory.' }
 $result=Get-Content -LiteralPath (Join-Path $lifecycle 'result.json') -Raw | ConvertFrom-Json
-if (-not $result.passed -or $result.version -ne '1.0.0') { throw 'Installed report failed or used a different version.' }
+if (-not $result.passed -or $result.version -ne $ExpectedVersion) { throw 'Installed report failed or used a different version.' }
 $os=Get-CimInstance Win32_OperatingSystem
 $report=@{
-    passed=$true; version='1.0.0'; scope='Fresh Windows x64 installation, bundled runtime, Run/Debug, console menu, shared debugger and removal'
+    passed=$true; version=$ExpectedVersion; scope='Fresh Windows x64 installation, bundled runtime, Run/Debug, console menu, shared debugger and removal'
     fresh_environment_operator_attested=$true; machine_identity_sha256=$machineHash
     windows_caption=$os.Caption; windows_version=$os.Version; windows_install_date=$os.InstallDate.ToString('o')
     artifact_sha256=$ExpectedSha256.ToLowerInvariant(); payload_files_verified=@($manifest.files.PSObject.Properties).Count
