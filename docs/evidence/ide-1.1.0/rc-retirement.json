@@ -1,0 +1,29 @@
+﻿{
+    "version":  "1.1.0",
+    "previous":  "1.2.0rc1",
+    "preserved_volumes":  [
+                              "openbexi-ide-1-2-rc1_workspace",
+                              "openbexi-ide-1-2-rc1_preferences"
+                          ],
+    "shared_cache":  [
+                         {
+                             "path":  "F:\\openbexi-builds\\ide-v1.1\\shared-build-cache\\cache",
+                             "verified_files":  1
+                         },
+                         {
+                             "path":  "F:\\openbexi-builds\\ide-v1.1\\shared-build-cache\\dependencies",
+                             "verified_files":  4
+                         }
+                     ],
+    "removed_paths":  [
+                          "C:\\projects\\openbexi_ide\\dist\\1.2.0rc1",
+                          "C:\\projects\\openbexi_ide\\.qualification\\ide-1.2.0rc1"
+                      ],
+    "removed_image_tags":  [
+                               "openbexi-ide:1.2.0rc1",
+                               "openbexi-ide:1.1-build-base-fe526165"
+                           ],
+    "source_history_preserved":  true,
+    "accepted_historical_evidence_preserved":  true,
+    "completed_at":  "2026-10-18T03:25:27.0623646Z"
+}

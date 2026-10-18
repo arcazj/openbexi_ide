@@ -106,10 +106,18 @@ Actual captured previews: [desktop prompt](evidence/ide-1.1.0/windows-native/run
    The launcher compares the service implementation fingerprint. It replaces an
    idle older service while preserving history, and refuses replacement while any
    native instance is live. The native update qualification tests both paths.
-3. Once stable 1.1.0 is published and migration passes, retire the old GitHub
-   release/tag/assets and only the exclusively owned local RC builds, caches,
-   image and containers. Preserve source history, accepted evidence, projects,
-   preferences, records and shared dependencies. No global Docker/cache prune.
-4. The migration and qualification conditions have passed. Publication and actual
-   retirement are recorded separately; source history, user data and accepted
-   historical evidence are preserved.
+3. Stable [1.1.0 is published](https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.0)
+   with 16 verified assets. Both repositories' main branches contain the qualified
+   changes. The release tag identifies IDE commit `8ec46d4`; the companion source
+   archive identifies `6a00c5c`.
+4. The old RC release, tag and 15 assets are removed. Local `dist/1.2.0rc1` and
+   `.qualification/ide-1.2.0rc1`, the dedicated RC container, its image and its
+   temporary base-image alias are removed. Shared Python/dependency caches were
+   copied to `F:\openbexi-builds\ide-v1.1\shared-build-cache` and hash-verified.
+   Source history, accepted historical evidence and both RC user-data volumes
+   remain preserved. No global Docker/cache prune was performed.
+
+Post-publication receipts: [release](evidence/ide-1.1.0/published-release.json),
+[GitHub retirement](evidence/ide-1.1.0/rc-remote-retirement.json), and
+[local retirement](evidence/ide-1.1.0/rc-retirement.json). The new Docker desktop
+is healthy at <http://127.0.0.1:6091/vnc.html?autoconnect=1&resize=remote>.

@@ -91,5 +91,19 @@
     "docs/evidence/ide-1.1.0/fresh-windows/installed-workflow/menu/result.json": "05ecb2a6c07cbd288e1a32d6f6dbc6bf345caba455a606962d45508f66090016",
     "docs/evidence/ide-1.1.0/fresh-windows/installed-workflow/shared-debug/result.json": "6fff659103b8cc5d1103bd52b81d8f4d0b3ebd527e466f92e5099e127bbc41c6",
     "docs/evidence/ide-1.1.0/compose-smoke.json": "94fbf574609db70befe1512769baf1d93a339d694a53ee90a66dc94b73ae3240"
+  },
+  "post_publication": {
+    "published-release.json": {
+      "path": "docs/evidence/ide-1.1.0/published-release.json",
+      "sha256": "036469fcce4d614dbacfef48c906f5cb6205a03bb7ab4b4830d0d1f685fb1633"
+    },
+    "rc-remote-retirement.json": {
+      "path": "docs/evidence/ide-1.1.0/rc-remote-retirement.json",
+      "sha256": "84f3c50f9a5f5113f2a10dfd532290095da0bb238ba0470418b17b14a8181b00"
+    },
+    "rc-retirement.json": {
+      "path": "docs/evidence/ide-1.1.0/rc-retirement.json",
+      "sha256": "538eb8fc78ffaf7db0adf91a0f3cf8baafb1bb37ed3b2d8996c7123a11527f35"
+    }
   }
 }

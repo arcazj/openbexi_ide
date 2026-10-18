@@ -1,0 +1,24 @@
+{
+  "retired_release_id": 416118656,
+  "retired_tag": "v1.2.0rc1",
+  "asset_names": [
+    "compose.rc1.yaml",
+    "IDE_1_2_0_RC1_RELEASE.md",
+    "IDE_1_2_0_RC1_RELEASE_DOSSIER.json",
+    "openbexi-ide-1.2.0rc1-evidence.zip",
+    "openbexi-ide-1.2.0rc1-linux-amd64.tar.gz",
+    "openbexi-ide-1.2.0rc1-source.tar.gz",
+    "OpenBEXI-IDE-1.2.0rc1-windows-x64.zip",
+    "openbexi-spell-0.3.1-workspace.1.zip",
+    "openbexi-spell-host-0.3.1-dev3-linux-amd64.tar.gz",
+    "openbexi-spell-workspace-source-11d5b3f.tar.gz",
+    "openbexi_ide-1.2.0rc1-py3-none-any.whl",
+    "openbexi_spell_host-0.3.1.dev3-py3-none-any.whl",
+    "qualify_fresh_windows.ps1",
+    "release-check.json",
+    "SHA256SUMS.txt"
+  ],
+  "replacement": "https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.0",
+  "source_history_preserved": true,
+  "release_and_tag_removed": true
+}

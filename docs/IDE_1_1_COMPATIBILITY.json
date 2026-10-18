@@ -2,7 +2,7 @@
   "schema": 1,
   "product": "openbexi_ide",
   "version": "1.1.0",
-  "status": "release-qualified",
+  "status": "published",
   "base": {"tag": "v1.2.0rc1", "commit": "66dfffa5e8abbd048b9db38cbd6ecbefa998c93f"},
   "python": "3.13.15",
   "qt": "6.10.3",
@@ -15,5 +15,5 @@
   "running_limit": 1,
   "live_instance_limits": {"container": 8, "packaged_desktop": 1},
   "spell_v0_6": "paused",
-  "retirement": "Only after stable publication and successful migration; preserve source history and accepted evidence"
+  "retirement": "RC release/tag/assets, local RC output folders and dedicated image/container removed after publication; source history, user data, shared dependencies and accepted evidence preserved"
 }

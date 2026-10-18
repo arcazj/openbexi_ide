@@ -1,5 +1,11 @@
 # OpenBEXI IDE 1.2.0rc1
 
+> Retired after [1.1.0](https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.0)
+> publication and successful migration. The RC release, tag, downloadable assets,
+> local builds and dedicated Docker image/container have been removed. This
+> historical record and its accepted evidence are retained; use
+> [the 1.1 release notes](IDE_1_1_RELEASE.md) for current installation instructions.
+
 This prerelease adds the procedure workspace inspired by the SPELL GUI User
 Manual: a code/results table, current-line highlighting, per-session procedure
 history and embedded prompts with Commit, Reset and Abort controls. Native
