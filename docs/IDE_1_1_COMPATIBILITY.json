@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "product": "openbexi_ide",
+  "version": "1.1.0",
+  "status": "unpublished-candidate",
+  "base": {"tag": "v1.2.0rc1", "commit": "66dfffa5e8abbd048b9db38cbd6ecbefa998c93f"},
+  "python": "3.13.15",
+  "qt": "6.10.3",
+  "native_host": "0.3.1.dev3",
+  "native_image": "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79",
+  "jetbrains_plugin": "0.3.1-workspace.2",
+  "jetbrains_builds": ["261.24374.152", "262.10968.63"],
+  "workspace_protocol": 1,
+  "as_run_schema": "openbexi.as-run/1",
+  "running_limit": 1,
+  "live_instance_limits": {"container": 8, "packaged_desktop": 1},
+  "spell_v0_6": "paused",
+  "retirement": "Only after stable publication and successful migration; preserve source history and accepted evidence"
+}

@@ -115,3 +115,25 @@ def test_run_uses_backend_workspace_without_changing_python_launch(app, tmp_path
     view.run_script()
     assert calls[-1] == 'python'
     view.close()
+
+
+def test_spell_layout_hides_python_panels_and_restores_previous_layout(app, tmp_path, monkeypatch):
+    from openbexi_ide.app import MainWindow
+    monkeypatch.setattr(MainWindow, 'discover_backends', lambda self: None)
+    view = MainWindow(tmp_path, QSettings(str(tmp_path / 'prefs.ini'), QSettings.IniFormat))
+    view.backend_choices = [dict(id='spell', label='SPELL', procedureWorkspace=True, sourceModules=['spell'])]
+    view.populate_backends(); view.show(); app.processEvents()
+    script = tmp_path / 'main.py'; script.write_text('import spell\n')
+    view.open_file(script)
+    assert view.editor_panel.isHidden() and not view.output_tabs.isTabVisible(0)
+    assert not view.output_tabs.isTabVisible(1)
+    view.procedure_workspace.begin(LaunchSpec(tmp_path, script, language='spell'), 'Run')
+    assert view.project_panel.isHidden()
+    assert view.output_tabs.currentWidget() is view.procedure_workspace
+    view.report_error('Native validation error')
+    assert view.output_tabs.currentWidget() is view.procedure_workspace
+    view.procedure_workspace.finish(0)
+    view.language.setCurrentIndex(view.language.findData('python')); app.processEvents()
+    assert not view.editor_panel.isHidden() and not view.project_panel.isHidden()
+    assert view.output_tabs.isTabVisible(0) and view.output_tabs.isTabVisible(1)
+    view.close()

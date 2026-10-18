@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import time
+import sys
 
 from PySide6.QtCore import QObject, QProcess, QThreadPool, QTimer, Signal
 from openbexi_runtime.dap import MessageReader, ProtocolError, encode_message
@@ -23,6 +24,7 @@ class DebugController(QObject):
     breakpoints_verified = Signal(object)
     input_requested = Signal(object)
     procedure_event = Signal(object)
+    procedure_state = Signal(object)
     prompt_answered = Signal(str, str)
 
     def __init__(self, parent=None):
@@ -64,6 +66,7 @@ class DebugController(QObject):
             raise RuntimeError("Stop the current debugger before starting another")
         self.spec = spec.validate()
         self.no_debug = no_debug
+        self.detaching = False
         self.backend = None
         self.prompt_id = self.answer_pending = None
         self.answer_requests = {}
@@ -81,7 +84,7 @@ class DebugController(QObject):
         self.reverse_request = None
         self.pump.reset()
         self.state_changed.emit(True)
-        self.probe = ProbeTask(self.epoch, self.spec.interpreter, debugger=True, language=self.spec.language)
+        self.probe = ProbeTask(self.epoch, self.spec.interpreter, debugger=True, language=self.spec.language, project=self.spec.project)
         self.probe.signals.done.connect(self.probe_finished)
         QThreadPool.globalInstance().start(self.probe)
 
@@ -93,12 +96,18 @@ class DebugController(QObject):
             self.fail(error); return
         self.interpreter_checked.emit(info)
         self.backend = info.get('backend')
+        self.service_backed = bool(info.get('procedureService'))
         self.adapter.setWorkingDirectory(str(self.spec.project))
         self.adapter.setProcessEnvironment(process_environment())
         self.timer.start()
         module = self.backend['debugAdapter'] if self.backend else 'debugpy.adapter'
         args = ['--project', str(self.spec.project)] if self.backend else []
-        self.adapter.start(str(self.spec.interpreter), ["-I", "-B", "-X", "utf8", "-m", module, *args])
+        executable = self.spec.interpreter
+        if info.get('procedureService'):
+            module = 'openbexi_runtime.procedure_bridge'
+            executable = console_interpreter(sys.executable)
+            args += ['--endpoint', info['procedureService'], '--interpreter', str(self.spec.interpreter)]
+        self.adapter.start(str(executable), ["-I", "-B", "-X", "utf8", "-m", module, *args])
 
     def adapter_started(self):
         self.request("initialize", {"clientID": "openbexi-python", "adapterID": self.spec.language,
@@ -180,6 +189,9 @@ class DebugController(QObject):
                 self.reply(message, False, message="This reverse request is not supported")
         else:
             event, body = message.get("event"), message.get("body", {})
+            if event in {'openbexi/service', 'openbexi/workspace'}:
+                self.procedure_state.emit(dict(body, event=event))
+                return
             if event == 'openbexi/procedure' and self.backend:
                 if body.get('kind') == 'promptClosed' and body.get('promptId') == self.prompt_id:
                     self.prompt_id = None
@@ -213,7 +225,7 @@ class DebugController(QObject):
                 self.terminated = self.stopping = True
                 self.request("disconnect", {"terminateDebuggee": True})
                 epoch = self.epoch
-                grace = self.backend['gracefulStopMilliseconds'] if self.backend else 150
+                grace = 60000 if getattr(self, 'service_backed', False) else self.backend['gracefulStopMilliseconds'] if self.backend else 150
                 QTimer.singleShot(grace, lambda: self.force_end(epoch))
 
     def configure(self):
@@ -310,7 +322,9 @@ class DebugController(QObject):
     def check_timeouts(self):
         now = time.monotonic()
         for sequence, (command, _callback, started) in list(self.pending.items()):
-            if now - started > (30 if command == "launch" else 10):
+            timeout = ((120 if getattr(self, 'service_backed', False) else 30) if command == 'launch'
+                       else 60 if command == 'disconnect' and getattr(self, 'service_backed', False) else 10)
+            if now - started > timeout:
                 self.pending.pop(sequence, None)
                 if sequence in self.answer_requests:
                     identifier = self.answer_requests.pop(sequence)
@@ -357,8 +371,18 @@ class DebugController(QObject):
             self.maybe_finish(); return
         self.request("disconnect", {"terminateDebuggee": True})
         epoch = self.epoch
-        grace = self.backend['gracefulStopMilliseconds'] if getattr(self, 'backend', None) else 250
+        grace = 60000 if getattr(self, 'service_backed', False) else self.backend['gracefulStopMilliseconds'] if getattr(self, 'backend', None) else 250
         QTimer.singleShot(grace, lambda: self.force_end(epoch))
+
+    def detach(self):
+        """Leave a server-owned instance; loss of its lease requests a pause."""
+        if self.active and getattr(self, 'service_backed', False):
+            self.detaching = self.stopping = True
+            self.adapter.closeWriteChannel()
+            epoch = self.epoch
+            QTimer.singleShot(10000, lambda: self.force_end(epoch))
+        else:
+            self.stop()
 
     def force_end(self, epoch):
         if epoch != self.epoch or not self.active:

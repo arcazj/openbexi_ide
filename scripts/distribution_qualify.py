@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--bundle', type=Path, required=True)
     parser.add_argument('--previous-bundle', type=Path)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--installation', type=Path, help='New private installation directory, optionally on a faster drive')
     parser.add_argument('--spell-host-wheel', type=Path)
     parser.add_argument('--spell-harness', type=Path)
     parser.add_argument('--spell-image')
@@ -47,7 +48,9 @@ def main():
         names.append('distribution_menu.py')
     for name in names:
         (harnesses/name).write_bytes((ROOT/'scripts'/name).read_bytes())
-    installation = evidence / 'installation with spaces'
+    installation = args.installation.resolve() if args.installation else evidence / 'installation with spaces'
+    if installation.exists():
+        raise ValueError('The private installation directory must not already exist')
     shortcuts = evidence / 'private Start menu'
     project = evidence / 'user project'
     project.mkdir()

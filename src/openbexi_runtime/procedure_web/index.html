@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenBEXI · SPELL execution</title><link rel="stylesheet" href="/app.css"></head>
+<body>
+<header><strong>OpenBEXI <span>SPELL execution</span></strong><span id="connection" role="status">Disconnected</span><button id="disconnect">Disconnect</button></header>
+<main>
+<form id="login"><h1>Connect to a procedure workspace</h1><p>Use an operator or monitor credential from your local OpenBEXI workspace.</p>
+<label>Connection name <input name="name" value="Browser" required maxlength="80"></label>
+<label>Workspace credential <input name="key" type="password" autocomplete="off" required></label><button>Connect</button></form>
+<section id="workspace" hidden>
+<nav id="history" aria-label="Procedure instances and history"></nav>
+<details id="launcher" open><summary>Open a procedure</summary><form id="run-form">
+<label>Procedure <select id="files" required></select></label>
+<label>Python interpreter <input id="interpreter" placeholder="Server interpreter"></label>
+<label><input id="debug" type="checkbox"> Debug (pause on entry)</label><button id="run">Run procedure</button></form></details>
+<section class="heading"><div><h1 id="title">Choose a procedure</h1><span id="step"></span></div><div><span id="role" class="badge">MON</span> <span id="state" class="badge">Ready</span></div></section>
+<div class="controls" aria-label="Execution controls">
+<button id="claim">Take control</button><button id="release">Release control</button><button id="export">Export As-Run</button>
+<button data-command="continue">Run / Continue</button><button data-command="pause">Pause</button>
+<button data-command="stepIn">Step</button><button data-command="next">Step over</button>
+<button data-command="disconnect" class="danger">Abort</button><span id="pending" role="status"></span>
+</div>
+<div class="presentation"><label>Procedure source <select id="sources"></select></label><label><input id="follow" type="checkbox" checked> Follow current line</label><button id="refresh">Refresh</button></div>
+<div id="code-scroll"><table id="code"><thead><tr><th>Line</th><th>Procedure code</th><th>Native date &amp; time</th><th>Item</th><th>Value</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+<form id="prompt" hidden><h2 id="question"></h2><div id="answers"></div><p id="hint"></p><button id="commit">Commit</button><button type="reset" id="reset">Reset</button><button type="button" id="abort-prompt" class="danger">Abort procedure</button><span id="prompt-message" role="status"></span></form>
+<details><summary>Output</summary><pre id="output"></pre></details>
+<details><summary>Runtime capabilities</summary><p id="capabilities"></p></details>
+</section><p id="error" role="alert"></p>
+</main>
+<dialog id="information"><h2 id="information-title">Item information</h2><label>Display <select id="information-mode"><option>Latest information</option><option>History</option><option>Full</option></select></label><p id="information-count"></p>
+<div class="information-scroll"><table id="information-table"></table><pre id="information-raw" hidden></pre></div><button id="information-more">Load more</button><button id="information-close">Close</button></dialog>
+<script src="/app.js"></script></body></html>

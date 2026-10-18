@@ -2,6 +2,7 @@
 import argparse
 from contextlib import nullcontext
 import hashlib
+from importlib.metadata import version
 import json
 import os
 from pathlib import Path
@@ -23,7 +24,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     app = QApplication.instance() or QApplication([])
     configure_fonts(app)
-    report = {'passed': False, 'cases': [], 'platform': sys.platform, 'requested_image': os.environ.get('OPENBEXI_SPELL_IMAGE', 'backend default')}
+    report = {'passed': False, 'version': version('openbexi-ide'), 'cases': [], 'platform': sys.platform, 'requested_image': os.environ.get('OPENBEXI_SPELL_IMAGE', 'backend default')}
     view = None
     def wait(predicate, timeout=90):
         deadline = time.monotonic() + timeout
@@ -89,9 +90,12 @@ Display('PROCEDURE_WORKSPACE_PASS')
                     else:
                         workspace.answer_field.setText(answer)
                     QTest.mouseClick(workspace.commit, Qt.LeftButton)
-                    assert run.answering or run.prompt is None
+                    assert run.answering or run.prompt is None or run.prompt['promptId'] != seen[-1], dict(
+                        error=run.error, prompt=run.prompt, controlling=getattr(run, 'controlling', None),
+                        input_pending=view.debug_controller.input_pending, prompt_id=view.debug_controller.prompt_id,
+                        commit_enabled=workspace.commit.isEnabled())
                 wait(lambda: not view.is_busy())
-                assert run.status == 'Finished (0)', (run.status, view.console.toPlainText())
+                assert run.status in {'Finished (0)', 'FINISHED'}, (run.status, view.console.toPlainText())
                 assert 'PROCEDURE_WORKSPACE_PASS' in run.output and 'CHILD_WORKSPACE_PASS' in run.output
                 assert project / 'child.py' in run.sources
                 assert not workspace.prompt_panel.isVisible()

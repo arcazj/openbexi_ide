@@ -1,0 +1,28 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #192330; background: #f3f5f7; }
+* { box-sizing: border-box; } body { margin: 0; } [hidden] { display: none !important; }
+header { display: flex; align-items: center; gap: 20px; padding: 12px 20px; background: #182638; color: white; }
+header strong { margin-right: auto; } header strong span { font-weight: 400; margin-left: 14px; color: #d3dfec; }
+main { padding: 12px 18px; } h1 { font-size: 1.3rem; margin: 6px 0; } h2 { font-size: 1rem; }
+button, input, select { font: inherit; border-radius: 4px; padding: 7px 10px; border: 1px solid #9ba8b6; }
+button { cursor: pointer; background: white; } button:hover:enabled { border-color: #1c56a0; background: #edf4ff; }
+button:disabled { cursor: default; opacity: .45; } button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #256fd0; outline-offset: 2px; }
+input[type=checkbox], input[type=radio] { accent-color: #1c56a0; } .danger { color: #a11919; }
+label { display: inline-flex; align-items: center; gap: 8px; margin: 4px 10px 4px 0; }
+#login { max-width: 640px; padding: 24px; margin: 8vh auto; background: white; border: 1px solid #ccd6df; border-radius: 8px; }
+#login label { display: flex; justify-content: space-between; margin: 18px 0; } #login input { width: 65%; }
+#history { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 8px; min-height: 42px; }
+#history button { white-space: nowrap; border-bottom: 3px solid #aab4bf; } #history button[aria-current=true] { border-color: #215b9d; font-weight: 600; }
+.heading { display: flex; align-items: center; justify-content: space-between; margin: 10px 0; } .badge { display: inline-block; padding: 5px 10px; border: 1px solid #7b8792; border-radius: 4px; color: black; }
+.controls, .presentation { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 6px 0; }
+.presentation { justify-content: space-between; } #pending { color: #785b00; } #role { font-weight: 700; }
+#code-scroll { overflow: auto; max-height: 54vh; min-height: 200px; background: white; border: 1px solid #aebac6; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; } th { text-align: left; position: sticky; top: 0; background: #e7ebef; color: #243446; z-index: 1; }
+th, td { padding: 4px 8px; border-right: 1px solid #c7cbd0; border-bottom: 1px solid #c7cbd0; white-space: pre; height: 25px; }
+#code td:nth-child(2) { font-family: Consolas, monospace; min-width: 430px; } #code tr { color: black; } #code tbody tr:hover { outline: 1px solid #1a365b; outline-offset: -1px; }
+#prompt { padding: 12px; margin-top: 10px; background: #fffccf; border: 1px solid #b2a52e; border-radius: 4px; }
+#prompt input:not([type=radio]) { background: #ffff00; color: black; min-width: 280px; } #answers label { display: flex; }
+#commit { background: #1957a0; color: white; } details { margin-top: 8px; padding: 8px 10px; border: 1px solid #c6cfd9; background: white; } summary { cursor: pointer; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.5 Consolas, monospace; } #output { max-height: 30vh; overflow: auto; }
+#error { color: #a11919; white-space: pre-wrap; } dialog { max-width: 95vw; width: 1100px; border: 1px solid #8091a1; border-radius: 7px; }
+dialog::backdrop { background: #15203088; } .information-scroll { overflow: auto; max-height: 65vh; margin: 12px 0; }
+@media (max-width: 700px) { main { padding: 8px; } header strong span { display: none; } .controls button { flex: 1; } #code-scroll { max-height: 50vh; } }

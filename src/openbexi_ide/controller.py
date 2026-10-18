@@ -13,17 +13,21 @@ class ProbeSignals(QObject):
 
 
 class ProbeTask(QRunnable):
-    def __init__(self, epoch, interpreter, debugger=False, language='python'):
+    def __init__(self, epoch, interpreter, debugger=False, language='python', project=None):
         super().__init__()
         self.epoch, self.interpreter, self.debugger = epoch, interpreter, debugger
         self.signals = ProbeSignals()
         self.language = language
+        self.project = project
         self.cancel = threading.Event()
 
     def run(self):
         try:
             result = interpreter_info(self.interpreter, require_debugger=self.debugger,
                                       cancel=self.cancel, language=self.language)
+            if self.project and result.get('backend', {}).get('procedureWorkspace'):
+                from openbexi_runtime.procedure_client import ensure_service
+                result['procedureService'] = str(ensure_service(self.project))
             self.signals.done.emit(self.epoch, result, "")
         except Exception as error:
             self.signals.done.emit(self.epoch, None, str(error))

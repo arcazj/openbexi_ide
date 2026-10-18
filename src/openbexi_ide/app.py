@@ -131,6 +131,9 @@ class MainWindow(QMainWindow):
         self.procedure_workspace.attention.connect(self.show_procedure_workspace)
         self.procedure_workspace.navigate.connect(self.open_procedure_line)
         self.procedure_workspace.location_changed.connect(self.highlight_procedure_line)
+        self.procedure_workspace.selection_changed.connect(self.refresh_busy)
+        self.procedure_workspace.open_instance.connect(self.run_procedure_file)
+        self.debug_controller.procedure_state.connect(self.refresh_busy)
         self.source_view = None
         self._source_pending = None
         self._source_latest = None
@@ -186,11 +189,11 @@ class MainWindow(QMainWindow):
         self.join_action = self.action("Join Shared Session…", self.join_session)
         self.disconnect_action = self.action("Disconnect from Session", self.session_client.disconnect)
         self.plugins_action = self.action('Runtime Plugins…', self.manage_plugins)
-        self.continue_action = self.action("Continue", lambda: self.active_debugger.control("continue"), "F6")
-        self.pause_action = self.action("Pause", lambda: self.active_debugger.control("pause"), "F7")
-        self.over_action = self.action("Step Over", lambda: self.active_debugger.control("next"), "F10")
-        self.into_action = self.action("Step Into", lambda: self.active_debugger.control("stepIn"), "F11")
-        self.out_action = self.action("Step Out", lambda: self.active_debugger.control("stepOut"), "Shift+F11")
+        self.continue_action = self.action("Continue", lambda: self.debug_control("continue"), "F6")
+        self.pause_action = self.action("Pause", lambda: self.debug_control("pause"), "F7")
+        self.over_action = self.action("Step Over", lambda: self.debug_control("next"), "F10")
+        self.into_action = self.action("Step Into", lambda: self.debug_control("stepIn"), "F11")
+        self.out_action = self.action("Step Out", lambda: self.debug_control("stepOut"), "Shift+F11")
 
     def make_workspace(self):
         self.files = QFileSystemModel(self)
@@ -203,7 +206,7 @@ class MainWindow(QMainWindow):
             self.tree.hideColumn(column)
         self.tree.doubleClicked.connect(self.open_tree_item)
         self.tree.setIndentation(16)
-        project_panel = QWidget()
+        project_panel = self.project_panel = QWidget()
         project_layout = QVBoxLayout(project_panel)
         project_layout.setContentsMargins(8, 0, 8, 8)
         heading_row = QHBoxLayout()
@@ -236,7 +239,7 @@ class MainWindow(QMainWindow):
         self.editor_stack.addWidget(welcome); self.editor_stack.addWidget(self.tabs)
         self.find = QLineEdit(); self.find.setPlaceholderText("Find in this file · Enter for next match · Escape to close")
         self.find.returnPressed.connect(self.find_next); self.find.hide()
-        editor_panel = QWidget(); editor_layout = QVBoxLayout(editor_panel)
+        editor_panel = self.editor_panel = QWidget(); editor_layout = QVBoxLayout(editor_panel)
         editor_layout.setContentsMargins(0, 0, 0, 0)
         editor_layout.addWidget(self.editor_stack); editor_layout.addWidget(self.find)
         self.find.installEventFilter(self)
@@ -253,7 +256,7 @@ class MainWindow(QMainWindow):
         self.latest_output.setToolTip("Return to the newest output and follow incoming lines")
         self.latest_output.clicked.connect(self.console.show_latest)
         input_row.addWidget(self.latest_output)
-        console_panel = QWidget(); console_layout = QVBoxLayout(console_panel)
+        console_panel = self.console_panel = QWidget(); console_layout = QVBoxLayout(console_panel)
         console_layout.setContentsMargins(12, 8, 12, 10)
         console_layout.addWidget(self.console); console_layout.addLayout(input_row)
         self.debug_panel = QWidget(); debug_layout = QVBoxLayout(self.debug_panel)
@@ -487,6 +490,7 @@ class MainWindow(QMainWindow):
             self.tabs.removeTab(0); widget.deleteLater()
         self.editor_stack.setCurrentIndex(0)
         self.project = folder
+        self.procedure_workspace.load_history(folder, create=False)
         self.arguments = ()
         self.files.setRootPath(str(folder))
         self.tree.setRootIndex(self.files.index(str(folder)))
@@ -766,7 +770,7 @@ class MainWindow(QMainWindow):
 
     def run_script(self):
         editor = self.current_editor()
-        if not editor or not self.project or self.is_busy():
+        if not editor or not self.project or (self.is_busy() and not self.can_start_procedure()):
             return
         if self.session_client.active:
             if not self.session_client.can_control or not self.shared_project_matches():
@@ -807,8 +811,9 @@ class MainWindow(QMainWindow):
                               self.arguments, self.language.currentData())
             backend = next((item for item in self.backend_choices if item['id'] == spec.language), {})
             if backend.get('procedureWorkspace'):
-                self.procedure_workspace.begin(spec, 'Run')
-                self.debug_controller.start(spec, no_debug=True)
+                controller = self.procedure_controller()
+                self.procedure_workspace.begin(spec, 'Run', controller)
+                controller.start(spec, no_debug=True)
             else:
                 self.run_controller.start(spec)
         except (OSError, ValueError, RuntimeError) as error:
@@ -839,7 +844,7 @@ class MainWindow(QMainWindow):
             self.output_tabs.setCurrentWidget(self.session_panel)
             return
         editor = self.current_editor()
-        if not editor or not self.project or self.is_busy():
+        if not editor or not self.project or (self.is_busy() and not self.can_start_procedure()):
             return
         self.select_editor_runtime()
         for index in range(self.tabs.count()):
@@ -855,16 +860,63 @@ class MainWindow(QMainWindow):
             spec = LaunchSpec(self.project, editor.path, self.interpreter, self.arguments, self.language.currentData())
             backend = next((item for item in self.backend_choices if item['id'] == spec.language), {})
             if backend.get('procedureWorkspace'):
-                self.procedure_workspace.begin(spec, 'Debug')
-            self.debug_controller.start(spec, breakpoints)
+                controller = self.procedure_controller()
+                self.procedure_workspace.begin(spec, 'Debug', controller)
+            else:
+                controller = self.debug_controller
+            controller.start(spec, breakpoints)
         except (OSError, ValueError, RuntimeError) as error:
             self.procedure_workspace.finish(-1)
             self.report_error(str(error)); self.refresh_busy()
 
     def show_procedure_workspace(self):
         self.output_tabs.setCurrentWidget(self.procedure_workspace)
-        if self.vertical.sizes()[-1] < 650:
+        self._procedure_focus = True
+        self.update_procedure_layout()
+        if not self.spell_mode() and self.vertical.sizes()[-1] < 650:
             self.vertical.setSizes([max(150, self.vertical.height() - 650), 650])
+
+    def run_procedure_file(self, path):
+        if self.project and path.resolve().is_relative_to(self.project) and self.can_start_procedure():
+            self.file_runtimes[path.resolve()] = 'spell'
+            self.open_file(path); self.run_script()
+
+    def can_start_procedure(self):
+        return self.spell_mode() and not self.run_controller.running and self.procedure_workspace.can_start()
+
+    def procedure_controller(self):
+        for controller in self.procedure_workspace.controllers:
+            if not controller.running:
+                return controller
+        controller = DebugController(self)
+        controller.state_changed.connect(self.refresh_busy)
+        controller.finished.connect(self.run_finished)
+        controller.error.connect(self.report_error)
+        return controller
+
+    def spell_mode(self):
+        return hasattr(self, 'language') and self.language.currentData() == 'spell'
+
+    def update_procedure_layout(self):
+        if not hasattr(self, 'procedure_workspace') or not hasattr(self, 'language'):
+            return
+        spell = self.spell_mode() and not self.session_client.active
+        previous = getattr(self, '_spell_layout', False)
+        if spell and not previous:
+            self._python_layout = (self.horizontal.saveState(), self.vertical.saveState())
+        self._spell_layout = spell
+        # Remove the Python editor/console/debugger entirely in SPELL mode.
+        self.editor_panel.setVisible(not spell)
+        self.project_panel.setVisible(not (spell and getattr(self, '_procedure_focus', False)))
+        for panel in (self.console_panel, self.debug_panel, self.session_panel):
+            self.output_tabs.setTabVisible(self.output_tabs.indexOf(panel), not spell)
+        self.output_tabs.tabBar().setVisible(not spell)
+        if spell:
+            self.output_tabs.setCurrentWidget(self.procedure_workspace)
+        elif previous:
+            self._procedure_focus = False
+            horizontal, vertical = self._python_layout
+            self.horizontal.restoreState(horizontal); self.vertical.restoreState(vertical)
 
     def open_procedure_line(self, path, line):
         if path and path.is_file() and self.project and path.is_relative_to(self.project):
@@ -881,6 +933,9 @@ class MainWindow(QMainWindow):
         if self.session_client.active and not self.is_busy():
             self.session_panel.control('stop')
             return
+        if self.spell_mode() and self.procedure_workspace.selected:
+            self.procedure_workspace.stop_selected()
+            return
         self._stopping = True
         if self.procedure_workspace.active_run:
             self.procedure_workspace.active_run.aborted = True
@@ -888,8 +943,15 @@ class MainWindow(QMainWindow):
         self.run_controller.stop()
         self.debug_controller.stop()
 
+    def debug_control(self, command):
+        if self.spell_mode() and not self.session_client.active:
+            self.procedure_workspace.control(command)
+        else:
+            self.active_debugger.control(command)
+
     def is_busy(self):
-        return self.run_controller.running or self.debug_controller.running
+        return self.run_controller.running or self.debug_controller.running or any(
+            controller.running for controller in self.procedure_workspace.controllers)
 
     def refresh_busy(self, *_):
         self.set_busy(self.is_busy())
@@ -980,6 +1042,14 @@ class MainWindow(QMainWindow):
         self.symbols_action.setEnabled(python_editor)
         for name, action in self.session_actions.items():
             action.setEnabled(getattr(self.session_panel, name).isEnabled())
+        if self.spell_mode() and not self.session_client.active:
+            self.run_action.setEnabled(bool(editor) and self.can_start_procedure())
+            self.debug_action.setEnabled(self.run_action.isEnabled())
+            for action, command in ((self.stop_action, 'abort'), (self.continue_action, 'continue'),
+                                    (self.pause_action, 'pause'), (self.over_action, 'next'), (self.into_action, 'stepIn')):
+                action.setEnabled(self.procedure_workspace.control_buttons[command].isEnabled())
+            self.out_action.setEnabled(False)
+        self.update_procedure_layout()
 
     def append_output(self, content):
         self.console.append_output(content)
@@ -996,7 +1066,14 @@ class MainWindow(QMainWindow):
             self.close()
 
     def report_error(self, message):
-        self.append_output(f"\n{message}\n"); self.output_tabs.setCurrentIndex(0)
+        self.append_output(f"\n{message}\n")
+        if self.spell_mode():
+            self.output_tabs.setCurrentWidget(self.procedure_workspace)
+            if self.procedure_workspace.active_run:
+                self.procedure_workspace.active_run.error = message
+                self.procedure_workspace.refresh()
+        else:
+            self.output_tabs.setCurrentIndex(0)
         self.statusBar().showMessage(message, 10000)
 
     def send_input(self):
@@ -1021,7 +1098,7 @@ class MainWindow(QMainWindow):
         controller.close_input()
 
     def debug_stopped(self, body):
-        self.output_tabs.setCurrentIndex(1)
+        self.output_tabs.setCurrentWidget(self.procedure_workspace if self.spell_mode() else self.debug_panel)
         if self.vertical.sizes()[-1] < 320:
             self.vertical.setSizes([max(200, self.vertical.height() - 320), 320])
         self.eval_result.setText(f"Paused · {body.get('reason', 'breakpoint')}")
@@ -1190,13 +1267,21 @@ class MainWindow(QMainWindow):
             event.ignore(); return
         if self.is_busy():
             self._close_requested = True
-            self.stop_script(); event.ignore(); return
+            self.run_controller.stop()
+            for controller in self.procedure_workspace.controllers:
+                if controller.running:
+                    controller.detach()
+            if self.debug_controller.running and self.debug_controller not in self.procedure_workspace.controllers:
+                self.debug_controller.stop()
+            event.ignore(); return
         if self.session_client.active:
             self._close_requested = True
             self.setEnabled(False)
             self.session_client.disconnect()
             event.ignore(); return
         self.settings.sync()
+        if self.procedure_workspace.connection_worker:
+            self.procedure_workspace.connection_worker.close()
         self.cancel_interpreter_selection()
         if self.backend_probe:
             self.backend_probe.cancel.set()

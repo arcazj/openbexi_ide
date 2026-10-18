@@ -1,0 +1,58 @@
+name: Qualify exact v1.1 Windows installer
+on:
+  push:
+    branches: [work/ide-v1.1]
+    paths: [.github/workflows/qualify-v1.1-windows.yml]
+  workflow_dispatch:
+
+# Reading an unpublished draft release requires repository write permission.
+# This workflow only downloads its pinned asset and uploads qualification evidence.
+permissions:
+  contents: write
+
+jobs:
+  fresh-windows:
+    runs-on: windows-2025
+    timeout-minutes: 35
+    steps:
+      - name: Download and verify the exact unpublished installer
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $archive = Join-Path $env:RUNNER_TEMP 'OpenBEXI-IDE-1.1.0-windows-x64.zip'
+          $headers = @{Authorization="Bearer $env:GH_TOKEN"; Accept='application/octet-stream'; 'X-GitHub-Api-Version'='2022-11-28'}
+          Invoke-WebRequest -Uri 'https://api.github.com/repos/arcazj/openbexi_ide/releases/assets/652287302' -Headers $headers -OutFile $archive
+          $expected = 'd390f9c900c7cf9a0b5e93894d9bd9bb850e94c86a4249a6652ec9ae65b09de1'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) { throw 'Installer digest differs' }
+          $fixture = New-Item -ItemType Directory -Path (Join-Path $env:RUNNER_TEMP 'v11-harness')
+          & tar.exe -xf $archive -C $fixture.FullName payload/source/openbexi-ide-source.zip
+          if ($LASTEXITCODE -ne 0) { throw 'Source archive extraction failed' }
+          & tar.exe -xf (Join-Path $fixture.FullName 'payload/source/openbexi-ide-source.zip') -C $fixture.FullName scripts/qualify_fresh_windows.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'Qualification harness extraction failed' }
+
+      - name: Qualify a fresh Windows installation and complete removal
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $output = Join-Path $env:RUNNER_TEMP 'v11-fresh'
+          $harness = Join-Path $env:RUNNER_TEMP 'v11-harness/scripts/qualify_fresh_windows.ps1'
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $harness -Archive (Join-Path $env:RUNNER_TEMP 'OpenBEXI-IDE-1.1.0-windows-x64.zip') -ExpectedSha256 'd390f9c900c7cf9a0b5e93894d9bd9bb850e94c86a4249a6652ec9ae65b09de1' -ExpectedVersion '1.1.0' -FreshWindows -Output $output
+          if ($LASTEXITCODE -ne 0) { throw 'Fresh Windows qualification failed' }
+          @{run_id=$env:GITHUB_RUN_ID; run_attempt=$env:GITHUB_RUN_ATTEMPT; commit=$env:GITHUB_SHA; runner_os=$env:RUNNER_OS; runner_image=$env:ImageOS; image_version=$env:ImageVersion; provisioner='GitHub-hosted fresh Windows VM'} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'runner.json') -Encoding utf8
+
+      - name: Retain reports, logs, harnesses and captured previews
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ide-v1.1-fresh-windows
+          retention-days: 30
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/v11-fresh/fresh-windows.json
+            ${{ runner.temp }}/v11-fresh/runner.json
+            ${{ runner.temp }}/v11-fresh/installed-workflow/**/*.json
+            ${{ runner.temp }}/v11-fresh/installed-workflow/**/*.log
+            ${{ runner.temp }}/v11-fresh/installed-workflow/**/*.png
+            ${{ runner.temp }}/v11-fresh/installed-workflow/harnesses/*.py

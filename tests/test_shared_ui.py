@@ -134,6 +134,9 @@ def test_serial_queue_pause_handoff_and_live_parallel_configuration(shared, app)
     wait(app, lambda: alice.session_panel.pause.isEnabled())
     QTest.mouseClick(alice.session_panel.pause, Qt.LeftButton)
     wait(app, lambda: all(p.status == 'PAUSED' for p in session.procedures.values()))
+    # Native state can arrive before the desktop finishes its pause request.
+    # Exercise the enabled control, as an operator would, after UI acknowledgement.
+    wait(app, lambda: alice.session_panel.release.isEnabled())
     QTest.mouseClick(alice.session_panel.release, Qt.LeftButton)
     wait(app, lambda: bob.session_panel.claim.isEnabled())
     claim(app, bob)

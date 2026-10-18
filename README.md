@@ -1,10 +1,13 @@
 # OpenBEXI IDE
 
-The **1.2.0rc1 prerelease** adds a [procedure workspace](docs/PROCEDURE_WORKSPACE.md)
-for native SPELL Run and Debug: code/results tables, current-line highlighting,
-session history and embedded prompts. The matching IntelliJ workspace candidate
-is also available. SPELL v0.6 release qualification remains paused at the user's
-request; this GUI update does not promote that release.
+The next stable release is **1.1.0**, developed from the published **1.2.0rc1**
+code base. This branch prepares **1.1.0** artifacts; stable publication is still
+gated by the [acceptance record](docs/IDE_1_1_ACCEPTANCE.md). Its
+[procedure workspace](docs/PROCEDURE_WORKSPACE.md) adds a server-owned native
+SPELL executor, a browser control/monitor view, persistent records, the manual's
+state colors, and an execution-only layout in Qt, IntelliJ and PyCharm.
+SPELL v0.6 remains paused. The old candidate is retained until 1.1.0 is
+published and its migration checks pass.
 
 See the [1.2.0rc1 release notes](docs/IDE_1_2_0_RC1_RELEASE.md) for installation,
 matching SPELL artifacts, validation and open issues. The release candidate is
