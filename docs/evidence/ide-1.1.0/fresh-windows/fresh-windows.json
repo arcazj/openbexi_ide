@@ -1,0 +1,17 @@
+{
+    "artifact_sha256":  "d390f9c900c7cf9a0b5e93894d9bd9bb850e94c86a4249a6652ec9ae65b09de1",
+    "windows_install_date":  "2026-10-08T02:37:18.0000000+00:00",
+    "windows_caption":  "Microsoft Windows Server 2025 Datacenter",
+    "machine_identity_sha256":  "115fb85d10b6e8b193b70cb19df832511071d23d9599ee4ca21268591fbc6962",
+    "version":  "1.1.0",
+    "passed":  true,
+    "windows_version":  "10.0.26100",
+    "harness_sha256":  "12bd5e12d4e3e1eee9b84750f62bc683065c8a8d08cda8fe4c0c66902c0d5a40",
+    "scope":  "Fresh Windows x64 installation, bundled runtime, Run/Debug, console menu, shared debugger and removal",
+    "fresh_environment_operator_attested":  true,
+    "lifecycle":  {
+                      "sha256":  "1121ce1e9d5856e784d8a71c391830f7bb4dbdabb93290260b6f62b94b282691",
+                      "path":  "D:\\a\\_temp\\v11-fresh\\installed-workflow\\result.json"
+                  },
+    "payload_files_verified":  7757
+}

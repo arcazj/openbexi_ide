@@ -70,8 +70,15 @@ def test_shared_desktops_breakpoint_edit_step_cached_monitor_and_handoff(shared,
     alice.current_editor().toggle_breakpoint(5)
     wait(app, lambda: alice.debug_action.isEnabled())
     alice.debug_action.trigger()
-    wait(app, lambda: alice.shared_debug.paused and line(alice) == 5
-         and variable(alice, 'number') is not None, 35)
+    try:
+        wait(app, lambda: alice.shared_debug.paused and line(alice) == 5
+             and variable(alice, 'number') is not None, 35)
+    except AssertionError as error:
+        states = [(p.status, p.reason, p.debug) for p in session.procedures.values()]
+        raise AssertionError({'procedures': states, 'paused': alice.shared_debug.paused,
+            'line': line(alice), 'healthy': alice.session_client.healthy,
+            'can_control': alice.session_client.can_control,
+            'console': alice.console.toPlainText()}) from error
     p = next(iter(session.procedures.values()))
     assert p.debug['all_threads_stopped'] and not p.has_token
     assert alice.current_editor().verified_breakpoints[5]

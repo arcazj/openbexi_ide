@@ -1,22 +1,21 @@
 # OpenBEXI IDE
 
-The next stable release is **1.1.0**, developed from the published **1.2.0rc1**
-code base. This branch prepares **1.1.0** artifacts; stable publication is still
-gated by the [acceptance record](docs/IDE_1_1_ACCEPTANCE.md). Its
+**OpenBEXI IDE 1.1.0** develops the former **1.2.0rc1** code base. Its
 [procedure workspace](docs/PROCEDURE_WORKSPACE.md) adds a server-owned native
 SPELL executor, a browser control/monitor view, persistent records, the manual's
 state colors, and an execution-only layout in Qt, IntelliJ and PyCharm.
-SPELL v0.6 remains paused. The old candidate is retained until 1.1.0 is
-published and its migration checks pass.
+**SPELL v0.6 remains paused.** Publication and retirement status are recorded in
+the [acceptance record](docs/IDE_1_1_ACCEPTANCE.md).
 
-See the [1.2.0rc1 release notes](docs/IDE_1_2_0_RC1_RELEASE.md) for installation,
-matching SPELL artifacts, validation and open issues. The release candidate is
-separate from the stable 1.0 downloads below.
+See the [1.1 installation and release notes](docs/IDE_1_1_RELEASE.md) for the
+matching host/plugin versions, migration, validation and remaining limits.
 
-Download the [Windows ZIP](https://github.com/arcazj/openbexi_ide/releases/download/1.0/OpenBEXI-IDE-1.0.0-windows-x64.zip),
-[Linux Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/1.0/openbexi-ide-1.0.0-linux-amd64.tar.gz),
-or [release notes and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/1.0).
-The Git tag is `1.0`; the package version is `1.0.0`.
+Download the [Windows ZIP](https://github.com/arcazj/openbexi_ide/releases/download/v1.1.0/OpenBEXI-IDE-1.1.0-windows-x64.zip),
+[Linux Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/v1.1.0/openbexi-ide-1.1.0-linux-amd64.tar.gz),
+or [matching components and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.0).
+The Git tag is `v1.1.0`; the package version is `1.1.0`. The
+[older stable 1.0](https://github.com/arcazj/openbexi_ide/releases/tag/1.0) remains
+available as a historical download.
 
 The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Start it with
 `docker compose up -d --build --wait ide`. It contains the latest IDE source and
@@ -24,9 +23,8 @@ all SPELL procedures under `test_spell/`, with a dedicated language-menu launche
 The menu exercises available features and lists all 763 reference entries;
 unsupported features are explicitly reported. See [the procedures](examples/test_spell/README.md).
 
-The [1.0 release record](docs/IDE_1_0_0_RELEASE.md) documents passing Windows,
-Linux, installed-workflow and browser checks. Fresh-Windows installation
-validation remains outstanding and is disclosed as a release limitation.
+The [1.0 release record](docs/IDE_1_0_0_RELEASE.md) retains its original checks
+and limitations. Version 1.1 has separate artifact and fresh-Windows evidence.
 
 The corrected [v0.5 Docker desktop](docs/IDE_V05_DOCKER.md) has its own launch
 file, `compose.v05.yaml`. Typing a menu choice while the console output has
@@ -39,8 +37,9 @@ threads, stacks and variables. The controller can evaluate, edit variables and
 step; monitors inspect cached views and read-only source copies. Durable source
 views verify the captured tree rather than displaying changed worktree files.
 **Run > Runtime Plugins** installs/removes optional local wheels in the selected
-interpreter. See [shared debugging](docs/shared-debugging.md). Shared native SPELL
-debugging is explicitly unavailable; its existing local debugger remains usable.
+interpreter. See [shared debugging](docs/shared-debugging.md). Native SPELL uses
+the separate [procedure workspace service](docs/PROCEDURE_WORKSPACE.md) for
+execution ownership, debugging, prompts and browser monitoring.
 
 The usability candidate adds **Ctrl+Space** Python name completion, **F12**
 project definition navigation, and **Ctrl+Shift+O** searchable project symbols.

@@ -1,0 +1,34 @@
+{
+  "artifact": "openbexi-spell-0.3.1-workspace.2.zip",
+  "sha256": "cd03cbe174c1b49db6db17a5c7685899ad2fd2743e309aa40a2c954cab63cab9",
+  "sdk": {
+    "name": "IntelliJ IDEA",
+    "version": "2026.2.3",
+    "buildNumber": "262.10968.63"
+  },
+  "inputs": {
+    "src/org/openbexi/spell/DapClient.java": "10fe6aa97695ea14e4304dc0e66db4c2354d3aa1bd075a90e572aa8f26996c73",
+    "src/org/openbexi/spell/SpellActions.java": "e69e8fa2aa3d632381813550fecc284dcf65c864fcc42dbb09ad21bcbe9735e8",
+    "src/org/openbexi/spell/SpellBreakpointType.java": "bb070398237633694fddad80c6f3ba3b00df1338d6ffcdfe798bce38c9663034",
+    "src/org/openbexi/spell/SpellConfigurable.java": "4c657eba2ce16f314397cfd9a15ccde10caa9d49f8def2b183098856d7b9b182",
+    "src/org/openbexi/spell/SpellConnection.java": "28bfac882c0b32ba7fcd890ddbc265905fbe3974bfcdc3f501c31c025df49d9c",
+    "src/org/openbexi/spell/SpellDebugAction.java": "96c627c2d39e960bec8b5fbe3188785288b2c0f772bbef0b17e7ca1fcd1e1565",
+    "src/org/openbexi/spell/SpellDebugProcess.java": "de26aec0b46a6a52f05562e8c3c3408226f413164e3b71c476d52a6a7cbddd1b",
+    "src/org/openbexi/spell/SpellEditorLibrary.java": "d1b5528a288c2c0750c6636b3e9e8fa48a9790b8a18347b5c274520826e4837a",
+    "src/org/openbexi/spell/SpellEditorSupport.java": "76ac34a5e9521cd9b750ffad9b752fbd3d145657b6b6605a9463a3e86cb951e2",
+    "src/org/openbexi/spell/SpellEditorSyncAction.java": "52c6670b398fbd23c211b4c0ce6c8ee41e4ae9eb59ff1aefa80d6874109ec753",
+    "src/org/openbexi/spell/SpellLaunch.java": "fc8e72e8851c213a6a3a00b11333c67b5a1875b7c776662bc4d7c1635cd4ecea",
+    "src/org/openbexi/spell/SpellPalette.java": "6920039bf2f93601dacfac51f42d0f1584797d9de502506d7a0cd0902b4efd07",
+    "src/org/openbexi/spell/SpellRecords.java": "54c77324e66f38194f9c4ad82a32b26ecd4428eeb2a8c75aecf288268e9e828e",
+    "src/org/openbexi/spell/SpellRunAction.java": "c2d45dc7113224c56e07c79d81aec9baa61c6f2db2b38516014d572af02bb705",
+    "src/org/openbexi/spell/SpellSettings.java": "22be13c819d0058507d0729daf8398459e6c41fefa4b65a10d0839dd97069f53",
+    "src/org/openbexi/spell/SpellSettingsAction.java": "6690f3bffb4430e51e4a5fabc0f9dfa6cb87e2a379ce45b1d76dda3620dfc52d",
+    "src/org/openbexi/spell/SpellToolWindow.java": "8c962fe92258ec986b01436ad06adf1cff678561556c4249b65f776c7a064390",
+    "src/org/openbexi/spell/SpellWorkspace.java": "aa983fde82619ff6a7eb596b3774def71c43587eab2ff8d2fc1e7be9524cd525",
+    "src/org/openbexi/spell/SpellWorkspaceActions.java": "c5337dc6ef461efb7dca42671876a9a3c42cfcc33479cb72522cd7fef52a5586",
+    "resources/META-INF/plugin.xml": "b69e3a881313a7135e99ed8604d2be8098f1e34ff9472126677f90a1617dd8f2",
+    "build.py": "f5887bb6013ecd1229859ef454510d9d766d4ceebcbd0d661241c2ff3fa5aaaf"
+  },
+  "status": "Compiled candidate; verifier and actual host acceptance are separate gates",
+  "editor_exporter_sha256": "5e0da2376943cf22c7aee67cd9f3baae54304a365a50c973a5bdf9782191cdf0"
+}

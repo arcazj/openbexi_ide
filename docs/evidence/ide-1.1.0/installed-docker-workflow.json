@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "version": "1.1.0",
+  "image": "sha256:aaf3d19d5a98a39c8b82c477e3fbbd2bfafc57ef627f31c0c0202c0c37e60d1d",
+  "scope": "Installed Linux native and Python Qt workflows with xcb/X11; browser service qualified separately",
+  "reports": [
+    {
+      "path": "evidence/linux-native/result.json",
+      "sha256": "7103a5c376924367c14bd64375c80d899729f12d220041ecf2408051951934c5"
+    },
+    {
+      "path": "evidence/linux-desktop/result.json",
+      "sha256": "57edb5a00bcddef918b65cf567370277033f040a3f9084bfa254a48fa0baea29"
+    }
+  ]
+}

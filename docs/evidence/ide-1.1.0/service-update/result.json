@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checks": [
+    "A changed service implementation refuses replacement while an original native prompt is live",
+    "Idle update starts a new service and restores the original captured source and terminal record without replay"
+  ]
+}

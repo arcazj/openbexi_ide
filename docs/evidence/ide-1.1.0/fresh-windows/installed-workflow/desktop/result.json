@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "version": "1.1.0",
+  "python": "\\\\?\\D:\\a\\_temp\\v11-fresh\\installed-workflow\\installation with spaces\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\python.exe",
+  "prefix": "\\\\?\\D:\\a\\_temp\\v11-fresh\\installed-workflow\\installation with spaces\\versions\\1.1.0-39f8e8854f5cee50\\runtime",
+  "origin": "\\\\?\\D:\\a\\_temp\\v11-fresh\\installed-workflow\\installation with spaces\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\Lib\\site-packages\\openbexi_ide\\app.py",
+  "script_sha256": "00e54dd95697b09411c6bf487fcc0e538b0da4c669d02ea7d61b4693650af4f2",
+  "checks": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue",
+    "Installed Ctrl+Space insertion, F12 unsaved definition and read-only symbol navigation",
+    "Private runtime deep Python 15 chapters and graphics animation/controls/close"
+  ],
+  "scope": "Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence",
+  "examples": {
+    "hello.py": "21ef69c983ecc2a55e81a7f2cf4d1b0aa045910c13f9e5d2054141c749aaaf9d"
+  }
+}

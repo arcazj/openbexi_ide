@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "version": "1.1.0",
+  "image": "sha256:aaf3d19d5a98a39c8b82c477e3fbbd2bfafc57ef627f31c0c0202c0c37e60d1d",
+  "container": "/openbexi-ide-1-1-ide-1",
+  "health": "healthy",
+  "http_status": 200,
+  "compose_sha256": "50b6ad40cc3b5075c629f4d2412910067b1529a32211853c0806a9581fbac480",
+  "scope": "Final Compose startup, health and noVNC HTTP delivery; interactive browser workspace has separate evidence"
+}

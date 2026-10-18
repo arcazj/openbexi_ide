@@ -1,0 +1,35 @@
+{
+  "checks": [
+    "Installed plugin settings and tool window in actual IDE",
+    "Run action uses the selected editor when a tool window has focus",
+    "Native Run through IDE process handler and console",
+    "Completed history restores captured source when the original file no longer exists",
+    "Controlled child prompt/status ordering preserves paused parent and scopes invalidation",
+    "Native launch rejection remains Failed despite successful relay disconnect",
+    "XDebugger breakpoint, stack/source position, variable edit, Step, Continue and output",
+    "Native prompt and answer through IDE console input",
+    "Embedded Yes/No, text, numeric and list prompts: native scoped answers, Commit and Reset",
+    "Native item-information dialog loads Latest, History and Full persisted notifications",
+    "Detached native instance restored with source/history, monitored, explicitly claimed and answered without restarting",
+    "IDE Stop gracefully closes its owned native run"
+  ],
+  "passed": true,
+  "debug_handler_start_notified": true,
+  "runtime_images": [
+    "sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79"
+  ],
+  "sdk": {
+    "name": "PyCharm",
+    "version": "2026.1.2",
+    "buildNumber": "261.24374.152"
+  },
+  "plugin_sha256": "cd03cbe174c1b49db6db17a5c7685899ad2fd2743e309aa40a2c954cab63cab9",
+  "runtime_packages": {
+    "openbexi-ide": "1.1.0",
+    "openbexi-spell-host": "0.3.1.dev3"
+  },
+  "inputs": {
+    "qualify.py": "061f175bfaa9caf029d08c85bf67e6f80449331d409b4acbd8039ddcc6bdf39e",
+    "qualification/HostQualification.java": "4a4f72a57f47bd6ae5537704586c0ab2db853bc596a9e52107c1981260e864f7"
+  }
+}

@@ -66,7 +66,7 @@ The [v1.1 acceptance record](IDE_1_1_ACCEPTANCE.md) tracks packaging, migration 
 the independent clean-Windows installation gate. The records below document
 the older candidate, not qualification of every new v1.1 feature.
 
-The [release notes](IDE_1_2_0_RC1_RELEASE.md) describe the candidate artifacts.
+The [1.1 release notes](IDE_1_1_RELEASE.md) describe the current artifacts.
 The development qualification below remains bound to its original `1.2.0.dev1`
 build; the release candidate has a separate dossier and retained checks.
 

@@ -1,0 +1,8 @@
+Close the application using this installation before uninstalling (PID 23916). No files removed.
+At C:\projects\openbexi_ide\.qualification\ide-v11-verified-install\uninstall.ps1:12 char:9
++         throw "Close the application using this installation before u ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Close the appli... files removed.:String) [], RuntimeException
+    + FullyQualifiedErrorId : Close the application using this installation before uninstalling (PID 23916). No files  
+   removed.
+ 

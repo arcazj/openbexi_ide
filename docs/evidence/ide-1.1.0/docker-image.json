@@ -1,0 +1,15 @@
+{
+  "product": "openbexi_ide",
+  "version": "1.1.0",
+  "image_id": "sha256:aaf3d19d5a98a39c8b82c477e3fbbd2bfafc57ef627f31c0c0202c0c37e60d1d",
+  "tag": "openbexi-ide:1.1.0",
+  "archive": "openbexi-ide-1.1.0-linux-amd64.tar.gz",
+  "archive_sha256": "1fcedd8b2916d244573e4c83dbd1e0b24eabdf3590093b00e3c8a551187691d3",
+  "archive_bytes": 569506544,
+  "base_image": "sha256:fe526165b40b9f4e124a11990938a2ad595a8cf18f0443ac7deab846266fa4ac",
+  "recipe_sha256": "54e5c1b604b16f8ffe2b293547fb6dc27c983beb5a71dbc08d13dc3f4282a46f",
+  "wheel_sha256": "09707509649b6d605e399cd990a2b8db558df4ae4008ad4448c0d5d817538882",
+  "native_runtime": "0.3.1.dev3",
+  "spell_v0_6": "paused",
+  "status": "Unpublished candidate; clean Windows release gate pending"
+}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "version": "1.1.0",
+  "origin": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\Lib\\site-packages\\openbexi_ide\\__init__.py",
+  "interpreter": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\python.exe",
+  "checks": [
+    "Run: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Debug: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit"
+  ],
+  "harness_sha256": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850",
+  "examples": {
+    "hello.py": "21ef69c983ecc2a55e81a7f2cf4d1b0aa045910c13f9e5d2054141c749aaaf9d"
+  },
+  "qt_platform": "offscreen",
+  "scope": "Actual installed Qt controls using offscreen; copied packaged examples; no live noVNC claim"
+}

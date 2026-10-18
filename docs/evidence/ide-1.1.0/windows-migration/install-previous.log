@@ -1,0 +1,7 @@
+{
+    "installed":  true,
+    "version":  "1.2.0rc1",
+    "root":  "C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install",
+    "active":  "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install\\versions\\1.2.0rc1-2f2522abbd13818c",
+    "python":  "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install\\versions\\1.2.0rc1-2f2522abbd13818c\\runtime\\python.exe"
+}

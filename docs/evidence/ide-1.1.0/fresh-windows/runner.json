@@ -1,0 +1,9 @@
+{
+  "runner_image": "win25-vs2026",
+  "commit": "99556185b52125dc905e934e6a7c90236f51b02c",
+  "run_id": "39091854219",
+  "runner_os": "Windows",
+  "run_attempt": "1",
+  "image_version": "20261007.264.1",
+  "provisioner": "GitHub-hosted fresh Windows VM"
+}

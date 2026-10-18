@@ -1,0 +1,16 @@
+usage: app.py [-h] [--project PROJECT] [--file FILE] [--theme {light,dark}]
+              [--runtime RUNTIME] [--session-info SESSION_INFO] [--user USER]
+              [--role {developer,monitor}]
+
+OpenBEXI standalone Python desktop IDE
+
+options:
+  -h, --help            show this help message and exit
+  --project PROJECT     Project folder to open
+  --file FILE           File inside the project to edit
+  --theme {light,dark}  Light or dark theme
+  --runtime RUNTIME     Select an installed runtime backend, for example spell
+  --session-info SESSION_INFO
+                        Private session invitation JSON
+  --user USER           Shared-session display name
+  --role {developer,monitor}

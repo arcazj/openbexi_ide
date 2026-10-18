@@ -1,15 +1,16 @@
 # OpenBEXI IDE v1.1 acceptance
 
 The requested stable version is **1.1.0**, based on `1.2.0rc1` commit
-`66dfffa5e8abbd048b9db38cbd6ecbefa998c93f`. The current candidate is
-**1.1.0** on `work/ide-v1.1`, prepared but unpublished. Stable publication is not yet approved by the
-release checks. SPELL v0.6 remains paused; its runtime feature work is excluded.
+`66dfffa5e8abbd048b9db38cbd6ecbefa998c93f`. The **1.1.0** artifacts pass all six
+release gates. [The qualification manifest](IDE_1_1_QUALIFICATION.json) binds
+their bytes to retained reports and previews. SPELL v0.6 remains paused;
+its runtime feature work is excluded.
 
 ## Compatibility
 
 | Component | Candidate / tested version |
 | --- | --- |
-| IDE and procedure service | 1.1.0, unpublished candidate |
+| IDE and procedure service | 1.1.0 |
 | Native host Python package | openbexi-spell-host 0.3.1.dev3 |
 | Native container | openbexi-spell-host:0.3.1-dev3 |
 | Native image digest | sha256:0518192b4748bd4f5fa2cef5daa4ebe5b884735f559636bce5ba0b4119355c79 |
@@ -54,7 +55,10 @@ own indicator. Reaching a line never implies item success.
 ## Qualification
 
 Private builds, logs and captured previews are on **F:\openbexi-builds\ide-v1.1**.
-The evidence manifest will bind the final candidate bytes to their checks.
+The release includes `IDE_1_1_RELEASE_DOSSIER.json`, `release-check.json` and an
+evidence ZIP. Extract the evidence beside the downloaded artifacts and run
+`scripts/check_release.py --manifest IDE_1_1_RELEASE_DOSSIER.json --root .`
+to verify their recorded hashes and gates.
 
 Passing native checks include Windows and packaged Linux Run/Debug with five
 prompts and visible children; Abort followed by Run; ordinary Python afterward;
@@ -63,16 +67,31 @@ persisted item dialogs and reconnection; browser operator/monitor, colors,
 reconnect, item dialogs and As-Run download. Authentication, ownership, native
 acknowledgement ordering, durable history and mutual-TLS checks also pass.
 
-The initial Linux test container lacked an init process and accumulated zombies.
-The corrected `--init` container passed all 199 tests with nine documented skips.
-The final complete test runs and installable artifact checks are tracked separately.
+The final full Windows suite passed **201 tests, 9 skipped**, in one process.
+The full Linux suite passed **201 tests, 9 skipped**. Eight skips on each
+platform concern the separately approved operational Execution-image profile.
+Windows also lacks symlink permission; Linux skips Windows Job-object cleanup.
+Earlier Windows attempts encountered asynchronous UI/probe timeouts while other
+qualification jobs were running. Their reports are retained privately; the
+final complete run has no failures. One test now waits for UI acknowledgement
+before clicking Release. No production timeout was increased to conceal these
+failures. Linux uses `--init` so native child processes are reaped.
 
-The independent clean-Windows gate is **pending**. Local `Get-VM` reports
-insufficient Hyper-V access. The dedicated GitHub Actions workflow downloads the
-exact unpublished installer by asset ID and SHA-256, then runs its bundled
-qualification harness on a fresh hosted Windows VM. A new folder on this
-development machine does not satisfy that gate. Stable publication and
-old-release retirement remain pending until the independent check passes.
+The exact Windows ZIP passed fresh installation on a GitHub-hosted **Windows
+Server 2025 Datacenter** VM: [workflow and retained results](https://github.com/arcazj/openbexi_ide/actions/runs/39091854219).
+The harness verified all 7,757 payload files and exercised Python Run/Debug,
+menus, shared debugging and complete removal. Independently, installation over
+1.2.0rc1 passed on this development machine, preserving projects, saved examples
+and preferences. Native Windows and packaged Linux workflows passed, including
+Abort followed immediately by Run. Both final JetBrains SDK qualifications
+passed 12 checks, including captured source after the original file moves.
+
+Actual captured previews: [desktop prompt](evidence/ide-1.1.0/windows-native/run-prompt.png),
+[desktop results](evidence/ide-1.1.0/windows-native/run-results.png),
+[browser controller](evidence/ide-1.1.0/browser/controller-prompt.png),
+[browser monitor](evidence/ide-1.1.0/browser/monitor-prompt.png),
+[IntelliJ](evidence/ide-1.1.0/intellij/workspace-prompt.png), and
+[PyCharm](evidence/ide-1.1.0/pycharm/workspace-prompt.png).
 
 ## Version migration and retirement
 
@@ -91,5 +110,6 @@ old-release retirement remain pending until the independent check passes.
    release/tag/assets and only the exclusively owned local RC builds, caches,
    image and containers. Preserve source history, accepted evidence, projects,
    preferences, records and shared dependencies. No global Docker/cache prune.
-4. Retain the old artifacts until those conditions are met. This document does not
-   claim that publication, migration or retirement has already happened.
+4. The migration and qualification conditions have passed. Publication and actual
+   retirement are recorded separately; source history, user data and accepted
+   historical evidence are preserved.

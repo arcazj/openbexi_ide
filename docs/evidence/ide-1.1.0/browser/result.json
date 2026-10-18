@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "version": "1.1.0",
+  "checks": [
+    "Native browser Run, prompt Reset/Commit, successful completion",
+    "Second browser monitors the same execution and cannot answer or run",
+    "Manual current-line and SUCCESS colors",
+    "Reconnect restores completed record and source snapshot",
+    "Persisted item dialog Latest/History/Full and native notification fields",
+    "As-Run download contains captured source and complete persisted notifications"
+  ],
+  "browser": "155.0.4283.45",
+  "page_errors": []
+}

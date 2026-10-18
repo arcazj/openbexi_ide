@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "release_accepted": false,
+  "version": "1.1.0",
+  "bundle_manifest_sha256": "c7d6e32536254e31cb09a9c8b063b0dd32cb761555b67a14fa7ffc845f3d4310",
+  "checks": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue",
+    "Installed Ctrl+Space insertion, F12 unsaved definition and read-only symbol navigation",
+    "Private runtime deep Python 15 chapters and graphics animation/controls/close",
+    "Run: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Debug: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Installed shared breakpoint, cached monitor variables and read-only source copy",
+    "Real 1.6-second evaluation retains explicitly reclaimed 1.2-second controller lease",
+    "Actual variable-edit dialog, Step Into/Out/Over and monitor cache updates",
+    "Fenced two-controller handoff, explicit Continue, input and completed shared output",
+    "Machine Python absent from PATH; Python environment injection ignored",
+    "Active bundled interpreter blocks uninstall before file deletion",
+    "Complete manifest-owned uninstall; project, saved example and preferences unchanged"
+  ],
+  "harness_sha256": "c71855a9326e00e738b572e559fb855c7825f4e177bfb27f319d3c6fda74a794",
+  "retained_harnesses": {
+    "distribution_qualify.py": "c71855a9326e00e738b572e559fb855c7825f4e177bfb27f319d3c6fda74a794",
+    "distribution_desktop.py": "00e54dd95697b09411c6bf487fcc0e538b0da4c669d02ea7d61b4693650af4f2",
+    "distribution_shared_debug.py": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27",
+    "distribution_menu.py": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850"
+  },
+  "scope": "Private clean directory on existing Windows host; offscreen Qt, no actual noVNC or fresh VM claim",
+  "interpreter": "\\\\?\\D:\\a\\_temp\\v11-fresh\\installed-workflow\\installation with spaces\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\python.exe",
+  "desktop_sha256": "d0604a5f5e104c449ec7451c71cee6ecd392373ce9d7e8cf0f58edc9128336f3",
+  "menu_sha256": "05ecb2a6c07cbd288e1a32d6f6dbc6bf345caba455a606962d45508f66090016",
+  "shared_debug_sha256": "6fff659103b8cc5d1103bd52b81d8f4d0b3ebd527e466f92e5099e127bbc41c6"
+}

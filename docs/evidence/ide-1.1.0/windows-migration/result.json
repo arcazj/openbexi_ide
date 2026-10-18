@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "release_accepted": false,
+  "version": "1.1.0",
+  "bundle_manifest_sha256": "c7d6e32536254e31cb09a9c8b063b0dd32cb761555b67a14fa7ffc845f3d4310",
+  "checks": [
+    "Actual previous-version install then candidate upgrade; old interpreter retained",
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue",
+    "Installed Ctrl+Space insertion, F12 unsaved definition and read-only symbol navigation",
+    "Private runtime deep Python 15 chapters and graphics animation/controls/close",
+    "Run: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Debug: console typing, Send/Return, menu 1\u20137, nested prompts, graphics close and exit",
+    "Installed shared breakpoint, cached monitor variables and read-only source copy",
+    "Real 1.6-second evaluation retains explicitly reclaimed 1.2-second controller lease",
+    "Actual variable-edit dialog, Step Into/Out/Over and monitor cache updates",
+    "Fenced two-controller handoff, explicit Continue, input and completed shared output",
+    "Machine Python absent from PATH; Python environment injection ignored",
+    "Active bundled interpreter blocks uninstall before file deletion",
+    "Complete manifest-owned uninstall; project, saved example and preferences unchanged"
+  ],
+  "harness_sha256": "c71855a9326e00e738b572e559fb855c7825f4e177bfb27f319d3c6fda74a794",
+  "retained_harnesses": {
+    "distribution_qualify.py": "c71855a9326e00e738b572e559fb855c7825f4e177bfb27f319d3c6fda74a794",
+    "distribution_desktop.py": "00e54dd95697b09411c6bf487fcc0e538b0da4c669d02ea7d61b4693650af4f2",
+    "distribution_shared_debug.py": "5735dbfe529171b42e20e3ae14984abb01ccb73d105f2069f785c98d3d712b27",
+    "distribution_menu.py": "5aed3e10ba1d1cc7e57112d9ca5b2011fb410b6783df212089e0bafda7a0c850"
+  },
+  "scope": "Private clean directory on existing Windows host; offscreen Qt, no actual noVNC or fresh VM claim",
+  "previous_version": "1.2.0rc1",
+  "previous_manifest_sha256": "f088b709459850761ee582e9e120eb7e8722e336f4de46666a2eb173ed416015",
+  "interpreter": "\\\\?\\C:\\projects\\openbexi_ide\\.qualification\\ide-v11-verified-install\\versions\\1.1.0-39f8e8854f5cee50\\runtime\\python.exe",
+  "desktop_sha256": "6da08f4c3ef6d69b4dfdbcc0a48a61c281ed79f559e28c541948dcbb1479bfa6",
+  "menu_sha256": "e6bd312ba90f62506d9332ee4c8b6310e7eb5b73c7f34c4ab7b12ac3227c7a44",
+  "shared_debug_sha256": "a2e7fdfc447c57df6aac05c8ac1686749c64e64bd256d6a9e65efee73ca10bcc"
+}
