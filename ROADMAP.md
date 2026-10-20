@@ -6,7 +6,8 @@ Delivered the SPELL GUI User Manual-inspired procedure table, current-line
 highlighting, procedure history and embedded prompts in local Run and Debug.
 The implementation and exact validation scope are recorded in
 [Procedure workspace](docs/PROCEDURE_WORKSPACE.md). The sibling plugin's v0.6
-packaging and release qualification remain paused at the user's explicit request.
+packaging and release qualification resumed at the user's explicit request on
+2026-10-19; see [the current handoff](docs/RESUME_V04.md).
 The [1.2.0rc1 release](docs/IDE_1_2_0_RC1_RELEASE.md) packages this GUI update;
 stable promotion remains pending the recorded release checks and open issues.
 Earlier milestone sections below retain their historical candidate status;

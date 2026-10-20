@@ -1,5 +1,20 @@
 # Resume from openbexi_ide
 
+## Current priority: SPELL v0.6 resumed (2026-10-19)
+
+The user explicitly requested `resume v0.6`, superseding the pause below.
+Continue in `C:/obspell_v06_resume`, branch `release/v06-resumed`, checkpoint
+`b7f9b9f`. This integrates the committed shared procedure workspace with the
+v0.6 distribution work. See that checkout's `docs/V06_PROGRESS.md` for retained
+evidence and remaining release gates. Focused integration checks pass (67 tests
+plus 33 subtests), and the v0.6 JetBrains ZIP compiles.
+
+Preserve uncommitted changes in `C:/projects/openbexi_spell_plugin` and
+`C:/obspell_v06`. The latter contains unfinished upgrade harnesses to port and
+validate, plus passing package/rebuild prerequisites. Its earlier repository
+test failures remain unresolved; v0.6 is not accepted or published. The IDE's
+published 1.1.0 release remains independent of SPELL qualification.
+
 ## Current priority: procedure workspace (2026-10-17)
 
 The user explicitly prioritized a SPELL GUI User Manual-like execution table,
@@ -8,8 +23,8 @@ current-line highlighting, procedure history and embedded prompts. See
 installed artifacts and validation. The small SDK import change is supporting
 editor compatibility work, not the main GUI requirement.
 
-SPELL v0.6 remains **paused at the user's request**. Do not resume its packaging,
-upgrade, platform or release qualification from the older instructions below.
+At this historical checkpoint SPELL v0.6 was **paused at the user's request**.
+The explicit 2026-10-19 resume instruction above supersedes that pause.
 The GUI is a local Development update with independent validation. Preserve the
 published v0.5 evidence and all retained images/volumes. This update does not
 close the independent fresh-Windows OS installation gate for IDE 1.0.

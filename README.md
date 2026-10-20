@@ -4,7 +4,7 @@
 [procedure workspace](docs/PROCEDURE_WORKSPACE.md) adds a server-owned native
 SPELL executor, a browser control/monitor view, persistent records, the manual's
 state colors, and an execution-only layout in Qt, IntelliJ and PyCharm.
-**SPELL v0.6 remains paused.** Publication and retirement status are recorded in
+**SPELL v0.6 resumed on 2026-10-19; qualification is in progress.** IDE publication and retirement status are recorded in
 the [acceptance record](docs/IDE_1_1_ACCEPTANCE.md).
 
 See the [1.1 installation and release notes](docs/IDE_1_1_RELEASE.md) for the
