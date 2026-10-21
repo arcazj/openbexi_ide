@@ -1,0 +1,27 @@
+{
+  "passed": false,
+  "version": "1.1.1",
+  "cases": [
+    {
+      "mode": "Run",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: /evidence/native-final/project/.openbexi/runs/7de14acd13264b03920d32c24af16b29\n"
+    },
+    {
+      "mode": "Debug",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: /evidence/native-final/project/.openbexi/runs/e7a478b2baed4e1f97425d314f242dd8\n"
+    }
+  ],
+  "platform": "linux",
+  "requested_image": "backend default",
+  "source_sha256": "4e67389c942ad4dd011f8598c2dbefe7fd4786f9440bd1515aa6e0e1757c53fa",
+  "error": "Traceback (most recent call last):\n  File \"/opt/openbexi/scripts/qualify_procedure_workspace.py\", line 115, in main\n    assert workspace.selected.mode == 'Run' and workspace.model.lines == source.splitlines()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "console": "Debugging procedure.py\n\nReady to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nReady to execute?\nChoices: Y\u0004N\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nOperator name\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSetpoint\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nChoose station\nChoices: North\u0004South\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nChild decision\nChoices: Y\u0004N\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: /evidence/native-final/project/.openbexi/runs/e7a478b2baed4e1f97425d314f242dd8\n\nFinished \u00b7 exit 0\n"
+}

@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QAbstractItemView, QButtonGroup, QCheckBox, QComboBox, QFrame, QHBoxLayout,
     QLabel, QLineEdit, QPlainTextEdit, QPushButton, QRadioButton,
     QScrollArea, QSplitter, QTabBar, QTableView, QTabWidget, QTreeWidget, QTreeWidgetItem,
-    QVBoxLayout, QWidget,
+    QVBoxLayout, QWidget, QStyledItemDelegate, QStyle, QStyleOptionViewItem,
 )
 
 from .fonts import fixed_font
@@ -20,6 +20,14 @@ from PySide6.QtGui import QColor, QDesktopServices
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QTableWidget, QTableWidgetItem, QFileDialog
 
 
+
+
+class CodeResultsDelegate(QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        # Row selection must not cover the execution cursor or result colors.
+        option = QStyleOptionViewItem(option)
+        option.state &= ~QStyle.State_Selected
+        super().paint(painter, option, index)
 
 
 class CodeResultsModel(QAbstractTableModel):
@@ -66,12 +74,13 @@ class CodeResultsModel(QAbstractTableModel):
         if role == Qt.BackgroundRole:
             if column == 5 and result_color(row.get('status', '')):
                 return QColor(result_color(row['status']))
-            if self.run.active and self.run.current.get(self.path) == line:
+            if (self.run.active and self.run.current_path == self.path
+                    and self.run.status.upper().split(' (', 1)[0] not in {'FINISHED', 'FAILED', 'ERROR', 'ABORTED'}
+                    and self.run.current.get(self.path) == line):
                 return QColor(CURRENT_LINE)
-            return QColor(procedure_color(self.run.status))
+            return QColor('white')
         if role == Qt.ForegroundRole:
-            return QColor('white' if self.run.active and self.run.current.get(self.path) == line
-                          and not (column == 5 and result_color(row.get('status', ''))) else 'black')
+            return QColor('black')
         if role == Qt.ToolTipRole:
             return self.lines[index.row()] if column == 1 else json.dumps(row.get('details', {}), ensure_ascii=False, indent=2)
 
@@ -159,6 +168,7 @@ class ProcedureWorkspace(QWidget):
         content_layout.addLayout(source_row)
         self.code = QTableView()
         self.model = CodeResultsModel(self.code); self.code.setModel(self.model)
+        self.code.setItemDelegate(CodeResultsDelegate(self.code))
         self.code.setShowGrid(False)
         self.code.verticalHeader().hide()
         self.code.verticalHeader().setDefaultSectionSize(25)
@@ -514,11 +524,13 @@ class ProcedureWorkspace(QWidget):
         if run and run.active and getattr(run, 'controlling', True):
             controller = self.run_controller(run)
             if controller:
+                run.aborted = True
                 controller.stop()
             elif self.connection_worker:
                 self.service_request('/api/command', dict(id=run.service_id, command='disconnect',
                     arguments={'terminateDebuggee': True}), run)
             else:
+                run.aborted = True
                 self.controller.stop()
             self.refresh()
 

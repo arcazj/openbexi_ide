@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "version": "1.1.1",
+  "cases": [
+    {
+      "mode": "Run",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: C:\\projects\\openbexi_ide\\.qualification\\spell-v06-windows-native-published\\project\\.openbexi\\runs\\c3745f15f9f14063888784872556d429\r\n"
+    },
+    {
+      "mode": "Debug",
+      "passed": true,
+      "prompts": 5,
+      "sources": 2,
+      "results": 8,
+      "output": "Ready to execute?\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Ready to execute?\nAnswer: 'Y'\nOperator name\n\nSPELL prompt: Operator name\nAnswer: 'Ada'\nSetpoint\n\nSPELL prompt: Setpoint\nAnswer: '-2.5'\nChoose station\nAvailable options:\n   - North\n   - South\n\nSPELL prompt: Choose station\nAnswer: 'South'\nStarting procedure child (Automatic:True, Blocking:True, Visible: True)\n=== SPELL child child#0 ===\nfrom spell.lang.functions import Prompt, Display\nfrom spell.lang.constants import YES_NO\nassert Prompt('Child decision', Type=YES_NO, HandleError=False) is False\nDisplay('CHILD_WORKSPACE_PASS')\n=== End child source ===\nWaiting for child procedure\nChild decision\nAvailable options:\n   - Y: Yes\n   - N: No\n\nSPELL prompt: Child decision\nAnswer: 'N'\nCHILD_WORKSPACE_PASS\nPROCEDURE_WORKSPACE_PASS\nSPELL run files: C:\\projects\\openbexi_ide\\.qualification\\spell-v06-windows-native-published\\project\\.openbexi\\runs\\f665b018f58d47be99139573d49a0ba5\r\n"
+    }
+  ],
+  "platform": "win32",
+  "requested_image": "backend default",
+  "source_sha256": "9f920351428bbbd7c14452da6476d0411699030a977ccd6bb78b1738f39904a4",
+  "stop_rerun": true,
+  "ordinary_python": true,
+  "presentation": "White code rows, one soft current-line cursor, result-cell colors; light and dark themes",
+  "history": 4,
+  "runtime_images": [
+    "sha256:ef97426030ab9db06f573710ebbec56ff2486ed558697c058ce9d724c9036100"
+  ]
+}

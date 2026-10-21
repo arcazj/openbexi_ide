@@ -60,12 +60,14 @@ function render() {
 }
 function renderCode(run) {
   const path = $('sources').value; const content = run?.sources[path] || '';
-  const rows = run?.results[path] || {}; const line = run?.active ? run.current[path] : null;
+  const rows = run?.results[path] || {};
+  const executing = run?.active && !['FINISHED', 'FAILED', 'ERROR', 'ABORTED'].includes(String(run.status).toUpperCase().split(' (')[0]);
+  const line = executing && run.current_path === path ? run.current[path] : null;
   const key = JSON.stringify([run?.id, path, content, rows, line, run?.status]); if (renderKey === key) return; renderKey = key;
   const fragment = document.createDocumentFragment(); const lines = content.split(/\r?\n/); if (lines.at(-1) === '') lines.pop();
   lines.forEach((source, index) => {
     const number = index + 1, row = rows[number] || {}, tr = document.createElement('tr'); tr.dataset.line = number;
-    tr.style.background = number === line ? snapshot.colors.current : snapshot.colors.procedure[run?.status] || '#fff'; tr.style.color = number === line ? '#fff' : '#000';
+    tr.style.background = number === line ? snapshot.colors.current : '#fff'; tr.style.color = '#000';
     for (const value of [number, source, row.timestamp, row.item, row.value, row.status]) tr.append(text('td', String(value ?? '').replaceAll('\x04', ' · ')));
     const resultColor = snapshot.colors.result[String(row.status || '').split(' (')[0]];
     if (resultColor) { tr.lastChild.style.background = resultColor; tr.lastChild.style.color = '#000'; }

@@ -1,24 +1,25 @@
 # OpenBEXI IDE
 
-**OpenBEXI IDE 1.1.0** develops the former **1.2.0rc1** code base. Its
+**OpenBEXI IDE 1.1.1** integrates the published **SPELL v0.6** runtime. Its
 [procedure workspace](docs/PROCEDURE_WORKSPACE.md) adds a server-owned native
 SPELL executor, a browser control/monitor view, persistent records, the manual's
-state colors, and an execution-only layout in Qt, IntelliJ and PyCharm.
-**SPELL v0.6 resumed on 2026-10-19; qualification is in progress.** IDE publication and retirement status are recorded in
-the [acceptance record](docs/IDE_1_1_ACCEPTANCE.md).
+state badge, and an execution-only layout in Qt, IntelliJ and PyCharm.
+Procedure rows stay white, with a soft highlight on the current line and colors
+only in result cells. See [the current Docker setup and verification](docs/IDE_SPELL_V06.md).
 
-See the [1.1 installation and release notes](docs/IDE_1_1_RELEASE.md) for the
-matching host/plugin versions, migration, validation and remaining limits.
+Use the [1.1.1 setup guide](docs/IDE_SPELL_V06.md) for matching SPELL v0.6
+components, Docker commands and offline builds. The
+[1.1.0 release notes](docs/IDE_1_1_RELEASE.md) retain the previous release's scope.
 
-Download the [Windows ZIP](https://github.com/arcazj/openbexi_ide/releases/download/v1.1.0/OpenBEXI-IDE-1.1.0-windows-x64.zip),
-[Linux Docker image tar.gz](https://github.com/arcazj/openbexi_ide/releases/download/v1.1.0/openbexi-ide-1.1.0-linux-amd64.tar.gz),
-or [matching components and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.0).
-The Git tag is `v1.1.0`; the package version is `1.1.0`. The
+Download the [1.1.1 Docker image, core wheel, components and checksums](https://github.com/arcazj/openbexi_ide/releases/tag/v1.1.1).
+The previous [1.1.0 Windows offline ZIP](https://github.com/arcazj/openbexi_ide/releases/download/v1.1.0/OpenBEXI-IDE-1.1.0-windows-x64.zip)
+remains available; this Docker-focused patch does not replace that bundle.
+The Git tag is `v1.1.1`; the package version is `1.1.1`. The
 [older stable 1.0](https://github.com/arcazj/openbexi_ide/releases/tag/1.0) remains
 available as a historical download.
 
-The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Start it with
-`docker compose up -d --build --wait ide`. It contains the latest IDE source and
+The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Load the 1.1.1
+image archive, then start it with `docker compose up -d --wait ide`. It contains
 all SPELL procedures under `test_spell/`, with a dedicated language-menu launcher.
 The menu exercises available features and lists all 763 reference entries;
 unsupported features are explicitly reported. See [the procedures](examples/test_spell/README.md).
@@ -69,11 +70,11 @@ immutable native releases and fenced effects through the optional DSS provider.
 
 ## Install and open
 
-For a complete local Docker test desktop, run this from the repository root with
-`openbexi_spell_plugin` beside it:
+For the Docker desktop, load the image from the 1.1.1 release, then run this from
+the repository root (see [offline build instructions](docs/IDE_SPELL_V06.md)):
 
 ```powershell
-docker compose up -d --build --wait ide
+docker compose up -d --wait ide
 ```
 
 Open [the browser desktop](http://localhost:6080/vnc.html?autoconnect=1&resize=scale).

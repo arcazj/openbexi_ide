@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "passed": true,
+  "version": "1.1.1",
+  "spell_release": "v0.6",
+  "image": "sha256:11052c0f58ebc64920476eeb918df6291a5f78a39406f682f632a3b6e228377f",
+  "native_image": "sha256:ef97426030ab9db06f573710ebbec56ff2486ed558697c058ce9d724c9036100",
+  "host_sha256": "17b63183600cbfaad15bc4ed76d0d5651cc264368164aa8f825a377ccc38de33",
+  "artifacts": {
+    "compose.v06.yaml": {
+      "sha256": "887a2a58afa677c2ed8aa261e4db83342c67335df9c63c41a0ad70923f8004a4",
+      "bytes": 799
+    },
+    "compose.yaml": {
+      "sha256": "b9346a68ba2d1a201269e50dfa4b1e0703343265c1c37882ce87378f7ab9fe6b",
+      "bytes": 126
+    },
+    "IDE_SPELL_V06.md": {
+      "sha256": "a699db1c4eebdac5d8a6f06288428cb302fae14fcd72c4c117b1909740b01c1b",
+      "bytes": 3874
+    },
+    "openbexi-ide-1.1.1-spell-v0.6-linux-amd64.tar.gz": {
+      "sha256": "58265755b7267a46213a32511616c3bc3e849a18f8bd73922ea47b1960de6383",
+      "bytes": 671037398
+    },
+    "openbexi_ide-1.1.1-py3-none-any.whl": {
+      "sha256": "e7c01dff04923d303bec9d5787d94c67bbddc5c290fe86e11bfa895426d7442b",
+      "bytes": 162362
+    },
+    "openbexi_spell_host-0.6.0-py3-none-any.whl": {
+      "sha256": "17b63183600cbfaad15bc4ed76d0d5651cc264368164aa8f825a377ccc38de33",
+      "bytes": 26882
+    },
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": {
+      "sha256": "bffd26c8d08df391e8d1c51acbfbf581dbfb250a643130b18132f8987eabf869",
+      "bytes": 58004
+    }
+  },
+  "tests": {
+    "windows": {
+      "tests": 211,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 202
+    },
+    "linux": {
+      "tests": 211,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 202
+    },
+    "focused": {
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 18
+    }
+  },
+  "reports": {
+    "build.json": {
+      "path": "docs/evidence/ide-spell-v06/build.json",
+      "sha256": "50727045f0c50420e29876e90bfa2655dee921d392fa259b9bd1a69139b4f6d1",
+      "bytes": 26221
+    },
+    "windows-unit.xml": {
+      "path": "docs/evidence/ide-spell-v06/windows-unit.xml",
+      "sha256": "2f268585ebf8e744552bda70181cf62e7e0462df7c27ac1feea0588101d9b1b4",
+      "bytes": 46606
+    },
+    "linux-unit.xml": {
+      "path": "docs/evidence/ide-spell-v06/linux-unit.xml",
+      "sha256": "9d4059a00556e4682b0332765f2e8f63a27fd1b148d1d99033ca3d535d6140cf",
+      "bytes": 46577
+    },
+    "focused.xml": {
+      "path": "docs/evidence/ide-spell-v06/focused.xml",
+      "sha256": "b4067c547f0037940b09079b92f1a1b81547c9a1c8f52aea20a8e03c968323c1",
+      "bytes": 2553
+    },
+    "windows-native.json": {
+      "path": "docs/evidence/ide-spell-v06/windows-native.json",
+      "sha256": "6f87cbb190a4772be6c9bf671ae76b81f3d555f04d03a7e40f6e27883921f61d",
+      "bytes": 2798
+    },
+    "linux-native.json": {
+      "path": "docs/evidence/ide-spell-v06/linux-native.json",
+      "sha256": "50d9154bfee27e3af608549290e21f1edf36658d811de5e7bfab2d52543de7b8",
+      "bytes": 2686
+    },
+    "browser.json": {
+      "path": "docs/evidence/ide-spell-v06/browser.json",
+      "sha256": "aa98d6da6e1d90ffcb8936d0345ee87f8f9e05957c26707b2980cd609f6dcdbe",
+      "bytes": 596
+    },
+    "command-setpoint.json": {
+      "path": "docs/evidence/ide-spell-v06/command-setpoint.json",
+      "sha256": "7d92176ae68e694ad4252ed797fcf4810f8633d2f4b25af5f38d21e4316911a1",
+      "bytes": 548
+    },
+    "deployment.json": {
+      "path": "docs/evidence/ide-spell-v06/deployment.json",
+      "sha256": "d8095ecc24f7abe2ab7776a91133385ab54b43a15a7841b0fafafaa28c57980a",
+      "bytes": 424
+    },
+    "cleanup.json": {
+      "path": "docs/evidence/ide-spell-v06/cleanup.json",
+      "sha256": "0465a7c078eb48c67709e354b7e59cf95b1a1973ac73871ff9b4b4ffd9d5d81a"
+    },
+    "linux-run-prompt.png": {
+      "path": "docs/evidence/ide-spell-v06/linux-run-prompt.png",
+      "sha256": "59dc871ff3996ae1e7f3402eae10936dfe8d02e9b74a8987156426252e019a6d",
+      "bytes": 114430
+    },
+    "linux-run-prompt-dark.png": {
+      "path": "docs/evidence/ide-spell-v06/linux-run-prompt-dark.png",
+      "sha256": "b8ec1eea43bbef45b1817649f2fb329a5cffa5014c3173bb4261d9037660ea0e",
+      "bytes": 114943
+    },
+    "linux-run-results.png": {
+      "path": "docs/evidence/ide-spell-v06/linux-run-results.png",
+      "sha256": "6fb4e8f64c9d3ab7d449889fa35b6a2a54c43637499c702f1fbc3eabdbfe1ba9",
+      "bytes": 122111
+    },
+    "windows-run-prompt.png": {
+      "path": "docs/evidence/ide-spell-v06/windows-run-prompt.png",
+      "sha256": "9a0ab16df6ffa5cf484b3b8f495ae778c0d49086730a14f2ed36149cca94c602",
+      "bytes": 54266
+    },
+    "windows-run-results.png": {
+      "path": "docs/evidence/ide-spell-v06/windows-run-results.png",
+      "sha256": "8137b40ed10381d99cbabea9ccad3cc41b2cb67d94cf3bf1721175ff3977764f",
+      "bytes": 53686
+    },
+    "browser-controller-prompt.png": {
+      "path": "docs/evidence/ide-spell-v06/browser-controller-prompt.png",
+      "sha256": "adb309e8d84f52aabffb483850d4f47566ec27fdce6ddbad9a8f012a02921d8b",
+      "bytes": 55936
+    },
+    "browser-monitor-prompt.png": {
+      "path": "docs/evidence/ide-spell-v06/browser-monitor-prompt.png",
+      "sha256": "fca6181a7e26fcd6462e46ab6748aadd4b7f244f7022b2fbd28a827540f74d8c",
+      "bytes": 64860
+    },
+    "browser-finished.png": {
+      "path": "docs/evidence/ide-spell-v06/browser-finished.png",
+      "sha256": "07777a54a17d704b4bb1936eff1a7b59e0d0c540655b8ccd54283ff02f017f16",
+      "bytes": 50964
+    }
+  },
+  "diagnostics": "docs/evidence/ide-spell-v06/diagnostics.json",
+  "runtime_manifest_sha256": "45aec7e5a2f750632caa698f89fbb8499dd8fabc4aab73889323b3919a164f7c",
+  "cleanup": {
+    "passed": true,
+    "retired_containers": 256,
+    "removed_image_tags": 219,
+    "removed_disposable_test_volumes": 209,
+    "removed_cache_directories": 240,
+    "builder_cache_reclaimed": "17.35GB",
+    "preserved_user_files": 165,
+    "preserved_user_volumes": true,
+    "preserved_release_evidence": true
+  },
+  "scope": "Linux x86_64 Docker desktop; installed Windows/Qt and browser Run/Debug, prompts, child procedures, Abort/rerun, ordinary Python, records and As-Run. Accepted SPELL v0.6 GENERIC simulator runtime.",
+  "limitations": [
+    "Nine explicit platform/operational-Execution skips in each full suite.",
+    "One retained Windows shutdown-thread warning; unchanged focused repeat passes with warnings as errors.",
+    "No new Windows offline bundle or JetBrains ZIP; no v0.7 operational qualification."
+  ]
+}

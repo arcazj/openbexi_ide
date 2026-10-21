@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "container": "openbexi-ide-spell-v06-ide-1",
+  "image": "sha256:11052c0f58ebc64920476eeb918df6291a5f78a39406f682f632a3b6e228377f",
+  "health": "healthy",
+  "preserved_user_files": 165,
+  "restored_generated_results": [],
+  "user_volumes": [
+    "openbexi-v1-final-workspace",
+    "openbexi-v1-final-preferences"
+  ],
+  "url": "http://127.0.0.1:6080/vnc.html?autoconnect=1&resize=remote"
+}

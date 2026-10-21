@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "image": "sha256:11052c0f58ebc64920476eeb918df6291a5f78a39406f682f632a3b6e228377f",
+  "source_sha256": "967d3af0d7786592d04d5b137d54ff2fe6a63c2b7bc17c3745b84f9a3736f377",
+  "exit_code": 0,
+  "stdout": "Sending command 'CMDNAME'\nExecution success\nVerifying telemetry conditions\n    0 : Parameter 'TM.PAYLOAD.SETPOINT: Payload command setpoint' = 2.5\nVerifications succeeded\nSPELL_COMMAND_SETPOINT_PASS\n",
+  "stderr": "SPELL run files: /evidence/command-setpoint-final/.openbexi/runs/b21553213a9048588cea5ca72a438c05\n"
+}

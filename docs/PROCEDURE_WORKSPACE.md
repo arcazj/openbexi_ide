@@ -2,9 +2,9 @@
 
 This Development workspace follows the SPELL GUI User Manual 2.4.4 procedure
 presentation: sections 3.2.1 (tabular view), 3.2.6 (prompt inputs) and 5.4
-(procedure input). The current unpublished candidate version is `1.1.0`, based on
-`1.2.0rc1`; the companion native host is `0.3.1.dev3` and JetBrains candidate is
-`0.3.1-workspace.2`. SPELL v0.6 remains paused at the user's request.
+(procedure input). IDE `1.1.1` uses the published SPELL `0.6.0` host and native
+runtime. See [the current Docker setup](IDE_SPELL_V06.md). Historical v1.1.0
+qualification and its original companion versions remain recorded separately.
 
 ## v1.1 development behavior
 
@@ -13,8 +13,11 @@ a procedure also hides the project pane. The menu, execution controls and
 procedure/history strip remain visible. Leaving SPELL mode restores the Qt
 layout; JetBrains provides **Return to editor**. Completed results stay visible.
 
-The manual's page-38 procedure-state background, blue current-line marker and
-item-result colors are independent. An unknown result is never shown as success.
+Procedure-state colors appear in the state badge. Code rows remain white in
+both themes. A soft blue highlight follows only the current executing line and
+clears after completion. Result cells independently use green for success, red
+for failure and amber for warnings or work in progress. An unknown result is
+never shown as success. Selecting a row preserves these execution/result colors.
 Double-click a Qt result for **Latest information**, **History** or **Full**.
 The first two merge item updates; Full preserves the raw notifications. EX uses
 the native statement count when supplied. History is paged from SQLite, and

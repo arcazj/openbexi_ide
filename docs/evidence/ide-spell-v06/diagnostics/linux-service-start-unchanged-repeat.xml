@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.985" timestamp="2026-10-21T06:48:22.888104+00:00" hostname="aeeb25286bac"><testcase classname="tests.test_session_backpressure" name="test_nonreading_input_cannot_block_session_control" time="0.854" /></testsuite></testsuites>

@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "version": "1.1.1",
+  "checks": [],
+  "error": "Traceback (most recent call last):\n  File \"C:\\projects\\openbexi_ide\\scripts\\qualify_procedure_web.py\", line 62, in main\n    assert operator.locator('#code tbody tr').evaluate_all(\"rows => rows.every(row => row.style.backgroundColor === 'rgb(255, 255, 255)')\")\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "page_errors": []
+}

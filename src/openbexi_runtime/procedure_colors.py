@@ -1,7 +1,8 @@
 """SPELL 2.4.4 presentation colors, independent of toolkit and desktop theme.
 
 Procedure colors were sampled from the default-color table on manual page 38.
-Item-result colors and the execution cursor are separate from procedure state.
+Procedure state colors belong to the state badge. Code rows stay white, with
+a soft execution cursor and independent item-result colors.
 """
 
 PROCEDURE_COLORS = {
@@ -10,11 +11,11 @@ PROCEDURE_COLORS = {
     'PAUSED': '#e0ffc1', 'ERROR': '#ffb9b9', 'ABORTED': '#ffb9b9',
     'FINISHED': '#dcb9ff', 'RELOADING': '#e1feba', 'INTERRUPTED': '#ffffb3',
 }
-CURRENT_LINE = '#0000ff'
+CURRENT_LINE = '#eaf2ff'
 CONTROL_COLOR = '#008000'
 MONITOR_COLOR = '#0000ff'
 RESULT_COLORS = {'SUCCESS': '#00ff00', 'FAILED': '#ff0000', 'ERROR': '#ff0000',
-                 'WARNING': '#ffff00', 'IN PROGRESS': '#ffff00'}
+                 'WARNING': '#ffd166', 'IN PROGRESS': '#ffd166'}
 
 
 def procedure_color(status):

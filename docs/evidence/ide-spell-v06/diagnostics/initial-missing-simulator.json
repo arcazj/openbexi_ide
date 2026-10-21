@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "version": "1.1.1",
+  "cases": [],
+  "platform": "linux",
+  "requested_image": "backend default",
+  "source_sha256": "4e67389c942ad4dd011f8598c2dbefe7fd4786f9440bd1515aa6e0e1757c53fa",
+  "error": "Traceback (most recent call last):\n  File \"/opt/openbexi/scripts/qualify_procedure_workspace.py\", line 71, in main\n    assert run.prompt and run.prompt['text'] == expected, (run.prompt, view.console.toPlainText())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (None, \"Running procedure.py\\n\\n\\nlaunch: No module named 'dss'\\n\\nFinished \u00b7 exit -1\\n\")\n",
+  "console": "Running procedure.py\n\n\nlaunch: No module named 'dss'\n\nFinished \u00b7 exit -1\n"
+}

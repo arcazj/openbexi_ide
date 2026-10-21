@@ -15,6 +15,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from openbexi_ide.app import MainWindow
 from openbexi_ide.fonts import configure_fonts
+from openbexi_runtime.procedure_colors import CURRENT_LINE
 
 
 def main():
@@ -76,7 +77,11 @@ Display('PROCEDURE_WORKSPACE_PASS')
                         assert run.results[script][3]['status'] == 'SUCCESS', run.results
                         assert '28.0' in run.results[script][3]['value']
                         assert run.sources[script] == source
-                        assert workspace.model.data(workspace.model.index(3, 0), Qt.BackgroundRole) is not None
+                        background = lambda row, column: workspace.model.data(workspace.model.index(row, column), Qt.BackgroundRole).name()
+                        assert background(3, 1) == CURRENT_LINE
+                        assert background(2, 1) == '#ffffff' and background(2, 5) == '#00ff00'
+                        assert all(background(row, 1) == '#ffffff' for row in range(len(source.splitlines())) if row != 3)
+                        workspace.code.selectRow(2)
                         assert view.grab().save(str(args.output / (mode.lower() + '-prompt.png')))
                         view.toggle_theme(); workspace.refresh(); app.processEvents()
                         assert view.grab().save(str(args.output / (mode.lower() + '-prompt-dark.png')))
@@ -99,6 +104,12 @@ Display('PROCEDURE_WORKSPACE_PASS')
                 assert 'PROCEDURE_WORKSPACE_PASS' in run.output and 'CHILD_WORKSPACE_PASS' in run.output
                 assert project / 'child.py' in run.sources
                 assert not workspace.prompt_panel.isVisible()
+                workspace.source_choice.setCurrentIndex(next(index for index in range(workspace.source_choice.count())
+                    if workspace.source_choice.itemData(index) == script))
+                workspace.refresh(); app.processEvents()
+                assert workspace.model.lines == source.splitlines()
+                assert all(workspace.model.data(workspace.model.index(row, 1), Qt.BackgroundRole).name() == '#ffffff'
+                           for row in range(workspace.model.rowCount()))
                 assert view.grab().save(str(args.output / (mode.lower() + '-results.png')))
                 report['cases'].append(dict(mode=mode, passed=True, prompts=len(seen), sources=len(run.sources), results=len(run.results.get(script, {})), output=run.output))
             assert len(workspace.runs) == 2
@@ -110,7 +121,7 @@ Display('PROCEDURE_WORKSPACE_PASS')
             assert run.prompt
             QTest.mouseClick(workspace.abort, Qt.LeftButton)
             wait(lambda: not view.is_busy())
-            assert run.status == 'Aborted'
+            assert run.status.upper() == 'ABORTED', (run.status, view.console.toPlainText())
             view.run_action.trigger(); fresh = workspace.active_run
             wait(lambda: fresh.prompt is not None or not view.is_busy())
             assert fresh is not run and fresh.prompt
@@ -123,6 +134,7 @@ Display('PROCEDURE_WORKSPACE_PASS')
             wait(lambda: not view.is_busy())
             assert 'PLAIN_PYTHON_PASS' in view.console.toPlainText()
             report['ordinary_python'] = True
+            report['presentation'] = 'White code rows, one soft current-line cursor, result-cell colors; light and dark themes'
             report['history'] = len(workspace.runs)
             report['runtime_images'] = sorted({json.loads(path.read_text())['image']
                 for path in project.glob('.openbexi/runs/*/manifest.json')})

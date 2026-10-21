@@ -1,0 +1,42 @@
+{
+  "initial-missing-simulator.json": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/initial-missing-simulator.json",
+    "sha256": "c4e173e30904f0424eca61239cb7f2593d7c48e8dc3ddc65f29384f934c0e00f",
+    "bytes": 722
+  },
+  "initial-harness-source-choice.json": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/initial-harness-source-choice.json",
+    "sha256": "9d1263f0b36bc7d8803fe8a6096066d1cfac384f36151ffbc9dab201b22d752d",
+    "bytes": 3852
+  },
+  "abort-before-fix.json": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/abort-before-fix.json",
+    "sha256": "9ef3865ed85284d47f4f9b740b7698ac16f638cc8d7c417fb1d245061e6f2dc5",
+    "bytes": 3115
+  },
+  "completion-cursor-before-fix.json": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/completion-cursor-before-fix.json",
+    "sha256": "4068757d9af6baf6e8fae9963df6ad1330632c473864bb9291488e4f9b51d110",
+    "bytes": 531
+  },
+  "linux-service-start-timeout.xml": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/linux-service-start-timeout.xml",
+    "sha256": "f62f494fcf2addd16649b6976a85be0a1c621da7d9b9f49b612c68246529aed8",
+    "bytes": 49575
+  },
+  "linux-service-start-unchanged-repeat.xml": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/linux-service-start-unchanged-repeat.xml",
+    "sha256": "7dbd3019e7f54cf1d880fa0bfa77efc8ab4768374e9066600e8b372c014160ba",
+    "bytes": 375
+  },
+  "windows-shutdown-warning-unchanged-repeat.xml": {
+    "path": "docs/evidence/ide-spell-v06/diagnostics/windows-shutdown-warning-unchanged-repeat.xml",
+    "sha256": "2e7e3a9044ab3b7be592fdbfc208e85277a0082db438abe0cfdfe1ef2a8a3936",
+    "bytes": 369
+  },
+  "notes": [
+    "One Linux full run timed out during the unrelated Python service initial /run request (5 seconds). The exact test passed unchanged in 0.98 seconds; the final complete image suite also passes.",
+    "The Windows full run passed 202 cases with 9 skips and one shutdown-thread warning (Session._pump: read of closed file). That exact test passed unchanged with warnings treated as errors.",
+    "Earlier packaging, harness-selection, Abort presentation and terminal-cursor failures are retained separately from the accepted checks."
+  ]
+}

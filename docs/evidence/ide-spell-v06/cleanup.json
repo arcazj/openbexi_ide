@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "retired_containers": 256,
+  "removed_image_tags": 219,
+  "removed_disposable_test_volumes": 209,
+  "removed_cache_directories": 240,
+  "builder_cache_reclaimed": "17.35GB",
+  "preserved_user_files": 165,
+  "preserved_user_volumes": true,
+  "preserved_release_evidence": true
+}

@@ -15,8 +15,10 @@
 !scripts/
 !scripts/qualify_installed.py
 !scripts/qualify_desktop_installed.py
+!scripts/qualify_procedure_workspace.py
 !scripts/check_release.py
 !docker/
 !docker/**
 **/__pycache__/
 **/*.pyc
+examples/test_spell/spell_menu_results.json

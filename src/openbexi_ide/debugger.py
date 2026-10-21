@@ -222,8 +222,10 @@ class DebugController(QObject):
                 self.input_requested.emit(body)
                 self.state_changed.emit(True)
             elif event == "terminated":
+                was_stopping = self.stopping
                 self.terminated = self.stopping = True
-                self.request("disconnect", {"terminateDebuggee": True})
+                if not was_stopping:
+                    self.request("disconnect", {"terminateDebuggee": True})
                 epoch = self.epoch
                 grace = 60000 if getattr(self, 'service_backed', False) else self.backend['gracefulStopMilliseconds'] if self.backend else 150
                 QTimer.singleShot(grace, lambda: self.force_end(epoch))

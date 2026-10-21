@@ -3,6 +3,8 @@ from PySide6.QtCore import QObject, QSettings, Qt, Signal
 
 from openbexi_ide.procedure_workspace import ProcedureRun, ProcedureWorkspace
 from openbexi_runtime.launch import LaunchSpec
+from openbexi_ide.procedure_workspace import CodeResultsModel
+from openbexi_runtime.procedure_colors import CURRENT_LINE
 
 
 class Controller(QObject):
@@ -22,6 +24,37 @@ class Controller(QObject):
 
     def stop(self):
         self.stopped = True
+
+
+def test_code_rows_stay_white_and_cursor_follows_only_the_current_source(tmp_path):
+    script, child = tmp_path / 'main.py', tmp_path / 'child.py'
+    run = ProcedureRun(tmp_path, script, 'Run')
+    for path, content in ((script, 'first\nsecond\nthird\n'), (child, 'child\n')):
+        run.apply(dict(kind='source', source={'path': str(path)}, text=content, offset=0))
+    model = CodeResultsModel()
+    model.display(run, script)
+    color = lambda row, column: model.data(model.index(row, column), Qt.BackgroundRole).name()
+    run.apply(dict(kind='line', source={'path': str(script)}, line=1, current=True))
+    assert color(0, 1) == CURRENT_LINE
+    run.apply(dict(kind='line', source={'path': str(script)}, line=2, current=True))
+    assert color(0, 1) == '#ffffff' and color(1, 1) == CURRENT_LINE
+    for status, expected in (('SUCCESS', '#00ff00'), ('FAILED', '#ff0000'), ('WARNING', '#ffd166')):
+        run.apply(dict(kind='line', source={'path': str(script)}, line=2, status=status))
+        assert color(1, 5) == expected and color(1, 1) == CURRENT_LINE
+        assert model.data(model.index(1, 1), Qt.ForegroundRole).name() == '#000000'
+    run.apply(dict(kind='line', source={'path': str(child)}, line=1, current=True))
+    assert all(color(row, 1) == '#ffffff' for row in range(3))
+    model.display(run, child)
+    assert color(0, 1) == CURRENT_LINE
+    # Native completion can precede the adapter's final export/exit acknowledgement.
+    for status in ('FINISHED', 'ERROR', 'ABORTED'):
+        run.status = status
+        assert color(0, 1) == '#ffffff'
+    run.active = False
+    run.status = 'RUNNING'
+    assert color(0, 1) == '#ffffff'
+    model.display(run, script)
+    assert color(1, 5) == '#ffd166'
 
 
 def test_native_results_use_snapshot_and_do_not_invent_success(tmp_path):
@@ -91,7 +124,8 @@ def test_prompt_reset_commit_rejection_expiry_and_history(app, tmp_path):
     view.answer_field.setText('1.25'); view.submit()
     assert controller.answers[-1] == ('c', '1.25')
     view.stop_selected(); assert controller.stopped
-    controller.finished.emit(130); assert view.selected.status == 'Aborted'
+    # A native abort can acknowledge clean process shutdown with exit code zero.
+    controller.finished.emit(0); assert view.selected.status == 'Aborted'
     view.close()
 
 

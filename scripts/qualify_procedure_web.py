@@ -48,7 +48,8 @@ def main():
             expect(monitor.locator('#commit')).to_be_disabled()
             expect(monitor.locator('#answers input').first).to_be_disabled()
             colors = operator.locator('#code tbody').evaluate("node => ({current: node.querySelector('[data-line=\"4\"]').style.backgroundColor, success: node.querySelector('[data-line=\"3\"]').lastChild.style.backgroundColor})")
-            assert colors == {'current': 'rgb(0, 0, 255)', 'success': 'rgb(0, 255, 0)'}, colors
+            assert colors == {'current': 'rgb(234, 242, 255)', 'success': 'rgb(0, 255, 0)'}, colors
+            assert operator.locator('#code tbody tr').evaluate_all("rows => rows.every(row => row.style.color === 'rgb(0, 0, 0)' && (row.dataset.line === '4' || row.style.backgroundColor === 'rgb(255, 255, 255)'))")
             operator.screenshot(path=str(args.output / 'controller-prompt.png'), full_page=True)
             monitor.screenshot(path=str(args.output / 'monitor-prompt.png'), full_page=True)
             operator.locator('#answers input[value="0"]').check(); operator.locator('#reset').click()
@@ -57,10 +58,12 @@ def main():
             expect(operator.locator('#state')).to_have_text('FINISHED')
             expect(monitor.locator('#state')).to_have_text('FINISHED')
             expect(operator.locator('#output')).to_contain_text('BROWSER_NATIVE_PASS')
+            expect(operator.locator('#code tbody tr').first).to_have_css('background-color', 'rgb(255, 255, 255)')
+            assert operator.locator('#code tbody tr').evaluate_all("rows => rows.every(row => row.style.backgroundColor === 'rgb(255, 255, 255)')")
             operator.screenshot(path=str(args.output / 'finished.png'), full_page=True)
             report['checks'] += ['Native browser Run, prompt Reset/Commit, successful completion',
                 'Second browser monitors the same execution and cannot answer or run',
-                'Manual current-line and SUCCESS colors']
+                'White rows, one soft current-line highlight and SUCCESS result cell; white completed rows']
             # Refreshing a browser preserves the service record and snapshot.
             monitor.reload(); monitor.locator('[name=key]').fill(config['monitor']); monitor.locator('#login button').click()
             expect(monitor.locator('#state')).to_have_text('FINISHED')
