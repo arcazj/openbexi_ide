@@ -43,12 +43,15 @@ def test_real_browser_service_tls_roles_identity_binding_and_revocation(tmp_path
         with pytest.raises(HTTPError) as denied:
             request('monitor', '/api/state', alice['client'])
         assert denied.value.code == 403
+        denied.value.close()
         with pytest.raises(HTTPError) as denied:
             request('monitor', '/api/run', monitor['client'], {'script': 'never.py'})
         assert denied.value.code == 403
+        denied.value.close()
         rows.pop(fingerprint(certificates, 'alice')); identities.write_text(json.dumps({'schema': 1, 'identities': rows}))
         with pytest.raises(HTTPError) as denied:
             request('alice', '/api/state', alice['client'])
         assert denied.value.code == 403
+        denied.value.close()
     finally:
         server.shutdown(); server.server_close(); thread.join(); service.records.close()

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "image": "sha256:cc41cf1a0ba2d7b670d8c831066c51b22fe2b7974f5803034d8c3fa2a133fc9d",
+  "container": "openbexi-ide-spell-v07-ide-1",
+  "url": "http://127.0.0.1:6080/vnc.html",
+  "preserved_user_files": 165,
+  "preserved_user_volumes": [
+    "openbexi-v1-final-workspace",
+    "openbexi-v1-final-preferences"
+  ],
+  "private_backup_retained": true,
+  "changed_saved_files": 0
+}

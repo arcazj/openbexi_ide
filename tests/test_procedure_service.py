@@ -116,6 +116,7 @@ def test_http_authentication_origin_and_host_checks(workspace):
     try:
         with pytest.raises(HTTPError) as invalid: get()
         assert invalid.value.code == 403
+        invalid.value.close()
         headers = {'Authorization': 'Bearer ' + monitor}
         with get(headers=headers) as response:
             snapshot = json.load(response)
@@ -123,11 +124,13 @@ def test_http_authentication_origin_and_host_checks(workspace):
         for extra in ({'Origin': 'https://untrusted.example'}, {'Host': 'untrusted.example'}, {'Sec-Fetch-Site': 'cross-site'}):
             with pytest.raises(HTTPError) as denied: get(headers=headers | extra)
             assert denied.value.code == 403
+            denied.value.close()
         with get('/') as response:
             assert b'Procedure instances and history' in response.read()
         with pytest.raises(HTTPError) as denied:
             get('/api/command', headers | {'Content-Type': 'application/json'}, json.dumps(dict(id=run.identifier, command='continue')).encode())
         assert denied.value.code == 403
+        denied.value.close()
     finally:
         server.shutdown(); server.server_close(); thread.join()
 

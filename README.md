@@ -1,6 +1,18 @@
 # OpenBEXI IDE
 
-**OpenBEXI IDE 1.1.1** integrates the published **SPELL v0.6** runtime. Its
+**OpenBEXI IDE 1.2.0** integrates **SPELL v0.7** in the
+`openbexi-ide-spell-v07` Docker desktop. Offline authority backup/restore retains
+uncertain-effect holds, advances the controller epoch and revokes historical
+Execution approvals. The driver admits effects only within durable journal
+limits. See [setup and recovery](docs/IDE_SPELL_V07.md) and the
+[qualification record](docs/IDE_SPELL_V07_QUALIFICATION.json).
+
+Load the release image archive, then run `docker compose up -d --wait ide`.
+Open `http://127.0.0.1:6080/vnc.html`. The default volumes preserve existing
+projects and preferences. Download the matching components and checksums from
+the [1.2.0 release](https://github.com/arcazj/openbexi_ide/releases/tag/v1.2.0).
+
+The previous **OpenBEXI IDE 1.1.1** integrated **SPELL v0.6**. Its
 [procedure workspace](docs/PROCEDURE_WORKSPACE.md) adds a server-owned native
 SPELL executor, a browser control/monitor view, persistent records, the manual's
 state badge, and an execution-only layout in Qt, IntelliJ and PyCharm.
@@ -18,7 +30,7 @@ The Git tag is `v1.1.1`; the package version is `1.1.1`. The
 [older stable 1.0](https://github.com/arcazj/openbexi_ide/releases/tag/1.0) remains
 available as a historical download.
 
-The current Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Load the 1.1.1
+The previous Docker desktop uses `http://127.0.0.1:6080/vnc.html`. Load the 1.1.1
 image archive, then start it with `docker compose up -d --wait ide`. It contains
 all SPELL procedures under `test_spell/`, with a dedicated language-menu launcher.
 The menu exercises available features and lists all 763 reference entries;

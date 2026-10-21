@@ -65,6 +65,8 @@ def request(url, path, body=None, token=None, *, tls=None):
             explanation = json.load(error).get('error', str(error))
         except ValueError:
             explanation = str(error)
+        finally:
+            error.close()
         raise ValueError(explanation) from error
 
 
@@ -119,6 +121,13 @@ def parser():
     reconcile = commands.add_parser('reconcile', help='Offline maintenance after verifying worker shutdown and external effects')
     reconcile.add_argument('--state-directory', required=True)
     reconcile.add_argument('--receipt', required=True, help='Identity-bound JSON with shutdown and effect settlement evidence')
+    backup = commands.add_parser('backup', help='Offline, hash-verified backup of a stopped durable authority')
+    backup.add_argument('--state-directory', required=True)
+    backup.add_argument('--output', required=True, help='New ZIP outside the authority directory')
+    restore = commands.add_parser('restore', help='Restore to a new authority; retain recovery holds and revoke approvals')
+    restore.add_argument('--backup', required=True)
+    restore.add_argument('--state-directory', required=True)
+    restore.add_argument('--receipt', required=True, help='Backup hash, session, minimum_epoch, actor and shutdown/effect evidence')
     prepare = commands.add_parser('release-prepare', help='Build an immutable runtime release without approving it')
     prepare.add_argument('script')
     prepare.add_argument('--project', required=True)
@@ -252,6 +261,18 @@ def main(argv=None):
             return run_local(args)
         if args.command == 'serve':
             return serve(args)
+        if args.command in {'backup', 'restore'}:
+            from .maintenance import backup, restore
+            if args.command == 'backup':
+                emit(backup(args.state_directory, args.output))
+            else:
+                from .session_identity import unique_object
+                path = Path(args.receipt)
+                if path.stat().st_size > 8192:
+                    raise ValueError('Restore receipt exceeds its bound')
+                receipt = json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=unique_object)
+                emit(restore(args.backup, args.state_directory, receipt))
+            return 0
         if args.command == 'release-prepare':
             from .execution_release import prepare
             emit(prepare(args.project, args.script, args.runtime_image, args.output,

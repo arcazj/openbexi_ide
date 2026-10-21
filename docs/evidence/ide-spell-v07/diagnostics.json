@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "closed": true,
+  "reports": {
+    "linux-output-deadline.xml": {
+      "path": "docs/evidence/ide-spell-v07/diagnostics/linux-output-deadline.xml",
+      "sha256": "c12e4caff99454ef04288cca3afcba32471a6f1502545c9812a815c48e873652",
+      "bytes": 50102
+    },
+    "linux-output-unchanged-repeat.xml": {
+      "path": "docs/evidence/ide-spell-v07/diagnostics/linux-output-unchanged-repeat.xml",
+      "sha256": "3a123383472ff328f757d3ff745f44f5c0371909fbe7eaf34509e18bb490d999",
+      "bytes": 370
+    },
+    "windows-connection-attempt.log": {
+      "path": "docs/evidence/ide-spell-v07/diagnostics/windows-connection-attempt.log",
+      "sha256": "2aeda5061fe8aefaea2321f733a511d4d66bf020234918284e7357d71654c052",
+      "bytes": 3458
+    },
+    "windows-connection-attempt.png": {
+      "path": "docs/evidence/ide-spell-v07/diagnostics/windows-connection-attempt.png",
+      "sha256": "99f75897a40e73f7afe2a9417e86d06c8f9c5983c796a6b4c0729ec9c584d035",
+      "bytes": 54561
+    },
+    "http-fixture-resources-before-cleanup.xml": {
+      "path": "docs/evidence/ide-spell-v07/diagnostics/http-fixture-resources-before-cleanup.xml",
+      "sha256": "3d1687706586637dab123a2665767dba171605408207cab8d283f0685ab76dfd",
+      "bytes": 54362
+    }
+  },
+  "notes": [
+    "The native driver request/pause admission race was fixed with one critical section; its deterministic regression fails against the original implementation and passes after the fix.",
+    "HTTP error responses in clients and negative-test fixtures are now closed explicitly; the final Windows and Linux suites pass with warnings treated as errors.",
+    "One concurrent Linux output test exceeded its UI deadline. The exact test passed unchanged in 4.04 seconds, then the full frozen image passed 213 tests with 9 explicit skips.",
+    "One concurrent Windows native workflow lost its workspace connection; its cleanup also failed. The complete workflow passed unchanged when run separately; the original attempt is retained."
+  ]
+}

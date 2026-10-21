@@ -1,4 +1,4 @@
-# Current desktop: IDE 1.1.1 with the accepted SPELL v0.6 runtime.
-name: openbexi-ide-spell-v06
+# Current desktop: IDE 1.2.0 with SPELL v0.7.
+name: openbexi-ide-spell-v07
 include:
-  - compose.v06.yaml
+  - compose.v07.yaml

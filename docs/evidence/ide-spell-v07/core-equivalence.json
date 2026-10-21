@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "image_wheel_sha256": "27872f5b51bf9af64ab134c1b250ef5d88d9831673a0edc52d2061232dcfbfcd",
+  "published_wheel_sha256": "60f5533ff43fcdbd19b34a78171550b8144e1c3791db232cfd96765316311940",
+  "files": 58,
+  "runtime_payloads_identical": true,
+  "metadata_difference": "Windows CRLF versus Linux LF, with corresponding valid RECORD hashes"
+}

@@ -125,7 +125,10 @@ def execute(session, procedure):
                     if procedure.status in {'PAUSING','PAUSED'}:
                         pending_request = event
                         continue
-                dispatch_request(session,procedure,event)
+                    # Keep admission and dispatch in one critical section. A
+                    # pause arriving here must either precede this request or
+                    # follow its completed, fenced handling.
+                    dispatch_request(session,procedure,event)
             elif event.get('type') == 'finished' and type(event.get('exit_code')) is int:
                 code = event['exit_code']
                 break

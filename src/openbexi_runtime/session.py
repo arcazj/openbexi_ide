@@ -581,7 +581,15 @@ class Session:
 
     def _pump(self, identifier, stream, name):
         decoder = codecs.getincrementaldecoder('utf-8')('replace')
-        while raw := stream.read1(4096):
+        while True:
+            try:
+                raw = stream.read1(4096)
+            except (OSError, ValueError):
+                if not (self.closed.is_set() or stream.closed or getattr(stream.raw, 'closed', False)):
+                    raise
+                break  # Shutdown may close a pipe while this reader is waiting.
+            if not raw:
+                break
             self.event('output', procedure=identifier, stream=name, text=decoder.decode(raw))
         final = decoder.decode(b'', final=True)
         if final:

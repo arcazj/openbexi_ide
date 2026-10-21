@@ -29,6 +29,8 @@ class Client:
                 message = json.load(error)['error']
             except (ValueError, KeyError):
                 message = str(error)
+            finally:
+                error.close()
             raise RuntimeError(message) from None
 
     @classmethod

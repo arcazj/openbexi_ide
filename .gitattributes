@@ -11,3 +11,4 @@ docs/evidence/procedure-workspace/** -text whitespace=blank-at-eol,blank-at-eof,
 docs/evidence/ide-1.2.0rc1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 docs/evidence/ide-1.1.0/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 docs/evidence/ide-spell-v06/** -text -whitespace
+docs/evidence/ide-spell-v07/** -text -whitespace
