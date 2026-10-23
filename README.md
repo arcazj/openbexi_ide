@@ -229,3 +229,8 @@ bounded profiles described above. See [architecture](docs/ARCHITECTURE.md),
 [roadmap](ROADMAP.md), [master prompt](openbexi_ide_master_prompt.md) and
 [migration](docs/MIGRATION.md). The v0.2 test scope and remaining gates are in
 [qualification](docs/QUALIFICATION.md).
+
+The development [SPELL v0.8 server connection](docs/v0.8/SPELL_SERVER_INTEGRATION.md)
+adds a separate certificate-authenticated server tab. Current scope is discovery,
+reservations, read-only observation and explicit control handoff. Native server
+execution and full v0.8 qualification remain pending.
