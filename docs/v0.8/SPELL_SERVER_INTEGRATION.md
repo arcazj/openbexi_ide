@@ -4,6 +4,8 @@ The **SPELL server** tab connects to the v0.8 certificate gateway. It is separat
 from the existing **Session** tab and v0.7 runtime. Development version
 `1.2.1.dev1` supports discovery, source catalogs, execution reservations,
 observation, explicit control requests, accept/reject and controller rebind.
+While connected, local Run and Debug are disabled and direct action calls are
+rejected, preventing a server action from falling back to local execution.
 Native run, pause, debugging, prompts and driver effects are not yet available
 through this new tab. It must not be described as the qualified v0.8 runtime.
 
@@ -43,7 +45,7 @@ provides read-only Context discovery; add `--context A --resource executions`.
 
 ## Qualification scope
 
-13 new local client/desktop checks pass, including nonblocking window detach while a network operation is pending. A development detach fixture initially omitted the client controller-query method; its failed JUnit is retained separately. Real three-client TLS and handoff checks
+14 new local client/desktop checks pass, including nonblocking window detach while a network operation is pending. A development detach fixture initially omitted the client controller-query method; its failed JUnit is retained separately. Real three-client TLS and handoff checks
 are maintained in the plugin's `server/tests/test_ide_integration.py`; its CI pins
 an exact IDE commit. Independent certificate identities are used for controller
 Alice, controller Bob and an observer. GUI connection and observer button states

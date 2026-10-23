@@ -65,6 +65,8 @@ class ServerWorker(QObject):
 
 
 class SpellServerPanel(QWidget):
+    changed = Signal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.client = None
@@ -224,6 +226,7 @@ class SpellServerPanel(QWidget):
             else:
                 self.refresh()
         self.update_buttons()
+        self.changed.emit()
 
     def update_buttons(self):
         ready = not self.busy and self.client is not None

@@ -135,3 +135,32 @@ def test_busy_panel_never_waits_on_controller_network_lock(app):
     finally:
         panel.worker.close()
         panel.close()
+
+
+def test_server_connection_cannot_fall_back_to_local_run_or_debug(app, tmp_path):
+    from PySide6.QtCore import QSettings
+    from openbexi_ide.app import MainWindow
+
+    project = tmp_path / "project"
+    project.mkdir()
+    script = project / "main.py"
+    script.write_text("raise RuntimeError('must not run locally from server mode')\n")
+    window = MainWindow(
+        project, QSettings(str(tmp_path / "test.ini"), QSettings.IniFormat)
+    )
+    errors = []
+    window.report_error = errors.append
+    try:
+        window.open_file(script)
+        window.spell_server_panel.client = type(
+            "Client", (), {"forget": lambda self: None}
+        )()
+        window.refresh_busy()
+        assert not window.run_action.isEnabled() and not window.debug_action.isEnabled()
+        window.run_script()
+        window.debug_script()
+        assert len(errors) == 2 and all("Server" in error for error in errors)
+        assert not window.run_controller.running and not window.debug_controller.running
+        window.spell_server_panel.client = None
+    finally:
+        window.close()

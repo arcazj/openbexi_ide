@@ -300,6 +300,7 @@ class MainWindow(QMainWindow):
         self.session_panel.selection_changed.connect(self.refresh_busy)
         self.output_tabs.addTab(self.session_panel, "Session")
         self.spell_server_panel = SpellServerPanel(self)
+        self.spell_server_panel.changed.connect(self.refresh_busy)
         self.output_tabs.addTab(self.spell_server_panel, "SPELL server")
         self.vertical = QSplitter(Qt.Vertical)
         self.vertical.addWidget(editor_panel); self.vertical.addWidget(self.output_tabs)
@@ -772,6 +773,9 @@ class MainWindow(QMainWindow):
             self.arguments = tuple(dialog.input.toPlainText().splitlines())
 
     def run_script(self):
+        if self.spell_server_panel.client is not None:
+            self.report_error("Server execution is not available in this development build. Disconnect before using local Run.")
+            return
         editor = self.current_editor()
         if not editor or not self.project or (self.is_busy() and not self.can_start_procedure()):
             return
@@ -824,6 +828,9 @@ class MainWindow(QMainWindow):
             self.report_error(str(error)); self.set_busy(False)
 
     def debug_script(self):
+        if self.spell_server_panel.client is not None:
+            self.report_error("Server debugging is not available in this development build. Disconnect before using local Debug.")
+            return
         if self.session_client.active:
             editor = self.current_editor()
             capabilities = self.session_client.snapshot.get('debug_capabilities', {})
@@ -1052,6 +1059,9 @@ class MainWindow(QMainWindow):
                                     (self.pause_action, 'pause'), (self.over_action, 'next'), (self.into_action, 'stepIn')):
                 action.setEnabled(self.procedure_workspace.control_buttons[command].isEnabled())
             self.out_action.setEnabled(False)
+        if self.spell_server_panel.client is not None:
+            self.run_action.setEnabled(False)
+            self.debug_action.setEnabled(False)
         self.update_procedure_layout()
 
     def append_output(self, content):
