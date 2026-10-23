@@ -27,25 +27,29 @@ class ServerWorker(QObject):
         super().__init__(parent)
         self.jobs = queue.Queue(maxsize=1)
         self.closed = threading.Event()
+        self.cleanup = None
         self.thread = threading.Thread(
             target=self.run, name="spell-v08-client", daemon=True
         )
         self.thread.start()
 
     def run(self):
-        while not self.closed.is_set():
-            try:
-                operation = self.jobs.get(timeout=0.1)
-            except queue.Empty:
-                continue
-            try:
-                result = operation()
-                item = {"result": result}
-            except Exception as error:
-                # Network/client errors contain no capability or server body.
-                item = {"error": str(error)}
-            if not self.closed.is_set():
-                self.completed.emit(item)
+        try:
+            while not self.closed.is_set():
+                try:
+                    operation = self.jobs.get(timeout=0.1)
+                except queue.Empty:
+                    continue
+                try:
+                    result = operation()
+                    item = {"result": result}
+                except Exception as error:
+                    item = {"error": str(error)}
+                if not self.closed.is_set():
+                    self.completed.emit(item)
+        finally:
+            if self.cleanup is not None:
+                self.cleanup()
 
     def submit(self, operation):
         try:
@@ -54,7 +58,9 @@ class ServerWorker(QObject):
         except queue.Full:
             return False
 
-    def close(self):
+    def close(self, cleanup=None):
+        if cleanup is not None:
+            self.cleanup = cleanup
         self.closed.set()
 
 
@@ -243,8 +249,12 @@ class SpellServerPanel(QWidget):
             and "execution:request_control" in permissions
             and not execution.get("pending_claim")
         )
-        has_proof = self.client is not None and self.client.has_controller(
-            self.context.currentText(), execution.get("id")
+        has_proof = (
+            control
+            and owner
+            and self.client.has_controller(
+                self.context.currentText(), execution.get("id")
+            )
         )
         for button in (self.accept_button, self.reject_button):
             button.setEnabled(
@@ -329,6 +339,4 @@ class SpellServerPanel(QWidget):
     def close_connection(self):
         # Closing the window is transport detach, not a proven controller close.
         # Persisted server authority is never cleared on a failed/omitted close.
-        self.worker.close()
-        if self.client:
-            self.client.forget()
+        self.worker.close(self.client.forget if self.client else None)

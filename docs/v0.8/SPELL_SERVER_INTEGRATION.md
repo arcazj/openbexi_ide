@@ -43,7 +43,7 @@ provides read-only Context discovery; add `--context A --resource executions`.
 
 ## Qualification scope
 
-11 new local client/desktop checks pass. Real three-client TLS and handoff checks
+13 new local client/desktop checks pass, including nonblocking window detach while a network operation is pending. A development detach fixture initially omitted the client controller-query method; its failed JUnit is retained separately. Real three-client TLS and handoff checks
 are maintained in the plugin's `server/tests/test_ide_integration.py`; its CI pins
 an exact IDE commit. Independent certificate identities are used for controller
 Alice, controller Bob and an observer. GUI connection and observer button states

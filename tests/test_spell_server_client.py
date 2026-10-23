@@ -78,3 +78,60 @@ def test_observer_panel_disables_every_mutation(app):
     finally:
         panel.worker.close()
         panel.close()
+
+
+def test_window_detach_does_not_wait_for_pending_network_lock(app):
+    import threading
+
+    entered, release, forgotten = (
+        threading.Event(),
+        threading.Event(),
+        threading.Event(),
+    )
+    panel = SpellServerPanel()
+
+    class Client:
+        def has_controller(self, *args):
+            return False
+
+        def forget(self):
+            forgotten.set()
+
+    panel.client = Client()
+
+    def pending():
+        entered.set()
+        assert release.wait(2)
+        return {}
+
+    try:
+        panel.submit(pending)
+        assert entered.wait(1)
+        start = time.monotonic()
+        panel.close_connection()
+        assert time.monotonic() - start < 0.1
+        assert not forgotten.is_set()
+        release.set()
+        assert forgotten.wait(1)
+    finally:
+        release.set()
+        panel.close()
+
+
+def test_busy_panel_never_waits_on_controller_network_lock(app):
+    panel = SpellServerPanel()
+
+    class PendingClient:
+        def has_controller(self, *args):
+            raise AssertionError(
+                "GUI must not query a client lock while network work is pending"
+            )
+
+    panel.client = PendingClient()
+    panel.busy = True
+    try:
+        panel.update_buttons()
+        assert not panel.refresh_button.isEnabled()
+    finally:
+        panel.worker.close()
+        panel.close()
