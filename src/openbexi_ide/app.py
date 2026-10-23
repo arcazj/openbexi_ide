@@ -25,6 +25,7 @@ from .fonts import configure_fonts, fixed_font
 from .themes import THEMES, apply_theme
 from .session_client import SessionClient
 from .session_panel import JoinDialog, SessionPanel
+from .spell_server_panel import SpellServerPanel
 from .shared_debugger import SharedDebugController
 from .plugin_manager import PluginManager
 from .source_view import SourceView
@@ -298,6 +299,8 @@ class MainWindow(QMainWindow):
         self.session_panel.frame_activated.connect(self.open_shared_frame)
         self.session_panel.selection_changed.connect(self.refresh_busy)
         self.output_tabs.addTab(self.session_panel, "Session")
+        self.spell_server_panel = SpellServerPanel(self)
+        self.output_tabs.addTab(self.spell_server_panel, "SPELL server")
         self.vertical = QSplitter(Qt.Vertical)
         self.vertical.addWidget(editor_panel); self.vertical.addWidget(self.output_tabs)
         self.vertical.setSizes([510, 225]); self.vertical.setCollapsible(0, False)
@@ -1280,6 +1283,7 @@ class MainWindow(QMainWindow):
             self.session_client.disconnect()
             event.ignore(); return
         self.settings.sync()
+        self.spell_server_panel.close_connection()
         if self.procedure_workspace.connection_worker:
             self.procedure_workspace.connection_worker.close()
         self.cancel_interpreter_selection()
