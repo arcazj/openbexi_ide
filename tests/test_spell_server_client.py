@@ -172,28 +172,49 @@ def test_read_only_monitoring_uses_exact_pinned_gateway_request():
     client = object.__new__(SpellServerClient)
     log = []
     instance = str(uuid.uuid4())
+
     def fake(method, path, body=None, *, key=None):
         log.append((method, path, body, key))
-        return {"schema": "openbexi.listener/1", "result": {
-            "context_id": "A", "after_sequence": 0, "next_sequence": 3,
-            "latest_sequence": 3, "has_more": False, "runtime_enabled": False,
-            "events": [
-                {"sequence": 2, "type": "CONTROL_OWNER_CHANGED", "execution_id": instance},
-            ],
-        }}
+        return {
+            "schema": "openbexi.listener/1",
+            "result": {
+                "context_id": "A",
+                "after_sequence": 0,
+                "next_sequence": 3,
+                "latest_sequence": 3,
+                "has_more": False,
+                "runtime_enabled": False,
+                "events": [
+                    {
+                        "sequence": 2,
+                        "type": "CONTROL_OWNER_CHANGED",
+                        "execution_id": instance,
+                    },
+                ],
+            },
+        }
+
     client.request = fake
     response = client.events("A")
     assert response["events"][0]["execution_id"] == instance
-    assert log == [(
-        "POST", "/v1/contexts/A/events", {"after_sequence": 0, "limit": 32}, None
-    )]
+    assert log == [
+        ("POST", "/v1/contexts/A/events", {"after_sequence": 0, "limit": 32}, None)
+    ]
     assert not client.__dict__.get("_controllers")
 
 
-@pytest.mark.parametrize("after,limit", [
-    (-1, 1), (True, 1), (2**63, 1), (1.5, 1),
-    (0, 0), (0, 33), (0, True),
-])
+@pytest.mark.parametrize(
+    "after,limit",
+    [
+        (-1, 1),
+        (True, 1),
+        (2**63, 1),
+        (1.5, 1),
+        (0, 0),
+        (0, 33),
+        (0, True),
+    ],
+)
 def test_invalid_monitoring_cursor_never_sends_any_request(after, limit):
     client = object.__new__(SpellServerClient)
     client.request = lambda *a, **k: (_ for _ in ()).throw(
@@ -203,27 +224,39 @@ def test_invalid_monitoring_cursor_never_sends_any_request(after, limit):
         client.events("A", after_sequence=after, limit=limit)
 
 
-@pytest.mark.parametrize("changed", [
-    {"runtime_enabled": True},
-    {"has_more": True},
-    {"context_id": "B"},
-    {"after_sequence": 1},
-    {"next_sequence": -1},
-    {"events": [{"sequence": 3, "type": "CONTROL_OWNER_CHANGED", "token": "SECRET"}]},
-    {"events": [{"sequence": 1, "type": "NATIVE_DRIVER_EVENT"}]},
-    {"events": [{"sequence": True, "type": "EXECUTION_RESERVED"}]},
-    {"events": [{"sequence": 0, "type": "EXECUTION_RESERVED"}]},
-    {"events": [{"sequence": 4, "type": "EXECUTION_RESERVED"}]},
-])
+@pytest.mark.parametrize(
+    "changed",
+    [
+        {"runtime_enabled": True},
+        {"has_more": True},
+        {"context_id": "B"},
+        {"after_sequence": 1},
+        {"next_sequence": -1},
+        {
+            "events": [
+                {"sequence": 3, "type": "CONTROL_OWNER_CHANGED", "token": "SECRET"}
+            ]
+        },
+        {"events": [{"sequence": 1, "type": "NATIVE_DRIVER_EVENT"}]},
+        {"events": [{"sequence": True, "type": "EXECUTION_RESERVED"}]},
+        {"events": [{"sequence": 0, "type": "EXECUTION_RESERVED"}]},
+        {"events": [{"sequence": 4, "type": "EXECUTION_RESERVED"}]},
+    ],
+)
 def test_monitoring_rejects_bogus_or_secret_bearing_gateway_result(changed):
     client = object.__new__(SpellServerClient)
     expected = {
-        "context_id": "A", "after_sequence": 0, "next_sequence": 3,
-        "latest_sequence": 3, "has_more": False, "runtime_enabled": False,
+        "context_id": "A",
+        "after_sequence": 0,
+        "next_sequence": 3,
+        "latest_sequence": 3,
+        "has_more": False,
+        "runtime_enabled": False,
         "events": [{"sequence": 2, "type": "CONTROL_OWNER_CHANGED"}],
     }
     client.request = lambda *a, **k: {
-        "schema": "openbexi.listener/1", "result": dict(expected, **changed)
+        "schema": "openbexi.listener/1",
+        "result": dict(expected, **changed),
     }
     with pytest.raises(SpellServerError):
         client.events("A")

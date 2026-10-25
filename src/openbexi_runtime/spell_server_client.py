@@ -194,12 +194,18 @@ class SpellServerClient:
         if type(limit) is not int or not 1 <= limit <= 32:
             raise ValueError("Invalid monitoring page size")
         page = self.request(
-            "POST", f"/v1/contexts/{context}/events",
+            "POST",
+            f"/v1/contexts/{context}/events",
             {"after_sequence": after_sequence, "limit": limit},
         )["result"]
         required = {
-            "context_id", "after_sequence", "next_sequence", "latest_sequence",
-            "has_more", "events", "runtime_enabled",
+            "context_id",
+            "after_sequence",
+            "next_sequence",
+            "latest_sequence",
+            "has_more",
+            "events",
+            "runtime_enabled",
         }
         if type(page) is not dict or set(page) != required:
             raise SpellServerError(503, "invalid_monitoring_response")
@@ -219,18 +225,25 @@ class SpellServerClient:
         ):
             raise SpellServerError(503, "invalid_monitoring_response")
         allowed = {
-            "EXECUTION_RESERVED", "CONTROLLER_REBOUND",
-            "CONTROL_CLAIM_REQUESTED", "CONTROL_CLAIM_REJECTED",
-            "CONTROL_CLAIM_ACCEPTED", "CONTROL_OWNER_CHANGED",
-            "CONTROL_CLAIM_CANCELLED", "CONTROL_TRANSFER_BLOCKED",
-            "CONTROL_CONNECTION_CLOSED", "CONTROL_TRANSFER_PAUSE_REQUESTED",
+            "EXECUTION_RESERVED",
+            "CONTROLLER_REBOUND",
+            "CONTROL_CLAIM_REQUESTED",
+            "CONTROL_CLAIM_REJECTED",
+            "CONTROL_CLAIM_ACCEPTED",
+            "CONTROL_OWNER_CHANGED",
+            "CONTROL_CLAIM_CANCELLED",
+            "CONTROL_TRANSFER_BLOCKED",
+            "CONTROL_CONNECTION_CLOSED",
+            "CONTROL_TRANSFER_PAUSE_REQUESTED",
             "CONTROL_TRANSFER_PAUSE_UNPROVEN",
         }
         previous = after_sequence
         for event in page["events"]:
-            if type(event) is not dict or not set(event) <= {
-                "sequence", "type", "execution_id"
-            } or not {"sequence", "type"} <= set(event):
+            if (
+                type(event) is not dict
+                or not set(event) <= {"sequence", "type", "execution_id"}
+                or not {"sequence", "type"} <= set(event)
+            ):
                 raise SpellServerError(503, "invalid_monitoring_response")
             sequence = event["sequence"]
             if (
@@ -248,7 +261,9 @@ class SpellServerClient:
                     if str(execution) != event["execution_id"]:
                         raise ValueError("noncanonical execution")
                 except (TypeError, ValueError, AttributeError) as error:
-                    raise SpellServerError(503, "invalid_monitoring_response") from error
+                    raise SpellServerError(
+                        503, "invalid_monitoring_response"
+                    ) from error
         if page["has_more"] and (not page["events"] or cursor != previous):
             raise SpellServerError(503, "invalid_monitoring_response")
         if cursor < previous:
