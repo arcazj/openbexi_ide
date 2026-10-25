@@ -117,7 +117,7 @@ class SpellServerClient:
 
     def request(self, method, path, body=None, *, key=None):
         if method not in ("GET", "POST") or not re.fullmatch(
-            r"/v1/(?:health|contexts(?:/[A-Za-z0-9_.:-]+/(?:health|snapshot|blackboard|procedures|executions|authority))?)",
+            r"/v1/(?:health|contexts(?:/[A-Za-z0-9_.:-]+/(?:health|snapshot|blackboard|procedures|executions|events|authority))?)",
             path,
         ):
             raise ValueError("Unconfigured server route")
@@ -185,6 +185,75 @@ class SpellServerClient:
         ):
             raise ValueError("Unknown resource")
         return self.request("GET", f"/v1/contexts/{context}/{resource}")["result"]
+
+    def events(self, context, *, after_sequence=0, limit=32):
+        """Certificate-scoped read-only monitoring replay, not a control channel."""
+        identifier(context)
+        if type(after_sequence) is not int or not 0 <= after_sequence < 2**63:
+            raise ValueError("Invalid monitoring cursor")
+        if type(limit) is not int or not 1 <= limit <= 32:
+            raise ValueError("Invalid monitoring page size")
+        page = self.request(
+            "POST", f"/v1/contexts/{context}/events",
+            {"after_sequence": after_sequence, "limit": limit},
+        )["result"]
+        required = {
+            "context_id", "after_sequence", "next_sequence", "latest_sequence",
+            "has_more", "events", "runtime_enabled",
+        }
+        if type(page) is not dict or set(page) != required:
+            raise SpellServerError(503, "invalid_monitoring_response")
+        cursor = page["next_sequence"]
+        latest = page["latest_sequence"]
+        if (
+            page["context_id"] != context
+            or page["after_sequence"] != after_sequence
+            or type(cursor) is not int
+            or type(latest) is not int
+            or cursor < after_sequence
+            or latest < 0
+            or type(page["has_more"]) is not bool
+            or page["runtime_enabled"] is not False
+            or type(page["events"]) is not list
+            or len(page["events"]) > limit
+        ):
+            raise SpellServerError(503, "invalid_monitoring_response")
+        allowed = {
+            "EXECUTION_RESERVED", "CONTROLLER_REBOUND",
+            "CONTROL_CLAIM_REQUESTED", "CONTROL_CLAIM_REJECTED",
+            "CONTROL_CLAIM_ACCEPTED", "CONTROL_OWNER_CHANGED",
+            "CONTROL_CLAIM_CANCELLED", "CONTROL_TRANSFER_BLOCKED",
+            "CONTROL_CONNECTION_CLOSED", "CONTROL_TRANSFER_PAUSE_REQUESTED",
+            "CONTROL_TRANSFER_PAUSE_UNPROVEN",
+        }
+        previous = after_sequence
+        for event in page["events"]:
+            if type(event) is not dict or not set(event) <= {
+                "sequence", "type", "execution_id"
+            } or not {"sequence", "type"} <= set(event):
+                raise SpellServerError(503, "invalid_monitoring_response")
+            sequence = event["sequence"]
+            if (
+                type(sequence) is not int
+                or not previous < sequence <= latest
+                or event["type"] not in allowed
+            ):
+                raise SpellServerError(503, "invalid_monitoring_response")
+            previous = sequence
+            if "execution_id" in event:
+                import uuid
+
+                try:
+                    execution = uuid.UUID(event["execution_id"])
+                    if str(execution) != event["execution_id"]:
+                        raise ValueError("noncanonical execution")
+                except (TypeError, ValueError, AttributeError) as error:
+                    raise SpellServerError(503, "invalid_monitoring_response") from error
+        if page["has_more"] and (not page["events"] or cursor != previous):
+            raise SpellServerError(503, "invalid_monitoring_response")
+        if cursor < previous:
+            raise SpellServerError(503, "invalid_monitoring_response")
+        return page
 
     def authority(self, context, method, payload, *, key):
         identifier(context)
