@@ -595,3 +595,136 @@ def test_disconnect_retry_keeps_exact_close_key_and_blocks_connection_switch(app
     finally:
         panel.worker.close()
         panel.close()
+
+
+def heartbeat_client():
+    import threading
+
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {}
+    client._leases = {}
+    client._lease_stop = threading.Event()
+    client._lease_thread = None
+    return client
+
+
+def test_heartbeat_response_loss_discards_only_affected_connection_without_retry():
+    import uuid
+
+    client = heartbeat_client()
+    connection, other = str(uuid.uuid4()), str(uuid.uuid4())
+    execution, unrelated = str(uuid.uuid4()), str(uuid.uuid4())
+    for eid, cid in ((execution, connection), (unrelated, other)):
+        client.remember_controller(
+            "A",
+            dict(
+                id=eid,
+                connection_id=cid,
+                epoch=2,
+                connection_generation=4,
+                capability="a" * 64,
+            ),
+        )
+    client._leases[("A", connection)] = dict(nonce="b" * 64, due=0)
+    client._leases[("A", other)] = dict(nonce="c" * 64, due=float("inf"))
+    sent = []
+
+    def lost(method, path, body=None, *, key=None):
+        sent.append((body, key))
+        raise SpellServerError(503, "gateway_unavailable")
+
+    client.request = lost
+    client._heartbeat_once(time.monotonic())
+    client._heartbeat_once(time.monotonic())
+    assert len(sent) == 1
+    assert sent[0][0] == {
+        "method": "session.heartbeat",
+        "payload": {"connection_id": connection, "heartbeat_nonce": "b" * 64},
+    }
+    assert not client.has_controller("A", execution)
+    assert client.has_controller("A", unrelated)
+    assert ("A", connection) not in client._leases
+    client.forget()
+
+
+def test_successful_heartbeat_rotates_nonce_without_restamping_controller_proof():
+    import uuid
+
+    client = heartbeat_client()
+    connection, execution = str(uuid.uuid4()), str(uuid.uuid4())
+    client.remember_controller(
+        "A",
+        dict(
+            id=execution,
+            connection_id=connection,
+            epoch=2,
+            connection_generation=4,
+            capability="a" * 64,
+        ),
+    )
+    original = dict(client._controllers[("A", execution)])
+    client._leases[("A", connection)] = dict(nonce="b" * 64, due=0)
+    client.request = lambda *args, **kw: {
+        "result": {"heartbeat_nonce": "c" * 64, "lease_seconds": 5}
+    }
+    client._heartbeat_once(time.monotonic())
+    assert client._leases[("A", connection)]["nonce"] == "c" * 64
+    assert client._controllers[("A", execution)] == original
+    client.forget()
+
+
+def test_detach_during_inflight_heartbeat_cannot_restore_session_or_proof():
+    import uuid
+
+    client = heartbeat_client()
+    connection = str(uuid.uuid4())
+    client._leases[("A", connection)] = dict(nonce="b" * 64, due=0)
+
+    def received_after_detach(*args, **kwargs):
+        client.forget()
+        return {"result": {"heartbeat_nonce": "c" * 64, "lease_seconds": 5}}
+
+    client.request = received_after_detach
+    client._heartbeat_once(time.monotonic())
+    assert not client._leases and not client._controllers
+
+
+@pytest.mark.parametrize(
+    "receipt",
+    [
+        {"lease_seconds": 30},
+        {"lease_seconds": False, "heartbeat_nonce": "a" * 64},
+        {"lease_seconds": 4, "heartbeat_nonce": "a" * 64},
+        {"lease_seconds": 301, "heartbeat_nonce": "a" * 64},
+        {"lease_seconds": 30, "heartbeat_nonce": "bad"},
+    ],
+)
+def test_invalid_or_replayed_open_receipt_cannot_start_heartbeat(receipt):
+    client = heartbeat_client()
+    client.request = lambda *args, **kw: {
+        "result": dict(receipt, connection_id="invalid")
+    }
+    with pytest.raises(SpellServerError, match="invalid_heartbeat_receipt"):
+        client.authority("A", "session.open", {}, key="open")
+    assert not client._leases and client._lease_thread is None
+
+
+def test_open_starts_lease_and_explicit_close_or_forget_stops_renewing():
+    import uuid
+
+    client = heartbeat_client()
+    connection = str(uuid.uuid4())
+    client.request = lambda *args, **kw: {
+        "result": dict(
+            connection_id=connection, heartbeat_nonce="a" * 64, lease_seconds=30
+        )
+    }
+    client.authority("A", "session.open", {}, key="open")
+    thread = client._lease_thread
+    assert thread.is_alive() and ("A", connection) in client._leases
+    client.authority("A", "session.close", dict(connection_id=connection), key="close")
+    assert not client._leases
+    client.forget()
+    thread.join(1)
+    assert not thread.is_alive()

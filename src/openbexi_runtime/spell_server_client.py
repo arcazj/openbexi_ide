@@ -15,6 +15,8 @@ import re
 import socket
 import ssl
 import threading
+import time
+import uuid
 from urllib.parse import urlsplit
 
 LIMIT = 65536
@@ -101,6 +103,9 @@ class SpellServerClient:
         self.tls.load_cert_chain(str(certificate), str(key))
         self._lock = threading.RLock()
         self._controllers = {}
+        self._leases = {}
+        self._lease_stop = threading.Event()
+        self._lease_thread = None
 
     @classmethod
     def from_config(cls, path):
@@ -134,45 +139,44 @@ class SpellServerClient:
         headers = {} if raw is None else {"Content-Type": "application/json"}
         if key is not None:
             headers["Idempotency-Key"] = identifier(key)
-        with self._lock:
-            connection = http.client.HTTPSConnection(
-                self.host, self.port, context=self.tls, timeout=2
-            )
-            watchdog = None
-            try:
-                connection.connect()
-                wire = connection.sock
+        connection = http.client.HTTPSConnection(
+            self.host, self.port, context=self.tls, timeout=2
+        )
+        watchdog = None
+        try:
+            connection.connect()
+            wire = connection.sock
 
-                def expire():
-                    try:
-                        wire.shutdown(socket.SHUT_RDWR)
-                    except OSError:
-                        pass
+            def expire():
+                try:
+                    wire.shutdown(socket.SHUT_RDWR)
+                except OSError:
+                    pass
 
-                watchdog = threading.Timer(5, expire)
-                watchdog.daemon = True
-                watchdog.start()
-                peer = hashlib.sha256(wire.getpeercert(binary_form=True)).hexdigest()
-                if peer != self.fingerprint:
-                    raise SpellServerError(503, "gateway_identity_unavailable")
-                connection.request(method, path, raw, headers)
-                response = connection.getresponse()
-                result = decode(response.read(LIMIT + 1))
-                if response.status != 200:
-                    # Never expose server-controlled errors, paths or secrets.
-                    raise SpellServerError(response.status, "request_denied")
-                if (
-                    type(result) is not dict
-                    or result.get("schema") != "openbexi.listener/1"
-                ):
-                    raise SpellServerError(503, "invalid_protocol")
-                return result
-            except (OSError, http.client.HTTPException) as error:
-                raise SpellServerError(503, "gateway_unavailable") from error
-            finally:
-                if watchdog:
-                    watchdog.cancel()
-                connection.close()
+            watchdog = threading.Timer(5, expire)
+            watchdog.daemon = True
+            watchdog.start()
+            peer = hashlib.sha256(wire.getpeercert(binary_form=True)).hexdigest()
+            if peer != self.fingerprint:
+                raise SpellServerError(503, "gateway_identity_unavailable")
+            connection.request(method, path, raw, headers)
+            response = connection.getresponse()
+            result = decode(response.read(LIMIT + 1))
+            if response.status != 200:
+                # Never expose server-controlled errors, paths or secrets.
+                raise SpellServerError(response.status, "request_denied")
+            if (
+                type(result) is not dict
+                or result.get("schema") != "openbexi.listener/1"
+            ):
+                raise SpellServerError(503, "invalid_protocol")
+            return result
+        except (OSError, http.client.HTTPException) as error:
+            raise SpellServerError(503, "gateway_unavailable") from error
+        finally:
+            if watchdog:
+                watchdog.cancel()
+            connection.close()
 
     def contexts(self):
         return self.request("GET", "/v1/contexts")["contexts"]
@@ -278,6 +282,7 @@ class SpellServerClient:
         if method not in (
             "session.open",
             "session.close",
+            "session.heartbeat",
             "execution.reserve",
             "execution.rebind",
             "execution.claim",
@@ -285,12 +290,100 @@ class SpellServerClient:
             "execution.cancel",
         ):
             raise ValueError("Unknown authority operation")
-        return self.request(
+        result = self.request(
             "POST",
             f"/v1/contexts/{context}/authority",
             {"method": method, "payload": payload},
             key=key,
         )["result"]
+        if method == "session.open" and "lease_seconds" in result:
+            self._start_lease(context, result)
+        elif method == "session.close":
+            with self._lock:
+                self._drop_lease(context, payload["connection_id"])
+        return result
+
+    @staticmethod
+    def _lease_receipt(result):
+        seconds, nonce = result.get("lease_seconds"), result.get("heartbeat_nonce")
+        if (
+            type(seconds) is not int
+            or not 5 <= seconds <= 300
+            or not isinstance(nonce, str)
+            or re.fullmatch("[0-9a-f]{64}", nonce) is None
+        ):
+            raise SpellServerError(503, "invalid_heartbeat_receipt")
+        return seconds, nonce
+
+    def _start_lease(self, context, result):
+        seconds, nonce = self._lease_receipt(result)
+        connection = result["connection_id"]
+        try:
+            if str(uuid.UUID(connection)) != connection:
+                raise ValueError("Noncanonical connection")
+        except (TypeError, ValueError, AttributeError) as error:
+            raise SpellServerError(503, "invalid_heartbeat_receipt") from error
+        with self._lock:
+            if not hasattr(self, "_leases"):
+                self._leases = {}
+                self._lease_stop = threading.Event()
+                self._lease_thread = None
+            if len(self._leases) >= 128:
+                raise SpellServerError(503, "client_lease_capacity")
+            self._leases[(context, connection)] = dict(
+                nonce=nonce,
+                due=time.monotonic() + seconds / 3,
+            )
+            if self._lease_thread is None or not self._lease_thread.is_alive():
+                self._lease_stop = threading.Event()
+                self._lease_thread = threading.Thread(
+                    target=self._heartbeat_loop,
+                    args=(self._lease_stop,),
+                    name="spell-controller-heartbeat",
+                    daemon=True,
+                )
+                self._lease_thread.start()
+
+    def _drop_lease(self, context, connection):
+        getattr(self, "_leases", {}).pop((context, connection), None)
+        for identity, proof in list(self._controllers.items()):
+            if identity[0] == context and proof["connection_id"] == connection:
+                self._controllers.pop(identity, None)
+
+    def _heartbeat_once(self, now):
+        with self._lock:
+            pending = [
+                (identity, lease)
+                for identity, lease in self._leases.items()
+                if lease["due"] <= now
+            ]
+        for (context, connection), lease in pending:
+            with self._lock:
+                if self._leases.get((context, connection)) is not lease:
+                    continue
+            try:
+                # A fresh TLS connection carries one challenge. Neither a lost
+                # response nor a rejected challenge is retried or reconstructed.
+                result = self.authority(
+                    context,
+                    "session.heartbeat",
+                    {"connection_id": connection, "heartbeat_nonce": lease["nonce"]},
+                    key=str(uuid.uuid4()),
+                )
+                seconds, nonce = self._lease_receipt(result)
+                with self._lock:
+                    if self._leases.get((context, connection)) is lease:
+                        self._leases[(context, connection)] = dict(
+                            nonce=nonce, due=time.monotonic() + seconds / 3
+                        )
+            except Exception:
+                with self._lock:
+                    if self._leases.get((context, connection)) is lease:
+                        self._drop_lease(context, connection)
+
+    def _heartbeat_loop(self, stop):
+        while not stop.wait(0.1):
+            self._heartbeat_once(time.monotonic())
 
     def remember_controller(self, context, result):
         """Store only an explicitly delivered proof; never reconstruct one from a list."""
@@ -356,6 +449,13 @@ class SpellServerClient:
     def forget(self):
         with self._lock:
             self._controllers.clear()
+            getattr(self, "_leases", {}).clear()
+            stop = getattr(self, "_lease_stop", None)
+            if stop is not None:
+                stop.set()
+            # Detach can leave one in-flight heartbeat, bounded by the transport
+            # deadline. It cannot schedule another or reconstruct a proof.
+            self._lease_thread = None
 
 
 def main():
