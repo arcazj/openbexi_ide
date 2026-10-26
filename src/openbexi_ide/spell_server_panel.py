@@ -112,6 +112,22 @@ class SpellServerPanel(QWidget):
         ):
             controls.addWidget(button)
         layout.addLayout(controls)
+        command_row = QHBoxLayout()
+        self.command_buttons = {}
+        for label, command in (
+            ("Run / Continue", "CMD_RUN"),
+            ("Step", "CMD_STEP"),
+            ("Pause", "CMD_PAUSE"),
+            ("Abort", "CMD_ABORT"),
+            ("Close execution", "CMD_CLOSE"),
+        ):
+            button = QPushButton(label)
+            button.clicked.connect(
+                lambda checked=False, op=command: self.send_command(op)
+            )
+            self.command_buttons[command] = button
+            command_row.addWidget(button)
+        layout.addLayout(command_row)
         self.connect_button.clicked.connect(self.choose_connection)
         self.refresh_button.clicked.connect(self.refresh)
         self.disconnect_button.clicked.connect(self.disconnect_server)
@@ -201,6 +217,7 @@ class SpellServerPanel(QWidget):
                     + (
                         " • execution unavailable"
                         if not health["runtime_enabled"]
+                        and not health.get("native_commands")
                         else ""
                     )
                 )
@@ -243,7 +260,12 @@ class SpellServerPanel(QWidget):
             control and "execution:start" in permissions and self.procedures.count() > 0
         )
         self.rebind_button.setEnabled(
-            control and owner and execution.get("lifecycle") == "RESERVED"
+            control
+            and owner
+            and (
+                execution.get("lifecycle") == "RESERVED"
+                or execution.get("control_state") == "HANDOFF_PAUSED"
+            )
         )
         self.claim_button.setEnabled(
             control
@@ -263,6 +285,34 @@ class SpellServerPanel(QWidget):
             button.setEnabled(
                 control and owner and has_proof and bool(execution.get("pending_claim"))
             )
+        available = set(health.get("native_commands", []))
+        for command, button in self.command_buttons.items():
+            button.setEnabled(
+                bool(has_proof)
+                and execution.get("lifecycle") == "STARTING"
+                and (
+                    execution.get("control_state") == "OWNED"
+                    or (
+                        execution.get("control_state") == "HANDOFF_PAUSED"
+                        and command == "CMD_RUN"
+                    )
+                )
+                and command in available
+            )
+
+    def send_command(self, command):
+        button = self.command_buttons.get(command)
+        if button is None or not button.isEnabled() or self.busy or self.client is None:
+            return
+        execution = dict(self.selected() or {})
+        context, client = self.context.currentText(), self.client
+        key = str(uuid.uuid4())
+
+        def action():
+            result = client.command(context, execution["id"], command, key=key)
+            return {"command_result": result}
+
+        self.submit(action)
 
     def mutate(self, operation):
         if self.busy or self.client is None:

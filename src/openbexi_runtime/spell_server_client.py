@@ -18,6 +18,9 @@ import threading
 from urllib.parse import urlsplit
 
 LIMIT = 65536
+NATIVE_COMMANDS = frozenset(
+    {"CMD_RUN", "CMD_STEP", "CMD_PAUSE", "CMD_ABORT", "CMD_CLOSE"}
+)
 IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}\Z")
 
 
@@ -117,7 +120,7 @@ class SpellServerClient:
 
     def request(self, method, path, body=None, *, key=None):
         if method not in ("GET", "POST") or not re.fullmatch(
-            r"/v1/(?:health|contexts(?:/[A-Za-z0-9_.:-]+/(?:health|snapshot|blackboard|procedures|executions|events|authority))?)",
+            r"/v1/(?:health|contexts(?:/[A-Za-z0-9_.:-]+/(?:health|snapshot|blackboard|procedures|executions|events|authority|commands))?)",
             path,
         ):
             raise ValueError("Unconfigured server route")
@@ -308,6 +311,29 @@ class SpellServerClient:
         with self._lock:
             return (context, execution) in self._controllers
 
+    def command(self, context, execution, command, *, key, target_admission_id=None):
+        """Send one intent using the original delivered controller proof.
+
+        No retry or list-derived epoch repair follows response loss. Queue
+        admission is not a claim that the native operation has completed.
+        """
+        identifier(context)
+        identifier(execution)
+        if command not in NATIVE_COMMANDS:
+            raise ValueError("Unknown native command")
+        if target_admission_id is not None:
+            identifier(target_admission_id)
+        with self._lock:
+            proof = self._controllers.get((context, execution))
+            if proof is None:
+                raise SpellServerError(403, "controller_proof_required")
+            return self.request(
+                "POST",
+                f"/v1/contexts/{context}/commands",
+                dict(proof, command=command, target_admission_id=target_admission_id),
+                key=key,
+            )["result"]
+
     def decide(self, context, execution, claim, decision, *, key):
         if decision not in ("accept", "reject"):
             raise ValueError("Explicit accept or reject required")
@@ -319,7 +345,7 @@ class SpellServerClient:
                 {**proof, "claim_id": claim, "decision": decision},
                 key=key,
             )
-            if result.get("state") in ("ACCEPTED", "BLOCKED"):
+            if result.get("state") in ("ACCEPTED", "BLOCKED", "REQUESTED", "PAUSING"):
                 self._controllers.pop((context, execution), None)
             return result
 

@@ -73,8 +73,108 @@ def test_observer_panel_disables_every_mutation(app):
                 panel.claim_button,
                 panel.accept_button,
                 panel.reject_button,
+                *panel.command_buttons.values(),
             )
         )
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
+def test_native_command_uses_delivered_proof_once_even_after_response_loss():
+    import threading
+    import uuid
+
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {}
+    eid = str(uuid.uuid4())
+    original = dict(
+        id=eid,
+        connection_id=str(uuid.uuid4()),
+        epoch=1,
+        connection_generation=3,
+        capability="a" * 64,
+    )
+    client.remember_controller("A", original)
+    sent = []
+
+    def lose_response(method, path, body=None, *, key=None):
+        sent.append((method, path, dict(body), key))
+        raise SpellServerError(503, "gateway_unavailable")
+
+    client.request = lose_response
+    with pytest.raises(SpellServerError):
+        client.command("A", eid, "CMD_STEP", key="one-intent")
+    assert len(sent) == 1
+    assert sent[0][2]["expected_epoch"] == 1
+    assert sent[0][2]["connection_generation"] == 3
+    assert sent[0][3] == "one-intent"
+    assert client._controllers[("A", eid)]["expected_epoch"] == 1
+    with pytest.raises(ValueError):
+        client.command("A", eid, "CMD_EVAL", key="arbitrary")
+    client.forget()
+    with pytest.raises(SpellServerError, match="controller_proof_required"):
+        client.command("A", eid, "CMD_RUN", key="no-proof")
+    assert len(sent) == 1
+
+
+@pytest.mark.parametrize(
+    "state,enabled",
+    [
+        ("OWNED", {"CMD_RUN", "CMD_STEP", "CMD_PAUSE", "CMD_ABORT", "CMD_CLOSE"}),
+        ("HANDOFF_PAUSED", {"CMD_RUN"}),
+        ("RECOVERY_REQUIRED", set()),
+        ("PAUSING", set()),
+    ],
+)
+def test_panel_commands_require_owner_proof_capability_and_live_state(
+    app, state, enabled
+):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QTreeWidgetItem
+
+    panel = SpellServerPanel()
+    panel.client = type("Client", (), {"has_controller": lambda *args: True})()
+    try:
+        panel.context.blockSignals(True)
+        panel.context.addItem("A")
+        panel.context.blockSignals(False)
+        panel.state = {
+            "health": {
+                "subject": "alice",
+                "permissions": ["execution:control", "execution:start"],
+                "native_commands": [
+                    "CMD_RUN",
+                    "CMD_STEP",
+                    "CMD_PAUSE",
+                    "CMD_ABORT",
+                    "CMD_CLOSE",
+                ],
+            }
+        }
+        row = QTreeWidgetItem(["example", "alice", state, ""])
+        row.setData(
+            0,
+            Qt.UserRole,
+            dict(
+                id="execution-1",
+                owner="alice",
+                lifecycle="STARTING",
+                control_state=state,
+            ),
+        )
+        panel.executions.addTopLevelItem(row)
+        panel.executions.setCurrentItem(row)
+        panel.update_buttons()
+        assert {k for k, b in panel.command_buttons.items() if b.isEnabled()} == enabled
+        panel.state["health"]["native_commands"] = []
+        panel.update_buttons()
+        assert not any(b.isEnabled() for b in panel.command_buttons.values())
+        panel.state["health"]["native_commands"] = ["CMD_RUN"]
+        panel.state["health"]["subject"] = "bob"
+        panel.update_buttons()
+        assert not any(b.isEnabled() for b in panel.command_buttons.values())
     finally:
         panel.worker.close()
         panel.close()

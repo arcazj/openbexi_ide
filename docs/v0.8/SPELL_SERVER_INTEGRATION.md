@@ -59,3 +59,24 @@ reject workers. No containment check was disabled. The hosted workflow reruns
 the existing IDE suite on a normal Linux runner; only actual hosted results may
 supersede this failed attempt. Native/driver, browser/WSS, deployment and full
 v0.8 release qualification remain pending.
+# Existing-execution controls in 1.2.1.dev2
+
+The server panel now offers Run / Continue, Step, Pause, Abort and Close execution
+when the authenticated Context advertises those commands through an explicitly
+enabled Listener. Each operation uses the exact controller capability, epoch
+and connection generation originally delivered to this client. An ambiguous
+response is not retried, and queue admission is not reported as native completion.
+Observers, other owners, fenced executions and missing controller proofs leave
+the controls disabled. The backend independently enforces the same authority.
+
+After an accepted native family handoff, B explicitly reconnects control while
+the original family is paused, then requests Run. Acceptance does not silently
+resume the family. The client drops A's proof when acceptance starts the barrier.
+The main IDE's local Run/Debug fallback remains disabled while connected.
+
+This development feature controls an existing host-provisioned execution. It
+does not add public worker provisioning, debugger inspection/breakpoints,
+browser/WSS, prompt widgets or Git collaboration. Exact paired native results
+are recorded in the companion plugin; the historical evidence below retains
+its original source identity and scope.
+
