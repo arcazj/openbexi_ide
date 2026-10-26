@@ -294,6 +294,10 @@ class SpellServerClient:
 
     def remember_controller(self, context, result):
         """Store only an explicitly delivered proof; never reconstruct one from a list."""
+        if result.get("rebind_pending") is True:
+            with self._lock:
+                self._controllers.pop((identifier(context), result["id"]), None)
+            return False
         if "capability" not in result:
             return False
         proof = {

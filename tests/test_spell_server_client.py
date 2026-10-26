@@ -218,6 +218,69 @@ def test_window_detach_does_not_wait_for_pending_network_lock(app):
         panel.close()
 
 
+def test_pending_native_reconnect_discards_only_its_original_cached_proof():
+    import threading
+
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {
+        ("A", "one"): {"capability": "old"},
+        ("A", "two"): {"capability": "other"},
+    }
+    assert not client.remember_controller("A", {"id": "one", "rebind_pending": True})
+    assert not client.has_controller("A", "one")
+    assert client.has_controller("A", "two")
+    with pytest.raises(SpellServerError, match="controller_proof_required"):
+        client.command("A", "one", "CMD_RUN", key="pending-must-not-run")
+
+
+@pytest.mark.parametrize(
+    "state,advertised,has_proof,subject,enabled",
+    [
+        ("CONTROLLER_DISCONNECTED", True, False, "alice", True),
+        ("OWNED", True, False, "alice", True),
+        ("OWNED", True, True, "alice", False),
+        ("CONTROLLER_DISCONNECTED", False, False, "alice", False),
+        ("CONTROLLER_DISCONNECTED", True, False, "observer", False),
+        ("PAUSING", True, False, "alice", False),
+        ("RECOVERY_REQUIRED", True, False, "alice", False),
+    ],
+)
+def test_native_reconnect_button_requires_owner_and_configured_recovery(
+    app, state, advertised, has_proof, subject, enabled
+):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QTreeWidgetItem
+
+    panel = SpellServerPanel()
+    panel.client = type("Client", (), {"has_controller": lambda *args: has_proof})()
+    try:
+        panel.context.blockSignals(True)
+        panel.context.addItem("A")
+        panel.context.blockSignals(False)
+        panel.state = {
+            "health": {
+                "subject": subject,
+                "permissions": ["execution:control", "execution:start"],
+                "native_rebind": advertised,
+            }
+        }
+        row = QTreeWidgetItem(["example", "alice", state, ""])
+        row.setData(
+            0,
+            Qt.UserRole,
+            dict(id="one", owner="alice", lifecycle="STARTING", control_state=state),
+        )
+        panel.executions.addTopLevelItem(row)
+        panel.executions.setCurrentItem(row)
+        panel.update_buttons()
+        assert panel.rebind_button.isEnabled() is enabled
+        assert not any(b.isEnabled() for b in panel.command_buttons.values())
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
 def test_busy_panel_never_waits_on_controller_network_lock(app):
     panel = SpellServerPanel()
 

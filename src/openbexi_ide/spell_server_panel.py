@@ -265,6 +265,16 @@ class SpellServerPanel(QWidget):
             and (
                 execution.get("lifecycle") == "RESERVED"
                 or execution.get("control_state") == "HANDOFF_PAUSED"
+                or (
+                    health.get("native_rebind") is True
+                    and "execution:start" in permissions
+                    and execution.get("lifecycle") == "STARTING"
+                    and execution.get("control_state")
+                    in {"OWNED", "CONTROLLER_DISCONNECTED"}
+                    and not self.client.has_controller(
+                        self.context.currentText(), execution.get("id")
+                    )
+                )
             )
         )
         self.claim_button.setEnabled(
