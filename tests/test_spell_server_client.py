@@ -301,9 +301,16 @@ def test_busy_panel_never_waits_on_controller_network_lock(app):
         panel.close()
 
 
-@pytest.mark.parametrize("control_state", ["OWNED", "CONTROLLER_DISCONNECTED"])
+@pytest.mark.parametrize(
+    "lifecycle,control_state",
+    [
+        ("STARTING", "OWNED"),
+        ("STARTING", "CONTROLLER_DISCONNECTED"),
+        ("RESERVED", "CONTROLLER_DISCONNECTED"),
+    ],
+)
 def test_live_reconnect_uses_fresh_session_and_retains_other_connections(
-    app, control_state
+    app, lifecycle, control_state
 ):
     from PySide6.QtCore import Qt
     from PySide6.QtWidgets import QTreeWidgetItem
@@ -342,7 +349,7 @@ def test_live_reconnect_uses_fresh_session_and_retains_other_connections(
             id="one",
             epoch=3,
             owner="alice",
-            lifecycle="STARTING",
+            lifecycle=lifecycle,
             control_state=control_state,
         ),
     )

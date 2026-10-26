@@ -338,11 +338,12 @@ class SpellServerPanel(QWidget):
         procedure = self.procedures.currentData()
 
         def action():
-            reconnect = (
-                operation == "rebind"
-                and execution.get("lifecycle") == "STARTING"
-                and execution.get("control_state")
-                in {"OWNED", "CONTROLLER_DISCONNECTED"}
+            reconnect = operation == "rebind" and (
+                execution.get("control_state") == "CONTROLLER_DISCONNECTED"
+                or (
+                    execution.get("lifecycle") == "STARTING"
+                    and execution.get("control_state") == "OWNED"
+                )
             )
             if context not in self.connections or reconnect:
                 connection = client.authority(
