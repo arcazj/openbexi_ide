@@ -1,0 +1,7 @@
+# Native controller reconnect from the IDE
+
+Development package 1.2.1.dev4 fixes two desktop reconnect defects. After the server reports CONTROLLER_DISCONNECTED, a retained old controller proof no longer hides the explicit Reconnect control action. Starting a live reconnect opens a fresh authenticated session, as required by Context, instead of reusing the closed or previously bound session.
+
+The panel retains prior sessions because other executions can still use them. Only explicit Disconnect closes every known session, with one stable idempotency key per session; a lost close response can be retried without closing an already acknowledged session again. Pending reconnect drops only the selected execution's old proof. The server still requires independent host freeze, original family identity and explicit resume. No command, session-open or reconnect request is automatically retried after response loss.
+
+Three focused regressions failed on the previous source: the disconnected button stayed disabled with a cached proof, and both live reconnect states reused the old session. After the fix, all 51 client and Qt panel tests pass locally on CPython 3.12.14 / PySide6 6.10.3, including failure paths and protection of other execution proofs. Ruff checks and formatting pass. CPython 3.13 complete-suite and source-pinned native acceptance remain mandatory hosted checks. This component does not qualify abrupt network recovery, prompt GUI, browser/WSS, public launch or the full v0.8 release.

@@ -71,6 +71,7 @@ class SpellServerPanel(QWidget):
         super().__init__(parent)
         self.client = None
         self.connections = {}
+        self.retained_connections = set()
         self.closing_keys = {}
         self.state = {}
         self.busy = False
@@ -151,7 +152,7 @@ class SpellServerPanel(QWidget):
         if self.busy:
             return
         # A connection switch must not silently abandon logical controllers.
-        if self.connections:
+        if self.connections or self.retained_connections:
             self.status.setText("Close this server panel before switching connections")
             return
 
@@ -252,7 +253,9 @@ class SpellServerPanel(QWidget):
         execution = self.selected() or {}
         owner = execution.get("owner") == health.get("subject") and bool(execution)
         control = ready and "execution:control" in permissions
-        self.connect_button.setEnabled(not self.busy and not self.connections)
+        self.connect_button.setEnabled(
+            not self.busy and not self.connections and not self.retained_connections
+        )
         self.context.setEnabled(ready)
         self.refresh_button.setEnabled(ready)
         self.disconnect_button.setEnabled(ready)
@@ -271,8 +274,11 @@ class SpellServerPanel(QWidget):
                     and execution.get("lifecycle") == "STARTING"
                     and execution.get("control_state")
                     in {"OWNED", "CONTROLLER_DISCONNECTED"}
-                    and not self.client.has_controller(
-                        self.context.currentText(), execution.get("id")
+                    and (
+                        execution.get("control_state") == "CONTROLLER_DISCONNECTED"
+                        or not self.client.has_controller(
+                            self.context.currentText(), execution.get("id")
+                        )
                     )
                 )
             )
@@ -332,10 +338,22 @@ class SpellServerPanel(QWidget):
         procedure = self.procedures.currentData()
 
         def action():
-            if context not in self.connections:
-                self.connections[context] = client.authority(
+            reconnect = (
+                operation == "rebind"
+                and execution.get("lifecycle") == "STARTING"
+                and execution.get("control_state")
+                in {"OWNED", "CONTROLLER_DISCONNECTED"}
+            )
+            if context not in self.connections or reconnect:
+                connection = client.authority(
                     context, "session.open", {}, key=str(uuid.uuid4())
                 )["connection_id"]
+                previous = self.connections.get(context)
+                if previous is not None:
+                    # Other executions can still use this original session.
+                    # Keep it for explicit disconnect; never close it on rebind.
+                    self.retained_connections.add((context, previous))
+                self.connections[context] = connection
             connection = self.connections[context]
             key = str(uuid.uuid4())
             if operation == "reserve":
@@ -387,13 +405,17 @@ class SpellServerPanel(QWidget):
         client = self.client
 
         def disconnect():
-            for context, connection in list(self.connections.items()):
-                key = self.closing_keys.setdefault(context, str(uuid.uuid4()))
+            pending = self.retained_connections | set(self.connections.items())
+            for context, connection in sorted(pending):
+                identity = (context, connection)
+                key = self.closing_keys.setdefault(identity, str(uuid.uuid4()))
                 client.authority(
                     context, "session.close", {"connection_id": connection}, key=key
                 )
-                del self.connections[context]
-                del self.closing_keys[context]
+                if self.connections.get(context) == connection:
+                    del self.connections[context]
+                self.retained_connections.discard(identity)
+                del self.closing_keys[identity]
             client.forget()
             return {"disconnected": True}
 

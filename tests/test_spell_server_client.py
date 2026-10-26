@@ -238,6 +238,7 @@ def test_pending_native_reconnect_discards_only_its_original_cached_proof():
     "state,advertised,has_proof,subject,enabled",
     [
         ("CONTROLLER_DISCONNECTED", True, False, "alice", True),
+        ("CONTROLLER_DISCONNECTED", True, True, "alice", True),
         ("OWNED", True, False, "alice", True),
         ("OWNED", True, True, "alice", False),
         ("CONTROLLER_DISCONNECTED", False, False, "alice", False),
@@ -295,6 +296,71 @@ def test_busy_panel_never_waits_on_controller_network_lock(app):
     try:
         panel.update_buttons()
         assert not panel.refresh_button.isEnabled()
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
+@pytest.mark.parametrize("control_state", ["OWNED", "CONTROLLER_DISCONNECTED"])
+def test_live_reconnect_uses_fresh_session_and_retains_other_connections(
+    app, control_state
+):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QTreeWidgetItem
+    import threading
+
+    panel = SpellServerPanel()
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {
+        ("A", "one"): {"capability": "stale"},
+        ("A", "two"): {"capability": "other"},
+    }
+    calls = []
+
+    def authority(context, method, payload, *, key):
+        calls.append((context, method, dict(payload), key))
+        if method == "session.open":
+            return {"connection_id": "fresh-session"}
+        if method == "execution.rebind":
+            assert payload["connection_id"] == "fresh-session"
+            return {"id": "one", "rebind_pending": True}
+        assert method == "session.close"
+        return {"closed": True}
+
+    client.authority = authority
+    panel.client = client
+    panel.connections["A"] = "original-session"
+    panel.context.blockSignals(True)
+    panel.context.addItem("A")
+    panel.context.blockSignals(False)
+    row = QTreeWidgetItem(["example", "alice", control_state, ""])
+    row.setData(
+        0,
+        Qt.UserRole,
+        dict(
+            id="one",
+            epoch=3,
+            owner="alice",
+            lifecycle="STARTING",
+            control_state=control_state,
+        ),
+    )
+    panel.executions.addTopLevelItem(row)
+    panel.executions.setCurrentItem(row)
+    # Run the network job synchronously; inspect its emitted request sequence.
+    panel.submit = lambda job: job()
+    try:
+        panel.mutate("rebind")
+        assert [c[1] for c in calls] == ["session.open", "execution.rebind"]
+        assert calls[-1][2]["expected_epoch"] == 3
+        assert panel.connections["A"] == "fresh-session"
+        assert not client.has_controller("A", "one")
+        assert client.has_controller("A", "two")
+        panel.disconnect_server()
+        closed = [c[2]["connection_id"] for c in calls if c[1] == "session.close"]
+        assert sorted(closed) == ["fresh-session", "original-session"]
+        assert not panel.connections and not client.has_controller("A", "two")
     finally:
         panel.worker.close()
         panel.close()
@@ -423,3 +489,109 @@ def test_monitoring_rejects_bogus_or_secret_bearing_gateway_result(changed):
     }
     with pytest.raises(SpellServerError):
         client.events("A")
+
+
+@pytest.mark.parametrize("phase", ["session.open", "execution.rebind"])
+def test_reconnect_response_loss_is_not_replayed_and_known_sessions_remain_closeable(
+    app, phase
+):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QTreeWidgetItem
+    import threading
+
+    panel = SpellServerPanel()
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {("A", "one"): {"capability": "old"}}
+    calls = []
+
+    def authority(context, method, payload, *, key):
+        calls.append((method, dict(payload), key))
+        if method == phase:
+            raise SpellServerError(503, "lost_response")
+        if method == "session.open":
+            return {"connection_id": "fresh"}
+        assert method == "session.close"
+        return {"closed": True}
+
+    client.authority = authority
+    panel.client = client
+    panel.connections["A"] = "old"
+    panel.context.blockSignals(True)
+    panel.context.addItem("A")
+    panel.context.blockSignals(False)
+    row = QTreeWidgetItem(["example", "alice", "CONTROLLER_DISCONNECTED", ""])
+    row.setData(
+        0,
+        Qt.UserRole,
+        dict(
+            id="one",
+            epoch=1,
+            owner="alice",
+            lifecycle="STARTING",
+            control_state="CONTROLLER_DISCONNECTED",
+        ),
+    )
+    panel.executions.addTopLevelItem(row)
+    panel.executions.setCurrentItem(row)
+    panel.submit = lambda job: job()
+    try:
+        with pytest.raises(SpellServerError, match="lost_response"):
+            panel.mutate("rebind")
+        assert sum(c[0] == phase for c in calls) == 1
+        assert client._controllers[("A", "one")] == {"capability": "old"}
+        panel.disconnect_server()
+        closed = {c[1]["connection_id"] for c in calls if c[0] == "session.close"}
+        assert closed == ({"old"} if phase == "session.open" else {"old", "fresh"})
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
+def test_disconnect_retry_keeps_exact_close_key_and_blocks_connection_switch(app):
+    panel = SpellServerPanel()
+    calls = []
+    failed = False
+
+    class Client:
+        def authority(self, context, method, payload, *, key):
+            nonlocal failed
+            calls.append((context, method, dict(payload), key))
+            if payload["connection_id"] == "retained" and not failed:
+                failed = True
+                raise SpellServerError(503, "lost_close_response")
+            return {"closed": True}
+
+        def forget(self):
+            calls.append("forgotten")
+
+        def has_controller(self, *args):
+            return False
+
+    panel.client = Client()
+    panel.connections["A"] = "current"
+    panel.retained_connections.add(("A", "retained"))
+    panel.submit = lambda job: job()
+    try:
+        with pytest.raises(SpellServerError, match="lost_close_response"):
+            panel.disconnect_server()
+        assert not panel.connections
+        assert panel.retained_connections == {("A", "retained")}
+        panel.update_buttons()
+        assert not panel.connect_button.isEnabled()
+        panel.connect_config("must-not-be-opened.json")
+        assert "Close this server panel" in panel.status.text()
+        panel.disconnect_server()
+        attempts = [
+            c for c in calls if c != "forgotten" and c[2]["connection_id"] == "retained"
+        ]
+        assert len(attempts) == 2 and attempts[0] == attempts[1]
+        assert (
+            sum(c != "forgotten" and c[2]["connection_id"] == "current" for c in calls)
+            == 1
+        )
+        assert calls[-1] == "forgotten"
+        assert not panel.retained_connections and not panel.closing_keys
+    finally:
+        panel.worker.close()
+        panel.close()
