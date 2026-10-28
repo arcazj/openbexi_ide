@@ -1,0 +1,389 @@
+{
+  "schema": "openbexi.ide-owned-descendant-reaping-correction/1",
+  "recorded_at": "2026-10-28T21:10:20.350594+00:00",
+  "base_ide_commit": "be3ba9885b12182e383f389aad5b88f69cdf53ca",
+  "candidate_version": "1.2.1.dev7",
+  "candidate_source_sha256": {
+    "src/openbexi_runtime/processes.py": "95d5bae17d6d0da75910e0e4f61f4868229c2d7e15a09486d1deddf0aba805db",
+    "src/openbexi_runtime/cli.py": "999479a3d6f0e6f38d5fc7cdcea3674877bdd59427e5e4e93d892f99f12ca469",
+    "src/openbexi_ide/controller.py": "6931ab9bb4a469cc859ff491b3b0ef6c9ddc2f36f21ffc8dd4d1dd9352c1aeef",
+    "tests/test_process_reaping.py": "b46ef44f9379abb3ba33c6aae2d52a841311f6411504aeb33c0a53fab70cf45e",
+    "pyproject.toml": "c8283d250c9b42d06b39d9bc76378b4b97bece1da9a8f9a26f1bf4091f889556"
+  },
+  "unchanged_original_test_files_sha256": {
+    "tests/test_ui.py": "e46885bb5fa4c8add32359656ac206c8f8e085e367423dfdbc793b5d1fab9528",
+    "tests/test_debugger.py": "9a43cb42597734880a11130d6c2cf32350a68a0c4f5e76699dab1f78f6ab3daf",
+    "tests/test_shared_ui.py": "476eb1dfd8098021e26283ddf234a51d44c060f591128f7944d03be5581fe0f0",
+    "tests/test_editor_productivity.py": "94550cf7ccfd136985e1dea2e818a70fbd4b30a404b791e22836042783800f2d"
+  },
+  "observed_hosted_failure": {
+    "collector": "3e48033b277bcba83143c84d5a424142876b8786",
+    "run": 40765982880,
+    "artifact": 12851260327,
+    "artifact_sha256": "f1873d0be364b98e677bb248aa531eb841fbcc95a4ccd26be7f1f865e968b245",
+    "result": "43 passed,1 failed,0 skipped",
+    "test": "test_window_close_reaps_running_user_process_and_child",
+    "config_user": "",
+    "actual_uid": 0,
+    "actual_gid": 0,
+    "actual_pid": 1,
+    "live_vs_zombie_state_retained": false
+  },
+  "historical_c58_one_failure_identity": "unresolved; individual assertion/JUnit were not retained",
+  "controlled_reproduction": {
+    "status": 1,
+    "harness_pid": 198741,
+    "proc_self": "198741",
+    "explicit_subreaper": true,
+    "actual_pid1": false,
+    "source_sha256": "0d59aa976dacc7f2514b2595ae4c47e4312abae95641f9a82568bc8e2bc7ebed",
+    "original_test_sha256": "e46885bb5fa4c8add32359656ac206c8f8e085e367423dfdbc793b5d1fab9528",
+    "records": [
+      {
+        "root": 198745,
+        "before": [],
+        "after": [],
+        "closed": true,
+        "after_test": []
+      },
+      {
+        "root": 198747,
+        "before": [],
+        "after": [],
+        "closed": true,
+        "after_test": []
+      },
+      {
+        "root": 198758,
+        "before": [
+          {
+            "pid": 198758,
+            "state": "S",
+            "ppid": 198741,
+            "pgrp": 198758,
+            "session": 198758,
+            "start_ticks": 3387692
+          },
+          {
+            "pid": 198759,
+            "state": "S",
+            "ppid": 198758,
+            "pgrp": 198758,
+            "session": 198758,
+            "start_ticks": 3387694
+          }
+        ],
+        "after": [
+          {
+            "pid": 198758,
+            "state": "R",
+            "ppid": 198741,
+            "pgrp": 198758,
+            "session": 198758,
+            "start_ticks": 3387692
+          },
+          {
+            "pid": 198759,
+            "state": "R",
+            "ppid": 198758,
+            "pgrp": 198758,
+            "session": 198758,
+            "start_ticks": 3387694
+          }
+        ],
+        "closed": true,
+        "after_test": [
+          null,
+          {
+            "pid": 198759,
+            "state": "Z",
+            "ppid": 198741,
+            "pgrp": 198758,
+            "session": 198758,
+            "start_ticks": 3387694
+          }
+        ]
+      }
+    ]
+  },
+  "correction": [
+    "Enable Linux orphan adoption before QProcess, start_owned_process, start_child and public CLI launch.",
+    "Bind owned session processes to numeric PID, start ticks and pidfd; reject a reused root identity.",
+    "Wait for captured processes to stop, rescan for children, terminate only captured pidfds, and reap only owned descendant pidfds.",
+    "Observe the direct root pidfd without consuming its exit status; leave QProcess/Popen and unrelated children with their original wait owners.",
+    "Keep ownership retryable after explicit cleanup failure; do not fall back to broad waitpid or sibling-child reaping."
+  ],
+  "runtime_prerequisites": [
+    "Linux >=5.4 with permitted pidfd_open, pidfd_send_signal, waitid(P_PIDFD) and PR_SET_CHILD_SUBREAPER.",
+    "A consistent procfs view of the process PID namespace; unsupported or denied primitives fail before owned launch."
+  ],
+  "scope_limits": [
+    "Same-session owned descendants; escaped setsid sessions/cgroup containment are not newly qualified.",
+    "Windows existing Job behavior is unchanged and was not rerun locally.",
+    "Controlled zombie reproduction used a real Linux subreaper, not an actual local PID1 container.",
+    "No full Docker or installed-default-user candidate acceptance is claimed by local Qt runs."
+  ],
+  "completed_checks": {
+    "controlled_original_ui_failure": {
+      "file": "original-ui-subreaper.xml",
+      "sha256": "e3f5557beeb4066b2868b75ae20ff01680eaabc7dcaed54e0810500793f05b31",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "initial_fixed_ui_component": {
+      "file": "fixed-ui-subreaper.xml",
+      "sha256": "2d3bfda10a1527063e36bc77c7909a1e6566063e04bc7a143a73367c29abe9af",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pre_cli_guard_full_original_desktop_plus_initial_regressions": {
+      "file": "original-desktop-with-reaping.xml",
+      "sha256": "0fb47353a8b5494a495ac98fd3a38962f59018eb6837cfce947ab290d622cc0d",
+      "tests": 49,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pre_cli_guard_runtime_session_regressions": {
+      "file": "runtime-session-regressions.xml",
+      "sha256": "cf97c10cfb042998b0f8f52901eea9351aa42d417f71ac14325a2b7737748772",
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9
+    },
+    "final_source_owned_api_and_original_failure": {
+      "file": "final-owned-api-regressions-corrected.xml",
+      "sha256": "18148f0c1b6d4b165c6406719e58f358f4b43d54eb0a52c9d5290c2a385be88d",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "prior_failed_local_attempts": [
+    "The restricted execution namespace exposed host procfs against namespace PIDs; the first process wait timed out and no valid system cause was inferred.",
+    "An initial new ancestry test incorrectly required a still-parented grandchild to be adopted immediately after root exit; both failed cases remain retained.",
+    "The first new Qt retry test used an instance enum alias unavailable in PySide6; its teardown AttributeError remains retained and the proper QProcess.NotRunning enum is used."
+  ],
+  "complete_final_local_collection": {
+    "status": "running",
+    "source_spell": "17ac0d81afca81fe765177f4137e71641be2ef9b",
+    "fresh_sdk_wheel": {
+      "source_spell": "17ac0d81afca81fe765177f4137e71641be2ef9b",
+      "wheel": "openbexi_spell_plugin-0.1.0-py3-none-any.whl",
+      "bytes": 58438,
+      "sha256": "589caa2d688c56da7073c7b301184ef3b47a2a0a93c5fe305da5f8bdd6e40aad",
+      "member_sha256": {
+        "dss/__init__.py": "1a0a564e79e7834f92e18174c6e1c774316b0bdc42c67bf46ab64cc6eb2eb8a5",
+        "dss/catalog.py": "0332c0e9e96ecbcde7dc8372a99af95403d0617840546d99b8023a85192422f2",
+        "dss/control.py": "cac85609190ffc07bd95d2536a77527b2522e12da41963f4809e49434be42c1c",
+        "dss/engine.py": "604663fb2a921922fc5318a31923b95523aec5193e31495ef310cacf1714a8ce",
+        "dss/evidence_validation.py": "017d2a4f5b6b2df14129599a1e973cf22a3da98f45e5eb77265ccaeedfb317cd",
+        "dss/healthcheck.py": "565c4948b60e9f3b32a18dbb40633aff2437a9d7ed21f5a4c4b148b437939a8b",
+        "dss/local.py": "3eb718d4ab6839577769c964c76623dcc0083d24ef2c9844fd90cadf25635e6c",
+        "dss/packets.py": "63bd4810501b85119d12ba273b5cc2b63d06c24c2c93dfddcab4388563d846f1",
+        "dss/server.py": "a136d929c27d7934cb72562b3be0849a19681040c42e2e959a139e055e7b3383",
+        "dss/uplink.py": "04bf381b2c4273e3aa107312586811c32cd4b2289a14151e7773960f6f08683a",
+        "dss/data/satellite_database.json": "710d7463095f4a51f7075974c8ee6435fe25199ef5b0c2ea02b4cd9391ddde8e",
+        "openbexi_spell/__init__.py": "55712c6f299549a507c503312d6edc0f709cdb84ffaf0d25e5d88b4c982bd74f",
+        "openbexi_spell/api.py": "18e34091cceec323d1a78e24e9ff2a65cf601b452793f24dbfd86cd66bc9f730",
+        "openbexi_spell/common.py": "098282c74e2a2ecd769c06e75cbc283009709d17ab14c9a970292ecf78452cca",
+        "openbexi_spell/compatibility.py": "8d160eb6c36cc10cf57911e8bf2994f6e55c707fe298c0d7bd2708642cde90c1",
+        "openbexi_spell/time.py": "2337dfdc5419d3e922011df239f45b17b6abe00de57686c6d7f4f9f8178f2b79",
+        "openbexi_spell_plugin/__init__.py": "0039d4ef1f9214653ac126474dbc5bd98c90fdc3d174583d6cdbf430717d46fe",
+        "openbexi_spell_plugin/runner.py": "bc3a7476b2ba7c3bea49601247d9655e758e4e2fe923977a438312ed2dcbc095",
+        "openbexi_spell_plugin/runtime.py": "8aec53318072dda782bc3c4bfdcc2b64b718964a26936483f872aeed0330d847",
+        "openbexi_spell_plugin-0.1.0.dist-info/licenses/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "openbexi_spell_plugin-0.1.0.dist-info/licenses/NOTICE": "d7dbc72842061ccf4e3e5d4830e4b06347a1b9e04d0c1b39a1e33066c1056f38",
+        "spell/__init__.py": "521d4af4cea225957261c308af989164be78dc37464255802547bf7cbcc18ec9",
+        "spell/lang/__init__.py": "9e60addb5ec23d5bae7549aac8c61f10155b817afd008c12da421d67889db6ec",
+        "openbexi_spell_plugin-0.1.0.dist-info/METADATA": "52da12d893654cb8bc8390f2f4c0d149d196c0059bed240e6ae0d66b69430499",
+        "openbexi_spell_plugin-0.1.0.dist-info/WHEEL": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "openbexi_spell_plugin-0.1.0.dist-info/entry_points.txt": "8c4ebc1e9e9c6d6a72b5c9ef6ae08b62c7100bd39c1473024d995133344a22ae",
+        "openbexi_spell_plugin-0.1.0.dist-info/top_level.txt": "cef3102b25ed879bf917801dc09b5a576acf6d5d52e7e8ef46568e200f56c931"
+      },
+      "all_non_record_members_equal_prior404_sdk": true,
+      "actual_installed_source": "/workspace/scratch/79c03b1ee320/packaging-evidence/ide-teardown-investigation/current-sdk-build/installed"
+    },
+    "log": "full-ide-dev7-local.stdout",
+    "junit": "full-ide-dev7-local.xml",
+    "docker_execution_image_unavailable_locally": true
+  },
+  "primary_sources": {
+    "retrieved_at": "2026-10-28T20:59:29.998074+00:00",
+    "sources": [
+      {
+        "url": "https://www.man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html",
+        "file": "subreaper.html",
+        "bytes": 9879,
+        "sha256": "b805fe23c7251ad6c3d08a829ed755b80a8fa106929c67325c7122f3b126ef2c"
+      },
+      {
+        "url": "https://www.man7.org/linux/man-pages/man2/waitpid.2.html",
+        "file": "wait.html",
+        "bytes": 31979,
+        "sha256": "fe247c4fc91a2dafd978157a46fa2a91fa48b902e643d852e8352d78c4b32fd3"
+      },
+      {
+        "url": "https://www.man7.org/linux/man-pages/man2/pidfd_open.2.html",
+        "file": "pidfd-open.html",
+        "bytes": 18141,
+        "sha256": "d34301a2f18869b774ad5c5dc3ef0e93988b903deb13bdc41cbbd60bce9c5bab"
+      },
+      {
+        "url": "https://docs.python.org/3.13/library/os.html",
+        "file": "python313-os.html",
+        "bytes": 726379,
+        "sha256": "8076540f6276f13e6cec22ea9e2d786a50de01f9b214dcd5f893839043b12b19"
+      }
+    ]
+  },
+  "external_evidence_directory": "packaging-evidence/ide-teardown-investigation",
+  "retained_completed_local_evidence": {
+    "fixed-ui-subreaper.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-ui-subreaper.xml": {
+      "bytes": 1741,
+      "sha256": "e3f5557beeb4066b2868b75ae20ff01680eaabc7dcaed54e0810500793f05b31"
+    },
+    "fixed-ui-subreaper.json": {
+      "bytes": 1291,
+      "sha256": "530b772479ee02b6a05f3d81eb4b8391eebd37266e765b569eb1668905d28507"
+    },
+    "runtime-session-regressions.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "final-owned-api-regressions.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baseline-consistent-proc.stdout.json": {
+      "bytes": 1218,
+      "sha256": "eceb22fa6238f1044d6275197b96ddc09f4060a66bfbc610d5561e4255ef8cc4"
+    },
+    "reproduce_baseline.py": {
+      "bytes": 1792,
+      "sha256": "03f46ed900253b5281765c456469e5d6edb8d7f55a9b187d1a53e05ed1caa480"
+    },
+    "baseline-consistent-proc.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-desktop-with-reaping.stdout": {
+      "bytes": 6604,
+      "sha256": "f82fe154c0b46d73c2688f124c2834bc12ec17ca5aa639d81cb5d6dda7f5cd6a"
+    },
+    "original-ui-subreaper.stdout": {
+      "bytes": 2299,
+      "sha256": "44f1d96ca5664f17418039b9b1612019327cc5a76baba2189b6d6f7f404e3297"
+    },
+    "original-desktop-with-reaping.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "targeted-reaping-corrected.xml": {
+      "bytes": 1327,
+      "sha256": "fcd9a9cc77c1253d709f0342c85e415421807dc330a4bc77a9e80e19485e8769"
+    },
+    "fixed-ui-subreaper.xml": {
+      "bytes": 361,
+      "sha256": "2d3bfda10a1527063e36bc77c7909a1e6566063e04bc7a143a73367c29abe9af"
+    },
+    "final-owned-api-regressions-corrected.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "environment-and-attempts.json": {
+      "bytes": 2085,
+      "sha256": "7bade254fea0845d11688d48e65fa7b82bc9670ac81e249b189f74b0fb267237"
+    },
+    "fixed-ui-subreaper.stdout": {
+      "bytes": 660,
+      "sha256": "346e2bdd0c0177f48d8727df53c4406887352a155a7de9a03608dcfb51178061"
+    },
+    "final-owned-api-regressions-corrected.stdout": {
+      "bytes": 1925,
+      "sha256": "f2f2f4cf0fe43cfb372ee1117117b8f9b4d750d074f30717d94d229ccf5c3d7f"
+    },
+    "targeted-reaping.xml": {
+      "bytes": 3382,
+      "sha256": "03d4566f8a93c9e6d1c4a3abf6dccef64d7cebfc5175494e0b56cc79fc112c08"
+    },
+    "original-desktop-with-reaping.xml": {
+      "bytes": 6449,
+      "sha256": "0fb47353a8b5494a495ac98fd3a38962f59018eb6837cfce947ab290d622cc0d"
+    },
+    "current-sdk-source-comparison.json": {
+      "bytes": 2945,
+      "sha256": "cb142962fefebd0c936b08ee4757b6cf942ca3b2f79f8303ced807b39c886f3e"
+    },
+    "original-ui-subreaper.json": {
+      "bytes": 1631,
+      "sha256": "c818e11f18cc6bbfad9e476497313ee9f37fdbf43313e49dd503ec63b8882598"
+    },
+    "final-owned-api-regressions-corrected.xml": {
+      "bytes": 1600,
+      "sha256": "18148f0c1b6d4b165c6406719e58f358f4b43d54eb0a52c9d5290c2a385be88d"
+    },
+    "original-ui-subreaper.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "implementation-before-version-bump.patch": {
+      "bytes": 10623,
+      "sha256": "ae41933e21878f121860a82cf7d52a680e6c769833394f18cb47983394ee38b9"
+    },
+    "runtime-session-regressions.xml": {
+      "bytes": 27456,
+      "sha256": "cf97c10cfb042998b0f8f52901eea9351aa42d417f71ac14325a2b7737748772"
+    },
+    "runtime-session-regressions.stdout": {
+      "bytes": 1537,
+      "sha256": "1a6ba489555475db1523dfbf2f4ee2cee5d81bea07917b91a0a00e5035cd23fb"
+    },
+    "final-owned-api-regressions.stdout": {
+      "bytes": 4099,
+      "sha256": "5e12f8a8b8c38ad6c4bff2b534fc4822a6998f3e3a76d8d99d1d3b886f619f63"
+    },
+    "final-owned-api-regressions.xml": {
+      "bytes": 3468,
+      "sha256": "a557d435a0c2d124787df395cbc7d227f2a0cc53b7d700f60edf8a3cf940914e"
+    },
+    "targeted-reaping.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run_original_ui_test.py": {
+      "bytes": 2335,
+      "sha256": "d8988a073da32b67202e7aefb53638becaef5e3ad29aa6a59557cfde33acdeef"
+    },
+    "targeted-reaping-corrected.stdout": {
+      "bytes": 1607,
+      "sha256": "4523670846223a4d69dc7ecef08b5d57d1358782dfbd5e4b8d584ce88e791a3e"
+    },
+    "targeted-reaping-corrected.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "targeted-reaping.stdout": {
+      "bytes": 4097,
+      "sha256": "6458b88341065b39317206f34a36bd5f5909be0dc1729e1028d9f7a71c674215"
+    },
+    "baseline-subreaper-result.json": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "full_ide_qualified": false,
+  "installed_default_user_candidate_qualified": false,
+  "full_v08_qualified": false,
+  "published_stable": false
+}

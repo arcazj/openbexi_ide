@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler
 
 from .launch import LaunchSpec, clean_environment, interpreter_info
-from .processes import ProcessTree, own_worker_tree
+from .processes import ProcessTree, own_worker_tree, prepare_child_reaping
 
 
 def private_json(path, value):
@@ -190,6 +190,7 @@ def run_local(args):
             environment['OPENBEXI_DSS_URL'] = args.dss_url
     elif args.language != 'python':
         raise ValueError(f'Install the {args.language} backend in the selected interpreter first')
+    prepare_child_reaping()
     process = subprocess.Popen(command, cwd=spec.project, env=environment, start_new_session=os.name != 'nt')
     owner = None
     try:

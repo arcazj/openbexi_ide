@@ -5,7 +5,7 @@ import threading
 
 from PySide6.QtCore import QObject, QProcess, QProcessEnvironment, QRunnable, QThreadPool, QTimer, Signal
 from openbexi_runtime.launch import LaunchSpec, clean_environment, interpreter_info
-from openbexi_runtime.processes import ProcessTree
+from openbexi_runtime.processes import ProcessTree, prepare_child_reaping
 
 
 class ProbeSignals(QObject):
@@ -53,6 +53,7 @@ class OwnedProcess(QProcess):
         super().__init__(parent)
         self.owner = None
         if os.name != "nt":
+            prepare_child_reaping()
             self.setUnixProcessParameters(QProcess.UnixProcessFlag.CreateNewSession)
         self.started.connect(self.claim_tree)
         self.finished.connect(self.release_tree)
@@ -68,11 +69,12 @@ class OwnedProcess(QProcess):
 
     def release_tree(self, *_):
         if self.owner:
-            owner, self.owner = self.owner, None
             try:
-                owner.close()
+                self.owner.close()
             except OSError as error:
                 self.ownership_error.emit(f"Process cleanup failed: {error}")
+            else:
+                self.owner = None
 
     def kill_tree(self):
         self.release_tree()

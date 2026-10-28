@@ -4,8 +4,54 @@ from __future__ import annotations
 import ctypes
 from ctypes import wintypes
 import os
+from pathlib import Path
+import select
 import signal
 import subprocess
+import sys
+import threading
+import time
+
+
+def prepare_child_reaping():
+    """Adopt orphaned descendants before launching an owned Linux session.
+
+    Keep direct-child exit statuses with their Popen/QProcess owners. Only
+    descendants captured from an owned session are reaped by ProcessTree.close.
+    This also works when the desktop itself is the container's PID 1.
+    """
+    if sys.platform.startswith("linux"):
+        # Require the complete Linux >= 5.4 pidfd path before creating a child.
+        # A denied/unsupported primitive must not become a numeric-PID fallback.
+        if not all(hasattr(os, name) for name in ("pidfd_open", "P_PIDFD", "waitid")) or not hasattr(signal, "pidfd_send_signal"):
+            raise OSError("Linux pidfd ownership requires Linux 5.4 or newer")
+        fd = os.pidfd_open(os.getpid())
+        try:
+            signal.pidfd_send_signal(fd, 0)
+            try:
+                os.waitid(os.P_PIDFD, fd, os.WEXITED | os.WNOHANG)
+            except ChildProcessError:
+                pass  # Our own process is deliberately not a waitable child.
+        finally:
+            os.close(fd)
+        libc = ctypes.CDLL(None, use_errno=True)
+        prctl = libc.prctl
+        prctl.argtypes = [ctypes.c_int, ctypes.c_ulong, ctypes.c_ulong, ctypes.c_ulong, ctypes.c_ulong]
+        prctl.restype = ctypes.c_int
+        if prctl(36, 1, 0, 0, 0):  # PR_SET_CHILD_SUBREAPER
+            error = ctypes.get_errno()
+            raise OSError(error, os.strerror(error))
+
+
+def _linux_identity(pid):
+    try:
+        fields = (Path("/proc") / str(pid) / "stat").read_bytes().rsplit(b")", 1)[1].split()
+        return {"pid": pid, "state": fields[0], "ppid": int(fields[1]),
+                "session": int(fields[3]), "start_ticks": int(fields[19])}
+    except (FileNotFoundError, ProcessLookupError):
+        return None
+    except (IndexError, ValueError) as error:
+        raise OSError("Owned process identity cannot be inspected") from error
 
 
 if os.name == "nt":
@@ -69,6 +115,13 @@ class ProcessTree:
             self._create_windows_job(pid)
         elif os.getsid(pid) != pid:
             raise RuntimeError("The child must have its own process session")
+        if sys.platform.startswith("linux"):
+            prepare_child_reaping()
+            identity = _linux_identity(pid)
+            if identity is None or identity["session"] != pid:
+                raise ProcessLookupError("Owned child session identity is unavailable")
+            self._root_start_ticks = identity["start_ticks"]
+            self._close_lock = threading.RLock()
 
     def _create_windows_job(self, pid):
         job = kernel.CreateJobObjectW(None, None)
@@ -93,6 +146,12 @@ class ProcessTree:
         self.job = job
 
     def close(self):
+        if sys.platform.startswith("linux"):
+            with self._close_lock:
+                if not self.closed:
+                    self._close_linux()
+                    self.closed = True
+            return
         if self.closed:
             return
         if os.name == "nt":
@@ -131,6 +190,104 @@ class ProcessTree:
                     pass
         self.closed = True
 
+    def _linux_session(self):
+        root = _linux_identity(self.pid)
+        if root is not None and root["start_ticks"] != self._root_start_ticks:
+            raise OSError("Owned root process identity changed")
+        records = {}
+        for entry in Path("/proc").iterdir():
+            if entry.name.isdigit():
+                identity = _linux_identity(int(entry.name))
+                if identity is not None and identity["session"] == self.pid:
+                    records[(identity["pid"], identity["start_ticks"])] = identity
+        return records
+
+    def _close_linux(self):
+        # pidfds bind signals/waits to the original processes even if a numeric
+        # PID is later reused. Freeze the complete session before terminating it.
+        owned = {}
+        deadline = time.monotonic() + 5
+        try:
+            for _ in range(16):
+                added = False
+                for key, identity in self._linux_session().items():
+                    if key in owned:
+                        continue
+                    try:
+                        fd = os.pidfd_open(identity["pid"])
+                    except ProcessLookupError:
+                        continue
+                    current = _linux_identity(identity["pid"])
+                    if current is None or current["start_ticks"] != identity["start_ticks"] or current["session"] != self.pid:
+                        os.close(fd)
+                        continue
+                    owned[key] = fd
+                    added = True
+                    try:
+                        signal.pidfd_send_signal(fd, signal.SIGSTOP)
+                    except ProcessLookupError:
+                        pass
+                # A pending stop is insufficient: a process could still finish
+                # a fork before the signal takes effect. Wait for the stop, then
+                # rescan so every child created before it is also captured.
+                while True:
+                    moving = []
+                    for pid, started in owned:
+                        current = _linux_identity(pid)
+                        if current is not None and current["start_ticks"] == started and current["state"] not in {b"T", b"t", b"Z", b"X"}:
+                            moving.append(pid)
+                    if not moving:
+                        break
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError("Owned processes did not stop: " + repr(moving))
+                    time.sleep(0.005)
+                if not added:
+                    break
+            else:
+                raise OSError("Owned process session did not settle before termination")
+            for fd in owned.values():
+                try:
+                    signal.pidfd_send_signal(fd, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            pending = dict(owned)
+            while pending:
+                for key, fd in tuple(pending.items()):
+                    pid, started = key
+                    if pid == self.pid:
+                        # QProcess/Popen must receive their direct child's real
+                        # exit status; observing its pidfd never consumes it.
+                        if select.select([fd], [], [], 0)[0]:
+                            del pending[key]
+                        continue
+                    try:
+                        reaped = os.waitid(os.P_PIDFD, fd, os.WEXITED | os.WNOHANG)
+                    except ChildProcessError:
+                        # A descendant may not be adopted until its parent has
+                        # exited, or its original parent may already have reaped it.
+                        current = _linux_identity(pid)
+                        if current is None or current["start_ticks"] != started:
+                            del pending[key]
+                    else:
+                        if reaped is not None:
+                            del pending[key]
+                if pending:
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError("Owned process cleanup did not settle: " + repr(sorted(pending)))
+                    time.sleep(0.005)
+        except BaseException:
+            # A failed observation must not abandon a task we already stopped.
+            # Keep ownership open so a caller can report/retry remaining cleanup.
+            for fd in owned.values():
+                try:
+                    signal.pidfd_send_signal(fd, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            raise
+        finally:
+            for fd in owned.values():
+                os.close(fd)
+
     def active_count(self):
         """Count owned processes; unknown ownership prevents early token reuse."""
         if self.closed:
@@ -166,6 +323,12 @@ class ProcessTree:
             if not self.job or not query(self.job, 3, ctypes.byref(report), ctypes.sizeof(report), None):
                 return None
             return set(report.identifiers[:report.count])
+        if sys.platform.startswith("linux"):
+            try:
+                return {record["pid"] for record in self._linux_session().values()
+                        if record["state"] not in {b"Z", b"X"}}
+            except OSError:
+                return None
         proc = __import__('pathlib').Path('/proc')
         if not proc.is_dir():
             return None
@@ -230,6 +393,7 @@ def start_owned_process(command, **options):
     if os.name == 'nt':
         options['creationflags'] = options.get('creationflags', 0) | 0x00000004  # CREATE_SUSPENDED
     else:
+        prepare_child_reaping()
         options['start_new_session'] = True
     process = subprocess.Popen(command, **options)
     owner = None
@@ -288,6 +452,7 @@ def start_child(spec):
     """Neutral subprocess API, also used by the independent runtime checks."""
     from .launch import clean_environment
     spec = spec.validate()
+    prepare_child_reaping()
     child = subprocess.Popen(spec.command(), cwd=spec.project, env=clean_environment(),
         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         text=True, encoding="utf-8", start_new_session=os.name != "nt",
