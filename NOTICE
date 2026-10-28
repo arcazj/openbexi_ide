@@ -5,6 +5,15 @@ This distribution contains independent desktop and runtime code under Apache-2.0
 It does not contain the legacy SPELL source library. Qt for Python, debugpy and
 Pygments are separately installed dependencies with their own license notices.
 
+The pinned PySide6_Essentials and shiboken6 6.10.3 Linux wheels omit installed
+license-text members. This package supplies their direct LGPL-3.0-only,
+GPL-2.0-only and GPL-3.0-only texts, together with two upstream Python Software
+Foundation attributions, in openbexi_ide/licenses/qt_for_python_6_10_3/.
+Its manifest binds each unchanged notice to the official v6.10.3 source commit
+and each dependency to the exact Linux wheel bytes. These supplemental notices
+do not relicense Qt or replace the corresponding-source requirements or the
+separate review of the Qt libraries and third-party components in those wheels.
+
 Procedure identity rules retain the Apache-2.0 legacy OpenBEXI implementation's
 UUID namespace and comment metadata behavior. The durable service consciously
 migrates its admission and no-automatic-replay rules without importing the legacy

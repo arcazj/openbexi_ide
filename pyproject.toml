@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openbexi-ide"
-version = "1.2.1.dev5"
+version = "1.2.1.dev6"
 description = "Standalone CPython 3.13 desktop IDE with optional domain plugins"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
@@ -25,6 +25,7 @@ openbexi = "openbexi_runtime.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
+openbexi_ide = ["licenses/qt_for_python_6_10_3/*"]
 openbexi_runtime = ["procedure_web/*.html", "procedure_web/*.js", "procedure_web/*.css"]
 
 [tool.pytest.ini_options]

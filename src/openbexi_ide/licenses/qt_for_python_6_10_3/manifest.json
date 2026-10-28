@@ -1,0 +1,94 @@
+{
+  "schema": "openbexi.qt-python-notice-supplement/1",
+  "scope": "Exact Qt for Python direct license texts and two upstream PSF attributions for the pinned desktop dependencies. Embedded Qt third-party notices, corresponding source, complete license obligations and distribution review remain separate.",
+  "upstream_repository": "https://github.com/qtproject/pyside-pyside-setup",
+  "upstream_tag": "v6.10.3",
+  "upstream_tag_object": "82d71d4a045d98d8d2b81a99d516abf2d531696b",
+  "upstream_commit": "863e6b6e6269fbd401db06e2066119b9014fcf0d",
+  "source_read_at": "2026-10-28T18:00:04.460299+00:00",
+  "direct_dependency_licenses": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only",
+  "dependencies": [
+    {
+      "name": "PySide6_Essentials",
+      "version": "6.10.3",
+      "wheel": "pyside6_essentials-6.10.3-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "wheel_bytes": 77077386,
+      "wheel_sha256": "5fb32b48010f513335a2166ac3df279c5996fb96402fd91a4875fc717fe55de0",
+      "source": "https://pypi.org/pypi/PySide6-Essentials/6.10.3/json",
+      "upstream_wheel_notice_members": 0,
+      "upstream_wheel_members": 2340
+    },
+    {
+      "name": "shiboken6",
+      "version": "6.10.3",
+      "wheel": "shiboken6-6.10.3-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "wheel_bytes": 273084,
+      "wheel_sha256": "99e8ac3319a2c93a4a8f8bb4512d71a9d43bc9f226f094a80a728d6dcc3e4826",
+      "source": "https://pypi.org/pypi/shiboken6/6.10.3/json",
+      "upstream_wheel_notice_members": 0,
+      "upstream_wheel_members": 56
+    }
+  ],
+  "files": [
+    {
+      "installed_name": "LGPL-3.0-only.txt",
+      "source_path": "LICENSES/LGPL-3.0-only.txt",
+      "source_blob": "65c5ca88a67c30becee01c5a8816d964b03862f9",
+      "bytes": 7651,
+      "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+    },
+    {
+      "installed_name": "GPL-2.0-only.txt",
+      "source_path": "LICENSES/GPL-2.0-only.txt",
+      "source_blob": "d159169d1050894d3ea3b98e1c965c4058208fe1",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "installed_name": "GPL-3.0-only.txt",
+      "source_path": "LICENSES/GPL-3.0-only.txt",
+      "source_blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "installed_name": "PSF-3.7.0.txt",
+      "source_path": "sources/shiboken6/shibokenmodule/files.dir/shibokensupport/signature/PSF-3.7.0.txt",
+      "source_blob": "be42010dd293c9481ed98ee98a4b8028e414dedf",
+      "bytes": 2445,
+      "sha256": "e5bdc4b568f0016df16652c4769bafde76641b61409149100ee53b708c8f1219"
+    },
+    {
+      "installed_name": "libshiboken-attribution.json",
+      "source_path": "sources/shiboken6/libshiboken/qt_attribution.json",
+      "source_blob": "36e7f686842e0e3ba6403cce9e13c71f1058ca0d",
+      "bytes": 609,
+      "sha256": "056d368770a9ff66d85dd5209afabee964e3095659ea715396409328bc27ba6b"
+    },
+    {
+      "installed_name": "signature-attribution.json",
+      "source_path": "sources/shiboken6/shibokenmodule/files.dir/shibokensupport/signature/qt_attribution.json",
+      "source_blob": "0f05aea8bcfd99c4cd14dd682dda506a2b377433",
+      "bytes": 590,
+      "sha256": "093d38e8ec6d682433d286bdba94777f2f55797937e725bc40e1526c41e2dda1"
+    },
+    {
+      "installed_name": "PSF-bufferprocs-3.7.0.txt",
+      "source_path": "sources/shiboken6/libshiboken/bufferprocs_py37.h",
+      "source_blob": "f381369e017eb4a16fc44b6b6a518dec2d034b2f",
+      "bytes": 2451,
+      "sha256": "6977c050b6782350ddff15bc166befb8296781942e331af12bb6ad0bd6b20bfd",
+      "upstream_file_bytes": 5582,
+      "upstream_file_sha256": "6cd29a9c24b774a16421665fedeefd1f5054aeba60e74ecb7fafd3ebed34e633",
+      "source_excerpt": {
+        "start_byte": 145,
+        "end_byte_exclusive": 2595,
+        "append_final_newline": true,
+        "scope": "Verbatim PSF license comment only; no Qt implementation code is redistributed in this notice supplement."
+      },
+      "installed_blob": "8352384237170e8de55fdd284ee8a633e1830356"
+    }
+  ],
+  "complete_qt_third_party_review": false,
+  "license_compatibility_qualified": false
+}
