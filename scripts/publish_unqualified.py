@@ -134,7 +134,9 @@ def cleanup():
     report=OUT/('cleanup-'+os.environ['GITHUB_RUN_ID']+'.json')
     report.write_text(json.dumps(result,indent=2)+'\n')
     run('gh','release','upload',TAG,str(report),'--repo',REPO)
-    assert cache_result.returncode == 0, 'Cache deletion incomplete; see cleanup report'
+    remaining = api(f'repos/{REPO}/actions/caches?per_page=1')['total_count']
+    assert remaining == 0, 'Caches remain after deletion: '+str(remaining)
+    print('Verified cache inventory is empty; no-caches CLI exit is harmless.')
     print(json.dumps(result))
 
 if __name__ == '__main__':

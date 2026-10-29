@@ -1,8 +1,5 @@
 name: Publish unqualified release and preserve branch recovery
 on:
-  push:
-    branches: [main]
-    paths: [scripts/publish_unqualified.py, .github/workflows/publish-unqualified.yml]
   workflow_dispatch:
     inputs:
       operation:
@@ -33,12 +30,22 @@ jobs:
           python-version: '3.13'
       - name: Install package and test tools
         run: python -m pip install build==1.3.0 setuptools==80.9.0 wheel pytest==8.4.2 PySide6-Essentials==6.10.3 debugpy==1.8.22
+      - name: Install Qt runtime prerequisite
+        if: github.repository == 'arcazj/openbexi_ide'
+        run: sudo apt-get update && sudo apt-get install -y libegl1
       - name: Pin archive timestamp
         run: echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)" >> "$GITHUB_ENV"
       - name: Publish verified artifacts or clean archived branches
         env:
           OPERATION: ${{ inputs.operation || 'publish' }}
         run: python scripts/publish_unqualified.py "$OPERATION"
+      - name: Verify unchanged published IDE regression sources and installed wheel
+        if: inputs.operation == 'cleanup' && github.repository == 'arcazj/openbexi_ide'
+        run: |
+          git diff --exit-code v1.2.1 HEAD -- src tests pyproject.toml
+          python -m pip install --no-deps "$RUNNER_TEMP/release-v1.2.1/cleanup-verification/openbexi_ide-1.2.1-py3-none-any.whl"
+          python -m pytest tests/test_process_pid_namespaces.py tests/test_process_reaping.py -q --tb=short --junitxml="$RUNNER_TEMP/release-v1.2.1/published-ide-tests.xml" > "$RUNNER_TEMP/release-v1.2.1/published-ide-tests.log" 2>&1
+          gh release upload v1.2.1 "$RUNNER_TEMP/release-v1.2.1/published-ide-tests.xml" "$RUNNER_TEMP/release-v1.2.1/published-ide-tests.log" --repo "$GITHUB_REPOSITORY"
       - name: Retain reports on success or failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -48,4 +55,5 @@ jobs:
             ${{ runner.temp }}/release-*/release-manifest.json
             ${{ runner.temp }}/release-*/focused-tests.*
             ${{ runner.temp }}/release-*/cleanup-*.json
+            ${{ runner.temp }}/release-*/published-ide-tests.*
           if-no-files-found: ignore
