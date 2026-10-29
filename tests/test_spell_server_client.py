@@ -13,7 +13,13 @@ from openbexi_ide.spell_server_panel import SpellServerPanel
 
 
 @pytest.mark.parametrize(
-    "raw", [b'{"x":1,"x":2}', b'{"x":NaN}', b"[" * 20 + b"0" + b"]" * 20, b"x" * 65537]
+    "raw",
+    [
+        b'{"x":1,"x":2}',
+        b'{"x":NaN}',
+        b"[" * 20 + b"0" + b"]" * 20,
+        pytest.param(b"x" * 65537, id="oversized-response-65537-bytes"),
+    ],
 )
 def test_client_rejects_ambiguous_or_unbounded_response(raw):
     with pytest.raises(SpellServerError):
