@@ -1,0 +1,19 @@
+{
+  "repository": "arcazj/openbexi_ide",
+  "branches": {
+    "feature/v0.8-spell-server-client": "c5edbdaecfbc08d252b87d2fb3cc18c4b27d19bc",
+    "master": "7585d221a58fcfe178b93046c691ad74a92148e9",
+    "qualification/v08-pyside-baseline-builder": "0e608688a5caf6d4bf9be4d4765a45c4be576682",
+    "qualification/v08-pyside-hosted-builder": "916b150644a90891f24b179e68c2ce878f3c0cfb",
+    "qualification/v08-qt-baseline-controls": "14b41df2ecaa83b362bfa111f2666002d275e5e4",
+    "qualification/v08-qt-feature-parser": "736259b78c38e6cc66f53b7b82c9f751a4e00455",
+    "qualification/v08-qt-full-baseline": "0b1404452c3a8e4ffe9331369765ca76af69bdb8",
+    "qualification/v08-qt-notices": "b1472b4d5a515b9082db139fb8e16b63677a052e",
+    "qualification/v08-reproducible-pyside": "3df88b8c4f98fb03f3db57b0fe513af3f32bf13a",
+    "qualification/v08-windows-dev7": "f56ac138166d73bb244972fdd72a015bcbcfeede",
+    "release/spell-v07": "7585d221a58fcfe178b93046c691ad74a92148e9",
+    "release/v1.0.0": "aba6bb935b4b75b1e298222b6fdb6e34fc6204f6",
+    "work/ide-v1.1": "59f245d60f4401348a9e9e2184bc2fde288b9c74"
+  },
+  "note": "Pre-publication inventory; recovery bundle in release assets preserves all branch histories before cleanup."
+}

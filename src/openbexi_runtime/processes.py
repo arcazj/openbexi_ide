@@ -43,15 +43,76 @@ def prepare_child_reaping():
             raise OSError(error, os.strerror(error))
 
 
-def _linux_identity(pid):
+def _linux_status(path):
+    return dict(line.split(":", 1) for line in path.read_text().splitlines() if ":" in line)
+
+
+def _linux_namespace_level():
     try:
-        fields = (Path("/proc") / str(pid) / "stat").read_bytes().rsplit(b")", 1)[1].split()
-        return {"pid": pid, "state": fields[0], "ppid": int(fields[1]),
-                "session": int(fields[3]), "start_ticks": int(fields[19])}
+        status = _linux_status(Path("/proc/self/status"))
+        identifiers = [int(value) for value in status["NSpid"].split()]
+        if not identifiers or identifiers[-1] != os.getpid() or identifiers[0] != int(status["Pid"]):
+            raise ValueError("Current namespace identity differs")
+        return len(identifiers) - 1
+    except (IndexError, KeyError, ValueError) as error:
+        raise OSError("Current PID namespace identity cannot be inspected") from error
+
+
+def _linux_pidfd_process(pid, fd, level):
+    """Resolve a caller-namespace PID through its already opened kernel handle.
+
+    /proc can be mounted from an ancestor PID namespace. Its numeric paths and
+    pidfd fdinfo use that mount's namespace, while pidfd_open/signals use ours.
+    Never infer this mapping from a matching numeric PID in an unrelated tree.
+    """
+    try:
+        info = _linux_status(Path("/proc/self/fdinfo") / str(fd))
+        proc_pid = int(info["Pid"])
+        if proc_pid == -1:
+            return None  # The original process has been reaped.
+        identifiers = [int(value) for value in info["NSpid"].split()]
+        if proc_pid <= 0 or len(identifiers) <= level or identifiers[0] != proc_pid or identifiers[level] != pid:
+            raise ValueError("Namespace identity differs")
+        return proc_pid
+    except (IndexError, KeyError, ValueError) as error:
+        raise OSError("Owned pidfd namespace identity differs") from error
+
+
+def _linux_identity(pid):
+    fd = None
+    try:
+        level = _linux_namespace_level()
+        fd = os.pidfd_open(pid)
+        proc_pid = _linux_pidfd_process(pid, fd, level)
+        if proc_pid is None:
+            return None
+        path = Path("/proc") / str(proc_pid)
+        stat = (path / "stat").read_bytes()
+        fields = stat.rsplit(b")", 1)[1].split()
+        status = _linux_status(path / "status")
+        identifiers = [int(value) for value in status["NSpid"].split()]
+        sessions = [int(value) for value in status["NSsid"].split()]
+        if int(stat.split(b" ", 1)[0]) != proc_pid or int(status["Pid"]) != proc_pid or identifiers[0] != proc_pid or len(identifiers) <= level or identifiers[level] != pid or len(sessions) <= level or sessions[0] != int(fields[3]):
+            raise OSError("Owned process namespace identity differs")
+        parent = int(fields[1])
+        if parent:
+            try:
+                parents = [int(value) for value in _linux_status(Path("/proc") / str(parent) / "status")["NSpid"].split()]
+                parent = parents[level] if len(parents) > level else 0
+            except (FileNotFoundError, ProcessLookupError):
+                parent = 0
+        # A reaped original cannot lend its pathname to a recycled host PID.
+        if _linux_pidfd_process(pid, fd, level) != proc_pid:
+            return None
+        return {"pid": pid, "proc_pid": proc_pid, "state": fields[0], "ppid": parent,
+                "session": sessions[level], "start_ticks": int(fields[19])}
     except (FileNotFoundError, ProcessLookupError):
         return None
-    except (IndexError, ValueError) as error:
+    except (IndexError, KeyError, ValueError) as error:
         raise OSError("Owned process identity cannot be inspected") from error
+    finally:
+        if fd is not None:
+            os.close(fd)
 
 
 if os.name == "nt":
@@ -121,6 +182,7 @@ class ProcessTree:
             if identity is None or identity["session"] != pid:
                 raise ProcessLookupError("Owned child session identity is unavailable")
             self._root_start_ticks = identity["start_ticks"]
+            self._root_proc_pid = identity["proc_pid"]
             self._close_lock = threading.RLock()
 
     def _create_windows_job(self, pid):
@@ -192,14 +254,27 @@ class ProcessTree:
 
     def _linux_session(self):
         root = _linux_identity(self.pid)
-        if root is not None and root["start_ticks"] != self._root_start_ticks:
+        if root is not None and (root["start_ticks"] != self._root_start_ticks or root["proc_pid"] != self._root_proc_pid):
             raise OSError("Owned root process identity changed")
         records = {}
+        level = _linux_namespace_level()
         for entry in Path("/proc").iterdir():
             if entry.name.isdigit():
-                identity = _linux_identity(int(entry.name))
-                if identity is not None and identity["session"] == self.pid:
-                    records[(identity["pid"], identity["start_ticks"])] = identity
+                try:
+                    status = _linux_status(entry / "status")
+                    identifiers = [int(value) for value in status["NSpid"].split()]
+                    sessions = [int(value) for value in status["NSsid"].split()]
+                    if len(identifiers) <= level or len(sessions) <= level or sessions[level] != self.pid:
+                        continue
+                    identity = _linux_identity(identifiers[level])
+                    # Sibling namespaces may reuse every inner numeric PID.
+                    # Only the pidfd-bound /proc identity belongs to our session.
+                    if identity is not None and identity["proc_pid"] == int(entry.name) and identity["session"] == self.pid:
+                        records[(identity["pid"], identity["start_ticks"])] = identity
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                except (IndexError, KeyError, ValueError) as error:
+                    raise OSError("Owned process session cannot be inspected") from error
         return records
 
     def _close_linux(self):

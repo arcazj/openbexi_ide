@@ -1,3 +1,5 @@
+> **UNQUALIFIED — qualification incomplete.** Current publication: OpenBEXI IDE v1.2.1. See [release notes](docs/UNQUALIFIED_RELEASE.md) for the delivered scope, installation and known limitations. Earlier release descriptions below are historical.
+
 # OpenBEXI IDE
 
 **OpenBEXI IDE 1.2.0** integrates **SPELL v0.7** in the

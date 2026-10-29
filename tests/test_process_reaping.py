@@ -141,7 +141,10 @@ def test_public_cli_natural_and_error_exit_reap_owned_descendants(tmp_path, code
         "pids=[os.getpid(),*json.loads(child.stdout.readline())]\n"
         "identities=[]\n"
         "for pid in pids:\n"
-        " fields=(pathlib.Path('/proc')/str(pid)/'stat').read_text().rsplit(')',1)[1].split()\n"
+        " fd=os.pidfd_open(pid)\n"
+        " info=dict(line.split(':',1) for line in pathlib.Path('/proc/self/fdinfo/'+str(fd)).read_text().splitlines())\n"
+        " fields=(pathlib.Path('/proc')/info['Pid'].strip()/'stat').read_text().rsplit(')',1)[1].split()\n"
+        " os.close(fd)\n"
         " identities.append(dict(pid=pid,start_ticks=int(fields[19])))\n"
         "print(json.dumps(identities),flush=True)\n"
         f"raise SystemExit({code})\n")
