@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "scope": "Published IDE/SPELL Python artifacts installed on preserved v0.7 desktop/native base; local qualification only",
+  "full_v08_qualified": false,
+  "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+  "spell_commit": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda",
+  "base_image": "sha256:cc41cf1a0ba2d7b670d8c831066c51b22fe2b7974f5803034d8c3fa2a133fc9d",
+  "wheels": {
+    "openbexi_ide-1.2.1-py3-none-any.whl": "43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b",
+    "openbexi_spell_dss-0.8.0rc1-py3-none-any.whl": "2a90c7abe18bfd1912f610daa6391e7f3fcab17991d56a2f1bd87037a05966fa",
+    "openbexi_spell_host-0.8.0rc1-py3-none-any.whl": "300c5ba181a76224a0f9d07a471a9dac307e9f42a3b17a3ec3bdf821d1127d5f",
+    "openbexi_spell_server-0.8.0rc1-py3-none-any.whl": "f5c775fe21d8f5f3daba3fd133e6809931c445f943d4a9ef813733e9e919c208",
+    "openbexi_spell_shared-0.8.0rc1-py3-none-any.whl": "339ae72b1f108bac43a16ab898c0bebfb046bf293070a7fb3b311873a35bac22"
+  },
+  "dependencies": {
+    "grpcio-1.84.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": {
+      "sha256": "986e9751d416d7a6eaa2fecdac38da63153d63a4b340ba7d624889c490451500",
+      "url": "https://files.pythonhosted.org/packages/da/56/548a643decb059ca244499c675ae2c13a15f523ba94592c2774bd80a13c1/grpcio-1.84.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "1.84.0"
+    },
+    "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl": {
+      "sha256": "89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2",
+      "url": "https://files.pythonhosted.org/packages/db/f3/3996583dd2906297a637af12114deddf7658af6e683fedb83be061983fb5/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+      "version": "7.36.2"
+    },
+    "typing_extensions-4.15.0-py3-none-any.whl": {
+      "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+      "url": "https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl",
+      "version": "4.15.0"
+    }
+  }
+}
