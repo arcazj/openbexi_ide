@@ -1,0 +1,109 @@
+{
+  "scope": "Local Docker installed published wheels and inherited v0.7 packaged native backend",
+  "full_v08_qualified": false,
+  "checks": [
+    {
+      "name": "health",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/health.py"
+      ],
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 0.3656919999998536
+    },
+    {
+      "name": "installed-headless",
+      "command": [
+        "python",
+        "-I",
+        "/opt/openbexi/scripts/qualify_installed.py",
+        "--output",
+        "/evidence/installed-headless"
+      ],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 1.6194683999999597
+    },
+    {
+      "name": "installed-desktop",
+      "command": [
+        "python",
+        "-I",
+        "/opt/openbexi/scripts/qualify_desktop_installed.py",
+        "--output",
+        "/evidence/installed-desktop"
+      ],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 2.522300600000108
+    },
+    {
+      "name": "native-learning",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/qualify_native_learning.py"
+      ],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 25.613215800000035
+    },
+    {
+      "name": "native-ownership",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/qualify_native_ownership.py"
+      ],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 21.03515090000019
+    },
+    {
+      "name": "launcher",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/qualify_desktop.py",
+        "--output",
+        "/evidence/launcher"
+      ],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 1.918932199999972
+    },
+    {
+      "name": "learning-ui",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/qualify_learning_ui.py"
+      ],
+      "timeout_seconds": 120,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 12.856612799999994
+    },
+    {
+      "name": "browser",
+      "command": [
+        "python",
+        "-I",
+        "/opt/test-lab/check_lab.py"
+      ],
+      "timeout_seconds": 60,
+      "exit_code": 0,
+      "passed": true,
+      "elapsed_seconds": 0.7664244999998573
+    }
+  ],
+  "passed": true
+}

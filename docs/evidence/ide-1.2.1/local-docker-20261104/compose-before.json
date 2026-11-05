@@ -1,0 +1,19 @@
+{
+  "executed_checks": [
+    "certificate_scope",
+    "observer_write_denied",
+    "runtime_disabled",
+    "isolated_state",
+    "durable_cas_idempotency",
+    "wrong_revision_denied"
+  ],
+  "full_v08_qualified": false,
+  "incarnation_a": "d2391893-17ab-47df-8f78-6a04e2ee91b5",
+  "incarnation_b": "3e40d659-a76e-46f7-a504-c033faffc41b",
+  "native_runtime_qualified": false,
+  "passed": true,
+  "phase": "before",
+  "prelaunch_only": true,
+  "production_migration_authorized": false,
+  "schema": "openbexi.v08.compose-prelaunch/1"
+}

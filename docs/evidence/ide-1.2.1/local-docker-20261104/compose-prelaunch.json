@@ -1,0 +1,57 @@
+{
+  "scope": "Local Docker five-service prelaunch, runtime remains disabled",
+  "full_v08_qualified": false,
+  "passed": true,
+  "git_head": "d73b61905620225bd182a09c7885d1b8904732dc",
+  "checks": [
+    {
+      "name": "provision",
+      "exit_code": 0,
+      "elapsed_seconds": 0.6656710999998268
+    },
+    {
+      "name": "config",
+      "exit_code": 0,
+      "elapsed_seconds": 0.06399069999997664
+    },
+    {
+      "name": "build-start",
+      "exit_code": 0,
+      "elapsed_seconds": 103.54499350000015
+    },
+    {
+      "name": "before",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2646577000000434
+    },
+    {
+      "name": "dss-health",
+      "exit_code": 0,
+      "elapsed_seconds": 0.1643047000000024
+    },
+    {
+      "name": "restart",
+      "exit_code": 0,
+      "elapsed_seconds": 0.515404799999942
+    },
+    {
+      "name": "after",
+      "exit_code": 0,
+      "elapsed_seconds": 0.26466400000003887
+    }
+  ],
+  "cleanup_exit_code": 0,
+  "files": {
+    "shutdown.log": "7b8597b127d9a7d4cde7c72cfd58afaa5fa0b210862f1cb9a52cadb54d0172ec",
+    "service-logs.log": "2daa80f103e5ad0deb77b157feb4af6fbd5fe982c3968ae1695d4d7f8bcb2c0f",
+    "after.json": "acdaab080218e53cace6bade173dd78d1100f15b6713bb881dc7af6f7808e876",
+    "after.log": "3c6353aaa20157b2fb39ebb4d76e94a2d28ad51c38f4c82a85cdb9932ad89120",
+    "restart.log": "5221ab9ada55986bf00fb78de7d3d749b6c9f2c352922b5a2fd445eb732f037e",
+    "dss-health.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "before.json": "ff9316583bbe9e4eb915dbc979401ba435b08f0c909afdf868a9b5ec72d2a0a7",
+    "before.log": "e63a6f064b31cbc7d7479cc5a5d45621b3a25c7d28b61908c50cb61e379ba32e",
+    "build-start.log": "b756024d491304bf4b141c68d65b6b3f4f8c8133a690867191cc3eba6db8458b",
+    "config.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "provision.log": "b165d9bb852ac0c9d53588f2905f59764576a58aa4a0983947fb6d73c04e7023"
+  }
+}

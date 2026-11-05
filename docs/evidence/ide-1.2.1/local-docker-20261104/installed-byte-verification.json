@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "wheel_members": {
+    "openbexi_ide-1.2.1-py3-none-any.whl": 67,
+    "openbexi_spell_dss-0.8.0rc1-py3-none-any.whl": 62,
+    "openbexi_spell_host-0.8.0rc1-py3-none-any.whl": 13,
+    "openbexi_spell_server-0.8.0rc1-py3-none-any.whl": 28,
+    "openbexi_spell_shared-0.8.0rc1-py3-none-any.whl": 6
+  },
+  "versions": {
+    "openbexi-ide": "1.2.1",
+    "openbexi-spell-host": "0.8.0rc1",
+    "openbexi-spell-server": "0.8.0rc1",
+    "openbexi-spell-dss": "0.8.0rc1",
+    "openbexi-spell-shared": "0.8.0rc1",
+    "PySide6-Essentials": "6.10.3",
+    "debugpy": "1.8.22",
+    "Pygments": "2.21.0",
+    "grpcio": "1.84.0",
+    "protobuf": "7.36.2",
+    "typing_extensions": "4.15.0"
+  },
+  "scope": "Published IDE/SPELL Python artifacts installed on preserved v0.7 desktop/native base; local qualification only",
+  "full_v08_qualified": false
+}

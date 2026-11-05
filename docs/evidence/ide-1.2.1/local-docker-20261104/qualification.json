@@ -1,0 +1,1424 @@
+{
+  "schema": "openbexi.local-docker-qualification/1",
+  "recorded_at": "2026-11-05T00:23:37.466684+00:00",
+  "status": "UNQUALIFIED - full acceptance incomplete",
+  "full_v08_qualified": false,
+  "production_migration_authorized": false,
+  "published_sources": {
+    "ide": {
+      "tag": "v1.2.1",
+      "commit": "08c314fb6b802b407cbabe01777072884d2b7504"
+    },
+    "spell": {
+      "tag": "v0.8-rc1",
+      "commit": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda"
+    },
+    "local_checkouts_match_github_tags": true,
+    "published_tags_unchanged": true
+  },
+  "qualification_changes": {
+    "ide_build_commit": "1eeff792bd105b0e3aaed6f926ff7c024e1a2493",
+    "spell_candidate_commit": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+    "ide_branch": "qualification/v121-resume-20261104",
+    "spell_branch": "qualification/v08-resume-20261104",
+    "fixes": [
+      "CI companion IDE pins aligned with published v1.2.1",
+      "Frozen legacy helper test accounts for the actual CPython tokenizer without modifying frozen bytes",
+      "Formatter excludes the deliberately frozen historical fixture",
+      "Prelaunch image versions aligned with 0.8.0rc1",
+      "Memory diagnostic source pin aligned with the rc1 legacy helper and exact overlay bytes preserved on Windows",
+      "Qualification heartbeat failure receipts retained without credential payloads"
+    ]
+  },
+  "local_docker_desktop": {
+    "url": "http://127.0.0.1:6088",
+    "compose_file": "compose.v08.qualification.yaml",
+    "container": "openbexi-ide-spell-v08-qualification-ide-1",
+    "image": "sha256:711eeb330a8291bbdca6fa31705f2b922610ad724d2f6654732b2b7fe40ab6cf",
+    "scope": "Exact published IDE 1.2.1 and SPELL 0.8.0rc1 Python wheels on the preserved v0.7 packaged native desktop baseline",
+    "full_v08_native_stack": false,
+    "checks_passed": 8,
+    "checks_failed": 0,
+    "wheel_payload_members_byte_verified": 176,
+    "pip_check_passed": true,
+    "native_v08_acceptance_is_separate": true
+  },
+  "ide_windows": {
+    "published_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+    "passed": 274,
+    "skipped": 31,
+    "failed": 0,
+    "errors": 0
+  },
+  "ide_windows_skips_executed_on_linux": {
+    "passed": 31,
+    "failed": 0,
+    "scope": "22 Linux PID ownership tests, 8 real immutable Docker execution tests, and one symlink exclusion test"
+  },
+  "ide_linux_full": {
+    "tests": 305,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 1,
+    "command_exit_code": 0,
+    "skip_reason": "One Windows Job ownership test, separately passed on Windows"
+  },
+  "qualification_tooling": {
+    "windows_passed": 103,
+    "windows_linux_only_cases_deselected": 3,
+    "linux_passed": 106,
+    "failed": 0
+  },
+  "compose_prelaunch": {
+    "passed": true,
+    "checks": 11,
+    "git_head": "d73b61905620225bd182a09c7885d1b8904732dc",
+    "runtime_disabled": true,
+    "full_native_deployment_qualified": false
+  },
+  "local_foundation": [
+    {
+      "passed": false,
+      "git_head": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+      "working_tree_dirty": false,
+      "junit": null,
+      "python": "3.13.15",
+      "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+      "run": "run-20261104T234830Z-4b88f1c4",
+      "raw_result_sha256": "799a54ebe4b320b1aef14d9b470f1de0a107fd34a727a193269c43388847a594",
+      "checks": [
+        {
+          "name": "lint",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "types",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "tests",
+          "exit_code": 124,
+          "timed_out": true,
+          "timeout_seconds": 600
+        }
+      ],
+      "ordered_journal": {
+        "sha256": "8057ff05b01a78de9756a0b835c8ea1e5b5e998ebb819918fed9994c0b512f84",
+        "records": 6116,
+        "finished": false,
+        "call_outcomes": {
+          "passed": 1465,
+          "failed": 17
+        },
+        "setup_outcomes": {
+          "passed": 1482,
+          "failed": 62
+        },
+        "failed_tests": [
+          {
+            "nodeid": "tests/test_child_gate.py::test_native_context_peer_uses_exact_owned_parent_executable_and_incarnation",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_child_gate.py::test_native_executor_peer_uses_context_bound_pid_parent_executable_and_incarnation",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_ide_integration.py::test_hundred_actual_ide_reservations_have_one_winner",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[oversize]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[allow]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[signal_reply]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[partial_io]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[deny]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[lost_reply]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[wrong_peer]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[expired_reply]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[signal_deadline]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[late_read]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[timely]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[drop_after_bind]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[delay_after_bind]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_busy_resource_denial_is_audited_without_effect_or_retry",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[wire]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[duplicates]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[partial_metadata]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[moves]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[output]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_preserves_original_wire_and_decoding[request_ids]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_rejects_unrepresentable_and_truncated_fields[malformed]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_rejects_unrepresentable_and_truncated_fields[oversize_key]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_reduces_measured_allocation_churn[alloc_parse-0.55]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_reduces_measured_allocation_churn[alloc_data-0.35]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_codec_reduces_measured_allocation_churn[alloc_output-0.25]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_request_id_retains_one_owned_result_with_fewer_allocations",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_request_id_into_owned_processor_storage_avoids_the_measured_temporary",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_move_transfers_payload_without_allocating",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_cached_bridge_frames_match_frozen_bytes_and_clear_stale_fields",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_cached_bridge_removes_measured_repeated_frame_allocations",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_reused_input_matches_fresh_messages_and_clears_metadata",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_reused_input_retains_no_malformed_packet_or_oversized_field_state",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_reused_input_removes_repeated_decode_allocations",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_alternating_input_layouts_reuse_owned_nodes",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_mixed_bridge_schemas_reuse_owned_nodes_without_stale_fields",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_retired_bridge_nodes_preserve_large_and_excess_fields",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_bridge_copies_long_headers_once_into_owned_encoder_storage[alloc_native_id_frames-10000-170000]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_native_bridge_copies_long_headers_once_into_owned_encoder_storage[alloc_long_header_frames-60000-1980000]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_header_borrow_does_not_alias_mutated_or_destroyed_message",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_input_borrow_preserves_native_wire_errors_and_request_ownership",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_input_borrow_removes_subtree_copy_allocations[short]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_input_borrow_removes_subtree_copy_allocations[long]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_input_borrow_removes_subtree_copy_allocations[absent]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_preserves_exact_errors_and_independent_native_ownership[shapes]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_preserves_exact_errors_and_independent_native_ownership[ownership]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_preserves_exact_errors_and_independent_native_ownership[sizes]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_preserves_exact_errors_and_independent_native_ownership[updates]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_preserves_exact_errors_and_independent_native_ownership[threads]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_copies_long_json_strings_directly_into_native_storage[short]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_copies_long_json_strings_directly_into_native_storage[long_values]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_copies_long_json_strings_directly_into_native_storage[long_headers]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_message_codec.py::test_bridge_transfer_copies_long_json_strings_directly_into_native_storage[long_keys]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_actual_methods_reserve_distinct_sequences_under_forced_interleaving[sequence]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_actual_methods_reserve_distinct_sequences_under_forced_interleaving[stack-sequence]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_actual_getref_semantics_require_an_owned_stack_field",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_sequential_ping_and_acknowledged_status_match_original_native_wire_contract",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_status_snapshot_mutex_is_released_before_stack_and_send_callbacks",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_actual_source_thread_sanitizer_reproduces_and_eliminates_status_races",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_actual_native_ping_ack_cannot_settle_a_different_call",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[synchronous-bridge]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[out-of-order]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[cancel-errors]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[retry-generation]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[retry-timeout]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[lifetime]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_live_logical_ack_owners_with_actual_native_methods[sequence-limit]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_receive_and_unlink_are_thread_sanitizer_clean[out-of-order]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_receive_and_unlink_are_thread_sanitizer_clean[lifetime]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_receive_and_unlink_are_thread_sanitizer_clean[cancel-errors]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_intentional_shared_wire_sequence_change_preserves_other_encoded_bytes",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_status_ownership.py::test_message_object_reuse_refuses_input_dependency_flag_and_token_drift",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_stream_reuse.py::test_native_stream_preserves_frames_and_error_behavior[wire]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_stream_reuse.py::test_native_stream_preserves_frames_and_error_behavior[large-and-failure]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_stream_reuse.py::test_native_stream_removes_long_identity_allocation_churn[decode-allocations]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_stream_reuse.py::test_native_stream_removes_long_identity_allocation_churn[output-allocations]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_stream_reuse.py::test_native_borrowed_input_is_owned_after_decode",
+            "phase": "setup"
+          }
+        ]
+      }
+    },
+    {
+      "passed": false,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "working_tree_dirty": false,
+      "junit": null,
+      "python": "3.13.15",
+      "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+      "run": "run-20261105T000236Z-1bbefa0d",
+      "raw_result_sha256": "b7775070e723200870c622a974e6e10fbf4d6d624428c56886d15708526c2d1f",
+      "checks": [
+        {
+          "name": "lint",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "types",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "tests",
+          "exit_code": 124,
+          "timed_out": true,
+          "timeout_seconds": 600
+        }
+      ],
+      "ordered_journal": {
+        "sha256": "a568ccdd042a6c77785bdceaf12bc8d9472b335a0b856851e61054cc2e543701",
+        "records": 2687,
+        "finished": false,
+        "call_outcomes": {
+          "passed": 574,
+          "failed": 17
+        },
+        "setup_outcomes": {
+          "passed": 591,
+          "failed": 107
+        },
+        "failed_tests": [
+          {
+            "nodeid": "tests/test_members.py::test_registration_100_way_race_has_one_winner",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change1]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change2]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change3]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change4]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change5]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change6]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change7]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change8]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rejects_invalid_identity_or_extra_proof[change9]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_run_forward_and_consumption_require_durable_member",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_canonical_zero_root_suffix_retains_one_immutable_target",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_native_zero_child_suffix_can_forward_and_consume_once",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_children_require_consumed_target_and_original_registered_parent",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rechecks_live_origin_and_source[disconnect]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rechecks_live_origin_and_source[revoked]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rechecks_live_origin_and_source[source_changed]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_rechecks_live_origin_and_source[manifest_changed]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_child_registration_cannot_use_changed_catalog_binding",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_registration_audit_failure_rolls_back_and_retains_hold",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_restart_fences_roster_without_replacing_member_identity",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_agent_cannot_rebind_after_lost_or_forged_receipt[lost]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_members.py::test_agent_cannot_rebind_after_lost_or_forged_receipt[forged]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_owned_admission_preserves_real_transport_and_lifetimes[ownership]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_owned_admission_preserves_real_transport_and_lifetimes[failures]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_owned_admission_preserves_real_transport_and_lifetimes[concurrency]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_owned_admission_preserves_real_transport_and_lifetimes[cancellation]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_frozen_const_reference_and_failure_behavior_matches",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_exact_json_copy_cost_and_identical_native_packets[benchmark]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_body.py::test_exact_json_copy_cost_and_identical_native_packets[benchmark-lvalue]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[wait_interrupt]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[wait_deadline]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[wait_late_ready]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[oversize]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[allow]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[signal_reply]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[partial_io]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[deny]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[lost_reply]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[wrong_peer]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[expired_reply]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[signal_deadline]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_admission_channel.py::test_production_admission_channel[late_read]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_allocation_trace.py::test_compiled_allocation_sampler_is_bounded_and_opt_in[False]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_allocation_trace.py::test_compiled_allocation_sampler_is_bounded_and_opt_in[True]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_allocation_trace.py::test_compiled_lifetime_samples_distinguish_live_from_freed",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_allocation_trace.py::test_dwarf_sampling_keeps_caller_across_library_without_frame_pointers",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_concurrent_completeness_ordering_and_process_restart",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_synced_audit_cache_is_bounded_without_losing_records",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_refused_cache_policy_fails_without_ack_or_record_deletion",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_successful_advisory_noop_is_revisited_with_all_audit_bytes_retained",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_large_restore_keeps_bytes_and_bounds_output_cache",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_reset_and_restore_preserve_original_generations",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_sigkill_preserves_acknowledgements_and_uncertain_tail[False]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_sigkill_preserves_acknowledgements_and_uncertain_tail[True]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_incomplete_tail_is_preserved_and_rejected_on_append",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_kernel_file_limit_refuses_writes_without_false_ack",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_interrupted_partial_and_uncertain_sync_behavior[interrupted-None]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_interrupted_partial_and_uncertain_sync_behavior[partial-failure-write]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_interrupted_partial_and_uncertain_sync_behavior[sync-failure-record_sync]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_other_process_cannot_replace_an_active_writer",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_opened_old_inode_cannot_mutate_an_archived_generation[delayed-append]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_opened_old_inode_cannot_mutate_an_archived_generation[delayed-new]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_directory_and_symlink_policy_fails_closed[False]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_directory_and_symlink_policy_fails_closed[True]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_exact_asrun_sequence_format_and_concurrent_reset_history",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_audit_file.py::test_actual_line_methods_preserve_all_records_and_remove_payload_allocations",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[timely]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[drop_after_bind]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_binding_faults.py::test_native_reply_after_durable_binding_never_rebinds[delay_after_bind]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_lifecycle.py::test_concurrent_exchange_is_rejected_before_second_wire_send",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[empty]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[empty_line]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[unterminated]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[crlf]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[empty_after_valid]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[embedded_nul]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[malformed]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[unicode]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[binary_escape]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[mixed_sizes]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[limit_minus_one]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[limit]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[limit_eof]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[oversize]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[oversize_after_small]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[failbit]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[badbit]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[eofbit]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[eof_exception]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[fail_exception]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_preserves_stream_boundaries_and_owned_json[invalid_utf8]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_removes_measured_allocations[raw-short]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_removes_measured_allocations[raw-long]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_removes_measured_allocations[parse-short]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_bridge_line.py::test_line_reuse_removes_measured_allocations[parse-long]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_identical_sources_reuse_verified_binary_but_execute_fresh_processes",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_binary_reuse_refuses_tampering_before_copy",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_binary_reuse_refuses_extra_frozen_input_before_copy",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_compiler_flag_change_requires_separate_actual_build",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_expanded_source_filename_difference_prevents_binary_reuse",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_external_header_comment_drift_requires_a_separate_build",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_build_batch.py::test_frozen_batches_share_one_bounded_compiler_pool_and_order",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_callback_bursts.py::test_measured_parallel_peak_reuses_threads_without_limiting_callbacks",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_callback_identifier.py::test_exact_compiled_callback_keeps_dispatch_and_avoids_id_copy",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_driver_failure_chain_records_types_without_exception_secrets",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_original_tc_over_worker_mtls_has_five_durable_receipts",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_busy_resource_denial_is_audited_without_effect_or_retry",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[2]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[3]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_ten_pending_receipts_bound_eleventh_rpc_without_effect[complete]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_ten_pending_receipts_bound_eleventh_rpc_without_effect[handoff-fenced]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_real_worker_client_uses_protocol_two_and_cannot_downgrade",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_twenty_duplicate_rpc_calls_produce_one_real_command",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_send_catalog_contract_retains_resource_permission",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_composed_native_send_options_keep_full_five_stage_command",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options0]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options1]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options2]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options3]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options4]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options5]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_native_command_options_cannot_expand_effect_semantics[options6]",
+            "phase": "setup"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_copied_original_config_cannot_bypass_consumption_and_dispatch",
+            "phase": "setup"
+          }
+        ]
+      }
+    },
+    {
+      "passed": false,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "working_tree_dirty": false,
+      "junit": null,
+      "python": "3.13.15",
+      "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+      "run": "run-20261105T001239Z-fd1960ed",
+      "raw_result_sha256": "299100616c8e35b6fa81ec14280a3a8c0ebd554afbdf38b363410496746f609d",
+      "checks": [
+        {
+          "name": "lint",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "types",
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "tests",
+          "exit_code": 124,
+          "timed_out": true,
+          "timeout_seconds": 600
+        }
+      ],
+      "ordered_journal": {
+        "sha256": "9a50852196e44c208baf06f004e1817eb03eed84516cb79b525b95d373b60348",
+        "records": 4602,
+        "finished": false,
+        "call_outcomes": {
+          "passed": 1148,
+          "failed": 2
+        },
+        "setup_outcomes": {
+          "passed": 1150
+        },
+        "failed_tests": [
+          {
+            "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[2]",
+            "phase": "call"
+          },
+          {
+            "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[3]",
+            "phase": "call"
+          }
+        ]
+      }
+    }
+  ],
+  "local_foundation_overlap": "The final local foundation run overlapped the complete IDE Linux suite. Its observed driver deadline failures and suite timeout remain failed evidence; isolation follow-up is recorded separately.",
+  "local_driver_isolated_confirmation": {
+    "tests": 2,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "scope": "Driver burst cases repeated after the foundation and IDE suites stopped; deadlines unchanged; cannot replace the failed full-run receipt"
+  },
+  "local_native": [
+    {
+      "run": "run-1715d83e4305487a84f6391aee8b3e6d",
+      "raw_result_sha256": "c644302a4910bd09c5862a6a756cad2738e441c15d17e97e759ea16dc8b4e296",
+      "passed": false,
+      "git_head": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+      "error": "RuntimeError: Native worker failed before native-ready",
+      "full_v08_qualified": false,
+      "controller_heartbeat": null,
+      "candidate_worker_image": "sha256:e56461ff60a6ee044d4a67ddc0e7f62301a2a452a512bfdb100062114d85efdc",
+      "native_driver_failure_categories": []
+    },
+    {
+      "run": "run-31c3a0765e4d48cbbe15ae23cc0e0218",
+      "raw_result_sha256": "53042536c4add00e3087a8f4e586ec6804d8abdefeeb8c64c83fa252c160a822",
+      "passed": false,
+      "git_head": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+      "error": "RuntimeError: Host operation failed: docker network",
+      "full_v08_qualified": false,
+      "controller_heartbeat": null,
+      "candidate_worker_image": "sha256:e56461ff60a6ee044d4a67ddc0e7f62301a2a452a512bfdb100062114d85efdc",
+      "native_driver_failure_categories": []
+    },
+    {
+      "run": "run-c283061b645c4acda1998e30732769bd",
+      "raw_result_sha256": "61e7c5b318fa1232c35c48ace2691e7f0ad04479eb9d0a4632ea48775ba9ffea",
+      "passed": false,
+      "git_head": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+      "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>",
+      "full_v08_qualified": false,
+      "controller_heartbeat": null,
+      "candidate_worker_image": null,
+      "native_driver_failure_categories": null
+    },
+    {
+      "run": "run-524a5e15aeb642d69c3094e0b246fd35",
+      "raw_result_sha256": "a33adb623d792d5bb8629537d4eed9281056b575dd07d3542a42e5f80d560441",
+      "passed": false,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "error": "RuntimeError: Native worker failed before native-child-running",
+      "full_v08_qualified": false,
+      "controller_heartbeat": [
+        {
+          "renewals": 5,
+          "failures": 0,
+          "active_sessions": 1,
+          "failure_tail": []
+        }
+      ],
+      "candidate_worker_image": "sha256:e56461ff60a6ee044d4a67ddc0e7f62301a2a452a512bfdb100062114d85efdc",
+      "native_driver_failure_categories": []
+    }
+  ],
+  "github_actions": [
+    {
+      "head": "00c1ee532a68d129c5464dab0876f9c6ab9c413c",
+      "runs": [
+        {
+          "id": 41929321233,
+          "name": "v0.8 qualification resume with published IDE 1.2.1",
+          "status": "completed",
+          "conclusion": "failure",
+          "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41929321233",
+          "head_sha": "00c1ee532a68d129c5464dab0876f9c6ab9c413c",
+          "run_attempt": 1,
+          "jobs": [
+            {
+              "id": 126921874717,
+              "name": "native-original-45 (native-ide)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T22:54:38Z",
+              "completed_at": "2026-11-04T23:02:08Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41929321233/job/126921874717"
+            },
+            {
+              "id": 126921875247,
+              "name": "foundation",
+              "status": "completed",
+              "conclusion": "failure",
+              "started_at": "2026-11-04T22:54:38Z",
+              "completed_at": "2026-11-04T22:55:18Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41929321233/job/126921875247"
+            },
+            {
+              "id": 126921875333,
+              "name": "native-original-45 (native-handoff)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T22:54:38Z",
+              "completed_at": "2026-11-04T22:59:49Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41929321233/job/126921875333"
+            }
+          ]
+        }
+      ],
+      "receipt_sha256": "9192fb4651cde0bfb99d00965ae71be6d63538ee96edec054a5197b7f3b2c19a"
+    },
+    {
+      "head": "d73b61905620225bd182a09c7885d1b8904732dc",
+      "runs": [
+        {
+          "id": 41930626082,
+          "name": "v0.8 qualification resume with published IDE 1.2.1",
+          "status": "completed",
+          "conclusion": "failure",
+          "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41930626082",
+          "head_sha": "d73b61905620225bd182a09c7885d1b8904732dc",
+          "run_attempt": 1,
+          "jobs": [
+            {
+              "id": 126926293079,
+              "name": "native-original-45 (native-handoff)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:03:52Z",
+              "completed_at": "2026-11-04T23:10:51Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41930626082/job/126926293079"
+            },
+            {
+              "id": 126926293251,
+              "name": "foundation",
+              "status": "completed",
+              "conclusion": "failure",
+              "started_at": "2026-11-04T23:03:51Z",
+              "completed_at": "2026-11-04T23:14:52Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41930626082/job/126926293251"
+            },
+            {
+              "id": 126926293256,
+              "name": "native-original-45 (native-ide)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:03:51Z",
+              "completed_at": "2026-11-04T23:10:14Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41930626082/job/126926293256"
+            }
+          ]
+        }
+      ],
+      "receipt_sha256": "0a824798034ed244bbe7484e29850c88344f7fdd51e391bc613adb30f6b19995"
+    },
+    {
+      "head": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+      "runs": [
+        {
+          "id": 41935663983,
+          "name": "v0.8 qualification resume with published IDE 1.2.1",
+          "status": "completed",
+          "conclusion": "failure",
+          "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41935663983",
+          "head_sha": "337f7336ca01683313a0fe51cd22fa5018e252a6",
+          "run_attempt": 1,
+          "jobs": [
+            {
+              "id": 126943358005,
+              "name": "native-original-45 (native-handoff)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:41:14Z",
+              "completed_at": "2026-11-04T23:46:34Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41935663983/job/126943358005"
+            },
+            {
+              "id": 126943358335,
+              "name": "foundation",
+              "status": "completed",
+              "conclusion": "failure",
+              "started_at": "2026-11-04T23:41:13Z",
+              "completed_at": "2026-11-04T23:51:37Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41935663983/job/126943358335"
+            },
+            {
+              "id": 126943358359,
+              "name": "native-original-45 (native-ide)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:41:14Z",
+              "completed_at": "2026-11-04T23:48:28Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41935663983/job/126943358359"
+            }
+          ]
+        }
+      ],
+      "receipt_sha256": "78dfc9dcd5e5ff4a9976eaaedd5b333186fe1a82792e0357501aac29a8f2283a"
+    },
+    {
+      "head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "runs": [
+        {
+          "id": 41937866009,
+          "name": "v0.8 qualification resume with published IDE 1.2.1",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41937866009",
+          "head_sha": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+          "run_attempt": 1,
+          "jobs": [
+            {
+              "id": 126950821968,
+              "name": "native-original-45 (native-ide)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:58:54Z",
+              "completed_at": "2026-11-05T00:05:49Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41937866009/job/126950821968"
+            },
+            {
+              "id": 126950822318,
+              "name": "foundation",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:58:54Z",
+              "completed_at": "2026-11-05T00:07:43Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41937866009/job/126950822318"
+            },
+            {
+              "id": 126950822327,
+              "name": "native-original-45 (native-handoff)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-04T23:58:54Z",
+              "completed_at": "2026-11-05T00:05:24Z",
+              "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41937866009/job/126950822327"
+            }
+          ]
+        }
+      ],
+      "receipt_sha256": "70fa4feb8330c027dbde9aef4f9bd993af1e8ed9387a186e34b7728e4991279e"
+    }
+  ],
+  "github_latest_result_receipts": [
+    {
+      "receipt": "13374129379-run-daafb011589b43cd92f01880323a63c5_result.json",
+      "sha256": "9dda3ba7407491cb05b2178d84f35219a942fc7f4e2e62bde47831b150b922d5",
+      "passed": true,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "junit": null,
+      "full_v08_qualified": false,
+      "controller_heartbeat": [
+        {
+          "renewals": 31,
+          "failures": 0,
+          "active_sessions": 2,
+          "failure_tail": []
+        },
+        {
+          "renewals": 0,
+          "failures": 0,
+          "active_sessions": 0,
+          "failure_tail": []
+        },
+        {
+          "renewals": 0,
+          "failures": 0,
+          "active_sessions": 0,
+          "failure_tail": []
+        },
+        {
+          "renewals": 0,
+          "failures": 0,
+          "active_sessions": 0,
+          "failure_tail": []
+        },
+        {
+          "renewals": 0,
+          "failures": 0,
+          "active_sessions": 0,
+          "failure_tail": []
+        },
+        {
+          "renewals": 0,
+          "failures": 0,
+          "active_sessions": 0,
+          "failure_tail": []
+        }
+      ]
+    },
+    {
+      "receipt": "13374144203-run-ea7872c2bbfd402c8fc7665862bed0c7_result.json",
+      "sha256": "ef010a4a16ad94907afad94dcbf6c821d6b1f7f08b84c7ad2c3a943574d38897",
+      "passed": true,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "junit": null,
+      "full_v08_qualified": false,
+      "controller_heartbeat": [
+        {
+          "renewals": 25,
+          "failures": 0,
+          "active_sessions": 2,
+          "failure_tail": []
+        },
+        {
+          "renewals": 24,
+          "failures": 0,
+          "active_sessions": 3,
+          "failure_tail": []
+        }
+      ]
+    },
+    {
+      "receipt": "13375830189-run-20261104T235937Z-e3b870ff_result.json",
+      "sha256": "092aa116bec2f038ee90d957367b836cae06e94bd3adc1aedba2f0b33984f1b8",
+      "passed": true,
+      "git_head": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "junit": {
+        "tests": 1815,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "full_v08_qualified": null,
+      "controller_heartbeat": null
+    }
+  ],
+  "local_runner_corrections": [
+    "Native audit storage moved from tmpfs to a dedicated durable Docker volume",
+    "Removed 26 verified empty obsolete project networks after retaining their configurations",
+    "Granted the qualification helper the ownership capabilities needed to retain audit evidence; native worker limits unchanged",
+    "Foundation helper installs zlib1g-dev and uses short temporary paths for AF_UNIX sockets",
+    "Foundation helper uses Docker --init to reap exited Git descendants; 512 PID limit and 600-second suite budget retained"
+  ],
+  "unresolved_acceptance": [
+    "Local v0.8 native child startup has Context service request timeouts; last instrumented run recorded five heartbeat renewals and zero heartbeat failures",
+    "Complete local foundation exceeded its 600-second budget; two driver deadline failures under overlapping IDE test load passed when repeated in isolation, which does not replace the failed complete run",
+    "Original sustained native hour memory-growth failures remain unresolved; short runs do not qualify endurance",
+    "Complete native compatibility, browser, deployment, restore, packaging, and final release acceptance remain incomplete",
+    "Production-like NetworkPolicy-enforcing Kubernetes environment is unavailable",
+    "Independent implemented-system security review and complete source/license/advisory closure remain outstanding"
+  ],
+  "release_gates": {
+    "services": false,
+    "native_family": false,
+    "compatibility": false,
+    "driver_faults": false,
+    "ide_browser": false,
+    "compose": false,
+    "kubernetes": false,
+    "recovery": false,
+    "security": false,
+    "ci": false,
+    "packaging": false
+  },
+  "preservation": {
+    "old_v07_image_and_user_volumes_retained": true,
+    "preexisting_plugin_edits_backed_up": true,
+    "raw_failed_attempts_retained_locally": true
+  },
+  "evidence_files": {
+    "compose-after.json": "acdaab080218e53cace6bade173dd78d1100f15b6713bb881dc7af6f7808e876",
+    "compose-before.json": "ff9316583bbe9e4eb915dbc979401ba435b08f0c909afdf868a9b5ec72d2a0a7",
+    "compose-prelaunch.json": "337ba6d41de1345653f52a538e8ceb68b2c5c9908d543d72e9223e9037aaa879",
+    "desktop-checks.json": "5732cf97c066690e423ea89004aa412acfc73b030d7aed6199a89c97e6d0b4b7",
+    "driver-isolated.xml": "914374b84444c9085cb4ede4eeb6d854c3ea774e876e22cf9e0998a1d489704c",
+    "ide-linux-full.xml": "9be156adb682ce51f5dc4914f5e769155368f39af21b477143f5c6eb531fe59e",
+    "ide-linux-specific.xml": "0fb24ffe61a6c1eca3e3b3c1c90c7c47e2539f263b9faee27e01a335b19abb52",
+    "ide-linux-symlink.xml": "81a087de08dc259147b51bdbbfe93938744a837e4ce6bccb82de27d09838ccd3",
+    "ide-windows.xml": "16b3fadfa6df1457b166d22c970e443f43bad38c1715cbe534163126888e35d3",
+    "installed-byte-verification.json": "b04ce38ce169e7e93ed8bdeb2beb548bab7af7c5ca454df93efcb119257c7bb3",
+    "installed-controller.png": "a34fb290333f685a0216e07cad22b631dae89b548aa2a15943066ffe2c44349f",
+    "tooling-linux.xml": "930438816fb6e44a452cb19010c8d48c3fa9ecbd63a3f6e14dd9bd24738840f1",
+    "tooling-windows.xml": "20b5be7cd916c77242036b6b380ca43f8bc18a185b7e400fb900f58c02c8c9b0"
+  }
+}
