@@ -1,3 +1,13 @@
+<!-- CURRENT QUALIFICATION -->
+> **Current qualification — November 5, 2026:** IDE v1.2.1 and full SPELL v0.8 remain unqualified; all eleven release groups are open. See [current status, verified results and next work](CURRENT_STATUS.md). Earlier candidate IDs and bounded acceptance below apply to their recorded subjects.
+<!-- END CURRENT QUALIFICATION -->
+
+# Qualification continuation — November 5, 2026
+
+The original unqualified publication disclosure below is preserved. [Current qualification and remaining work](CURRENT_STATUS.md) records subsequent source-bound evidence: 1,818 hosted foundation passes and local/hosted 45-second native passes, an unresolved local 600-second foundation timeout and failed 300-second memory growth of 256,954,368 bytes against 67,108,864 allowed. All eleven full-release groups remain open. No published tag/asset was replaced or promoted, and no successor IDE runtime was introduced.
+
+## Original publication disclosure
+
 # OpenBEXI IDE v1.2.1
 
 **UNQUALIFIED — qualification incomplete.** Published at the owner's explicit request before mandatory acceptance is complete. No production qualification is claimed.

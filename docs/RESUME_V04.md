@@ -1,6 +1,18 @@
+<!-- CURRENT QUALIFICATION -->
+> **Current qualification — November 5, 2026:** IDE v1.2.1 and full SPELL v0.8 remain unqualified; all eleven release groups are open. See [current status, verified results and next work](CURRENT_STATUS.md). Earlier candidate IDs and bounded acceptance below apply to their recorded subjects.
+<!-- END CURRENT QUALIFICATION -->
+
+# Current continuation — IDE v1.2.1 and full SPELL v0.8
+
+Use [current qualification status](CURRENT_STATUS.md) and `F:/openbexi-builds/v08-qualification-20261104/RESUME_QUALIFICATION.json`. Active worktrees are `F:/openbexi-builds/v08-qualification-20261104/ide` and `/spell`, on `qualification/v121-resume-20261104` and `qualification/v08-resume-20261104`. Preserve the detached published checkouts and unique backup/stash.
+
+Both releases remain unqualified. Hosted foundation and local/hosted short native checks pass; local foundation latency, sustained memory, full acceptance and the cluster/reviewer prerequisites remain open. No qualification jobs were active at the latest verified checkpoint. Reconcile live state before launching another suite. The older worktrees, service ports, pause instructions and priorities below are historical recovery pointers.
+
+## Earlier handoffs
+
 # Resume from openbexi_ide
 
-## Current priority: SPELL v0.6 resumed (2026-10-19)
+## Historical priority: SPELL v0.6 resumed (2026-10-19)
 
 The user explicitly requested `resume v0.6`, superseding the pause below.
 Continue in `C:/obspell_v06_resume`, branch `release/v06-resumed`, checkpoint
@@ -15,7 +27,7 @@ validate, plus passing package/rebuild prerequisites. Its earlier repository
 test failures remain unresolved; v0.6 is not accepted or published. The IDE's
 published 1.1.0 release remains independent of SPELL qualification.
 
-## Current priority: procedure workspace (2026-10-17)
+## Historical priority: procedure workspace (2026-10-17)
 
 The user explicitly prioritized a SPELL GUI User Manual-like execution table,
 current-line highlighting, procedure history and embedded prompts. See
@@ -29,7 +41,7 @@ The GUI is a local Development update with independent validation. Preserve the
 published v0.5 evidence and all retained images/volumes. This update does not
 close the independent fresh-Windows OS installation gate for IDE 1.0.
 
-## Current release: OpenBEXI IDE 1.0
+## Historical release: OpenBEXI IDE 1.0
 
 The user explicitly requested publication from `master` with tag `1.0` after
 being informed that fresh-Windows installation validation remains outstanding.

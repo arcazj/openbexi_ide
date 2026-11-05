@@ -1,3 +1,7 @@
+<!-- CURRENT QUALIFICATION -->
+> **Current qualification — November 5, 2026:** IDE v1.2.1 and full SPELL v0.8 remain unqualified; all eleven release groups are open. See [current status, verified results and next work](CURRENT_STATUS.md). Earlier candidate IDs and bounded acceptance below apply to their recorded subjects.
+<!-- END CURRENT QUALIFICATION -->
+
 # IDE v1.2.1 and SPELL v0.8 qualification environments
 
 Qualification targets and test budgets are recorded in the companion SPELL repository at `docs/v0.8/QUALIFICATION_ENVIRONMENTS.json`. This contract defines environments to test; it does not claim that these platforms or the full release have passed.
@@ -20,3 +24,5 @@ Run one heavy qualification suite per reference runner. Preserve the workload's 
 Local failures remain failed evidence. A controlled isolated rerun can distinguish environmental contention from a defect, but a later pass alone does not explain an earlier failure. A reference-runner pass cannot hide a failure in a claimed supported deployment.
 
 Published IDE v1.2.1 and SPELL v0.8-rc1 artifacts stay immutable and unqualified pending full acceptance. Changed runtime artifacts require a separate version. Windows offline bundle delivery is currently absent; historical bundles cannot establish v1.2.1 acceptance. The production-like cluster and independent implemented-system reviewer remain external prerequisites.
+
+The latest verified hosted run is [41958849238](https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238): 1,818 foundation passes in 461.451 seconds and both original 45-second scenarios pass. Foundation and native jobs used different CPU models and two runner image revisions despite the common Python pin; their receipts remain distinct. Both local short native scenarios pass, while the local foundation timeout and 300-second memory failure remain open. See [current status](CURRENT_STATUS.md) for complete subjects, metrics and remaining work.

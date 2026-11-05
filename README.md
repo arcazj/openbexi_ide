@@ -1,8 +1,14 @@
-> **UNQUALIFIED — qualification incomplete.** Current publication: OpenBEXI IDE v1.2.1. See [release notes](docs/UNQUALIFIED_RELEASE.md) for the delivered scope, installation and known limitations. Earlier release descriptions below are historical.
-
 # OpenBEXI IDE
 
-**OpenBEXI IDE 1.2.0** integrates **SPELL v0.7** in the
+## Current qualification
+
+**IDE v1.2.1 is published and unqualified.** Full SPELL v0.8 acceptance remains incomplete. The latest hosted run passes 1,818 foundation tests and both original 45-second native scenarios; the local foundation still exceeds 600 seconds and the 300-second memory diagnostic grows by 245.1 MiB against a 64 MiB limit. All eleven full-release groups remain open.
+
+Start with [current status and next work](docs/CURRENT_STATUS.md), [published artifact scope](docs/UNQUALIFIED_RELEASE.md) and [the qualification roadmap](ROADMAP.md). The existing local desktop at port 6088 uses the v0.7 native baseline. Earlier image and installation commands below apply to their named versions.
+
+## Existing features and earlier release profiles
+
+**Previous release OpenBEXI IDE 1.2.0** integrates **SPELL v0.7** in the
 `openbexi-ide-spell-v07` Docker desktop. Offline authority backup/restore retains
 uncertain-effect holds, advances the controller epoch and revokes historical
 Execution approvals. The driver admits effects only within durable journal
@@ -65,7 +71,7 @@ original SPELL examples are included. See [v0.4 qualification](docs/IDE_V04_USAB
 Live noVNC X-button/mouse-wheel checks passed on rc3. The IDE releases follow their independent roadmap;
 candidate commits do not promote the sibling plugin's conformance releases.
 
-Current release artifacts and remaining work: [resume development](docs/RESUME_V04.md).
+Historical usability handoff: [resume development](docs/RESUME_V04.md).
 
 A standalone CPython 3.13 IDE and headless CLI. The desktop has a project tree,
 tabbed editor, output and real debugpy debugger, with light/dark themes and a

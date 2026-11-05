@@ -1,3 +1,7 @@
+<!-- CURRENT QUALIFICATION -->
+> **Current qualification — November 5, 2026:** IDE v1.2.1 and full SPELL v0.8 remain unqualified; all eleven release groups are open. See [current status, verified results and next work](CURRENT_STATUS.md). Earlier candidate IDs and bounded acceptance below apply to their recorded subjects.
+<!-- END CURRENT QUALIFICATION -->
+
 # Native controller reconnect from the IDE
 
 Development package 1.2.1.dev4 fixes two desktop reconnect defects. After the server reports CONTROLLER_DISCONNECTED, a retained old controller proof no longer hides the explicit Reconnect control action. Starting a live reconnect opens a fresh authenticated session, as required by Context, instead of reusing the closed or previously bound session.

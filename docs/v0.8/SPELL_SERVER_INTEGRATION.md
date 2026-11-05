@@ -1,13 +1,16 @@
+<!-- CURRENT QUALIFICATION -->
+> **Current qualification — November 5, 2026:** IDE v1.2.1 and full SPELL v0.8 remain unqualified; all eleven release groups are open. See [current status, verified results and next work](../CURRENT_STATUS.md). Earlier candidate IDs and bounded acceptance below apply to their recorded subjects.
+<!-- END CURRENT QUALIFICATION -->
+
 # SPELL v0.8 server connection
 
 The **SPELL server** tab connects to the v0.8 certificate gateway. It is separate
-from the existing **Session** tab and v0.7 runtime. Development version
-`1.2.1.dev1` supports discovery, source catalogs, execution reservations,
+from the existing **Session** tab and v0.7 runtime. Published unqualified version
+`1.2.1` supports discovery, source catalogs, execution reservations,
 observation, explicit control requests, accept/reject and controller rebind.
 While connected, local Run and Debug are disabled and direct action calls are
 rejected, preventing a server action from falling back to local execution.
-Native run, pause, debugging, prompts and driver effects are not yet available
-through this new tab. It must not be described as the qualified v0.8 runtime.
+Existing host-provisioned executions can expose Run/Continue, Step, Pause, Abort and Close through an explicitly enabled Listener. The client also implements controller-session heartbeats. Public worker provisioning, complete graphical debugger/prompt workflows, browser/WSS and joint release acceptance remain incomplete. See [current qualification](../CURRENT_STATUS.md); this tab is not a qualified full v0.8 runtime.
 
 Prepare a private JSON connection file outside the project/source repository:
 
@@ -39,11 +42,10 @@ Capabilities are memory-only and are never put in list rows, logs or files.
 Select **Disconnect** to close logical controller connections. If a close fails,
 the panel retains its original request key for a safe explicit retry. Closing the
 window is transport detachment, not proof that the server closed the connection
-or stopped a native process. Automatic heartbeat/WSS disconnect behavior remains
-a pending v0.8 gate. The CLI `openbexi-spell-client --config connection.json`
+or stopped a native process. Controller-session heartbeats are implemented; complete abrupt-loss, browser/WSS and deployed recovery acceptance remains open. The CLI `openbexi-spell-client --config connection.json`
 provides read-only Context discovery; add `--context A --resource executions`.
 
-## Qualification scope
+## Historical initial-client qualification scope
 
 14 new local client/desktop checks pass, including nonblocking window detach while a network operation is pending. A development detach fixture initially omitted the client controller-query method; its failed JUnit is retained separately. Real three-client TLS and handoff checks
 are maintained in the plugin's `server/tests/test_ide_integration.py`; its CI pins
@@ -59,7 +61,7 @@ reject workers. No containment check was disabled. The hosted workflow reruns
 the existing IDE suite on a normal Linux runner; only actual hosted results may
 supersede this failed attempt. Native/driver, browser/WSS, deployment and full
 v0.8 release qualification remain pending.
-# Existing-execution controls in 1.2.1.dev2
+# Existing-execution controls introduced in 1.2.1.dev2
 
 The server panel now offers Run / Continue, Step, Pause, Abort and Close execution
 when the authenticated Context advertises those commands through an explicitly
@@ -79,4 +81,3 @@ does not add public worker provisioning, debugger inspection/breakpoints,
 browser/WSS, prompt widgets or Git collaboration. Exact paired native results
 are recorded in the companion plugin; the historical evidence below retains
 its original source identity and scope.
-
