@@ -1,0 +1,88 @@
+{
+  "schema": "openbexi.qualification-environment/1",
+  "recorded_at": "2026-11-05T03:01:23.929393+00:00",
+  "profile": "linux-hosted-foundation",
+  "qualification_pass": false,
+  "scope": "Runner observation only; no workload acceptance inferred",
+  "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9",
+  "git_head": {
+    "exit_code": 0,
+    "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+  },
+  "working_tree_dirty": false,
+  "system": "Linux",
+  "release": "7.0.0-1017-azure",
+  "machine": "x86_64",
+  "os_release": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo",
+  "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+  "cpu_count": 4,
+  "cpu_affinity_count": 4,
+  "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+  "python_executable_sha256": "104655eaac3e30166d621d3a4437a7cdee5e2250874ae680322f13a42360be12",
+  "packages": {
+    "openbexi-ide": "1.2.1",
+    "PySide6-Essentials": "6.10.3",
+    "shiboken6": "6.10.3",
+    "grpcio": "1.84.0",
+    "protobuf": "7.36.2",
+    "pytest": "8.4.2",
+    "ruff": "0.14.1",
+    "mypy": "1.18.2"
+  },
+  "memory": "MemTotal:       16367524 kB\nMemFree:        12280084 kB\nMemAvailable:   15293396 kB\nBuffers:           76456 kB\nCached:          3179312 kB\nSwapCached:            0 kB\nActive:           932228 kB\nInactive:        2579900 kB\nActive(anon):     312392 kB\nInactive(anon):        0 kB\nActive(file):     619836 kB\nInactive(file):  2579900 kB\nUnevictable:       46728 kB\nMlocked:           43656 kB\nSwapTotal:       3145724 kB\nSwapFree:        3145724 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:            793128 kB\nWriteback:             0 kB\nAnonPages:        303560 kB\nMapped:           339124 kB\nShmem:             47008 kB\nKReclaimable:     149812 kB\nSlab:             237468 kB\nSReclaimable:     149812 kB\nSUnreclaim:        87656 kB\nKernelStack:        4168 kB\nPageTables:         6448 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    11329484 kB\nCommitted_AS:    2091984 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       38884 kB\nVmallocChunk:          0 kB\nPercpu:             2336 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:     75776 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:         1462272 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      117888 kB\nDirectMap2M:     4071424 kB\nDirectMap1G:    14680064 kB",
+  "disk": {
+    "total_bytes": 154894188544,
+    "free_bytes": 90192531456
+  },
+  "cgroup": {
+    "cpu.max": null,
+    "cpu.stat": "usage_usec 36455000\nuser_usec 24523000\nsystem_usec 11932000\nnice_usec 2011000\ncore_sched.force_idle_usec 0\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0\nnr_bursts 0\nburst_usec 0",
+    "memory.max": null,
+    "memory.current": null,
+    "memory.events": null,
+    "memory.swap.max": null,
+    "memory.swap.current": null,
+    "pids.max": null,
+    "pids.current": null
+  },
+  "pressure": {
+    "cpu": "some avg10=0.10 avg60=0.79 avg300=0.32 total=1320691\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+    "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1",
+    "io": "some avg10=18.06 avg60=8.25 avg300=2.26 total=7668965\nfull avg10=17.94 avg60=7.95 avg300=2.15 total=7236879"
+  },
+  "docker": {
+    "ServerVersion": "28.0.4",
+    "OSType": "linux",
+    "Architecture": "x86_64",
+    "KernelVersion": "7.0.0-1017-azure",
+    "NCPU": 4,
+    "MemTotal": 16760344576,
+    "Driver": "overlay2",
+    "CgroupVersion": "2",
+    "ContainersRunning": 0
+  },
+  "tools": {
+    "git": {
+      "exit_code": 0,
+      "stdout": "git version 2.56.0"
+    },
+    "compiler": {
+      "exit_code": 0,
+      "stdout": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    "libc": {
+      "exit_code": 0,
+      "stdout": "ldd (Ubuntu GLIBC 2.39-0ubuntu8.9) 2.39\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Roland McGrath and Ulrich Drepper."
+    }
+  },
+  "ci": {
+    "ImageOS": "ubuntu24",
+    "ImageVersion": "20261101.360.1",
+    "RUNNER_OS": "Linux",
+    "RUNNER_ARCH": "X64",
+    "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+    "GITHUB_RUN_ID": "41958849238",
+    "GITHUB_RUN_ATTEMPT": "1",
+    "GITHUB_JOB": "foundation"
+  }
+}

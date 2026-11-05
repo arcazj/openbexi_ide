@@ -1,0 +1,17 @@
+{
+  "schema": "openbexi.native-recovery-resources/1",
+  "passed": true,
+  "resident_limit_bytes": 2147483648,
+  "swap_limit_bytes": 0,
+  "peak_budget_bytes": 1879048192,
+  "maximum_window_growth_bytes": 67108864,
+  "full_v08_qualified": false,
+  "failures": [],
+  "samples": 48,
+  "soak_samples": 22,
+  "duration_seconds": 45.471074792,
+  "peak_bytes": 1021194240,
+  "window_growth_bytes": 38862848,
+  "first_window_median_bytes": 975728640,
+  "last_window_median_bytes": 1014591488
+}

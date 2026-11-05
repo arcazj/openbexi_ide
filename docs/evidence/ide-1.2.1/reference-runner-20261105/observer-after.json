@@ -1,0 +1,16 @@
+{
+  "container_id": "d6a93b1ec61ff57376dd1f555b1e2e115cc2bd3dce08a246eb33b870bb4d868f",
+  "host_pid": 34655,
+  "observer_pid_namespace": "pid:[4026531836]",
+  "passed": true,
+  "pidfd_open": true,
+  "target_pid_namespace": "pid:[4026532388]",
+  "cgroup": "docker/d6a93b1ec61ff57376dd1f555b1e2e115cc2bd3dce08a246eb33b870bb4d868f",
+  "memory_max": "3221225472",
+  "privileged_read_exit": 0,
+  "privileged_read": {
+    "uid": 0,
+    "root_readable": true,
+    "status_readable": true
+  }
+}

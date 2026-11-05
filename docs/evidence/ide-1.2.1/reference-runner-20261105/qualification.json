@@ -1,0 +1,900 @@
+{
+  "schema": "openbexi.ide-spell-reference-qualification/1",
+  "recorded_at": "2026-11-05T03:24:59.980713+00:00",
+  "full_qualification": false,
+  "eligible_for_publication": false,
+  "published_tags_preserved": true,
+  "production_migration_authorized": false,
+  "identities": {
+    "published_ide": "08c314fb6b802b407cbabe01777072884d2b7504",
+    "published_spell_rc1": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda",
+    "local_runtime_subject": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+    "hosted_subject": "efada98963a9d9debdbdca437b0e97246180a86f",
+    "ide_wheel_sha256": "43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b"
+  },
+  "changed_scope": "Environment contract, environment collector and its regressions, CI Python pin, trusted local helper configuration, and evidence. No product runtime changes in this continuation.",
+  "platform_contract": "https://github.com/arcazj/openbexi_spell_plugin/blob/efada98963a9d9debdbdca437b0e97246180a86f/docs/v0.8/QUALIFICATION_ENVIRONMENTS.json",
+  "hosted": {
+    "initial": {
+      "workflow": {
+        "recorded_at": "2026-11-05T02:55:59.852407+00:00",
+        "head": "34772499543cf30569ec44b79d88161d9c808fd1",
+        "runs": [
+          {
+            "id": 41957183593,
+            "name": "v0.8 qualification resume with published IDE 1.2.1",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41957183593",
+            "head_sha": "34772499543cf30569ec44b79d88161d9c808fd1",
+            "run_attempt": 1,
+            "jobs": [
+              {
+                "id": 127014789400,
+                "name": "native-original-45 (native-ide)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T02:44:51Z",
+                "completed_at": "2026-11-05T02:52:24Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41957183593/job/127014789400"
+              },
+              {
+                "id": 127014789602,
+                "name": "foundation",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T02:44:50Z",
+                "completed_at": "2026-11-05T02:55:37Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41957183593/job/127014789602"
+              },
+              {
+                "id": 127014789622,
+                "name": "native-original-45 (native-handoff)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T02:44:50Z",
+                "completed_at": "2026-11-05T02:51:14Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41957183593/job/127014789622"
+              }
+            ]
+          }
+        ]
+      },
+      "archives": [
+        {
+          "artifact_id": 13384232260,
+          "name": "v08-resume-native-handoff-34772499543cf30569ec44b79d88161d9c808fd1",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-34772499\\41957183593\\13384232260-v08-resume-native-handoff-34772499543cf30569ec44b79d88161d9c808fd1.zip",
+          "sha256": "e0abf3e336b37533398e4ec22912a04bc2f6b03b33d09f4acbf2b6f4fcda1994",
+          "bytes": 403380,
+          "crc_verified": true
+        },
+        {
+          "artifact_id": 13383543905,
+          "name": "v08-resume-native-ide-34772499543cf30569ec44b79d88161d9c808fd1",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-34772499\\41957183593\\13383543905-v08-resume-native-ide-34772499543cf30569ec44b79d88161d9c808fd1.zip",
+          "sha256": "cfb91f2fd0db58721e800076070e96bb7b2b5750f4edc4a592514fe06ac26135",
+          "bytes": 425753,
+          "crc_verified": true
+        },
+        {
+          "artifact_id": 13383339890,
+          "name": "v08-resume-foundation-34772499543cf30569ec44b79d88161d9c808fd1",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-34772499\\41957183593\\13383339890-v08-resume-foundation-34772499543cf30569ec44b79d88161d9c808fd1.zip",
+          "sha256": "6349ef289efc6f9579dc54b24b2067e9ce29eb477d526bece758a9961aaf60ea",
+          "bytes": 9262123,
+          "crc_verified": true
+        }
+      ],
+      "results": [
+        {
+          "passed": true,
+          "git_head": "34772499543cf30569ec44b79d88161d9c808fd1",
+          "ide_commit": null,
+          "junit": null,
+          "candidate_worker_image": "sha256:3f5a1fa3b1e315c1e7d07933f4411d546153cc5cebf1a037761be6dcb15caeb0"
+        },
+        {
+          "passed": true,
+          "git_head": "34772499543cf30569ec44b79d88161d9c808fd1",
+          "ide_commit": null,
+          "junit": null,
+          "candidate_worker_image": "sha256:eabe5a3d3f3af9de7060ca8a339d6a0e81a112c286fda711ea54c3de58d810a4"
+        },
+        {
+          "passed": true,
+          "git_head": "34772499543cf30569ec44b79d88161d9c808fd1",
+          "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+          "junit": {
+            "tests": 1818,
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0
+          },
+          "candidate_worker_image": null
+        }
+      ],
+      "junit": [
+        {
+          "tests": "1818",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "587.656"
+        }
+      ]
+    },
+    "pinned": {
+      "workflow": {
+        "recorded_at": "2026-11-05T03:09:24.853519+00:00",
+        "head": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "runs": [
+          {
+            "id": 41958849238,
+            "name": "v0.8 qualification resume with published IDE 1.2.1",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238",
+            "head_sha": "efada98963a9d9debdbdca437b0e97246180a86f",
+            "run_attempt": 1,
+            "jobs": [
+              {
+                "id": 127020121110,
+                "name": "native-original-45 (native-ide)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T03:00:45Z",
+                "completed_at": "2026-11-05T03:07:34Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238/job/127020121110"
+              },
+              {
+                "id": 127020121374,
+                "name": "native-original-45 (native-handoff)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T03:00:45Z",
+                "completed_at": "2026-11-05T03:06:25Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238/job/127020121374"
+              },
+              {
+                "id": 127020121416,
+                "name": "foundation",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-11-05T03:00:45Z",
+                "completed_at": "2026-11-05T03:09:13Z",
+                "html_url": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238/job/127020121416"
+              }
+            ]
+          }
+        ]
+      },
+      "archives": [
+        {
+          "artifact_id": 13385170528,
+          "name": "v08-resume-native-ide-efada98963a9d9debdbdca437b0e97246180a86f",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-pinned\\41958849238\\13385170528-v08-resume-native-ide-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+          "sha256": "b8ba1d8cdf8f89397c88b85761ba3dbd370dc5c5ad93ec17ff2f84678b34d4dd",
+          "bytes": 426628,
+          "crc_verified": true
+        },
+        {
+          "artifact_id": 13384821793,
+          "name": "v08-resume-foundation-efada98963a9d9debdbdca437b0e97246180a86f",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-pinned\\41958849238\\13384821793-v08-resume-foundation-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+          "sha256": "7480f3fac7083c73fa5ea8dcf06accd3e898d14c50747cb1ad7c2aa942c2f9e5",
+          "bytes": 9260426,
+          "crc_verified": true
+        },
+        {
+          "artifact_id": 13384184628,
+          "name": "v08-resume-native-handoff-efada98963a9d9debdbdca437b0e97246180a86f",
+          "path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\ci-pinned\\41958849238\\13384184628-v08-resume-native-handoff-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+          "sha256": "af7b4380aa751c72548ed07d1b4b712abc7b6ee2af3ddf96a2f948bf302cc7a3",
+          "bytes": 397321,
+          "crc_verified": true
+        }
+      ],
+      "results": [
+        {
+          "passed": true,
+          "git_head": "efada98963a9d9debdbdca437b0e97246180a86f",
+          "ide_commit": null,
+          "junit": null,
+          "candidate_worker_image": "sha256:7da18d5f0e80f7eceaf8302d2c871b6a181dc2161e2aaadaf29b2ae9e25f15a5"
+        },
+        {
+          "passed": true,
+          "git_head": "efada98963a9d9debdbdca437b0e97246180a86f",
+          "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+          "junit": {
+            "tests": 1818,
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0
+          },
+          "candidate_worker_image": null
+        },
+        {
+          "passed": true,
+          "git_head": "efada98963a9d9debdbdca437b0e97246180a86f",
+          "ide_commit": null,
+          "junit": null,
+          "candidate_worker_image": "sha256:5ffc4955129dde16e24281025f3c0abc0b2bdf4d3e90eb926d3496b7a041f978"
+        }
+      ],
+      "junit": [
+        {
+          "tests": "1818",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "461.451"
+        }
+      ]
+    }
+  },
+  "local": {
+    "native-isolated": {
+      "run": "run-c23fa32eb7514e11b32737f3b2214a92",
+      "passed": false,
+      "error": "RuntimeError: Host operation failed: docker start",
+      "resources": null,
+      "receipt": "local/native-isolated.json"
+    },
+    "native-start-diagnostic": {
+      "run": "run-d1cf0b291d614163a917a58803cc7fa7",
+      "passed": false,
+      "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>",
+      "resources": null,
+      "receipt": "local/native-start-diagnostic.json"
+    },
+    "native-offline-diagnostic": {
+      "run": "run-e1b81267437d4ee9a364db81b0e506e2",
+      "passed": false,
+      "error": "ProcessLookupError: [Errno 3] No such process",
+      "resources": null,
+      "receipt": "local/native-offline-diagnostic.json"
+    },
+    "native-host-observer": {
+      "run": "run-a6a30e832a4240ca94cd34e22294ae3d",
+      "passed": false,
+      "error": "RuntimeError: Host operation failed: docker run",
+      "resources": null,
+      "receipt": "local/native-host-observer.json"
+    },
+    "native-host-observer-mounted": {
+      "run": "run-aedb5668bb8d4bdf9531614d17ad570e",
+      "passed": true,
+      "error": null,
+      "resources": {
+        "schema": "openbexi.native-recovery-resources/1",
+        "passed": true,
+        "resident_limit_bytes": 2147483648,
+        "swap_limit_bytes": 0,
+        "peak_budget_bytes": 1879048192,
+        "maximum_window_growth_bytes": 67108864,
+        "full_v08_qualified": false,
+        "failures": [],
+        "samples": 48,
+        "soak_samples": 22,
+        "duration_seconds": 45.5022636,
+        "peak_bytes": 1256972288,
+        "window_growth_bytes": 18456576,
+        "first_window_median_bytes": 1232379904,
+        "last_window_median_bytes": 1250836480
+      },
+      "receipt": "local/native-host-observer-mounted.json"
+    },
+    "native-ide-host-observer": {
+      "run": "run-13ba28d05ff54f82bbf95ff630fd91d7",
+      "passed": true,
+      "error": null,
+      "resources": {
+        "schema": "openbexi.native-recovery-resources/1",
+        "passed": true,
+        "resident_limit_bytes": 2147483648,
+        "swap_limit_bytes": 0,
+        "peak_budget_bytes": 1879048192,
+        "maximum_window_growth_bytes": 67108864,
+        "full_v08_qualified": false,
+        "failures": [],
+        "samples": 48,
+        "soak_samples": 22,
+        "duration_seconds": 45.5334735,
+        "peak_bytes": 1287147520,
+        "window_growth_bytes": 26036224.0,
+        "first_window_median_bytes": 1255184384.0,
+        "last_window_median_bytes": 1281220608
+      },
+      "receipt": "local/native-ide-host-observer.json"
+    },
+    "foundation_isolated": {
+      "passed": false,
+      "source": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "run": "run-20261105T023305Z-70ff3dac",
+      "checks": [
+        {
+          "name": "lint",
+          "command": [
+            "/usr/local/bin/python",
+            "-m",
+            "ruff",
+            "check",
+            "server",
+            "driver_plugin/src/openbexi_spell_dss/fenced_transport.py",
+            "driver_plugin/src/openbexi_spell_dss/context_driver.py",
+            "driver_plugin/src/openbexi_spell_dss/context_server.py",
+            "host_runtime/python/v08_worker.py",
+            "host_runtime/python/thread_barrier.py",
+            "host_runtime/python/child_gate.py",
+            "host_runtime/python/control_journal.py",
+            "host_runtime/python/prompt_replies.py",
+            "host_runtime/build_admission_context.py",
+            "host_runtime/native_prompt_patch.py",
+            "host_runtime/native_terminal_patch.py",
+            "host_runtime/python/terminal_probe.py",
+            "host_runtime/python/handoff_runtime.py",
+            "host_runtime/python/handoff_probe.py",
+            "host_runtime/python/epoch_connection.py",
+            "host_runtime/python/epoch_relay.py",
+            "scripts/v08_handoff_cohort.py",
+            "scripts/v08_resource_probe.py",
+            "scripts/v08_audit_storage.py",
+            "scripts/v08_native_audit_fault.py",
+            "scripts/v08_ide_cohort.py",
+            "scripts/v08_controller_heartbeat.py",
+            "scripts/v08_terminal_cohort.py",
+            "scripts/qualify_v08_native_launch.py",
+            "scripts/v08_listener_survival.py",
+            "scripts/v08_native_consumption.py",
+            "scripts/check_v08_release.py",
+            "scripts/qualify_v08_faults.py",
+            "scripts/qualify_v08_server.py"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "format",
+          "command": [
+            "/usr/local/bin/python",
+            "-m",
+            "ruff",
+            "format",
+            "--check",
+            "server",
+            "driver_plugin/src/openbexi_spell_dss/fenced_transport.py",
+            "driver_plugin/src/openbexi_spell_dss/context_driver.py",
+            "driver_plugin/src/openbexi_spell_dss/context_server.py",
+            "host_runtime/python/v08_worker.py",
+            "host_runtime/python/thread_barrier.py",
+            "host_runtime/python/child_gate.py",
+            "host_runtime/python/control_journal.py",
+            "host_runtime/python/prompt_replies.py",
+            "host_runtime/build_admission_context.py",
+            "host_runtime/native_prompt_patch.py",
+            "host_runtime/native_terminal_patch.py",
+            "host_runtime/python/terminal_probe.py",
+            "host_runtime/python/handoff_runtime.py",
+            "host_runtime/python/handoff_probe.py",
+            "host_runtime/python/epoch_connection.py",
+            "host_runtime/python/epoch_relay.py",
+            "scripts/v08_handoff_cohort.py",
+            "scripts/v08_resource_probe.py",
+            "scripts/v08_audit_storage.py",
+            "scripts/v08_native_audit_fault.py",
+            "scripts/v08_ide_cohort.py",
+            "scripts/v08_controller_heartbeat.py",
+            "scripts/v08_terminal_cohort.py",
+            "scripts/qualify_v08_native_launch.py",
+            "scripts/v08_listener_survival.py",
+            "scripts/v08_native_consumption.py",
+            "scripts/check_v08_release.py",
+            "scripts/qualify_v08_faults.py",
+            "scripts/qualify_v08_server.py"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "types",
+          "command": [
+            "/usr/local/bin/python",
+            "-m",
+            "mypy",
+            "--config-file",
+            "server/pyproject.toml",
+            "server/src"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "timeout_seconds": 180
+        },
+        {
+          "name": "tests",
+          "command": [
+            "/usr/local/bin/python",
+            "-m",
+            "pytest",
+            "server/tests",
+            "-v",
+            "-W",
+            "error",
+            "--tb=short",
+            "--durations=15",
+            "--junitxml=/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/spell-diagnostics/.qualification/v08-server/run-20261105T023305Z-70ff3dac/tests.xml"
+          ],
+          "exit_code": 124,
+          "timed_out": true,
+          "timeout_seconds": 600
+        }
+      ],
+      "completed_calls": {
+        "passed": 1150,
+        "failed": 0,
+        "skipped": 0
+      },
+      "final_event": {
+        "kind": "test_start",
+        "location": [
+          "tests/test_native_stream_reuse.py",
+          125,
+          "test_native_stream_preserves_frames_and_error_behavior[wire]"
+        ],
+        "monotonic_ns": 12818759927100,
+        "nodeid": "tests/test_native_stream_reuse.py::test_native_stream_preserves_frames_and_error_behavior[wire]",
+        "pid": 49,
+        "schema": "openbexi.pytest-result-journal/1",
+        "sequence": 4602,
+        "unix_ns": 1793846583263091400
+      },
+      "result_sha256": "74560f92066e9c4421342750560d6a89484fa1f97da36026ae039279566136b7",
+      "raw_path": "F:\\openbexi-builds\\v08-qualification-20261104\\reference-runner-20261105\\foundation-isolated\\results\\run-20261105T023305Z-70ff3dac"
+    },
+    "audit_volume_control": {
+      "command": [
+        "docker",
+        "run",
+        "--init",
+        "--name",
+        "openbexi-v08-audit-volume-control-20261105",
+        "--user",
+        "10003:10003",
+        "--group-add",
+        "0",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--memory",
+        "3g",
+        "--pids-limit",
+        "512",
+        "--mount",
+        "type=volume,src=openbexi-v08-qualification-20261104,dst=/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data",
+        "--workdir",
+        "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/spell-diagnostics",
+        "-e",
+        "QT_QPA_PLATFORM=offscreen",
+        "-e",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "-e",
+        "TMPDIR=/q/foundation-tmp-reference",
+        "-e",
+        "HOME=/tmp",
+        "--mount",
+        "type=volume,src=openbexi-v08-qualification-20261104,dst=/q",
+        "openbexi-v08-local-qualification-runner:20261104-foundation",
+        "python",
+        "-m",
+        "pytest",
+        "server/tests/test_native_audit_file.py::test_actual_line_methods_preserve_all_records_and_remove_payload_allocations",
+        "server/tests/test_native_audit_file.py::test_synced_audit_cache_is_bounded_without_losing_records",
+        "-v",
+        "-W",
+        "error",
+        "--durations=5",
+        "--junitxml=/q/audit-volume-control-20261105.xml"
+      ],
+      "started_at": "2026-11-05T03:10:53.072972+00:00",
+      "ended_at": "2026-11-05T03:11:33.463117+00:00",
+      "elapsed_seconds": 40.389792300062254,
+      "exit_code": 0,
+      "copy_exit": 0,
+      "scope": "Two unchanged audit tests, durable volume TMPDIR; no suite qualification"
+    },
+    "storage_conclusion": "Durable-volume TMPDIR changed cache-probe call from 15.415s to 1.98s; actual-line call remained about 36.2s. This partial observation does not explain or close the foundation timeout. No additional full-suite pass is claimed.",
+    "memory_300": {
+      "command": {
+        "command": [
+          "docker",
+          "exec",
+          "--env",
+          "TMPDIR=/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data",
+          "--env",
+          "HOME=/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data",
+          "--workdir",
+          "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/spell-diagnostics",
+          "openbexi-v08-host-observer-20261105",
+          "python",
+          "/tmp/run-memory-offline.py",
+          "--profile",
+          "asan-noswap",
+          "--scenario",
+          "handoff",
+          "--soak-seconds",
+          "300"
+        ],
+        "source_commit": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+        "started_at": "2026-11-05T03:12:20.668048+00:00",
+        "ended_at": "2026-11-05T03:22:17.930903+00:00",
+        "exit_code": 1,
+        "elapsed_seconds": 597.2577128000557,
+        "evidence_copy_exit": 0
+      },
+      "source_sha": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+      "passed": false,
+      "executed": true,
+      "diagnostic_only": true,
+      "profile": "asan-noswap",
+      "scenario": "handoff",
+      "soak_seconds": 300,
+      "failures": [],
+      "native_error": "RuntimeError: Native recovery resource acceptance failed",
+      "resources": {
+        "schema": "openbexi.native-memory-comparison-resources/1",
+        "profile": "asan-noswap",
+        "diagnostic_only": true,
+        "full_v08_qualified": false,
+        "eligible_for_publication": false,
+        "passed": false,
+        "resident_limit_bytes": 2147483648,
+        "swap_limit_bytes": 0,
+        "resident_peak_budget_bytes": 1879048192,
+        "combined_peak_budget_bytes": 1879048192,
+        "maximum_combined_window_growth_bytes": 67108864,
+        "minimum_soak_seconds": 300,
+        "swap_exercised": false,
+        "failures": [
+          "combined_memory_still_growing"
+        ],
+        "samples": 173,
+        "soak_samples": 147,
+        "duration_seconds": 303.1527927,
+        "resident_peak_bytes": 1492500480,
+        "sampled_combined_peak_bytes": 1490526208,
+        "combined_window_growth_bytes": 256954368,
+        "sampled_swap_peak_bytes": 0,
+        "native_instrumentation_verified": true,
+        "original_processes": 8,
+        "memory_max_events": 0,
+        "thread_observations_available": true,
+        "thread_first_median": 135.0,
+        "thread_last_median": 136,
+        "allocator_observations_available": true,
+        "last_memory_stat": {
+          "active_anon": 1467936768,
+          "active_file": 28672,
+          "anon": 1464467456,
+          "anon_thp": 576716800,
+          "file": 4046848,
+          "file_dirty": 12288,
+          "file_mapped": 0,
+          "file_thp": 0,
+          "file_writeback": 0,
+          "inactive_anon": 0,
+          "inactive_file": 815104,
+          "kernel": 21180416,
+          "kernel_stack": 2228224,
+          "pagetables": 15310848,
+          "percpu": 22920,
+          "pgactivate": 0,
+          "pgdeactivate": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_proactive": 0,
+          "pgfault": 326768,
+          "pglazyfree": 0,
+          "pglazyfreed": 0,
+          "pgmajfault": 0,
+          "pgrefill": 0,
+          "pgscan": 0,
+          "pgscan_direct": 0,
+          "pgscan_khugepaged": 0,
+          "pgscan_kswapd": 0,
+          "pgscan_proactive": 0,
+          "pgsteal": 0,
+          "pgsteal_direct": 0,
+          "pgsteal_khugepaged": 0,
+          "pgsteal_kswapd": 0,
+          "pgsteal_proactive": 0,
+          "pswpin": 0,
+          "pswpout": 0,
+          "sec_pagetables": 0,
+          "shmem": 3231744,
+          "shmem_thp": 0,
+          "slab": 3572608,
+          "slab_reclaimable": 1232904,
+          "slab_unreclaimable": 2339704,
+          "sock": 0,
+          "swapcached": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_collapse_alloc": 91,
+          "thp_fault_alloc": 232,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0,
+          "unevictable": 0,
+          "vmalloc": 12288,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 0,
+          "workingset_nodereclaim": 0,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 0,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 0
+        },
+        "last_native_allocator": [
+          {
+            "allocated_bytes": 10324593,
+            "free_bytes": 38109920,
+            "heap_bytes": 212549632,
+            "monotonic_ns": 15158119833700,
+            "pid": 41,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1495265,
+            "free_bytes": 6440816,
+            "heap_bytes": 18161664,
+            "monotonic_ns": 15157563213200,
+            "pid": 90,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9168551,
+            "free_bytes": 35500104,
+            "heap_bytes": 210718720,
+            "monotonic_ns": 15151533178900,
+            "pid": 158,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9416118,
+            "free_bytes": 47074880,
+            "heap_bytes": 283791360,
+            "monotonic_ns": 15157533625700,
+            "pid": 108,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1482202,
+            "free_bytes": 4708192,
+            "heap_bytes": 7020544,
+            "monotonic_ns": 15149534192300,
+            "pid": 47,
+            "role": 1,
+            "unmapped_bytes": 0
+          }
+        ]
+      },
+      "elapsed_seconds": 593.3906628999994,
+      "candidate_worker_image": "sha256:a5f56bd51934fac46d23748bcabddbdd1ffbd8557266a10a13bf729fb50eed06"
+    }
+  },
+  "receipts": [
+    {
+      "path": "observer-before.json",
+      "sha256": "34a17cc6e67f9bf5e9273b60f80a2ba4c911445aaff13bb3515feb8c253bee66",
+      "bytes": 244
+    },
+    {
+      "path": "observer-after.json",
+      "sha256": "9a71cc2b0ce09b6454d6c2e135db6715452605537d0700eb1b6e2f671e0837e0",
+      "bytes": 503
+    },
+    {
+      "path": "observer-preflight.py",
+      "sha256": "fd55284a79dbdab4e66ccafb1ce1d065684069d22f5121ec0ce7125932f4e7c9",
+      "bytes": 2031
+    },
+    {
+      "path": "host-observer.Dockerfile",
+      "sha256": "97333190030a055a6093d5024c7d30446904a64f7dfadab2eb60fadbc0c401b8",
+      "bytes": 349
+    },
+    {
+      "path": "capture-native-start.py",
+      "sha256": "9b248a7cf637c667da49366c80edc5a5d6427f0b08f3b637ddabe54b2e76261b",
+      "bytes": 1620
+    },
+    {
+      "path": "run-memory-offline.py",
+      "sha256": "e4e30cde41e057ce990666e7c2a08159aa4f581803549354f52a51e88636410d",
+      "bytes": 634
+    },
+    {
+      "path": "environment-tooling-windows.xml",
+      "sha256": "1d3c02c9b9ed44eeac0ac35085a9ec0a94698fa83eca585a207c51f9e26961cf",
+      "bytes": 632
+    },
+    {
+      "path": "release-gate-validation.xml",
+      "sha256": "412bcaf3d2dee490544287134022b3aa12e5f4a143bc26df94fb345cfb99839a",
+      "bytes": 1902
+    },
+    {
+      "path": "windows-environment.json",
+      "sha256": "f1e4ecd415e1b1f8a6453c2afcb461efd6c4cabcd370f6e183f8d68a55fe6299",
+      "bytes": 2279
+    },
+    {
+      "path": "hosted-environment-summary.json",
+      "sha256": "1cfd3e8955665de17056199efa455901eabd98c4e905d52cf44fe17fdf288a91",
+      "bytes": 8946
+    },
+    {
+      "path": "hosted-pinned-environment-summary.json",
+      "sha256": "cd112f6006f34bd2896db4be199ded26bb88c137313d343ac84b4cb704ef6b62",
+      "bytes": 8974
+    },
+    {
+      "path": "environment/13384184628-native-after.json",
+      "sha256": "13ec45c1efaa67772a4bf339561c383be426d2a6930bf2f792665c1880dc2740",
+      "bytes": 5413
+    },
+    {
+      "path": "environment/13384184628-native-before.json",
+      "sha256": "441a2431f49853bf685683bb677b319481d7d20e6dcefd268434e8bf9dbe2f64",
+      "bytes": 5409
+    },
+    {
+      "path": "environment/13384821793-foundation-after.json",
+      "sha256": "ee06ac037ae184e9f7fc701e5394078629fecd138f76e25d894003fde6818700",
+      "bytes": 5430
+    },
+    {
+      "path": "environment/13384821793-foundation-before.json",
+      "sha256": "b039c12068b75f7bb3fe3f9d3d2d9894146305202e7b047a181e110c96645120",
+      "bytes": 5427
+    },
+    {
+      "path": "environment/13385170528-native-after.json",
+      "sha256": "ee489b2de2bacbf53689295c0ffd43fafc27d3d848c6ccfd881ce58205abb435",
+      "bytes": 5426
+    },
+    {
+      "path": "environment/13385170528-native-before.json",
+      "sha256": "0f558301e38dfa6479495cb2bacbee96e8b51a232151d151baec46f0da8a4f25",
+      "bytes": 5421
+    },
+    {
+      "path": "local/memory-300-attribution.json",
+      "sha256": "328cd21ef5d545506e4de2f0622a2148b7cd6b4e10d35053cb1b708f20c0c785",
+      "bytes": 7401
+    },
+    {
+      "path": "local/foundation-isolated-result.json",
+      "sha256": "74560f92066e9c4421342750560d6a89484fa1f97da36026ae039279566136b7",
+      "bytes": 38850
+    },
+    {
+      "path": "local/audit-volume-control.xml",
+      "sha256": "3305959d738acbb1521f7db4395379e9116c5fb8ea8489c2204f4023616e768c",
+      "bytes": 531
+    },
+    {
+      "path": "published-ide-SHA256SUMS.txt",
+      "sha256": "a9a021c887304ad6cb6b6b0de6240dfc3c3b323f3251ebb98b337c3cd52e02ca",
+      "bytes": 807
+    },
+    {
+      "path": "published-ide-payload-inventory.json",
+      "sha256": "e2106cd45eaf9e52ace8eaa60af4ff912e444090dfb3356fdd058a3cbf261486",
+      "bytes": 6728
+    },
+    {
+      "path": "local/memory-300-comparison.json",
+      "sha256": "c02451d62d446daee6ada21b0bcaa3bfe9832d19d477a50c29e637965b5d0c72",
+      "bytes": 382672
+    }
+  ],
+  "receipt_base": {
+    "repository": "arcazj/openbexi_ide",
+    "branch": "qualification/v121-resume-20261104",
+    "path": "docs/evidence/ide-1.2.1/reference-runner-20261105",
+    "binding": "Each selected receipt has its own SHA-256; final evidence commit is recorded in the external recovery checkpoint"
+  },
+  "external_prerequisites": [
+    "Production-like cluster with enforced NetworkPolicy; local docker-desktop API refused connection",
+    "Independent implemented-system security reviewer"
+  ],
+  "historical_failures_preserved": true,
+  "compatibility_document_gap": "Prompt referenced docs/v0.8/DRIVER_COMPATIBILITY.md, which is absent. Existing sources include docs/DRIVER_RUNTIME.md, docs/DRIVER_QUALIFICATION.json and docs/v0.8/DRIVER_WRITE_GATE.md; missing coverage is not waived.",
+  "publication": {
+    "ide": "https://github.com/arcazj/openbexi_ide/releases/tag/v1.2.1",
+    "spell": "https://github.com/arcazj/openbexi_spell_plugin/releases/tag/v0.8-rc1",
+    "status": "Unqualified published artifacts remain immutable; no qualified stable v0.8 publication"
+  },
+  "memory_attribution_scope": "Largest median anonymous increases are in the two Executors and Context. Sparse allocator observations show nearly stable live-byte medians and growing heap mappings; sample offsets extend to about12s, so these are not a coeval decomposition or allocation-site proof. No allocator/runtime fix is claimed.",
+  "published_ide_download_verification": {
+    "download_url": "https://github.com/arcazj/openbexi_ide/releases/download/v1.2.1/openbexi_ide-1.2.1-py3-none-any.whl",
+    "sha256": "43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b",
+    "bytes": 207604,
+    "checksum_manifest_sha256": "a9a021c887304ad6cb6b6b0de6240dfc3c3b323f3251ebb98b337c3cd52e02ca",
+    "passed": true,
+    "scope": "Fresh public wheel and checksum-manifest download verification; not full installed acceptance"
+  },
+  "installed_ide_payload": {
+    "package_version": "1.2.1",
+    "payload_files": 61,
+    "mismatches": [],
+    "passed": true,
+    "scope": "Installed payload matches fresh published wheel; full runtime qualification not inferred"
+  },
+  "release_gates": {
+    "services": {
+      "qualified": false,
+      "remaining": "Bounded hosted foundation and native cohorts pass. Full independent deployed service/process, tenant isolation, partition and required controller/viewer acceptance remains incomplete."
+    },
+    "native_family": {
+      "qualified": false,
+      "remaining": "Original 45-second handoff/installed-IDE checks pass locally and hosted. Fresh 300-second handoff fails growth: 256,954,368 bytes versus 67,108,864 allowed. Sustained sanitizer/no-swap hours remain failed historical evidence; current full native semantics and sustained acceptance remain open."
+    },
+    "compatibility": {
+      "qualified": false,
+      "remaining": "All 763 requirements need current native/driver acceptance. Historical 555 bindings, 546 matches/nine drift and 46 missing historical hashes remain unreconciled; partial TIME/PY/DATA coverage is insufficient."
+    },
+    "driver_faults": {
+      "qualified": false,
+      "remaining": "Bounded driver and native subsets pass. Complete deployed DSS fault, uncertain effect, crash/partition/reconnect/cancel and unrelated-worker survival acceptance remains incomplete."
+    },
+    "ide_browser": {
+      "qualified": false,
+      "remaining": "Published IDE v1.2.1 pairing passes bounded installed native checks. Public connection/launch, full debugger/workspace/source/results, three browser identities, 20 observers, WSS recovery and Git conflict acceptance remain incomplete."
+    },
+    "compose": {
+      "qualified": false,
+      "remaining": "Existing prelaunch and legacy-native desktop evidence is retained. Full v0.8 native image with ten executions/20 viewers, authorization/egress, component faults, storage restore and authority fencing remains incomplete."
+    },
+    "kubernetes": {
+      "qualified": false,
+      "remaining": "Production-like NetworkPolicy-enforced cluster is unavailable; local docker-desktop API refused connection. Required real Jobs, RBAC/admission, node/DNS/DSS faults, storage recovery, restore, upgrade/rollback remain open."
+    },
+    "recovery": {
+      "qualified": false,
+      "remaining": "Component audit/ENOSPC evidence remains limited. Whole-deployment restore, fencing of old authority, durable audit capacity and sustained acceptance remain incomplete."
+    },
+    "security": {
+      "qualified": false,
+      "remaining": "Exact delivered dependency/SBOM/source/license/advisory disposition and full auth/replay/integrity/load acceptance remain incomplete. Mandatory independent implemented-system reviewer is unavailable."
+    },
+    "ci": {
+      "qualified": false,
+      "remaining": "Pinned hosted run 41958849238 passes 1,818 foundation cases with zero skips/errors/failures in 461.451 seconds and both original 45-second jobs. Local foundation still times out at 600 seconds. Full final-pair release CI is incomplete."
+    },
+    "packaging": {
+      "qualified": false,
+      "remaining": "Immutable unqualified IDEv1.2.1 and SPELLv0.8-rc1 source/wheels remain distinct from candidate runtime and helper images. Qualified full native image, portable complete dependency closure, offline bundles and clean final installed/downloaded acceptance remain incomplete."
+    }
+  },
+  "ide_successor": "No IDE runtime change made in this continuation; no successor version assigned. Need for a successor remains contingent on full public-path acceptance.",
+  "active_jobs": {
+    "local_memory_300": false,
+    "hosted": []
+  },
+  "next_steps": [
+    "Measure and correct remaining whole-family sanitizer retention; require both original3600s passes after a credible short result",
+    "Resolve local foundation deadline without relaxing600s",
+    "Complete public IDE/browser, all763 native compatibility, deployment/restore/security and packaging acceptance",
+    "Provide the NetworkPolicy cluster and independent reviewer"
+  ]
+}

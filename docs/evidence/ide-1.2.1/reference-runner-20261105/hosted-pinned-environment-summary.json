@@ -1,0 +1,278 @@
+[
+  {
+    "archive": "13384184628-v08-resume-native-handoff-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+    "environment/native-after.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": null,
+        "PySide6-Essentials": null,
+        "shiboken6": null,
+        "grpcio": null,
+        "protobuf": null,
+        "pytest": null,
+        "ruff": null,
+        "mypy": null
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261026.354.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "native-original-45"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16759308288,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    },
+    "environment/native-before.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": null,
+        "PySide6-Essentials": null,
+        "shiboken6": null,
+        "grpcio": null,
+        "protobuf": null,
+        "pytest": null,
+        "ruff": null,
+        "mypy": null
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261026.354.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "native-original-45"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16759308288,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    }
+  },
+  {
+    "archive": "13384821793-v08-resume-foundation-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+    "tests": [
+      {
+        "tests": "1818",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "time": "461.451"
+      }
+    ],
+    "environment/foundation-after.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": "1.2.1",
+        "PySide6-Essentials": "6.10.3",
+        "shiboken6": "6.10.3",
+        "grpcio": "1.84.0",
+        "protobuf": "7.36.2",
+        "pytest": "8.4.2",
+        "ruff": "0.14.1",
+        "mypy": "1.18.2"
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261101.360.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "foundation"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16760344576,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    },
+    "environment/foundation-before.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": "1.2.1",
+        "PySide6-Essentials": "6.10.3",
+        "shiboken6": "6.10.3",
+        "grpcio": "1.84.0",
+        "protobuf": "7.36.2",
+        "pytest": "8.4.2",
+        "ruff": "0.14.1",
+        "mypy": "1.18.2"
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261101.360.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "foundation"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16760344576,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    }
+  },
+  {
+    "archive": "13385170528-v08-resume-native-ide-efada98963a9d9debdbdca437b0e97246180a86f.zip",
+    "environment/native-after.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": "1.2.1",
+        "PySide6-Essentials": null,
+        "shiboken6": null,
+        "grpcio": null,
+        "protobuf": null,
+        "pytest": null,
+        "ruff": null,
+        "mypy": null
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261026.354.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "native-original-45"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16759308288,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    },
+    "environment/native-before.json": {
+      "git_head": {
+        "exit_code": 0,
+        "stdout": "efada98963a9d9debdbdca437b0e97246180a86f"
+      },
+      "working_tree_dirty": false,
+      "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "python": "3.13.17 (main, Oct 22 2026, 02:40:32) [GCC 13.3.0]",
+      "packages": {
+        "openbexi-ide": "1.2.1",
+        "PySide6-Essentials": null,
+        "shiboken6": null,
+        "grpcio": null,
+        "protobuf": null,
+        "pytest": null,
+        "ruff": null,
+        "mypy": null
+      },
+      "ci": {
+        "ImageOS": "ubuntu24",
+        "ImageVersion": "20261026.354.1",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64",
+        "GITHUB_SHA": "efada98963a9d9debdbdca437b0e97246180a86f",
+        "GITHUB_RUN_ID": "41958849238",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_JOB": "native-original-45"
+      },
+      "docker": {
+        "ServerVersion": "28.0.4",
+        "OSType": "linux",
+        "Architecture": "x86_64",
+        "KernelVersion": "7.0.0-1017-azure",
+        "NCPU": 4,
+        "MemTotal": 16759308288,
+        "Driver": "overlay2",
+        "CgroupVersion": "2",
+        "ContainersRunning": 0
+      },
+      "contract_sha256": "ca27bf4436620c3c319c75000407dc9b4c5c45f8214ddd82a57cf275e84172f9"
+    }
+  }
+]

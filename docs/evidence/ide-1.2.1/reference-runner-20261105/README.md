@@ -1,0 +1,13 @@
+<!-- BEGIN REFERENCE RUNNER 20261105 -->
+# November 5 reference-runner followthrough: release unqualified
+
+The current tested hosted subject is `efada98963a9d9debdbdca437b0e97246180a86f` with published IDE v1.2.1 `08c314fb6b802b407cbabe01777072884d2b7504`. Local native executions bind `c5529d02a49c89a8919b965ffb4eb43498eb0cdf`. Later evidence commits are not newly tested runtime identities. [The current receipt](qualification.json) supersedes older status summaries below while preserving their requirements and failures.
+
+Hosted run [41958849238](https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238) passes all 1,818 foundation cases with zero skips, errors or failures in 461.451 seconds and both original 45-second native scenarios. Host Python is pinned to 3.13.17; runner image versions still differ and are recorded. Local native handoff and installed-IDE checks pass after correcting the trusted observer's PID/cgroup access and shared temporary path. No worker isolation, workload, timeout, sanitizer policy or memory limit changed.
+
+The isolated local foundation still fails its 600-second deadline after 1,150 completed call passes and no completed call failures. A storage control improves one audit case but does not explain the complete timeout. The fresh 300-second handoff diagnostic returned passed=False; measured window growth is 256954368 bytes. Its full receipt and any failure are retained. Original 3,600-second ASan/UBSan/no-swap acceptance remains open; historical hour failures are not replaced by short or optimized results.
+
+The fresh public IDE wheel download matches SHA-256 `43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b`; all 61 installed payload files in the local helper match. This does not establish the public desktop/browser workflow. The existing noVNC desktop still contains the v0.7 native baseline. No successor IDE version was assigned and no qualified stable SPELL v0.8 release was published.
+
+All eleven release groups remain false. Full compatibility, public IDE/browser, native deployment, recovery, dependency/security and packaging acceptance remain incomplete. The production-like NetworkPolicy cluster and independent implemented-system reviewer remain unavailable. [Environment contract](https://github.com/arcazj/openbexi_spell_plugin/blob/efada98963a9d9debdbdca437b0e97246180a86f/docs/v0.8/QUALIFICATION_ENVIRONMENTS.json) and [local helper requirements](https://github.com/arcazj/openbexi_spell_plugin/blob/efada98963a9d9debdbdca437b0e97246180a86f/docs/v0.8/LOCAL_QUALIFICATION_RUNNER.md) describe reproducible inputs and scope, not qualified platform claims.
+<!-- END REFERENCE RUNNER 20261105 -->
