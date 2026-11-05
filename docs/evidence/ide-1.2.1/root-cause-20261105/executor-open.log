@@ -1,0 +1,57 @@
+MODE open MATCHING_4096_ALLOCATIONS 16
+ALLOCATION 0 FREED 1
+  /var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control+0x2791:?
+  /opt/spell-native/lib/libasan.so.8+0x1089f8:?
+  /opt/spell-native/lib/libasan.so.8+0x3f351:?
+  /opt/spell-native/lib/libasan.so.8+0x3be8b:?
+  /opt/spell-native/lib/libasan.so.8+0xf4c25:___interceptor_malloc
+  /usr/local/lib/libpython3.13.so.1.0+0x179ef0:?
+  /usr/local/lib/libpython3.13.so.1.0+0x25012a:?
+  /usr/local/lib/libpython3.13.so.1.0+0x25f754:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18b7cb:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18b54c:_PyObject_MakeTpCall
+  /usr/local/lib/libpython3.13.so.1.0+0x188958:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18877f:PyObject_CallFunction
+  /usr/local/lib/libpython3.13.so.1.0+0x24f1c7:?
+  /usr/local/lib/libpython3.13.so.1.0+0x1b29ac:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18d39c:PyObject_Vectorcall
+  /usr/local/lib/libpython3.13.so.1.0+0x19e9cd:_PyEval_EvalFrameDefault
+  /usr/local/lib/libpython3.13.so.1.0+0x22e3f4:PyEval_EvalCode
+  /var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control+0x2df3:?
+  /lib/x86_64-linux-gnu/libc.so.6+0x29ca8:?
+  /lib/x86_64-linux-gnu/libc.so.6+0x29d65:__libc_start_main
+ALLOCATION 1 FREED 1
+  /var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control+0x2791:?
+  /opt/spell-native/lib/libasan.so.8+0x1089f8:?
+  /opt/spell-native/lib/libasan.so.8+0x3f351:?
+  /opt/spell-native/lib/libasan.so.8+0x3be8b:?
+  /opt/spell-native/lib/libasan.so.8+0xf4c25:___interceptor_malloc
+  /usr/local/lib/libpython3.13.so.1.0+0x179ef0:?
+  /usr/local/lib/libpython3.13.so.1.0+0x25012a:?
+  /usr/local/lib/libpython3.13.so.1.0+0x25f754:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18b7cb:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18b54c:_PyObject_MakeTpCall
+  /usr/local/lib/libpython3.13.so.1.0+0x188958:?
+  /usr/local/lib/libpython3.13.so.1.0+0x18877f:PyObject_CallFunction
+  /usr/local/lib/libpython3.13.so.1.0+0x24f1c7:?
+  /usr/local/lib/libpython3.13.so.1.0+0x19eed8:_PyEval_EvalFrameDefault
+  /usr/local/lib/libpython3.13.so.1.0+0x22e3f4:PyEval_EvalCode
+  /var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control+0x2df3:?
+  /lib/x86_64-linux-gnu/libc.so.6+0x29ca8:?
+  /lib/x86_64-linux-gnu/libc.so.6+0x29d65:__libc_start_main
+  /var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control+0x22c1:?
+  ?+0x0:?
+ALLOCATION 2 FREED 1
+ALLOCATION 3 FREED 1
+ALLOCATION 4 FREED 1
+ALLOCATION 5 FREED 1
+ALLOCATION 6 FREED 1
+ALLOCATION 7 FREED 1
+ALLOCATION 8 FREED 1
+ALLOCATION 9 FREED 1
+ALLOCATION 10 FREED 1
+ALLOCATION 11 FREED 1
+ALLOCATION 12 FREED 1
+ALLOCATION 13 FREED 1
+ALLOCATION 14 FREED 1
+ALLOCATION 15 FREED 1

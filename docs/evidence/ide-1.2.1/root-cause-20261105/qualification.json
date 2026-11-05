@@ -1,0 +1,879 @@
+{
+  "schema": "openbexi.qualification-root-cause/1",
+  "recorded_at": "2026-11-05T07:12:46.550881+00:00",
+  "full_v08_qualified": false,
+  "ide_v121_qualified": false,
+  "source_runtime_commit": "c5529d02a49c89a8919b965ffb4eb43498eb0cdf",
+  "test_build_commit": "10283db843578c04ff4aa454e43abb041be605a9",
+  "product_runtime_changed": false,
+  "raw_evidence_directory": "F:\\openbexi-builds\\v08-qualification-20261104\\root-cause-20261105",
+  "original_limits_preserved": true,
+  "original_hours_attempted": false,
+  "hours_decision": "Completed 300-second sanitizer/no-swap handoff still fails 64 MiB growth; no validated memory correction. Shorter results do not justify either original hour.",
+  "memory": {
+    "baseline": {
+      "run": "run-318f109f186b43c289bfddcce084501a",
+      "acceptance": {
+        "schema": "openbexi.native-memory-comparison-resources/1",
+        "profile": "asan-noswap",
+        "diagnostic_only": true,
+        "full_v08_qualified": false,
+        "eligible_for_publication": false,
+        "passed": false,
+        "resident_limit_bytes": 2147483648,
+        "swap_limit_bytes": 0,
+        "resident_peak_budget_bytes": 1879048192,
+        "combined_peak_budget_bytes": 1879048192,
+        "maximum_combined_window_growth_bytes": 67108864,
+        "minimum_soak_seconds": 300,
+        "swap_exercised": false,
+        "failures": [
+          "combined_memory_still_growing"
+        ],
+        "samples": 172,
+        "soak_samples": 147,
+        "duration_seconds": 303.1346059,
+        "resident_peak_bytes": 1492119552,
+        "sampled_combined_peak_bytes": 1491042304,
+        "combined_window_growth_bytes": 229232640,
+        "sampled_swap_peak_bytes": 0,
+        "native_instrumentation_verified": true,
+        "original_processes": 8,
+        "memory_max_events": 0,
+        "thread_observations_available": true,
+        "thread_first_median": 135,
+        "thread_last_median": 135,
+        "allocator_observations_available": true,
+        "last_memory_stat": {
+          "active_anon": 1438363648,
+          "active_file": 29597696,
+          "anon": 1435119616,
+          "anon_thp": 398458880,
+          "file": 33632256,
+          "file_dirty": 8192,
+          "file_mapped": 45056,
+          "file_thp": 0,
+          "file_writeback": 0,
+          "inactive_anon": 0,
+          "inactive_file": 827392,
+          "kernel": 21110784,
+          "kernel_stack": 2211840,
+          "pagetables": 15269888,
+          "percpu": 22920,
+          "pgactivate": 0,
+          "pgdeactivate": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_proactive": 0,
+          "pgfault": 327733,
+          "pglazyfree": 0,
+          "pglazyfreed": 0,
+          "pgmajfault": 4,
+          "pgrefill": 0,
+          "pgscan": 0,
+          "pgscan_direct": 0,
+          "pgscan_khugepaged": 0,
+          "pgscan_kswapd": 0,
+          "pgscan_proactive": 0,
+          "pgsteal": 0,
+          "pgsteal_direct": 0,
+          "pgsteal_khugepaged": 0,
+          "pgsteal_kswapd": 0,
+          "pgsteal_proactive": 0,
+          "pswpin": 0,
+          "pswpout": 0,
+          "sec_pagetables": 0,
+          "shmem": 3235840,
+          "shmem_thp": 0,
+          "slab": 3564760,
+          "slab_reclaimable": 1239336,
+          "slab_unreclaimable": 2325424,
+          "sock": 0,
+          "swapcached": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_collapse_alloc": 7,
+          "thp_fault_alloc": 226,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0,
+          "unevictable": 0,
+          "vmalloc": 12288,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 0,
+          "workingset_nodereclaim": 0,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 0,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 0
+        },
+        "last_native_allocator": [
+          {
+            "allocated_bytes": 10315399,
+            "free_bytes": 37259816,
+            "heap_bytes": 211959808,
+            "monotonic_ns": 24150410128500,
+            "pid": 41,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1491564,
+            "free_bytes": 6523240,
+            "heap_bytes": 18358272,
+            "monotonic_ns": 24151659220100,
+            "pid": 90,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9168096,
+            "free_bytes": 35032080,
+            "heap_bytes": 210259968,
+            "monotonic_ns": 24143777560400,
+            "pid": 159,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9414369,
+            "free_bytes": 46704416,
+            "heap_bytes": 282152960,
+            "monotonic_ns": 24149777476200,
+            "pid": 108,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1482202,
+            "free_bytes": 4708192,
+            "heap_bytes": 7020544,
+            "monotonic_ns": 24141777274700,
+            "pid": 42,
+            "role": 1,
+            "unmapped_bytes": 0
+          }
+        ]
+      },
+      "scope": "300-second original handoff workload with ASan/UBSan and zero swap; diagnostic comparison, not full release acceptance"
+    },
+    "sampled_allocations": {
+      "run": "run-15337b5381614b82ad460fd9726d61e9",
+      "acceptance": {
+        "schema": "openbexi.native-memory-comparison-resources/1",
+        "profile": "asan-noswap",
+        "diagnostic_only": true,
+        "full_v08_qualified": false,
+        "eligible_for_publication": false,
+        "passed": false,
+        "resident_limit_bytes": 2147483648,
+        "swap_limit_bytes": 0,
+        "resident_peak_budget_bytes": 1879048192,
+        "combined_peak_budget_bytes": 1879048192,
+        "maximum_combined_window_growth_bytes": 67108864,
+        "minimum_soak_seconds": 300,
+        "swap_exercised": false,
+        "failures": [
+          "combined_memory_still_growing"
+        ],
+        "samples": 172,
+        "soak_samples": 146,
+        "duration_seconds": 303.1349442,
+        "resident_peak_bytes": 1606365184,
+        "sampled_combined_peak_bytes": 1605136384,
+        "combined_window_growth_bytes": 235368448.0,
+        "sampled_swap_peak_bytes": 0,
+        "native_instrumentation_verified": true,
+        "original_processes": 8,
+        "memory_max_events": 0,
+        "thread_observations_available": true,
+        "thread_first_median": 136,
+        "thread_last_median": 136,
+        "allocator_observations_available": true,
+        "last_memory_stat": {
+          "active_anon": 1564119040,
+          "active_file": 17334272,
+          "anon": 1559420928,
+          "anon_thp": 490733568,
+          "file": 22740992,
+          "file_dirty": 16384,
+          "file_mapped": 0,
+          "file_thp": 0,
+          "file_writeback": 0,
+          "inactive_anon": 0,
+          "inactive_file": 741376,
+          "kernel": 21491712,
+          "kernel_stack": 2228224,
+          "pagetables": 15597568,
+          "percpu": 22920,
+          "pgactivate": 0,
+          "pgdeactivate": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_proactive": 0,
+          "pgfault": 370969,
+          "pglazyfree": 0,
+          "pglazyfreed": 0,
+          "pgmajfault": 3,
+          "pgrefill": 0,
+          "pgscan": 0,
+          "pgscan_direct": 0,
+          "pgscan_khugepaged": 0,
+          "pgscan_kswapd": 0,
+          "pgscan_proactive": 0,
+          "pgsteal": 0,
+          "pgsteal_direct": 0,
+          "pgsteal_khugepaged": 0,
+          "pgsteal_kswapd": 0,
+          "pgsteal_proactive": 0,
+          "pswpin": 0,
+          "pswpout": 0,
+          "sec_pagetables": 0,
+          "shmem": 4694016,
+          "shmem_thp": 0,
+          "slab": 3592000,
+          "slab_reclaimable": 1248656,
+          "slab_unreclaimable": 2343344,
+          "sock": 8192,
+          "swapcached": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_collapse_alloc": 0,
+          "thp_fault_alloc": 292,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0,
+          "unevictable": 0,
+          "vmalloc": 12288,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 0,
+          "workingset_nodereclaim": 0,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 0,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 0
+        },
+        "last_native_allocator": [
+          {
+            "allocated_bytes": 10321242,
+            "free_bytes": 37582752,
+            "heap_bytes": 212156416,
+            "monotonic_ns": 25485914429100,
+            "pid": 41,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1495121,
+            "free_bytes": 6434784,
+            "heap_bytes": 18227200,
+            "monotonic_ns": 25487070331200,
+            "pid": 90,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 1482202,
+            "free_bytes": 4708192,
+            "heap_bytes": 7020544,
+            "monotonic_ns": 25477416521600,
+            "pid": 47,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9168955,
+            "free_bytes": 35757368,
+            "heap_bytes": 214913024,
+            "monotonic_ns": 25481414907000,
+            "pid": 159,
+            "role": 1,
+            "unmapped_bytes": 0
+          },
+          {
+            "allocated_bytes": 9414395,
+            "free_bytes": 47767528,
+            "heap_bytes": 290344960,
+            "monotonic_ns": 25485416202800,
+            "pid": 108,
+            "role": 1,
+            "unmapped_bytes": 0
+          }
+        ]
+      },
+      "scope": "300-second original handoff workload with ASan/UBSan and zero swap; diagnostic comparison, not full release acceptance"
+    },
+    "process_attribution": {
+      "scope": "Attribution of observed resource windows; overlapping RSS, allocator and cgroup measures are not added or subtracted from acceptance. Allocation-site cause and a fix are not established.",
+      "source_sha256": {
+        "native-resources.jsonl": "b445a0ac2ec1eb65d78814b57b979ea7e09df3daed9e658ccd5c9857e66b9721",
+        "native-recovery-soak.json": "fd36057ac93e93e6f9718da044f16df82f4037c88533b3449dcb1778a82cb111"
+      },
+      "processes": [
+        {
+          "pid": 82495,
+          "namespace_pid": 108,
+          "start_ticks": 2380436,
+          "program": "SPELL-Executor",
+          "Rss_bytes": {
+            "first_median": 345133056,
+            "last_median": 466821120,
+            "delta": 121688064
+          },
+          "Anonymous_bytes": {
+            "first_median": 290271232,
+            "last_median": 411959296,
+            "delta": 121688064
+          },
+          "Pss_bytes": {
+            "first_median": 301730816,
+            "last_median": 423419904,
+            "delta": 121689088
+          },
+          "allocator_observations": [
+            {
+              "window": "first",
+              "allocated_bytes_median": 9411257,
+              "heap_bytes_median": 172183552,
+              "observation_age_seconds_range": [
+                0.520462,
+                8.8186758
+              ]
+            },
+            {
+              "window": "last",
+              "allocated_bytes_median": 9414369,
+              "heap_bytes_median": 277434368,
+              "observation_age_seconds_range": [
+                0.3055356,
+                10.2382474
+              ]
+            }
+          ]
+        },
+        {
+          "pid": 82954,
+          "namespace_pid": 159,
+          "start_ticks": 2380674,
+          "program": "SPELL-Executor",
+          "Rss_bytes": {
+            "first_median": 324792320,
+            "last_median": 379531264,
+            "delta": 54738944
+          },
+          "Anonymous_bytes": {
+            "first_median": 270102528,
+            "last_median": 324841472,
+            "delta": 54738944
+          },
+          "Pss_bytes": {
+            "first_median": 281352192,
+            "last_median": 336091136,
+            "delta": 54738944
+          },
+          "allocator_observations": [
+            {
+              "window": "first",
+              "allocated_bytes_median": 9168096,
+              "heap_bytes_median": 163794944,
+              "observation_age_seconds_range": [
+                0.7488648,
+                10.0218351
+              ]
+            },
+            {
+              "window": "last",
+              "allocated_bytes_median": 9168096,
+              "heap_bytes_median": 210259968,
+              "observation_age_seconds_range": [
+                0.0966106,
+                8.3786688
+              ]
+            }
+          ]
+        },
+        {
+          "pid": 82233,
+          "namespace_pid": 41,
+          "start_ticks": 2380327,
+          "program": "SPELL-Context",
+          "Rss_bytes": {
+            "first_median": 480763904,
+            "last_median": 507084800,
+            "delta": 26320896
+          },
+          "Anonymous_bytes": {
+            "first_median": 413134848,
+            "last_median": 439455744,
+            "delta": 26320896
+          },
+          "Pss_bytes": {
+            "first_median": 454221824,
+            "last_median": 480542720,
+            "delta": 26320896
+          },
+          "allocator_observations": [
+            {
+              "window": "first",
+              "allocated_bytes_median": 10316656,
+              "heap_bytes_median": 193478656,
+              "observation_age_seconds_range": [
+                0.5205703,
+                0.8086254
+              ]
+            },
+            {
+              "window": "last",
+              "allocated_bytes_median": 10315672,
+              "heap_bytes_median": 211697664,
+              "observation_age_seconds_range": [
+                1.4724806,
+                1.7461007
+              ]
+            }
+          ]
+        },
+        {
+          "pid": 82410,
+          "namespace_pid": 90,
+          "start_ticks": 2380408,
+          "program": "spell-host-ipc",
+          "Rss_bytes": {
+            "first_median": 99700736,
+            "last_median": 113000448,
+            "delta": 13299712
+          },
+          "Anonymous_bytes": {
+            "first_median": 60403712,
+            "last_median": 73703424,
+            "delta": 13299712
+          },
+          "Pss_bytes": {
+            "first_median": 68928512,
+            "last_median": 82228224,
+            "delta": 13299712
+          },
+          "allocator_observations": [
+            {
+              "window": "first",
+              "allocated_bytes_median": 1495157,
+              "heap_bytes_median": 8593408,
+              "observation_age_seconds_range": [
+                0.5203145,
+                0.7641306
+              ]
+            },
+            {
+              "window": "last",
+              "allocated_bytes_median": 1492978,
+              "heap_bytes_median": 18096128,
+              "observation_age_seconds_range": [
+                0.2520259,
+                0.4970091
+              ]
+            }
+          ]
+        },
+        {
+          "pid": 82196,
+          "namespace_pid": 24,
+          "start_ticks": 2380314,
+          "program": "SPELL-Listener",
+          "Rss_bytes": {
+            "first_median": 104210432,
+            "last_median": 110125056,
+            "delta": 5914624
+          },
+          "Anonymous_bytes": {
+            "first_median": 81190912,
+            "last_median": 87105536,
+            "delta": 5914624
+          },
+          "Pss_bytes": {
+            "first_median": 90332160,
+            "last_median": 96247808,
+            "delta": 5915648
+          },
+          "allocator_observations": []
+        },
+        {
+          "pid": 82235,
+          "namespace_pid": 42,
+          "start_ticks": 2380329,
+          "program": "spell-host-ipc",
+          "Rss_bytes": {
+            "first_median": 98312192,
+            "last_median": 100950016,
+            "delta": 2637824
+          },
+          "Anonymous_bytes": {
+            "first_median": 58900480,
+            "last_median": 61538304,
+            "delta": 2637824
+          },
+          "Pss_bytes": {
+            "first_median": 67434496,
+            "last_median": 70073344,
+            "delta": 2638848
+          },
+          "allocator_observations": [
+            {
+              "window": "first",
+              "allocated_bytes_median": 1482202,
+              "heap_bytes_median": 7020544,
+              "observation_age_seconds_range": [
+                0.6619037,
+                9.9585281
+              ]
+            },
+            {
+              "window": "last",
+              "allocated_bytes_median": 1482202,
+              "heap_bytes_median": 7020544,
+              "observation_age_seconds_range": [
+                2.0968963,
+                10.3789545
+              ]
+            }
+          ]
+        },
+        {
+          "pid": 82094,
+          "namespace_pid": 7,
+          "start_ticks": 2380269,
+          "program": "python3.13",
+          "Rss_bytes": {
+            "first_median": 56446976,
+            "last_median": 57921536,
+            "delta": 1474560
+          },
+          "Anonymous_bytes": {
+            "first_median": 29949952,
+            "last_median": 31424512,
+            "delta": 1474560
+          },
+          "Pss_bytes": {
+            "first_median": 34816000,
+            "last_median": 36291584,
+            "delta": 1475584
+          },
+          "allocator_observations": []
+        },
+        {
+          "pid": 82071,
+          "namespace_pid": 1,
+          "start_ticks": 2380261,
+          "program": "docker-init",
+          "Rss_bytes": {
+            "first_median": 720896,
+            "last_median": 720896,
+            "delta": 0
+          },
+          "Anonymous_bytes": {
+            "first_median": 53248,
+            "last_median": 53248,
+            "delta": 0
+          },
+          "Pss_bytes": {
+            "first_median": 185344,
+            "last_median": 185344,
+            "delta": 0
+          },
+          "allocator_observations": []
+        }
+      ]
+    },
+    "executor_cause": {
+      "allocation": "4096-byte CPython BufferedWriter buffers",
+      "matched_libpython_offsets": [
+        "0x179ef0",
+        "0x25012a",
+        "0x25f754",
+        "0x18b7cb"
+      ],
+      "libpython_sha256": "085a2b2227f39be171d5fd68967fba933adb37b7ab8b879d2a2565d4f7bb6b41",
+      "standalone_modes": [
+        "open text and close",
+        "BufferedWriter construct write close"
+      ],
+      "allocations_and_frees_each_mode": 16,
+      "correction_implemented": false,
+      "conclusion": "Tracked buffers are freed; live-byte totals are nearly flat while ASan heap and anonymous memory grow. A conforming memory correction has not been demonstrated."
+    },
+    "context_bridge_followup": {
+      "scope": "Startup-only observation; no completed soak",
+      "retention": {
+        "complete_soak": false,
+        "observation_seconds": 44.7608159,
+        "quarantine": [
+          {
+            "pid": 41,
+            "snapshots": 5,
+            "first_last": [
+              {
+                "tick": 28564048803300,
+                "global_quarantine_bytes": 137816470,
+                "global_quarantine_user_bytes": 136685974
+              },
+              {
+                "tick": 28606065049400,
+                "global_quarantine_bytes": 138887664,
+                "global_quarantine_user_bytes": 137601520
+              }
+            ]
+          },
+          {
+            "pid": 47,
+            "snapshots": 4,
+            "first_last": [
+              {
+                "tick": 28563359443200,
+                "global_quarantine_bytes": 0,
+                "global_quarantine_user_bytes": 0
+              },
+              {
+                "tick": 28599362655900,
+                "global_quarantine_bytes": 0,
+                "global_quarantine_user_bytes": 0
+              }
+            ]
+          },
+          {
+            "pid": 91,
+            "snapshots": 4,
+            "first_last": [
+              {
+                "tick": 28574654553500,
+                "global_quarantine_bytes": 0,
+                "global_quarantine_user_bytes": 0
+              },
+              {
+                "tick": 28606299204800,
+                "global_quarantine_bytes": 1048584,
+                "global_quarantine_user_bytes": 958472
+              }
+            ]
+          },
+          {
+            "pid": 109,
+            "snapshots": 2,
+            "first_last": [
+              {
+                "tick": 28584959419200,
+                "global_quarantine_bytes": 119857862,
+                "global_quarantine_user_bytes": 118858438
+              },
+              {
+                "tick": 28596960339500,
+                "global_quarantine_bytes": 119857862,
+                "global_quarantine_user_bytes": 118858438
+              }
+            ]
+          },
+          {
+            "pid": 160,
+            "snapshots": 3,
+            "first_last": [
+              {
+                "tick": 28571280781500,
+                "global_quarantine_bytes": 105013964,
+                "global_quarantine_user_bytes": 104186572
+              },
+              {
+                "tick": 28597282538600,
+                "global_quarantine_bytes": 116645207,
+                "global_quarantine_user_bytes": 115678551
+              }
+            ]
+          }
+        ],
+        "mapped_libpython": [
+          [
+            "/usr/local/lib/libpython3.13.so.1.0",
+            "085a2b2227f39be171d5fd68967fba933adb37b7ab8b879d2a2565d4f7bb6b41"
+          ]
+        ]
+      },
+      "context_sites": [
+        "log4cplus formatting",
+        "SPELLexecutorManager::buildExecutorInfo via SPELLcontext::getExecutorInfo"
+      ],
+      "bridge_sites": [
+        "JSON DOM construction",
+        "SPELLipcMessageMailbox::prepare",
+        "SPELLmutexFactory::createMutex via SPELLevent/SPELLqueue"
+      ],
+      "observed_sites_freed": true,
+      "full_300_second_quarantine_decomposition_available": false
+    },
+    "startup_failures": [
+      {
+        "directory": "memory-baseline-300",
+        "run": "run-a9c80aed4e0443598db47898c8b73dc7",
+        "error": "RuntimeError: Host operation failed: docker start",
+        "failures": [
+          "ValueError: memory_comparison_incomplete"
+        ]
+      },
+      {
+        "directory": "memory-allocation-300",
+        "run": "run-3ed8cedf430f49958221fbc998344921",
+        "error": "RuntimeError: Host operation failed: docker start",
+        "failures": [
+          "ValueError: memory_comparison_incomplete"
+        ]
+      },
+      {
+        "directory": "memory-sites-300",
+        "run": "run-aa6048240d74493394a2c5f928683344",
+        "error": "RuntimeError: Native worker failed before native-child-running",
+        "failures": [
+          "ValueError: memory_comparison_incomplete"
+        ]
+      },
+      {
+        "directory": "memory-sites-retry-300",
+        "run": "run-af96397c82d64bd7b89fc8761e337dc4",
+        "error": "RuntimeError: Native worker failed before native-ready",
+        "failures": [
+          "ValueError: memory_comparison_incomplete"
+        ]
+      },
+      {
+        "directory": "memory-sites-final-300",
+        "run": "run-5d3c1c41da3644e2a4ffc38e49dc4a0f",
+        "error": "TimeoutError: Native cohort did not reach native-handoff-ready",
+        "failures": [
+          "ValueError: memory_comparison_incomplete"
+        ]
+      }
+    ]
+  },
+  "foundation": {
+    "profile_baseline": {
+      "run": "run-20261105T055633Z-8f4fa316",
+      "passed": false,
+      "timeout_seconds": 600,
+      "completed_call_outcomes": {
+        "passed": 1224
+      },
+      "phase_seconds": {
+        "setup": 254.7657416999973,
+        "call": 335.5636144000455,
+        "teardown": 5.755226499961282
+      },
+      "failed_checks": [],
+      "working_tree_dirty": false
+    },
+    "after_g1": {
+      "run": "run-20261105T062714Z-c02939a8",
+      "passed": false,
+      "timeout_seconds": 600,
+      "completed_call_outcomes": {
+        "passed": 1380,
+        "failed": 4
+      },
+      "phase_seconds": {
+        "setup": 245.48787400003857,
+        "call": 343.45774949995393,
+        "teardown": 6.8638667001032445
+      },
+      "failed_checks": [
+        {
+          "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[2]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:209: in test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss\n    assert [code for code, _reply in replies] == [200] * 10, categories\nE   AssertionError: [{'error_chain': [{'command_timing': {'elapsed_ms': 2401, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'effect_deadline_expired', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2408, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'effect_deadline_expired', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2361, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'effect_deadline_expired', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2328, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2530, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2631, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, ...]\nE   assert [500, 500, 50...500, 500, ...] == [200, 200, 20...200, 200, ...]\nE     \nE     At index 0 diff: 500 != 200\nE     \nE     Full diff:\nE       [\nE     -     200,\nE     ?     ^...\nE     \nE     ...Full output truncated (39 lines hidden), use '-vv' to show"
+        },
+        {
+          "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[3]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:188: in test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss\n    replies = list(\n/usr/local/lib/python3.13/concurrent/futures/_base.py:625: in result_iterator\n    yield _result_or_cancel(fs.pop())\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/usr/local/lib/python3.13/concurrent/futures/_base.py:318: in _result_or_cancel\n    return fut.result(timeout)\n           ^^^^^^^^^^^^^^^^^^^\n/usr/local/lib/python3.13/concurrent/futures/_base.py:460: in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n/usr/local/lib/python3.13/concurrent/futures/_base.py:402: in __get_result\n    raise self._exception\n/usr/local/lib/python3.13/concurrent/futures/thread.py:59: in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nserver/tests/test_native_driver.py:190: in <lambda>\n    lambda _index: native_call(\nserver/tests/test_native_driver.py:88: in native_call\n    return request(\nserver/tests/test_services.py:57: in request\n    answer = connection.getresponse()\n             ^^^^^^^^^^^^^^^^^^^^^^^^\n/usr/local/lib/python3.13/http/client.py:1478: in getresponse\n    response.begin()\n/usr/local/lib/python3.13/http/client.py:343: in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n/usr/local/lib/python3.13/http/client.py:312: in _read_status\n    raise RemoteDisconnected(\"Remote end closed connection without\"\nE   http.client.RemoteDisconnected: Remote end closed connection without response"
+        },
+        {
+          "nodeid": "tests/test_native_driver.py::test_ten_pending_receipts_bound_eleventh_rpc_without_effect[complete]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:295: in test_ten_pending_receipts_bound_eleventh_rpc_without_effect\n    assert [future.result()[0] for future in pending] == ([500] if fence else [200]) * 10\nE   AssertionError: assert [500, 500, 50...500, 500, ...] == [200, 200, 20...200, 200, ...]\nE     \nE     At index 0 diff: 500 != 200\nE     \nE     Full diff:\nE       [\nE     -     200,\nE     ?     ^...\nE     \nE     ...Full output truncated (39 lines hidden), use '-vv' to show"
+        },
+        {
+          "nodeid": "tests/test_native_driver.py::test_composed_native_send_options_keep_full_five_stage_command",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:421: in test_composed_native_send_options_keep_full_five_stage_command\n    assert code == 200, answer\nE   AssertionError: {'error': 'internal_error'}\nE   assert 500 == 200"
+        }
+      ],
+      "working_tree_dirty": false
+    },
+    "short_durable_volume": {
+      "run": "run-20261105T065322Z-effa3736",
+      "passed": false,
+      "timeout_seconds": 600,
+      "completed_call_outcomes": {
+        "passed": 1450,
+        "failed": 3
+      },
+      "phase_seconds": {
+        "setup": 244.41910630004713,
+        "call": 343.55105479994745,
+        "teardown": 7.715238100143324
+      },
+      "failed_checks": [
+        {
+          "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[2]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:209: in test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss\n    assert [code for code, _reply in replies] == [200] * 10, categories\nE   AssertionError: [{'error_chain': [{'command_timing': {'elapsed_ms': 2182, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'effect_deadline_expired', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2267, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'effect_deadline_expired', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2254, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2274, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2480, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 2496, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'code': 'worker_grant_fenced', 'type': 'Fault'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, ...]\nE   assert [500, 500, 50...500, 500, ...] == [200, 200, 20...200, 200, ...]\nE     \nE     At index 0 diff: 500 != 200\nE     \nE     Full diff:\nE       [\nE     -     200,\nE     ?     ^...\nE     \nE     ...Full output truncated (39 lines hidden), use '-vv' to show"
+        },
+        {
+          "nodeid": "tests/test_native_driver.py::test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss[3]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:209: in test_three_ten_request_bursts_keep_original_receipts_and_no_busy_loss\n    assert [code for code, _reply in replies] == [200] * 10, categories\nE   AssertionError: [{'error_chain': [{'command_timing': {'elapsed_ms': 3659, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 3709, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 3754, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 3753, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 3758, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, {'error_chain': [{'command_timing': {'elapsed_ms': 3856, 'steps': [{...}, {...}, {...}, {...}, {...}, {...}, ...]}, 'type': 'UncertainEffect'}, {'type': 'TimeoutError'}], 'error_code': 'driver_operation_failed', 'error_type': 'UncertainEffect'}, ...]\nE   assert [500, 500, 50...500, 500, ...] == [200, 200, 20...200, 200, ...]\nE     \nE     At index 0 diff: 500 != 200\nE     \nE     Full diff:\nE       [\nE     -     200,\nE     ?     ^...\nE     \nE     ...Full output truncated (39 lines hidden), use '-vv' to show"
+        },
+        {
+          "nodeid": "tests/test_native_driver.py::test_ten_pending_receipts_bound_eleventh_rpc_without_effect[complete]",
+          "phase": "call",
+          "detail": "server/tests/test_native_driver.py:273: in test_ten_pending_receipts_bound_eleventh_rpc_without_effect\n    assert condition.wait_for(lambda: len(entered) == 10, timeout=1.5), entered\nE   AssertionError: {'259cf878-2897-40e7-9505-6877ecf29240', '2eef63ab-c5f3-4420-93de-d88a228d5d10', '38515fc8-0df2-4c46-a840-130041a24aef', '57fa71e1-8f24-45c0-a403-814008297f58', '5e688c54-5de7-4f31-8d43-2c18e7a37637', '88985c42-0f35-4a6b-b1de-7d4c5b8afa69', ...}\nE   assert False\nE    +  where False = wait_for(<function test_ten_pending_receipts_bound_eleventh_rpc_without_effect.<locals>.<lambda> at 0x7fb6eb5df420>, timeout=1.5)\nE    +    where wait_for = <Condition(<locked _thread.RLock object owner=140423774544768 count=1 at 0x7fb6eb499900>, 0)>.wait_for"
+        }
+      ],
+      "working_tree_dirty": false
+    },
+    "compiler_correction": {
+      "median_seconds": {
+        "-g": 11.795756749999782,
+        "-g1": 8.956541199999265
+      },
+      "reduction_percent": 24.069804169203213,
+      "sections_byte_identical": [
+        ".text",
+        ".rodata",
+        ".data",
+        ".eh_frame"
+      ],
+      "scope": "23 debug metadata flags in 17 native test files, plus two regressions. Original runtime builds retain full -g. -g1 omits local-variable debug metadata; function and source-line sanitizer backtraces are tested."
+    },
+    "durable_io": {
+      "fdatasync_calls": 20012,
+      "fdatasync_seconds": 35.0183904,
+      "two_binary_wall_seconds": 35.3585706,
+      "original_audit_test_passed": true,
+      "durability_reduced": false
+    },
+    "storage_control": {
+      "cases_per_trial": 13,
+      "all_four_trials_passed": true,
+      "overlay_median_junit_seconds": 14.7855,
+      "volume_median_junit_seconds": 10.342,
+      "full_suite_configuration_accepted": false,
+      "reason": "Short-volume full run still timed out and failed original 2/3-second bursts and the 1.5-second ten-receipt barrier."
+    },
+    "invalid_long_path_attempt": {
+      "directory": "foundation-after-g1-volume",
+      "accepted": false,
+      "reason": "TMPDIR exceeded AF_UNIX path limit; stopped with exit 143 and retained journals. Short /q/t mount passed two original socket checks."
+    },
+    "resolved": false
+  },
+  "new_regressions": {
+    "asan_and_ubsan_source_backtrace_cases_passed": 2,
+    "affected_original_cases_passed": 245,
+    "short_volume_original_socket_checks_passed": 2
+  },
+  "all_eleven_groups_open": true
+}

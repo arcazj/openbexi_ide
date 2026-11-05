@@ -1,0 +1,280 @@
+{
+  "scope": "Attribution of observed resource windows; overlapping RSS, allocator and cgroup measures are not added or subtracted from acceptance. Allocation-site cause and a fix are not established.",
+  "source_sha256": {
+    "native-resources.jsonl": "b445a0ac2ec1eb65d78814b57b979ea7e09df3daed9e658ccd5c9857e66b9721",
+    "native-recovery-soak.json": "fd36057ac93e93e6f9718da044f16df82f4037c88533b3449dcb1778a82cb111"
+  },
+  "processes": [
+    {
+      "pid": 82495,
+      "namespace_pid": 108,
+      "start_ticks": 2380436,
+      "program": "SPELL-Executor",
+      "Rss_bytes": {
+        "first_median": 345133056,
+        "last_median": 466821120,
+        "delta": 121688064
+      },
+      "Anonymous_bytes": {
+        "first_median": 290271232,
+        "last_median": 411959296,
+        "delta": 121688064
+      },
+      "Pss_bytes": {
+        "first_median": 301730816,
+        "last_median": 423419904,
+        "delta": 121689088
+      },
+      "allocator_observations": [
+        {
+          "window": "first",
+          "allocated_bytes_median": 9411257,
+          "heap_bytes_median": 172183552,
+          "observation_age_seconds_range": [
+            0.520462,
+            8.8186758
+          ]
+        },
+        {
+          "window": "last",
+          "allocated_bytes_median": 9414369,
+          "heap_bytes_median": 277434368,
+          "observation_age_seconds_range": [
+            0.3055356,
+            10.2382474
+          ]
+        }
+      ]
+    },
+    {
+      "pid": 82954,
+      "namespace_pid": 159,
+      "start_ticks": 2380674,
+      "program": "SPELL-Executor",
+      "Rss_bytes": {
+        "first_median": 324792320,
+        "last_median": 379531264,
+        "delta": 54738944
+      },
+      "Anonymous_bytes": {
+        "first_median": 270102528,
+        "last_median": 324841472,
+        "delta": 54738944
+      },
+      "Pss_bytes": {
+        "first_median": 281352192,
+        "last_median": 336091136,
+        "delta": 54738944
+      },
+      "allocator_observations": [
+        {
+          "window": "first",
+          "allocated_bytes_median": 9168096,
+          "heap_bytes_median": 163794944,
+          "observation_age_seconds_range": [
+            0.7488648,
+            10.0218351
+          ]
+        },
+        {
+          "window": "last",
+          "allocated_bytes_median": 9168096,
+          "heap_bytes_median": 210259968,
+          "observation_age_seconds_range": [
+            0.0966106,
+            8.3786688
+          ]
+        }
+      ]
+    },
+    {
+      "pid": 82233,
+      "namespace_pid": 41,
+      "start_ticks": 2380327,
+      "program": "SPELL-Context",
+      "Rss_bytes": {
+        "first_median": 480763904,
+        "last_median": 507084800,
+        "delta": 26320896
+      },
+      "Anonymous_bytes": {
+        "first_median": 413134848,
+        "last_median": 439455744,
+        "delta": 26320896
+      },
+      "Pss_bytes": {
+        "first_median": 454221824,
+        "last_median": 480542720,
+        "delta": 26320896
+      },
+      "allocator_observations": [
+        {
+          "window": "first",
+          "allocated_bytes_median": 10316656,
+          "heap_bytes_median": 193478656,
+          "observation_age_seconds_range": [
+            0.5205703,
+            0.8086254
+          ]
+        },
+        {
+          "window": "last",
+          "allocated_bytes_median": 10315672,
+          "heap_bytes_median": 211697664,
+          "observation_age_seconds_range": [
+            1.4724806,
+            1.7461007
+          ]
+        }
+      ]
+    },
+    {
+      "pid": 82410,
+      "namespace_pid": 90,
+      "start_ticks": 2380408,
+      "program": "spell-host-ipc",
+      "Rss_bytes": {
+        "first_median": 99700736,
+        "last_median": 113000448,
+        "delta": 13299712
+      },
+      "Anonymous_bytes": {
+        "first_median": 60403712,
+        "last_median": 73703424,
+        "delta": 13299712
+      },
+      "Pss_bytes": {
+        "first_median": 68928512,
+        "last_median": 82228224,
+        "delta": 13299712
+      },
+      "allocator_observations": [
+        {
+          "window": "first",
+          "allocated_bytes_median": 1495157,
+          "heap_bytes_median": 8593408,
+          "observation_age_seconds_range": [
+            0.5203145,
+            0.7641306
+          ]
+        },
+        {
+          "window": "last",
+          "allocated_bytes_median": 1492978,
+          "heap_bytes_median": 18096128,
+          "observation_age_seconds_range": [
+            0.2520259,
+            0.4970091
+          ]
+        }
+      ]
+    },
+    {
+      "pid": 82196,
+      "namespace_pid": 24,
+      "start_ticks": 2380314,
+      "program": "SPELL-Listener",
+      "Rss_bytes": {
+        "first_median": 104210432,
+        "last_median": 110125056,
+        "delta": 5914624
+      },
+      "Anonymous_bytes": {
+        "first_median": 81190912,
+        "last_median": 87105536,
+        "delta": 5914624
+      },
+      "Pss_bytes": {
+        "first_median": 90332160,
+        "last_median": 96247808,
+        "delta": 5915648
+      },
+      "allocator_observations": []
+    },
+    {
+      "pid": 82235,
+      "namespace_pid": 42,
+      "start_ticks": 2380329,
+      "program": "spell-host-ipc",
+      "Rss_bytes": {
+        "first_median": 98312192,
+        "last_median": 100950016,
+        "delta": 2637824
+      },
+      "Anonymous_bytes": {
+        "first_median": 58900480,
+        "last_median": 61538304,
+        "delta": 2637824
+      },
+      "Pss_bytes": {
+        "first_median": 67434496,
+        "last_median": 70073344,
+        "delta": 2638848
+      },
+      "allocator_observations": [
+        {
+          "window": "first",
+          "allocated_bytes_median": 1482202,
+          "heap_bytes_median": 7020544,
+          "observation_age_seconds_range": [
+            0.6619037,
+            9.9585281
+          ]
+        },
+        {
+          "window": "last",
+          "allocated_bytes_median": 1482202,
+          "heap_bytes_median": 7020544,
+          "observation_age_seconds_range": [
+            2.0968963,
+            10.3789545
+          ]
+        }
+      ]
+    },
+    {
+      "pid": 82094,
+      "namespace_pid": 7,
+      "start_ticks": 2380269,
+      "program": "python3.13",
+      "Rss_bytes": {
+        "first_median": 56446976,
+        "last_median": 57921536,
+        "delta": 1474560
+      },
+      "Anonymous_bytes": {
+        "first_median": 29949952,
+        "last_median": 31424512,
+        "delta": 1474560
+      },
+      "Pss_bytes": {
+        "first_median": 34816000,
+        "last_median": 36291584,
+        "delta": 1475584
+      },
+      "allocator_observations": []
+    },
+    {
+      "pid": 82071,
+      "namespace_pid": 1,
+      "start_ticks": 2380261,
+      "program": "docker-init",
+      "Rss_bytes": {
+        "first_median": 720896,
+        "last_median": 720896,
+        "delta": 0
+      },
+      "Anonymous_bytes": {
+        "first_median": 53248,
+        "last_median": 53248,
+        "delta": 0
+      },
+      "Pss_bytes": {
+        "first_median": 185344,
+        "last_median": 185344,
+        "delta": 0
+      },
+      "allocator_observations": []
+    }
+  ]
+}

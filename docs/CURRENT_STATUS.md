@@ -24,14 +24,14 @@ No IDE runtime change or successor version was introduced in the reference-runne
 | Hosted foundation, [run 41958849238](https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238) | **1,818 passed**, zero failures/errors/skips, 461.451 seconds | Original 600-second suite budget; host Python 3.13.17 |
 | Original native handoff and installed-IDE scenarios | **Both 45-second scenarios passed locally and hosted** | Bounded private native acceptance |
 | Published IDE wheel | Fresh download matches its published SHA-256; all **61 installed payload files** match | Artifact and installed-payload integrity |
-| Isolated local foundation | **Failed** at 600 seconds after 1,150 completed call passes and zero completed call failures | Incomplete session remains failed |
-| Local sanitizer/no-swap handoff diagnostic | **Failed**: 256,954,368-byte growth over 303.153 seconds, versus 67,108,864 allowed | All eight original processes observed; zero swap and no OOM events |
+| Isolated local foundation | **Failed**: compiler correction reaches 1,380 passes/zero completed failures at 600 seconds; short-volume experiment reaches 1,450 passes/three failures and the same timeout | No accepted full local foundation pass |
+| Local sanitizer/no-swap handoff diagnostic | **Failed**: 229,232,640-byte growth over 303.135 seconds, versus 67,108,864 allowed | All eight original processes observed; zero swap and no OOM events |
 | Original 3,600-second sanitizer/no-swap scenarios | Historical failures remain open | Both original sustained scenarios still require passing evidence |
 | Release preflight | **Not eligible for publication** | All eleven full-release groups remain false |
 
 IDE wheel SHA-256: `43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b`.
 
-The local helper now observes Docker-host process IDs/cgroups and uses a shared durable temporary path. That corrects the demonstrated observation/setup failures. It does not explain every earlier startup failure or resolve sustained memory growth. The storage control improved one audit case but left another slow; the complete foundation timeout remains unexplained. Sparse allocator observations show nearly stable live-byte medians alongside growing heap mappings, with offsets up to about 12 seconds. They do not establish a complete simultaneous decomposition or allocation-site cause.
+The [latest root-cause investigation](QUALIFICATION_ROOT_CAUSE_20261105.md) reproduces memory growth and identifies freed Executor `BufferedWriter` allocations with exact runtime stacks. A controlled test-build metadata correction reduces compilation by 24.1%; all 245 affected original cases and two new sanitizer regressions pass. Full foundation still times out, and the short-volume experiment also fails three original concurrency/deadline cases. Direct timing attributes 35.02 seconds of the audit control to 20,012 preserved `fdatasync` calls. Context/bridge startup samples show freed allocation churn and ASan retention; their full-soak decomposition remains incomplete because later observer attempts fail startup deadlines.
 
 ## Full release acceptance
 
@@ -40,7 +40,7 @@ The original G0–G9/A–L requirements, F1–F10 review oracles, all 763 compat
 | Group | Status | Remaining acceptance |
 | --- | --- | --- |
 | `services` | Open | Bounded hosted foundation and native cohorts pass. Full independent deployed service/process, tenant isolation, partition and required controller/viewer acceptance remains incomplete. |
-| `native_family` | Open | Original 45-second handoff/installed-IDE checks pass locally and hosted. Fresh 300-second handoff fails growth: 256,954,368 bytes versus 67,108,864 allowed. Sustained sanitizer/no-swap hours remain failed historical evidence; current full native semantics and sustained acceptance remain open. |
+| `native_family` | Open | Original 45-second handoff/installed-IDE checks pass locally and hosted. Fresh 300-second handoff fails growth: 229,232,640 bytes versus 67,108,864 allowed. Sustained sanitizer/no-swap hours remain failed historical evidence; current full native semantics and sustained acceptance remain open. |
 | `compatibility` | Open | All 763 requirements need current native/driver acceptance. Historical 555 bindings, 546 matches/nine drift and 46 missing historical hashes remain unreconciled; partial TIME/PY/DATA coverage is insufficient. |
 | `driver_faults` | Open | Bounded driver and native subsets pass. Complete deployed DSS fault, uncertain effect, crash/partition/reconnect/cancel and unrelated-worker survival acceptance remains incomplete. |
 | `ide_browser` | Open | Published IDE v1.2.1 pairing passes bounded installed native checks. Public connection/launch, full debugger/workspace/source/results, three browser identities, 20 observers, WSS recovery and Git conflict acceptance remain incomplete. |
@@ -48,7 +48,7 @@ The original G0–G9/A–L requirements, F1–F10 review oracles, all 763 compat
 | `kubernetes` | Open | Production-like NetworkPolicy-enforced cluster is unavailable; local docker-desktop API refused connection. Required real Jobs, RBAC/admission, node/DNS/DSS faults, storage recovery, restore, upgrade/rollback remain open. |
 | `recovery` | Open | Component audit/ENOSPC evidence remains limited. Whole-deployment restore, fencing of old authority, durable audit capacity and sustained acceptance remain incomplete. |
 | `security` | Open | Exact delivered dependency/SBOM/source/license/advisory disposition and full auth/replay/integrity/load acceptance remain incomplete. Mandatory independent implemented-system reviewer is unavailable. |
-| `ci` | Open | Pinned hosted run 41958849238 passes 1,818 foundation cases with zero skips/errors/failures in 461.451 seconds and both original 45-second jobs. Local foundation still times out at 600 seconds. Full final-pair release CI is incomplete. |
+| `ci` | Open | Pinned hosted run 41958849238 passes 1,818 foundation cases with zero skips/errors/failures in 461.451 seconds and both original 45-second jobs. Local foundation still times out at 600 seconds after the measured compiler improvement; the volume experiment also fails three concurrent-deadline checks. Full final-pair release CI is incomplete. |
 | `packaging` | Open | Immutable unqualified IDEv1.2.1 and SPELLv0.8-rc1 source/wheels remain distinct from candidate runtime and helper images. Qualified full native image, portable complete dependency closure, offline bundles and clean final installed/downloaded acceptance remain incomplete. |
 
 Historical compatibility capture validation remains separate from current native acceptance: 555 bindings retain 546 matches/nine drift, and 46 historical hashes remain unresolved. Earlier all-763 acceptance belongs to its original release artifacts. It does not qualify the current v0.8 pair.
@@ -72,12 +72,12 @@ The public v0.8 provisioning/runtime boundary remains disabled. Private retained
 
 ## Next work and recovery
 
-1. Diagnose the local foundation latency and sanitizer memory retention, implement measured corrections and repeat affected original checks. Run one heavy suite per runner while preserving its required internal concurrency.
+1. Keep the validated native test-build optimization at `10283db843578c04ff4aa454e43abb041be605a9`. Isolate Context/DSS transaction latency behind the original concurrent deadlines and complete full-soak Context/bridge attribution. The durable-volume experiment is not an accepted runner fix. Run one heavy suite per runner while preserving required internal concurrency.
 2. Require a credible short result before rerunning both original 3,600-second ASan/UBSan/no-swap scenarios with exact dependency bytes and complete audits.
 3. Complete public IDE/browser, all-763 native/driver compatibility, full v0.8 deployment, restore/fencing, dependency/security and final packaging acceptance.
 4. Obtain the production-like **NetworkPolicy-enforced cluster** and **independent implemented-system security reviewer**. The local docker-desktop API refused connection at the checkpoint. Internal/static review does not replace these resources.
 
-The current continuation receipt is `F:/openbexi-builds/v08-qualification-20261104/RESUME_QUALIFICATION.json`. The verified raw checkpoint is under `reference-runner-20261105/` beside the worktrees: 2,285 inventoried files, 23 selected receipts checked against committed bytes and 69 comparison-evidence hashes verified. Its original manifest and `FINAL_CHECKPOINT.json` remain unchanged; subsequent documentation synchronization is recorded separately.
+The latest investigation report is [QUALIFICATION_ROOT_CAUSE_20261105.md](QUALIFICATION_ROOT_CAUSE_20261105.md); its raw evidence is retained separately under `root-cause-20261105/`. The current continuation receipt is `F:/openbexi-builds/v08-qualification-20261104/RESUME_QUALIFICATION.json`. The verified raw checkpoint is under `reference-runner-20261105/` beside the worktrees: 2,285 inventoried files, 23 selected receipts checked against committed bytes and 69 comparison-evidence hashes verified. Its original manifest and `FINAL_CHECKPOINT.json` remain unchanged; subsequent documentation synchronization is recorded separately.
 
 Use `ide-followthrough-final.bundle` and `spell-followthrough.bundle` with their documented prerequisite commits. Preserve earlier failed runs, the local backup/stash and all unique work. Published tags/assets and original unqualified disclosure remain immutable. Production migration remains unauthorized. No further routine owner confirmation is needed to continue already-authorized qualification work.
 

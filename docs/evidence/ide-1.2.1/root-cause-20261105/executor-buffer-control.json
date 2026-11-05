@@ -1,0 +1,39 @@
+{
+  "build_command": [
+    "c++",
+    "-std=c++17",
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-fno-omit-frame-pointer",
+    "-no-pie",
+    "-I/usr/local/include/python3.13",
+    "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/io-stack-control.cpp",
+    "-L/usr/local/lib",
+    "-lpython3.13",
+    "-ldl",
+    "-o",
+    "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control"
+  ],
+  "libpython_sha256": "085a2b2227f39be171d5fd68967fba933adb37b7ab8b879d2a2565d4f7bb6b41",
+  "runs": [
+    {
+      "command": [
+        "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control",
+        "buffer"
+      ],
+      "exit_code": 0,
+      "seconds": 0.022806600001786137
+    },
+    {
+      "command": [
+        "/var/lib/docker/volumes/openbexi-v08-qualification-20261104/_data/root-cause-20261105/io-stack-control/control",
+        "open"
+      ],
+      "exit_code": 0,
+      "seconds": 0.02278909999949974
+    }
+  ],
+  "source_sha256": "55989d74f92126d9dcb57be19c6818a678e0f082a5baf6e2d7e469d72a5ac494"
+}

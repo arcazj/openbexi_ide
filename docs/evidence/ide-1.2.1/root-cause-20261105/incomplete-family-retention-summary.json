@@ -1,0 +1,92 @@
+{
+  "complete_soak": false,
+  "observation_seconds": 44.7608159,
+  "quarantine": [
+    {
+      "pid": 41,
+      "snapshots": 5,
+      "first_last": [
+        {
+          "tick": 28564048803300,
+          "global_quarantine_bytes": 137816470,
+          "global_quarantine_user_bytes": 136685974
+        },
+        {
+          "tick": 28606065049400,
+          "global_quarantine_bytes": 138887664,
+          "global_quarantine_user_bytes": 137601520
+        }
+      ]
+    },
+    {
+      "pid": 47,
+      "snapshots": 4,
+      "first_last": [
+        {
+          "tick": 28563359443200,
+          "global_quarantine_bytes": 0,
+          "global_quarantine_user_bytes": 0
+        },
+        {
+          "tick": 28599362655900,
+          "global_quarantine_bytes": 0,
+          "global_quarantine_user_bytes": 0
+        }
+      ]
+    },
+    {
+      "pid": 91,
+      "snapshots": 4,
+      "first_last": [
+        {
+          "tick": 28574654553500,
+          "global_quarantine_bytes": 0,
+          "global_quarantine_user_bytes": 0
+        },
+        {
+          "tick": 28606299204800,
+          "global_quarantine_bytes": 1048584,
+          "global_quarantine_user_bytes": 958472
+        }
+      ]
+    },
+    {
+      "pid": 109,
+      "snapshots": 2,
+      "first_last": [
+        {
+          "tick": 28584959419200,
+          "global_quarantine_bytes": 119857862,
+          "global_quarantine_user_bytes": 118858438
+        },
+        {
+          "tick": 28596960339500,
+          "global_quarantine_bytes": 119857862,
+          "global_quarantine_user_bytes": 118858438
+        }
+      ]
+    },
+    {
+      "pid": 160,
+      "snapshots": 3,
+      "first_last": [
+        {
+          "tick": 28571280781500,
+          "global_quarantine_bytes": 105013964,
+          "global_quarantine_user_bytes": 104186572
+        },
+        {
+          "tick": 28597282538600,
+          "global_quarantine_bytes": 116645207,
+          "global_quarantine_user_bytes": 115678551
+        }
+      ]
+    }
+  ],
+  "mapped_libpython": [
+    [
+      "/usr/local/lib/libpython3.13.so.1.0",
+      "085a2b2227f39be171d5fd68967fba933adb37b7ab8b879d2a2565d4f7bb6b41"
+    ]
+  ]
+}
