@@ -89,7 +89,7 @@ passes. Do not replace the missing browser evidence with the Qt tests.
 
 ## Continue
 
-The subsequent sibling [COMMON milestone](../../openbexi_spell_plugin/conformance/COMMON.md)
+The subsequent sibling [COMMON milestone](https://github.com/arcazj/openbexi_spell_plugin/blob/main/conformance/COMMON.md)
 qualifies 40 of its 66 rows and resolves its two manual/source errata. The native
 wrapper now separates result/failure prompts, validates policies and handles
 configuration for functions absent from language.xml. Actual native IPC verifies

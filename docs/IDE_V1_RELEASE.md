@@ -35,7 +35,7 @@ distinct package version allows the IDE's local-wheel installer to upgrade
 0.3.0. The actual Qt plugin manager, Run/Debug child answers, removal and ordinary
 Python afterward pass on this IDE's source at `3779d85`; all installed wheel
 members match the selected artifact. The project and preferences survive.
-The [host upgrade record](../../openbexi_spell_plugin/distribution/evidence/host-console-upgrade.json)
+The [host upgrade record](https://github.com/arcazj/openbexi_spell_plugin/blob/main/distribution/evidence/host-console-upgrade.json)
 binds the reproducible wheel and required child-development runtime image.
 The console fix and installable host candidate are on the sibling's main branch
 at `a1b482a`; the combined native runtime is still under qualification.

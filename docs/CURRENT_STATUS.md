@@ -1,89 +1,28 @@
-# IDE v1.2.1 and SPELL v0.8 current qualification status
+# Current qualification status
 
-Updated November 5, 2026 UTC, following the November 4 New York qualification session. **IDE v1.2.1 and full SPELL v0.8 remain unqualified. All eleven mandatory release groups remain open.** The latest evidence-backed decision is to continue qualification; stable SPELL v0.8 publication is blocked.
+Updated November 6, 2026 UTC. **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 547.880 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
 
-## Published artifacts and tested subjects
+The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.
 
-| Subject | Exact identity | Status |
-| --- | --- | --- |
-| Published IDE v1.2.1 | `08c314fb6b802b407cbabe01777072884d2b7504` | Immutable unqualified release |
-| Published SPELL v0.8-rc1 | `ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda` | Immutable unqualified prerelease |
-| Hosted qualification subject | `efada98963a9d9debdbdca437b0e97246180a86f` | Bounded foundation and native passes |
-| Local native subject | `c5529d02a49c89a8919b965ffb4eb43498eb0cdf` | Short native passes; 300-second memory failure |
-| Verified IDE evidence commit | `9624c9009dcf70e0a7960de74763e9f64b0f1439` | Receipts verified against committed bytes |
-| SPELL gate reconciliation | `039e4be9dd74f2626cde19c7f983735b717ba84f` | All eleven groups false |
+## Exact subjects
 
-[IDE release](https://github.com/arcazj/openbexi_ide/releases/tag/v1.2.1) and [SPELL prerelease](https://github.com/arcazj/openbexi_spell_plugin/releases/tag/v0.8-rc1) deliver source archives, Python packages and recovery/checksum records. They do not deliver a newly qualified full v0.8 native image or v1.2.1 offline desktop bundle. Server, host, shared and DSS packages use `0.8.0rc1`; the separate root SDK remains `0.1.0`.
+| Subject | Identity / result |
+| --- | --- |
+| Published IDE v1.2.1 | `08c314fb6b802b407cbabe01777072884d2b7504`; unqualified |
+| Published SPELL v0.8-rc1 | `ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda`; unqualified prerelease |
+| Latest preserved product runtime | SPELL `c5529d02a49c89a8919b965ffb4eb43498eb0cdf`; no cleanup runtime change |
+| Reference foundation | `540c0e0ba957a82b98f3c13a416da28cd52acd65`; 1,823 passed / 547.880 s |
+| Complete memory diagnostic | `47ebd1c091e0299213f9ee3978cf4e74d513fddf`; 319,567,872-byte growth / zero swap |
+| Pre-cleanup latest commits | IDE `f14bd292e8dac77aa000c6590e16b503e831e113`; SPELL `d577d45455a56f4e355ab986ac15391f01a4191c` |
 
-No IDE runtime change or successor version was introduced in the reference-runner followthrough. Later documentation commits do not inherit a new executed-runtime identity. A required IDE fix must use separately versioned artifacts.
+The [complete investigation](https://github.com/arcazj/openbexi_spell_plugin/blob/main/docs/v0.8/CONTEXT_DSS_DEADLINES_20261105.md) records identical-input local/Linux comparisons, individual lock/commit/durable-I/O/RPC timings, live heartbeat results, source hashes, exact ELF attribution and retained failures. Matched local and Linux sets passed 18/18 each. A contended local set failed 11/18 and an earlier Linux set failed one original two-second check; those results remain counterexamples.
 
-## Latest verified results
+The complete diagnostic retained 169 samples (143 soak), eight process identities and 178 successful heartbeats. Growth is predominantly anonymous retention with nearly flat live allocation totals and rising sanitizer quarantine. Executors dominate, followed by Context and bridge. This does not prove a growing live-object leak or establish a sufficient correction. Reducing workload, durability or sanitizer quarantine would change the experiment.
 
-| Check | Result | Acceptance boundary |
-| --- | --- | --- |
-| Hosted foundation, [run 41958849238](https://github.com/arcazj/openbexi_spell_plugin/actions/runs/41958849238) | **1,818 passed**, zero failures/errors/skips, 461.451 seconds | Original 600-second suite budget; host Python 3.13.17 |
-| Original native handoff and installed-IDE scenarios | **Both 45-second scenarios passed locally and hosted** | Bounded private native acceptance |
-| Published IDE wheel | Fresh download matches its published SHA-256; all **61 installed payload files** match | Artifact and installed-payload integrity |
-| Isolated local foundation | **Failed**: compiler correction reaches 1,380 passes/zero completed failures at 600 seconds; short-volume experiment reaches 1,450 passes/three failures and the same timeout | No accepted full local foundation pass |
-| Local sanitizer/no-swap handoff diagnostic | **Failed**: 229,232,640-byte growth over 303.135 seconds, versus 67,108,864 allowed | All eight original processes observed; zero swap and no OOM events |
-| Original 3,600-second sanitizer/no-swap scenarios | Historical failures remain open | Both original sustained scenarios still require passing evidence |
-| Release preflight | **Not eligible for publication** | All eleven full-release groups remain false |
+## Binding acceptance and next work
 
-IDE wheel SHA-256: `43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b`.
+Follow the [SPELL acceptance plan](https://github.com/arcazj/openbexi_spell_plugin/blob/main/docs/v0.8/ACCEPTANCE_PLAN.md), [resource contract](https://github.com/arcazj/openbexi_spell_plugin/blob/main/docs/v0.8/NATIVE_RESOURCE_ACCEPTANCE.md) and [release gates](https://github.com/arcazj/openbexi_spell_plugin/blob/main/docs/v0.8/RELEASE_GATES.json) unchanged. Keep the original request deadlines, required concurrency, 600-second foundation budget, 45/300/3,600-second workloads, 64 MiB growth limit, 1,792 MiB resident peak, 2 GiB recovery limit and zero swap. All eleven release groups remain false. Historical short passes do not replace complete deployed, compatibility, security, recovery or sustained acceptance.
 
-The [latest root-cause investigation](QUALIFICATION_ROOT_CAUSE_20261105.md) reproduces memory growth and identifies freed Executor `BufferedWriter` allocations with exact runtime stacks. A controlled test-build metadata correction reduces compilation by 24.1%; all 245 affected original cases and two new sanitizer regressions pass. Full foundation still times out, and the short-volume experiment also fails three original concurrency/deadline cases. Direct timing attributes 35.02 seconds of the audit control to 20,012 preserved `fdatasync` calls. Context/bridge startup samples show freed allocation churn and ASan retention; their full-soak decomposition remains incomplete because later observer attempts fail startup deadlines.
+Establish and validate a measured memory correction, then pass the original 300-second gate before both original hours. The enforced-NetworkPolicy cluster and independent implemented-system reviewer remain external prerequisites. Public v0.8 provisioning remains disabled. The existing desktop uses the v0.7 native baseline.
 
-## Full release acceptance
-
-The original G0–G9/A–L requirements, F1–F10 review oracles, all 763 compatibility requirements, required concurrency, operation deadlines, 600-second foundation budget and original 45/3,600-second memory workloads remain binding. Native growth remains limited to 64 MiB; the resident peak budget remains 1,792 MiB inside the original 2 GiB no-swap recovery limit.
-
-| Group | Status | Remaining acceptance |
-| --- | --- | --- |
-| `services` | Open | Bounded hosted foundation and native cohorts pass. Full independent deployed service/process, tenant isolation, partition and required controller/viewer acceptance remains incomplete. |
-| `native_family` | Open | Original 45-second handoff/installed-IDE checks pass locally and hosted. Fresh 300-second handoff fails growth: 229,232,640 bytes versus 67,108,864 allowed. Sustained sanitizer/no-swap hours remain failed historical evidence; current full native semantics and sustained acceptance remain open. |
-| `compatibility` | Open | All 763 requirements need current native/driver acceptance. Historical 555 bindings, 546 matches/nine drift and 46 missing historical hashes remain unreconciled; partial TIME/PY/DATA coverage is insufficient. |
-| `driver_faults` | Open | Bounded driver and native subsets pass. Complete deployed DSS fault, uncertain effect, crash/partition/reconnect/cancel and unrelated-worker survival acceptance remains incomplete. |
-| `ide_browser` | Open | Published IDE v1.2.1 pairing passes bounded installed native checks. Public connection/launch, full debugger/workspace/source/results, three browser identities, 20 observers, WSS recovery and Git conflict acceptance remain incomplete. |
-| `compose` | Open | Existing prelaunch and legacy-native desktop evidence is retained. Full v0.8 native image with ten executions/20 viewers, authorization/egress, component faults, storage restore and authority fencing remains incomplete. |
-| `kubernetes` | Open | Production-like NetworkPolicy-enforced cluster is unavailable; local docker-desktop API refused connection. Required real Jobs, RBAC/admission, node/DNS/DSS faults, storage recovery, restore, upgrade/rollback remain open. |
-| `recovery` | Open | Component audit/ENOSPC evidence remains limited. Whole-deployment restore, fencing of old authority, durable audit capacity and sustained acceptance remain incomplete. |
-| `security` | Open | Exact delivered dependency/SBOM/source/license/advisory disposition and full auth/replay/integrity/load acceptance remain incomplete. Mandatory independent implemented-system reviewer is unavailable. |
-| `ci` | Open | Pinned hosted run 41958849238 passes 1,818 foundation cases with zero skips/errors/failures in 461.451 seconds and both original 45-second jobs. Local foundation still times out at 600 seconds after the measured compiler improvement; the volume experiment also fails three concurrent-deadline checks. Full final-pair release CI is incomplete. |
-| `packaging` | Open | Immutable unqualified IDEv1.2.1 and SPELLv0.8-rc1 source/wheels remain distinct from candidate runtime and helper images. Qualified full native image, portable complete dependency closure, offline bundles and clean final installed/downloaded acceptance remain incomplete. |
-
-Historical compatibility capture validation remains separate from current native acceptance: 555 bindings retain 546 matches/nine drift, and 46 historical hashes remain unresolved. Earlier all-763 acceptance belongs to its original release artifacts. It does not qualify the current v0.8 pair.
-
-## Environment and operational state
-
-The hosted reference is Ubuntu 24.04 x86_64 with host CPython **3.13.17** and recorded before/after environment receipts. The successful hosted run still used different runner image revisions; packaged native/desktop Python versions are separate inputs. The local Docker desktop is Debian 13 x86_64 with CPython 3.13.15 and PySide6-Essentials 6.10.3. The environment matrix defines qualification targets, not completed platform support.
-
-| Hosted job | CPU model | Runner image |
-| --- | --- | --- |
-| native-handoff | INTEL(R) XEON(R) PLATINUM 8573C | 20261026.354.1 |
-| foundation | AMD EPYC 9V45 96-Core Processor | 20261101.360.1 |
-| native-ide | Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz | 20261026.354.1 |
-
-All three expose four CPUs and approximately 15.6 GiB RAM. These are observations, not a production minimum. CPU/image differences prevent attributing the foundation timing improvement solely to the Python pin.
-
-
-At the verified checkpoint, **no qualification jobs remained active**, both temporary helpers were stopped and their durable volume/evidence was retained. The existing IDE desktop remained healthy at `http://127.0.0.1:6088`, container `openbexi-ide-spell-v08-qualification-ide-1`, image `sha256:711eeb330a8291bbdca6fa31705f2b922610ad724d2f6654732b2b7fe40ab6cf`. It contains the **v0.7 native baseline**, so desktop health does not establish joint v0.8 acceptance. Recheck live state before starting or stopping work.
-
-The public v0.8 provisioning/runtime boundary remains disabled. Private retained-worker tests and existing-execution IDE controls do not provide complete public launch, graphical debugger, browser/WSS or deployment acceptance.
-
-## Next work and recovery
-
-1. Keep the validated native test-build optimization at `10283db843578c04ff4aa454e43abb041be605a9`. Isolate Context/DSS transaction latency behind the original concurrent deadlines and complete full-soak Context/bridge attribution. The durable-volume experiment is not an accepted runner fix. Run one heavy suite per runner while preserving required internal concurrency.
-2. Require a credible short result before rerunning both original 3,600-second ASan/UBSan/no-swap scenarios with exact dependency bytes and complete audits.
-3. Complete public IDE/browser, all-763 native/driver compatibility, full v0.8 deployment, restore/fencing, dependency/security and final packaging acceptance.
-4. Obtain the production-like **NetworkPolicy-enforced cluster** and **independent implemented-system security reviewer**. The local docker-desktop API refused connection at the checkpoint. Internal/static review does not replace these resources.
-
-The latest investigation report is [QUALIFICATION_ROOT_CAUSE_20261105.md](QUALIFICATION_ROOT_CAUSE_20261105.md); its raw evidence is retained separately under `root-cause-20261105/`. The current continuation receipt is `F:/openbexi-builds/v08-qualification-20261104/RESUME_QUALIFICATION.json`. The verified raw checkpoint is under `reference-runner-20261105/` beside the worktrees: 2,285 inventoried files, 23 selected receipts checked against committed bytes and 69 comparison-evidence hashes verified. Its original manifest and `FINAL_CHECKPOINT.json` remain unchanged; subsequent documentation synchronization is recorded separately.
-
-Use `ide-followthrough-final.bundle` and `spell-followthrough.bundle` with their documented prerequisite commits. Preserve earlier failed runs, the local backup/stash and all unique work. Published tags/assets and original unqualified disclosure remain immutable. Production migration remains unauthorized. No further routine owner confirmation is needed to continue already-authorized qualification work.
-
-## Evidence and documentation scope
-
-[Detailed source-bound qualification receipt](https://github.com/arcazj/openbexi_ide/blob/9624c9009dcf70e0a7960de74763e9f64b0f1439/docs/evidence/ide-1.2.1/reference-runner-20261105/qualification.json) records every result's subject, command, artifact hashes and limits. Historical reports, raw evidence, release manifests, compatibility captures and original acceptance contracts retain their identities and requirements. Current guide notices point here so dated development checkpoints cannot be mistaken for today's release state.
-
-
-See [qualification environments](IDE_1_2_1_QUALIFICATION_ENVIRONMENTS.md), [server integration](v0.8/SPELL_SERVER_INTEGRATION.md), [published release scope](UNQUALIFIED_RELEASE.md) and the [companion SPELL status](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/v08-resume-20261104/docs/v0.8/CURRENT_STATUS.md).
+The [roadmap](../ROADMAP.md) records the work order. [Repository maintenance](REPOSITORY_MAINTENANCE.md) records cleanup, fresh-checkout validation and archive recovery. Earlier reports are immutable evidence for their named subjects, including failures; documentation and merge commits do not inherit runtime qualification.
