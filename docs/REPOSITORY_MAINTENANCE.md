@@ -23,6 +23,8 @@ Use the archive's `restore_archive.py --root <original-path> --destination <new-
 
 All reviewed local/origin branches are ancestors of consolidated `main`; branch names remain available for recovery. [Branch decisions](maintenance/branch-integration-20261106.json) explain integrated and superseded changes. The historical `pathlib.Path` harness alias fixes a directly reproduced wildcard-modifier collision; product code is unchanged.
 
+Historical `refs/remotes/recovery/*` pointers preserve earlier qualification experiments. They have no configured remote and remain in the Git backups for later investigation.
+
 Requested IDE `1.2.9`/`v1.2.9` does not exist locally or on origin, so IDE tags remain pending identification. SPELL retains `v0.7` and `v0.8-rc1`; four obsolete nonrelease tags were removed. Exact original `v0.4.0`, `v0.5` and `v0.6` tags were restored to preserve their published releases. Release IDs and asset IDs/digests are unchanged. The choice about those three release-linked tags remains pending. No tag was invented or repointed.
 
 ## Fresh-checkout validation
