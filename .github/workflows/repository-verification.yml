@@ -1,7 +1,5 @@
 name: Fresh checkout complete IDE verification
 on:
-  push:
-    branches: [integration/cleanup-20261106]
   workflow_dispatch:
 permissions:
   contents: read

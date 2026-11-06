@@ -1,0 +1,345 @@
+{
+  "measured_utc": "2026-11-06T03:36:29.977229+00:00",
+  "archive_root": "F:\\openbexi-archive\\cleanup-20261106T0013",
+  "archive_verification": {
+    "roots": 110,
+    "files": 933404,
+    "classes": [
+      [
+        "archive",
+        730540,
+        222221694951
+      ],
+      [
+        "delete-cache",
+        88386,
+        1604336495
+      ],
+      [
+        "git-bundle",
+        104231,
+        13883513167
+      ],
+      [
+        "keep",
+        10245,
+        392248550
+      ],
+      [
+        "keep-special",
+        2,
+        0
+      ]
+    ],
+    "unique_objects": [
+      132552,
+      126246275764
+    ],
+    "archive_bytes": 39794037606,
+    "verified_shards": 59
+  },
+  "original_project_file_bytes_removed_by_category": {
+    "ide_historical_outputs_and_worktrees": 21041555624,
+    "ide_redundant_image_exports": 2809832156,
+    "spell_historical_worktrees": 126861046815,
+    "spell_obsolete_resources": 70096264215,
+    "builds_obsolete_resources": 15884805901
+  },
+  "original_project_file_bytes_removed_total": 236693504711,
+  "spell_worktrees_removed": 103,
+  "remaining_worktrees": {
+    "ide": [
+      "C:/projects/openbexi_ide"
+    ],
+    "spell": [
+      "C:/projects/openbexi_spell_plugin"
+    ]
+  },
+  "resources": {
+    "spell": {
+      "planned_files": 158573,
+      "planned_bytes": 70096351886,
+      "remaining_files": 278,
+      "remaining_bytes": 87671,
+      "removed_bytes": 70096264215,
+      "retained_protected_paths": [
+        "C:\\projects\\openbexi_spell_plugin\\.git",
+        "C:\\projects\\openbexi_spell_plugin\\.idea",
+        "C:\\projects\\openbexi_spell_plugin\\.qualification\\plugin-layout-20261018\\fixed",
+        "C:\\projects\\openbexi_spell_plugin\\.venv",
+        "C:\\projects\\openbexi_spell_plugin\\var"
+      ]
+    },
+    "builds": {
+      "planned_files": 90965,
+      "planned_bytes": 15884832766,
+      "remaining_files": 375,
+      "remaining_bytes": 26865,
+      "removed_bytes": 15884805901,
+      "retained_protected_paths": [
+        "F:\\openbexi-builds\\ide-v1.1\\browser-1",
+        "F:\\openbexi-builds\\ide-v1.1\\browser-2",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-1\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-2\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-3\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-text-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-4\\workspace-text-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-text-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-6\\workspace-text-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\thread-dump.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-text-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-8\\workspace-text-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\intellij-lifecycle-evidence\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-text-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-1\\workspace-text-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\config",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\console.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\debugger.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\java.args",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\launcher.log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\plugins",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\process.json",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\project",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\result.json",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\startup.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\test-classes",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\test-compile.log",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-results.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-results.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-text-prompt.png",
+        "F:\\openbexi-builds\\ide-v1.1\\pycharm-2\\workspace-text-prompt.png.layout.txt",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace-2",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace-3",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace-4",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace-5",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-native-workspace-6",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-reconnect-1",
+        "F:\\openbexi-builds\\ide-v1.1\\windows-reconnect-2"
+      ]
+    }
+  },
+  "disposable_checkouts": [
+    {
+      "path": "F:\\openbexi-clean-verification-20261106",
+      "initial_bytes": 1061264577,
+      "remaining_files": 0,
+      "remaining_bytes": 0
+    },
+    {
+      "path": "F:\\openbexi-archive\\cleanup-20261106T0013\\restore-check-ide-hello",
+      "initial_bytes": 12462545,
+      "remaining_files": 3,
+      "remaining_bytes": 9001572
+    },
+    {
+      "path": "F:\\openbexi-archive\\cleanup-20261106T0013\\restore-check-spell-context",
+      "initial_bytes": 238675766,
+      "remaining_files": 3,
+      "remaining_bytes": 52666102
+    },
+    {
+      "path": "F:\\openbexi-archive\\cleanup-20261106T0013\\restore-check-spell-dirty",
+      "initial_bytes": 248010634,
+      "remaining_files": 3,
+      "remaining_bytes": 52666102
+    }
+  ],
+  "docker_removed_objects_by_kind": {
+    "container": 47,
+    "volume": 25,
+    "temporary-snapshot-image": 47,
+    "obsolete-image-tag": 36
+  },
+  "disk": {
+    "C": {
+      "before_free_bytes": 25561001984,
+      "after_free_bytes": 226158186496,
+      "net_free_increase_bytes": 200597184512
+    },
+    "F": {
+      "before_free_bytes": 287934554112,
+      "after_free_bytes": 255180787712,
+      "net_free_increase_bytes": -32753766400
+    }
+  },
+  "disk_note": "Logical file payload removal excludes filesystem metadata and Docker internal reclamation. Net free space includes archive growth and other host activity; Docker VHD was not compacted.",
+  "tag_exceptions": [
+    "IDE 1.2.9/v1.2.9 missing locally and on origin; IDE tags preserved pending identity.",
+    "SPELL v0.4.0/v0.5/v0.6 restored to preserve published releases and asset identities; requested v0.7/v0.8-rc1 retained. Four obsolete nonrelease tags removed."
+  ],
+  "readonly_policy_exception": "Automatic approval review rejected forced removal with stated reason: blocked by policy. Ordinary removal preserved read-only remnants; no attribute/API bypass.",
+  "memory_gate": {
+    "status": "blocked",
+    "trace_seconds": 303.491,
+    "growth_bytes": 319567872,
+    "limit_bytes": 67108864,
+    "swap_bytes": 0,
+    "correction_established": false,
+    "original_hours_attempted_in_cleanup": false
+  },
+  "ide_retained_remnants": {
+    "files": 62,
+    "bytes": 8170
+  },
+  "temporary_diagram_copies": {
+    "files": 0,
+    "bytes": 0
+  },
+  "documentation_reference_audit": {
+    "ide": {
+      "checked": 149,
+      "missing": 0
+    },
+    "spell": {
+      "checked": 1532,
+      "missing": 0
+    }
+  },
+  "workflow_reference_audit": {
+    "ide": {
+      "checked": 1,
+      "missing": 0,
+      "retired_references": 0
+    },
+    "spell": {
+      "checked": 49,
+      "missing": 0,
+      "retired_references": 0
+    }
+  },
+  "architecture_preservation": {
+    "original_zip_unchanged": true,
+    "repository_zip_exact_match": true,
+    "both_readmes_embed_both_unchanged_images": true,
+    "verified_images": [
+      "C:\\projects\\openbexi_ide\\docs\\diagrams\\release-package\\previous_comparison.png",
+      "C:\\projects\\openbexi_ide\\docs\\diagrams\\release-package\\v08_server.png",
+      "C:\\projects\\openbexi_spell_plugin\\docs\\v0.8\\diagrams\\release-package\\previous_comparison.png",
+      "C:\\projects\\openbexi_spell_plugin\\docs\\v0.8\\diagrams\\release-package\\v08_server.png"
+    ]
+  }
+}
