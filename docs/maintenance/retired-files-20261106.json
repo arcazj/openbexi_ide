@@ -1,0 +1,62 @@
+[
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-dev83-hours.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-dev83-integrated.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-dss-graceful-stop-dev83.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-fix-foundation-dev83.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-memory-startup-dev83.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-source-snapshot.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "spell",
+    "path": ".github/workflows/v08-step1-source-archive.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "d577d45455a56f4e355ab986ac15391f01a4191c"
+  },
+  {
+    "repo": "ide",
+    "path": ".github/workflows/qualify-v1.1-windows.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "f14bd292e8dac77aa000c6590e16b503e831e113"
+  },
+  {
+    "repo": "ide",
+    "path": ".github/workflows/v08-windows-source.yml",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "f14bd292e8dac77aa000c6590e16b503e831e113"
+  },
+  {
+    "repo": "ide",
+    "path": "scripts/qualify_v08_windows_identity.py",
+    "reason": "Retired branch/version-specific runner; exact prior bytes retained in verified complete Git bundle",
+    "recovery_commit": "f14bd292e8dac77aa000c6590e16b503e831e113"
+  }
+]

@@ -1,6 +1,6 @@
 # Current qualification status
 
-Updated November 6, 2026 UTC. **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 547.880 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
+Updated November 6, 2026 UTC. **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 423.326 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
 
 The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.
 
@@ -11,7 +11,7 @@ The complete **303.491-second** Context/bridge diagnostic captured all eight pro
 | Published IDE v1.2.1 | `08c314fb6b802b407cbabe01777072884d2b7504`; unqualified |
 | Published SPELL v0.8-rc1 | `ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda`; unqualified prerelease |
 | Latest preserved product runtime | SPELL `c5529d02a49c89a8919b965ffb4eb43498eb0cdf`; no cleanup runtime change |
-| Reference foundation | `540c0e0ba957a82b98f3c13a416da28cd52acd65`; 1,823 passed / 547.880 s |
+| Reference foundation | `d84c624708c2121ce008a88269cf7cf70bbec739`; 1,823 passed / 423.326 s |
 | Complete memory diagnostic | `47ebd1c091e0299213f9ee3978cf4e74d513fddf`; 319,567,872-byte growth / zero swap |
 | Pre-cleanup latest commits | IDE `f14bd292e8dac77aa000c6590e16b503e831e113`; SPELL `d577d45455a56f4e355ab986ac15391f01a4191c` |
 

@@ -1,0 +1,74 @@
+[
+  {
+    "branch": "refs/heads/conformance/command-features",
+    "tip": "37d7b551e2440b968dea31c5f500ba2c596060bf",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "0239d5f471f8002b885a3834298fbe7e5992845c"
+  },
+  {
+    "branch": "refs/heads/conformance/command-uplink-groups",
+    "tip": "be1704bb556c7718364b29469bc177aab97cea17",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "2dc6120925d61eba2caf4ed8a060c1578cfecdfe"
+  },
+  {
+    "branch": "refs/heads/conformance/database-format-native",
+    "tip": "586d5d5f1ee50ece3b61c25587eb31b9af9ab5a6",
+    "disposition": "Superseded overlay-specific telemetry provenance. Current run_database_formats.py rewrites installed_provenance to database_format_provenance and supplies that module; restoring the old telemetry import breaks the composed runtime harness.",
+    "merge": "beac7339d624c997feed4b218d73f5d52257a43b"
+  },
+  {
+    "branch": "refs/heads/conformance/gcs-displays",
+    "tip": "4f613c2e0eab3b68abb74a160e3a32d494d8db3b",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "287d44a29e76b75ba87532ca036b4669513b179c"
+  },
+  {
+    "branch": "refs/heads/conformance/limit-full-semantics",
+    "tip": "21553d28f7bc320904a3cc84212079f20ec0ead1",
+    "disposition": "Retain the unique pathlib alias in the historical baseline harness; prevents wildcard SPELL Path modifier from replacing pathlib.Path. Product code and acceptance limits are unchanged.",
+    "merge": "e392d7496d2888d3a00f0191e955141101ca59bf"
+  },
+  {
+    "branch": "refs/heads/conformance/manoeuvre-database-baseline",
+    "tip": "6ac807d15317a1fa810c4a2345ec88f69cdec07b",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "ad5a632ad035b7a610e05b3113da1df562b78d07"
+  },
+  {
+    "branch": "refs/heads/conformance/memory-full-semantics",
+    "tip": "3e23781e898fa8c1791e34e297797aca739d55ec",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "1d42c246a9277d68966fd4929dc438e89c52cc97"
+  },
+  {
+    "branch": "refs/heads/conformance/ranging-complete-baseline",
+    "tip": "34b4e00f47d5ad22ff9b90d69770dbcde847f0be",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "73d5ecab9fc146cf7d7a387ed86e73797ca51165"
+  },
+  {
+    "branch": "refs/heads/conformance/send-manual-completion",
+    "tip": "10db6008f96d7a6116aeb07eea9eccd7d8a8f201",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "cf53742268625f0da7bde69bdc8da396a4c403f8"
+  },
+  {
+    "branch": "refs/heads/conformance/telemetry-full-semantics",
+    "tip": "92d26e117762610502b61112dd05fe704968a1ef",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "48dba793fc0e9cbb1d7b5abdf348af50b3670161"
+  },
+  {
+    "branch": "refs/heads/conformance/v05-acceptance-runtime",
+    "tip": "e30971d2b87dd1fd85d09a3ea9d8d3e0a439a71d",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "e440eae03ed5342f09c41c41bb9ab8cbce5cb1c9"
+  },
+  {
+    "branch": "refs/heads/conformance/v05-focused-followup",
+    "tip": "b5e4578e71b58d2e6760833462aedd7b34939d7e",
+    "disposition": "Unique commits are patch-equivalent to integrated commits or their affected files exactly match the current baseline. Retain later integrated refinements.",
+    "merge": "9563c177386e373c02ee622e98773017ff04e7df"
+  }
+]

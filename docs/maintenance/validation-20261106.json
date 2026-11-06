@@ -1,0 +1,120 @@
+{
+  "scope": "Repository cleanup verification; no release or memory qualification",
+  "ide": {
+    "commit": "cc555604e2476884b59722d367d547e521fd427c",
+    "run": "https://github.com/arcazj/openbexi_ide/actions/runs/42137624350",
+    "linux": {
+      "passed": 304,
+      "failed": 0,
+      "errors": 0,
+      "windows_only_exclusion": 1,
+      "seconds": 397.106
+    },
+    "windows_excluded_case": {
+      "passed": 1,
+      "seconds": 0.58
+    },
+    "installed_windows_ide_and_dss_cli": "passed",
+    "installed_windows_native_server": "unsupported platform: fcntl; failed attempt retained, Linux service scope unchanged"
+  },
+  "spell": {
+    "commit": "d84c624708c2121ce008a88269cf7cf70bbec739",
+    "run": "https://github.com/arcazj/openbexi_spell_plugin/actions/runs/42137659032",
+    "foundation": {
+      "passed": 1823,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 423.326,
+      "original_limit_seconds": 600,
+      "verified_input_hashes": 290
+    },
+    "heartbeat_concurrency": {
+      "passed": 27,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 34.925
+    },
+    "lint_format_types": "passed"
+  },
+  "product_preservation": {
+    "ide": {
+      "baseline": "f14bd292e8dac77aa000c6590e16b503e831e113",
+      "unchanged_paths": [
+        "src",
+        "tests",
+        "pyproject.toml",
+        "docker",
+        "compose.yaml"
+      ]
+    },
+    "spell": {
+      "baseline": "d577d45455a56f4e355ab986ac15391f01a4191c",
+      "unchanged_paths": [
+        "server/src",
+        "server/tests",
+        "src",
+        "driver_plugin",
+        "host_plugin",
+        "host_runtime",
+        "shared_plugin",
+        "source_port",
+        "jetbrains",
+        "tests",
+        "pyproject.toml",
+        "server/requirements-test.lock",
+        "scripts/profile_context_deadlines.py",
+        "scripts/profile_context_bridge_memory.py",
+        "scripts/qualify_v08_server.py",
+        "docs/v0.8/RELEASE_GATES.json"
+      ]
+    }
+  },
+  "branches": {
+    "ide": {
+      "not_merged": [],
+      "checked": 12
+    },
+    "spell": {
+      "not_merged": [],
+      "checked": 117
+    }
+  },
+  "references": {
+    "ide": {
+      "checked": 144,
+      "missing": 0
+    },
+    "spell": {
+      "checked": 1527,
+      "missing": 0
+    }
+  },
+  "architecture": {
+    "source": "C:\\Users\\arcaz\\Downloads\\openbexi_spell_v0.8_architecture_release_package.zip",
+    "zip_sha256": "ad6e5160baed924073229170e4beda15383c18ae269e7e91e25ea6258d8cf450",
+    "scope": "Unmodified user-supplied target design; not qualification evidence",
+    "diagrams": {
+      "previous_comparison.png": {
+        "member": "openbexi_spell_v0.8_architecture_release_package/diagrams/previous_comparison.png",
+        "sha256": "7ac2b6ac31a031ab9407798d66f757b55fd8835a5c676b3dcbb54084150fd260",
+        "bytes": 2283937
+      },
+      "v08_server.png": {
+        "member": "openbexi_spell_v0.8_architecture_release_package/diagrams/v08_server.png",
+        "sha256": "8ff6dbca86bea9549c87fc4c9bbe2040fffc947a6d2454b1b79185592c9a178c",
+        "bytes": 508615
+      }
+    }
+  },
+  "memory_gate": {
+    "status": "blocked",
+    "trace_seconds": 303.491,
+    "growth_bytes": 319567872,
+    "limit_bytes": 67108864,
+    "swap_bytes": 0,
+    "correction_established": false,
+    "original_hours_attempted_in_cleanup": false
+  }
+}
