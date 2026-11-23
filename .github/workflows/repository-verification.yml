@@ -2,6 +2,10 @@ name: Fresh checkout complete IDE verification
 on:
   workflow_dispatch:
     inputs:
+      ide_commit:
+        description: Exact IDE wheel source when the branch also contains qualification evidence
+        required: false
+        type: string
       spell_commit:
         description: Exact companion SPELL commit for its simulator SDK
         required: false
@@ -17,6 +21,9 @@ jobs:
       PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.ide_commit || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.13.17'
@@ -24,13 +31,21 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           repository: arcazj/openbexi_spell_plugin
-          ref: ${{ inputs.spell_commit || 'a260204f4fb6b64dfe99ff87c8535c29a6ccd69b' }}
+          ref: ${{ inputs.spell_commit || '655f5b5a2de31bd4f8cba44794a1798342986512' }}
           path: .qualification/companion-plugin
+          persist-credentials: false
       - name: Install Qt system library
         run: sudo apt-get update && sudo apt-get install -y libegl1
       - name: Build and install the canonical desktop wheel
         run: |
           mkdir -p "$RUNNER_TEMP/ide-src" .qualification/v08-client/wheels
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          def head(path):
+              return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=path, text=True).strip()
+          subjects = dict(ide_commit=head('.'), spell_commit=head('.qualification/companion-plugin'), workflow_commit=os.environ['GITHUB_SHA'])
+          pathlib.Path('.qualification/v08-client/subjects.json').write_text(json.dumps(subjects, indent=2) + '\n')
+          PY
           git archive --format=tar HEAD | tar -xf - -C "$RUNNER_TEMP/ide-src"
           export SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)
           python -m pip wheel --no-deps "$RUNNER_TEMP/ide-src" -w .qualification/v08-client/wheels
