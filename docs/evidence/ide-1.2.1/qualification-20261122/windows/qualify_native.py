@@ -1,9 +1,11 @@
 """Drive installed native-launch widgets and collect a matched read-only worker observation."""
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
+import inspect
 import json
 from pathlib import Path
 import subprocess
@@ -13,7 +15,7 @@ from unittest.mock import patch
 
 from PySide6.QtCore import QSettings, Qt
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QFileDialog
+from PySide6.QtWidgets import QApplication, QComboBox, QFileDialog, QLabel, QPushButton
 from openbexi_ide.app import MainWindow
 
 
@@ -23,6 +25,7 @@ def main():
     parser.add_argument("--connection-file", default="connection.json", choices=("connection.json", "ipv4.json"))
     parser.add_argument("--worker", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--prompt", action="store_true", help="Answer the approved YES/NO native qualification procedure")
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -33,6 +36,7 @@ def main():
     report = {
         "passed": False, "python": sys.executable, "qt_platform": app.platformName(),
         "ide_version": importlib.metadata.version("openbexi-ide"),
+        "ide_origin": str(Path(inspect.getfile(MainWindow)).resolve()),
         "harness_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "fixture_sha256": hashlib.sha256((args.case / "case.json").read_bytes()).hexdigest(),
         "worker": args.worker, "worker_image": fixture["worker_image"], "runtime_image": fixture["image"], "events": [],
@@ -101,9 +105,94 @@ def main():
         assert view.grab().save(str(target))
         report.setdefault("screenshots_sha256", {})[target.name] = hashlib.sha256(target.read_bytes()).hexdigest()
 
+    def answer_native_prompt(owner, observer):
+        question = "Continue the qualification procedure?"
+        wait(lambda: not owner.busy and owner.prompt_button.isVisible() and owner.prompt_button.isEnabled(),
+             "waiting for the owner's native prompt", 48)
+        QTest.mouseClick(observer.refresh_button, Qt.LeftButton)
+        wait(lambda: not observer.busy and observer.executions.topLevelItemCount() == 1, "refreshing prompt observer")
+        observer.executions.setCurrentItem(observer.executions.topLevelItem(0))
+        observer_row = observer.selected()
+        assert observer_row["id"] == report["execution_id"]
+        assert "native_prompt_pending" not in observer_row and question not in json.dumps(observer_row)
+        assert not observer.prompt_button.isVisible() and observer.prompt_dialog is None
+        event("observer_filtered_pending_prompt", execution_id=observer_row["id"])
+        wait(lambda: not owner.busy and owner.prompt_button.isEnabled(), "opening owner prompt")
+        QTest.mouseClick(owner.prompt_button, Qt.LeftButton)
+        wait(lambda: owner.prompt_dialog is not None and owner.prompt_dialog.isVisible(), "opening the native dialog")
+        dialog = owner.prompt_dialog
+        assert dialog.windowTitle() == "Native procedure prompt"
+        assert any(question in label.text() for label in dialog.findChildren(QLabel) if label.isVisible())
+        choices = next(widget for widget in dialog.findChildren(QComboBox) if widget.isVisible())
+        send = next(button for button in dialog.findChildren(QPushButton) if button.text() == "Send answer")
+        assert choices.currentIndex() == -1 and not send.isEnabled()
+        options = [choices.itemText(index) for index in range(choices.count())]
+        normalized = tuple(option.strip().casefold() for option in options)
+        assert normalized in {("y", "n"), ("yes", "no")}, options
+        screenshot(dialog, "owner-native-prompt")
+        event("owner_displayed_native_prompt", question=question, choices=options, send_requires_selection=True)
+        # The native worker's workspace is tmpfs and vanishes on process exit.
+        # Start the read-only marker observation before submitting the real reply.
+        observe_marker = """
+import hashlib, json, time
+from pathlib import Path
+marker = Path('/workspace/approved-procedure-completed')
+expected = b'Operator confirmed the qualification prompt'
+deadline = time.monotonic() + 55
+print("watching", flush=True)
+while time.monotonic() < deadline:
+    if marker.is_file() and marker.read_bytes() == expected:
+        print(json.dumps(dict(path=str(marker), bytes=len(expected), sha256=hashlib.sha256(expected).hexdigest())), flush=True)
+        break
+    time.sleep(0.02)
+else:
+    raise RuntimeError('Native prompt marker did not appear')
+"""
+        with subprocess.Popen(
+            ["docker", "exec", args.worker, "python", "-I", "-c", observe_marker],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        ) as watcher:
+            with ThreadPoolExecutor(max_workers=1) as reader:
+                ready = reader.submit(watcher.stdout.readline)
+                wait(ready.done, "starting the read-only worker marker observation", 10)
+                assert ready.result().strip() == b"watching"
+            QTest.keyClick(choices, Qt.Key_Home)
+            assert choices.currentIndex() == 0 and send.isEnabled()
+            QTest.mouseClick(send, Qt.LeftButton)
+            event("owner_sent_native_answer", selected_index=0)
+            wait(lambda: watcher.poll() is not None, "reading the executing procedure's marker", 65)
+            raw, error = watcher.communicate(timeout=2)
+            assert watcher.returncode == 0, error.decode(errors="replace")
+            event("verified_native_post_answer_marker", **json.loads(raw))
+
+    def verify_prompt_receipt():
+        inspect_prompt = """
+import json, sqlite3, sys
+execution = sys.argv[1]
+with sqlite3.connect('file:/state/context.sqlite3?mode=ro', uri=True) as db:
+    db.row_factory = sqlite3.Row
+    sql = ("SELECT p.prompt_id, p.state AS prompt_state, p.outcome, r.owner, r.action, "
+           "r.state AS reply_state, r.diagnostic FROM native_prompts p "
+           "JOIN native_prompt_replies r USING (execution_id, prompt_id) WHERE p.execution_id=?")
+    matches = db.execute(sql, (execution,)).fetchall()
+    assert len(matches) == 1
+    receipt = dict(matches[0])
+    assert receipt["prompt_state"] == "CLOSED" and receipt["outcome"] == "ANSWER_SELECTED"
+    assert receipt["owner"] == "alice" and receipt["action"] == "ANSWER"
+    assert receipt["reply_state"] == "CONSUMED_UNPROVEN"
+    print(json.dumps(receipt))
+"""
+        receipt = subprocess.check_output(
+            ["docker", "exec", fixture["prefix"] + "-context", "python", "-I", "-c",
+             inspect_prompt, report["execution_id"]],
+            timeout=8,
+        )
+        event("verified_durable_prompt_and_reply", **json.loads(receipt))
+
     next_check, observations = 0, []
     try:
         assert app.platformName() == "windows"
+        assert Path(report["ide_origin"]).is_relative_to(Path(sys.prefix).resolve())
         alice = connect("alice")
         observer = connect("observer")
         assert not observer.launch_button.isEnabled() and not observer.reserve_button.isEnabled()
@@ -129,6 +218,8 @@ def main():
         wait(lambda: not alice.busy and alice.command_buttons["CMD_RUN"].isEnabled(), "enabling Run")
         QTest.mouseClick(alice.command_buttons["CMD_RUN"], Qt.LeftButton)
         event("run_continue_clicked")
+        if args.prompt:
+            answer_native_prompt(alice, observer)
         wait(lambda: observed("native-finished"), "waiting for native procedure completion", 100)
         finished = next(r for r in observations if r.get("event") == "native-finished" and r.get("execution_id") == report["execution_id"])
         assert finished["native_status"] == "FINISHED" and finished["native_lifecycle_receipts_settled"]
@@ -149,6 +240,8 @@ def main():
             screenshot(view, role + "-finished")
             event(role + "_displayed_result", execution_id=observed_row["id"], lifecycle=observed_row["lifecycle"],
                   native_root_result=row.text(column), native_controls_disabled=True)
+        if args.prompt:
+            verify_prompt_receipt()
         report["passed"] = True
     except BaseException as error:
         report["error"] = str(error)
