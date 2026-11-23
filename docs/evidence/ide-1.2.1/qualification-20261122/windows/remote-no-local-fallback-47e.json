@@ -1,0 +1,139 @@
+{
+  "status": "PASS",
+  "scope": "Windows installed Qt server actions during actual client-side network loss. The dedicated TLS pass-through socket stopped; the original Gateway continued serving a separate authenticated observer.",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "installed_wheels_reverified": {
+    "openbexi_ide-1.2.2-py3-none-any.whl": {
+      "sha256": "1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+      "verified_installed_members": 67
+    },
+    "openbexi_spell_dss-0.8.0-py3-none-any.whl": {
+      "sha256": "93e1b280ef192b4da0994b0fe66d8168dd702e582bcb5e0aa5e6d84c09361caa",
+      "verified_installed_members": 62
+    },
+    "openbexi_spell_host-0.8.0-py3-none-any.whl": {
+      "sha256": "8ecfee7b6484ed86246b91a22d8c0c1d544682af51662feae88da98af5beaa6f",
+      "verified_installed_members": 13
+    },
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": {
+      "sha256": "c167dd91b6d3f18ae1de522cedfc20a9b70e504c36c541663687a2c1adda5a8e",
+      "verified_installed_members": 27
+    },
+    "openbexi_spell_server-0.8.0-py3-none-any.whl": {
+      "sha256": "d39f4c6cc0735fea0c1331724a520658d866faf4548ded7f01802fcab2f6f3e8",
+      "verified_installed_members": 33
+    },
+    "openbexi_spell_shared-0.8.0-py3-none-any.whl": {
+      "sha256": "80a3affab5a552363a62f7e5fe86ce45dbe3284aaf5eedd9f17bea23e1dd2374",
+      "verified_installed_members": 6
+    }
+  },
+  "qt_platform": "windows",
+  "installed_role_images": {
+    "server_image": "sha256:f500c700cb5714a2040064a1a9bc93e3e86ae086cdc28dc65d363161af3ba94e",
+    "core": "sha256:b1b46dcda1f8db45889f6a145d2125362bbc04c41ded6e956ea99ca1ea61f968",
+    "worker_image": "sha256:489ff81aaa52ecbf09b4281499ed00f22fdd8b19e51e133a0202f2bbb6a40413"
+  },
+  "disposable_namespace": "obx-native-node47b",
+  "gateway_certificate_sha256": "b8a24c1c7f2d92343d94e4aa4fafaf80a530d748ecde60c2c7c7e8671681cf6e",
+  "method": "The installed Qt networking thread retained its original HTTPS origin and certificate pin. A process-scoped address resolver routed its TCP connects to a new Windows loopback relay. The relay forwarded encrypted bytes to the original Gateway. The observer used the original route throughout. No client or service response was simulated.",
+  "positive_control": {
+    "same_python_source_sha256": "bd590cc520d4887677f5bc6e609b42197bd544149c13a2ca2d911fb5550ccf1b",
+    "ordinary_local_run_created_marker": true,
+    "guarded_marker_name": "local-executed-fc6fa94d-3fa7-4835-a4b2-4d4a8182afbe.txt"
+  },
+  "live": {
+    "subject": "alice",
+    "status": "Connected • alice",
+    "catalog_entries": 10,
+    "selected_procedure": "procedure-02",
+    "selected_remote_execution": "66690072-cca6-429f-9a87-2fc720d0bd3a",
+    "tls_connections": 4,
+    "controls": {
+      "local_run": false,
+      "local_debug": false,
+      "busy_local": false,
+      "server_reserve": true,
+      "server_start_native": false,
+      "server_run": false,
+      "authenticated_state": true,
+      "server_client_attached": true,
+      "panel_controller_sessions": 0,
+      "has_controller_for_selection": false
+    }
+  },
+  "relay_stopped": {
+    "verified_connect_refused": true,
+    "user_action": "Reserve",
+    "visible_action_error": "SPELL server: 503 gateway_unavailable",
+    "explicit_refresh_error": "SPELL server: 503 gateway_unavailable",
+    "local_shortcuts": [
+      "F5",
+      "Shift+F5"
+    ],
+    "run_guard": "Server execution is not available in this development build. Disconnect before using local Run.",
+    "debug_guard": "Server debugging is not available in this development build. Disconnect before using local Debug.",
+    "controls": {
+      "local_run": false,
+      "local_debug": false,
+      "busy_local": false,
+      "server_reserve": false,
+      "server_start_native": false,
+      "server_run": false,
+      "authenticated_state": false,
+      "server_client_attached": true,
+      "panel_controller_sessions": 0,
+      "has_controller_for_selection": false
+    },
+    "independent_original_gateway_authenticated": true,
+    "guarded_marker_created": false,
+    "local_controller_starts": 0
+  },
+  "after_explicit_refresh": {
+    "subject": "alice",
+    "status": "Connected • alice",
+    "tls_connections": 3,
+    "controls": {
+      "local_run": false,
+      "local_debug": false,
+      "busy_local": false,
+      "server_reserve": true,
+      "server_start_native": false,
+      "server_run": false,
+      "authenticated_state": true,
+      "server_client_attached": true,
+      "panel_controller_sessions": 0,
+      "has_controller_for_selection": false
+    },
+    "server_rows_before_and_after": [
+      {
+        "id": "66690072-cca6-429f-9a87-2fc720d0bd3a",
+        "procedure_id": "procedure-01",
+        "owner": "alice",
+        "control_state": "RECOVERY_REQUIRED",
+        "lifecycle": "RECOVERY_REQUIRED",
+        "native_root_result": null
+      }
+    ],
+    "guarded_marker_created": false,
+    "local_controller_starts": 0
+  },
+  "receipts_sha256": {
+    "raw_result": "ce40f376308309d0398d6ce7693de1e6b9f468cef297344469ea3c7cb140e8b2",
+    "installation": "66398913dc87c09c4f56661ebbbe2979296c2735ee1e630e2c8ea6442f3ea469",
+    "qualify_remote_disconnect.py": "6b7f9246a3d2694007c1ea3607f3cb3a9176fac7579a8beb369e46742de082c8",
+    "first_local_only_probe": "86273124d5c834bb705eb35b34e5fa830a53bf8a3b2c9368ff2f7057b9709cf5",
+    "first_passing_run": "7981a19e7d242c5a121e81c32be11741e46f18bb26febb7b5c036288bb19bbe7"
+  },
+  "earlier_harness_observation": "An initial local positive-control wait expired before the remote test. The resolved fixture yields to the Python Qt worker. Two complete runs passed, including the final run using the real file chooser without external input.",
+  "reproduce": "<installed Windows venv>/Scripts/python.exe -I qualify_remote_disconnect.py --case <authorized per-role same-origin fixture> --installation <verified online install> --output <new directory>"
+}
