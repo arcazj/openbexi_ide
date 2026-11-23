@@ -1,0 +1,140 @@
+{
+  "scope": "Private intermediate wheels before canonical source freeze",
+  "installed": {
+    "artifact_sha256": {
+      "openbexi_ide-1.2.2-py3-none-any.whl": "9be19f840d1338623332c94337c60522242383af3bcd458c5b28fa6ae5d8705e",
+      "openbexi_spell_dss-0.8.0-py3-none-any.whl": "a7803582061401867265fcf2ba25f43a3e970ff07cb304fce98afd72771d364d",
+      "openbexi_spell_host-0.8.0-py3-none-any.whl": "c0cf31571b07a033a0360a21504b23168e7e1211de94fcd8273fa387bf5fd188",
+      "openbexi_spell_server-0.8.0-py3-none-any.whl": "fed9387a9fc5aadda3fa4b1bd38d6daefc39a4ec93868914ff246b47e0caa623",
+      "openbexi_spell_shared-0.8.0-py3-none-any.whl": "4ac666af9109942294aa18ec38373a97a4cbea636572967a6ebdcdc6970b3de8"
+    },
+    "before_spell": {
+      "openbexi_spell_plugin": false,
+      "openbexi_spell_host": false,
+      "openbexi_spell_shared": false,
+      "openbexi_spell_server": false,
+      "openbexi_spell_dss": false,
+      "spell": false,
+      "dss": false
+    },
+    "installed_versions": {
+      "debugpy": "1.8.22",
+      "grpcio": "1.84.0",
+      "openbexi-ide": "1.2.2",
+      "openbexi-spell-dss": "0.8.0",
+      "openbexi-spell-host": "0.8.0",
+      "openbexi-spell-server": "0.8.0",
+      "openbexi-spell-shared": "0.8.0",
+      "pip": "26.2.1",
+      "protobuf": "7.36.2",
+      "Pygments": "2.21.0",
+      "PySide6_Essentials": "6.10.3",
+      "shiboken6": "6.10.3",
+      "typing_extensions": "4.16.0"
+    },
+    "ordinary_python": {
+      "passed": true,
+      "version": "1.2.2",
+      "python": "F:\\openbexi-builds\\qualification-20261122\\windows\\candidate-01\\venv\\Scripts\\python.exe",
+      "prefix": "F:\\openbexi-builds\\qualification-20261122\\windows\\candidate-01\\venv",
+      "origin": "F:\\openbexi-builds\\qualification-20261122\\windows\\candidate-01\\venv\\Lib\\site-packages\\openbexi_ide\\app.py",
+      "script_sha256": "2c337034cc08aa6d110cff81699157c8c621195d63ed210c2c55992db08d0069",
+      "checks": [
+        "Default private CPython interpreter and ordinary Python Run",
+        "debugpy breakpoint, stack, variables, edit, Step and Continue"
+      ],
+      "qt_platform": "windows",
+      "scope": "Installed Qt widget actions and debugger in the selected desktop environment"
+    },
+    "pip_check": {
+      "label": "pip-check",
+      "argv": [
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\candidate-01\\venv\\Scripts\\python.exe",
+        "-I",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    "installed_member_counts": {
+      "openbexi_ide-1.2.2-py3-none-any.whl": 67,
+      "openbexi_spell_dss-0.8.0-py3-none-any.whl": 62,
+      "openbexi_spell_host-0.8.0-py3-none-any.whl": 13,
+      "openbexi_spell_server-0.8.0-py3-none-any.whl": 29,
+      "openbexi_spell_shared-0.8.0-py3-none-any.whl": 6
+    },
+    "passed": true
+  },
+  "install_record": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\candidate-01\\result.json",
+    "sha256": "be280ea1e59b3f4b594c4bcb15566a31ee9d908f2a95c29c4d05b0c7ccec4659"
+  },
+  "gateway_hostname_attempt": {
+    "status": "FAIL",
+    "error": "Timed out reserving native source: ['SPELL server: 503 gateway_unavailable', 'Connected \u2022 observer \u2022 execution unavailable']",
+    "events": [
+      {
+        "event": "roles_connected",
+        "time": "2026-11-23T00:43:39.433148+00:00",
+        "context": "A",
+        "subject": "alice",
+        "observer": "observer"
+      }
+    ],
+    "evidence": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-win01\\result.json",
+      "sha256": "a46dc65cb626bc5d15981e305c0cd342f5f2aa3fa602dece0fb248ac69583005"
+    },
+    "follow_up": "IPv4-only published Docker port. Windows localhost negotiation consumed the unchanged request deadline. The backend reported no reservation or spent slot."
+  },
+  "direct_ipv4_attempt": {
+    "native_launch": "PASS",
+    "public_terminal_result": "FAIL",
+    "events": [
+      {
+        "event": "roles_connected",
+        "time": "2026-11-23T00:45:26.630920+00:00",
+        "context": "A",
+        "subject": "alice",
+        "observer": "observer"
+      },
+      {
+        "event": "reserved",
+        "time": "2026-11-23T00:45:28.332082+00:00",
+        "execution_id": "7155a58f-9e5c-4350-8d2a-44e39a5474f7",
+        "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+        "revision": "8708496044323f1377cb233ce4011624cc427ef3"
+      },
+      {
+        "event": "start_native_clicked",
+        "time": "2026-11-23T00:45:28.372276+00:00"
+      },
+      {
+        "event": "native_ready",
+        "time": "2026-11-23T00:45:31.631604+00:00",
+        "execution_id": "7155a58f-9e5c-4350-8d2a-44e39a5474f7"
+      },
+      {
+        "event": "run_continue_clicked",
+        "time": "2026-11-23T00:45:31.635044+00:00"
+      },
+      {
+        "event": "native_finished",
+        "time": "2026-11-23T00:45:33.759196+00:00"
+      },
+      {
+        "event": "observer_matched_execution",
+        "time": "2026-11-23T00:45:34.582817+00:00",
+        "execution_id": "7155a58f-9e5c-4350-8d2a-44e39a5474f7",
+        "lifecycle": "STARTING"
+      }
+    ],
+    "evidence": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-win01-ipv4\\result.json",
+      "sha256": "aef22a0a38a481ae56f99a451cb4014f34fd7098c664be605ccf4b6a926f60ff"
+    },
+    "finding": "The worker emitted native-finished. The observer displayed the same ID but had only the STARTING reservation lifecycle and no root native result."
+  }
+}

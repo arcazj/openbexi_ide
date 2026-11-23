@@ -1,5 +1,11 @@
 # Current qualification status
 
+## November 22 joint execution
+
+**Hold the release.** Ordinary Python Run/Debug passed on the published 1.2.1 wheel. Its public SPELL interface stops at reservation. The 1.2.2 candidate launched and completed a native procedure visible to its controller and observer. On the matched 0.8.0 runtime, both five-minute sanitizer runs exceeded 64 MiB growth. [Windows receipts](evidence/ide-1.2.1/qualification-20261122/windows/canonical-windows.json) · [Joint verdicts and evidence](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
+
+## November 6 reference
+
 Updated November 6, 2026 UTC. **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 423.326 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
 
 The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.

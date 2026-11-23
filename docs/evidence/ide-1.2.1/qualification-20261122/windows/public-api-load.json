@@ -1,0 +1,801 @@
+{
+  "scope": "Windows installed pinned-mTLS client, three independent Linux HTTPS roles, ten isolated full-native Executors, and twenty distinct observer certificates. Driver binding is context-audit. The fixture uses no external GENERIC DSS.",
+  "ide_commit": "3ec9d4d998afa77f8590cd1e48c10b1a38561dca",
+  "spell_python_commit": "c7292d39f6f40eb98d4edb5304f4a49a0dd50307",
+  "image": {
+    "server": "sha256:6189fc60d20bcfd14ae40f10010fcd2cc0c79a9ac70da3118c05c8e2c5dd6583",
+    "worker": "sha256:de617ca4c3e0d2550bd639c201182f3f36ee21de6d7fd232e17fead8a47e47f3"
+  },
+  "installer": "canonical-windows.json",
+  "verdicts": {
+    "twenty_simultaneous_authenticated_reads": "PASS",
+    "one_durable_reservation_from_100_simultaneous_attempts": "PASS",
+    "ten_distinct_native_procedures_running_simultaneously": "PASS",
+    "twenty_observers_received_ten_finished_results": "PASS"
+  },
+  "case": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-ten01\\case.json",
+    "sha256": "cc384feaefaafa39624e05058e0f20853d59a8a36072709a5461ac1175e76987"
+  },
+  "deployment": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-ten01\\deployment.json",
+    "sha256": "66444f02877c081e2c6ebd68ee3fbf9f232279401a03486bf587a5b22299ec7d"
+  },
+  "complete_100_requests_and_all_observers": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-ten01\\probe\\result.json",
+    "sha256": "0e2d8a6dc97168d2de677b345d6518c22517251882853e9c17503a2e58459e9d"
+  },
+  "durable_sql_and_worker_logs": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-ten01\\durable.json",
+    "sha256": "4c633ac92102f3a2ccf37ea69812897174982b48ffbb1e6f55202161192c003d"
+  },
+  "setup": [
+    "python api/deploy.py --name obx-qual-load-ten01 --subnet 72 --output <new case>",
+    "<verified installed venv>/Scripts/python.exe -I api/qualify_load.py --case <case> --output <case>/probe",
+    "python api/collect.py --case <case> --cleanup"
+  ],
+  "harnesses_sha256": {
+    "collect.py": "9b51d757d0a1980d139815ad6628914625d4596a19ee22d0b30846af5cf2bcc0",
+    "competing_native_start.py": "3569caff8de109db99f950359a2ed297dd6fa29a2cc5878b164851334e103f0d",
+    "deploy.py": "f76fe487ac2e64af9e0a84eb7ce2f860fef07eb7f4fe193b7019c5b4103bf91c",
+    "provision.py": "0201f749dd186af23f4d8cde5a064a52876d52bc79fc64437cee3a07e0c2dc13",
+    "qualify_load.py": "76c9ab4151427c02d0fa0298c6f88fdb8dfaac696b7318bfdc8d7455bd6935a4"
+  },
+  "race_admission": {
+    "public_reservations": 1,
+    "owner_response_count": 1,
+    "response_counts": {
+      "409/request_denied": 99,
+      "200/": 1
+    },
+    "public_execution_ids": [
+      "5fd48f81-502f-4244-bb2e-a4d33839114d"
+    ],
+    "start_spread_seconds": 0.03111
+  },
+  "source_revision": "6edea66eb7e293905e7cfc1cfb9d7f0f8ea4b00c",
+  "procedures": {
+    "procedure-01": {
+      "id": "5fd48f81-502f-4244-bb2e-a4d33839114d",
+      "manifest_sha256": "eaba425cd3142f2a7d5b792020cb5dfccf0bd7e20cc9ca100ede298ec015d624"
+    },
+    "procedure-02": {
+      "id": "3da8042b-27ac-4a44-b531-7a3ae3cdd034",
+      "manifest_sha256": "9399eeb5cfc1f56263d3d5f0d2fc9eaf082910609a644ce88f9858ce939011c4"
+    },
+    "procedure-03": {
+      "id": "662bd657-cb80-4e03-bcd1-ffa6a1b304d4",
+      "manifest_sha256": "bd15692d009c466bff97f6c32345fe18cbd460417652ddeb30ba6fa6a9340d6a"
+    },
+    "procedure-04": {
+      "id": "1a80085f-517a-4a5b-a0cb-23922b997c8f",
+      "manifest_sha256": "c124132b83f689e3ef95e1bea8e456c9c92ff5f1c9b2a7691c62384ecd9ccabd"
+    },
+    "procedure-05": {
+      "id": "6277b523-e38d-490b-92ae-fadb7366d62f",
+      "manifest_sha256": "8253c7b09011cce6cc66bcde216d134cf26bb53ae6e3d2015af46f4a1f551af4"
+    },
+    "procedure-06": {
+      "id": "9aab57da-3c3b-46bd-aedf-0df21598b8b8",
+      "manifest_sha256": "e262344664607c26f2ed89e68aede522e6271cf70eb0def4addf6cc381c18253"
+    },
+    "procedure-07": {
+      "id": "05cc7a89-41a2-4f19-a6ce-5eddfe26f5d4",
+      "manifest_sha256": "76f9a8aa766873380f6b1422dc7d1d88f44c0f1b4345cf7c14f2286f95b7aed4"
+    },
+    "procedure-08": {
+      "id": "4fefcc98-972a-4521-aa01-b81dc8e04547",
+      "manifest_sha256": "e7aa4b3b2a57c83ceb26bf3bd68fb62c38f75b40d13cb3a86a7dcdf0d0e3e7e3"
+    },
+    "procedure-09": {
+      "id": "6d6f7c0f-9d4f-4aa2-86db-5e901fc5113d",
+      "manifest_sha256": "2288383b309f9c401c8e8db2cfa14552d706b5b470fe6354d5576c0f201315c0"
+    },
+    "procedure-10": {
+      "id": "5885edad-1f9c-4548-8736-3951d551ac49",
+      "manifest_sha256": "6f2fa226f61752148b74c41a471b8990ba99aa930660168e118a42c9a2e94694"
+    }
+  },
+  "authenticated_observers": {
+    "watch-01": {
+      "fingerprint": "d50bb667aa3853979f6cd6d447b10c9de24aeb8cbcf9d6b47a2be5853bb1550a",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-02": {
+      "fingerprint": "725428ad995876eadfbfe4146a088b33132a823273d3091a7610b3d712bec9b3",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-03": {
+      "fingerprint": "dbca4a17c7b3b2f13b90a0ae891e9ca5c8b88d362ee406b49ff9164f97a08d06",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-04": {
+      "fingerprint": "01bf3695b0314ba2c6a8c72b8cb1d726f17d31adbfce5e94c0629883f69739ec",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-05": {
+      "fingerprint": "ca1cfb5306ed13010e276585fbf7945a355174bfc2b8489c8e4d862d7a3bd802",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-06": {
+      "fingerprint": "1af7286a6d81e366e3c153b9c309b70cffd9040c292f4c10d0429ae3b009d25f",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-07": {
+      "fingerprint": "65b347f8dcff4ce07a821515de2ea8cb67fb7d4a02d944e543368130fb25d2f9",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-08": {
+      "fingerprint": "470d1d9cd88c8235d254a5f120db011693aa2e053f15572d0f89ce23f174a6cb",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-09": {
+      "fingerprint": "fd8ce705563acc1937e0572d3fd8454b94f6c67e7442191c871caf26a1b35953",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-10": {
+      "fingerprint": "27a396d9e36bf2b2868358353ebf5274272bb9438d20f9c09248904a0670a77d",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-11": {
+      "fingerprint": "24ea8975683ee32024a0e47faeec217cc0dcc5e535bf2b99c7464d5f87b7cf9e",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-12": {
+      "fingerprint": "1295c29043b8ab74e5596e61a8c73423ec3cd70c2da631dceeb919588252f6a0",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-13": {
+      "fingerprint": "bd9976598a648b000c7d8c4c93575bb29b34257a0a5762d91b6da175d0768bc0",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-14": {
+      "fingerprint": "7582adc73659a7acba59a50b882100c78bc0fec328d608f61d950c7e8a7b7c72",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-15": {
+      "fingerprint": "d94395769ab26146efcfe7727c7073381fe788ac19e604d216e9d5c86d9def52",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-16": {
+      "fingerprint": "5b3f8de7cdb82bc99f8a27790a9e25a0ed5a7237b07a3d77276585846fe5c7fc",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-17": {
+      "fingerprint": "a5a3e10eb03e941efcbc5b38f23ce51618d1a52925618af0586cfd8b66f1333a",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-18": {
+      "fingerprint": "42872526eb6c65a30494de6702ed68d6a7bfb39f2b68a01d0d280ba7738718b3",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-19": {
+      "fingerprint": "3fecd23e3b273c0dcc352547b83ee0a65e95847c0cd1be1e4722177f8d7ba548",
+      "rows": 0,
+      "finished": 0
+    },
+    "watch-20": {
+      "fingerprint": "a8f961437798af3d6f5741f61f591a1ac3d3c58567c3c9cf9fbc8f75587bc693",
+      "rows": 0,
+      "finished": 0
+    }
+  },
+  "observer_authority_denied": {
+    "status": 403,
+    "code": "request_denied"
+  },
+  "all_twenty_final_counts": {
+    "watch-01": 10,
+    "watch-02": 10,
+    "watch-03": 10,
+    "watch-04": 10,
+    "watch-05": 10,
+    "watch-06": 10,
+    "watch-07": 10,
+    "watch-08": 10,
+    "watch-09": 10,
+    "watch-10": 10,
+    "watch-11": 10,
+    "watch-12": 10,
+    "watch-13": 10,
+    "watch-14": 10,
+    "watch-15": 10,
+    "watch-16": 10,
+    "watch-17": 10,
+    "watch-18": 10,
+    "watch-19": 10,
+    "watch-20": 10
+  },
+  "all_ten_worker_overlap_seconds": 11.574798,
+  "root_executable_hashes": [
+    "237070cdab561537bac91de82b324723ce9b4e970ce5f4716a023b8f2a9a986f"
+  ],
+  "context_integrity": [
+    "ok"
+  ],
+  "spent_slots": 10,
+  "retained_reservations": 10,
+  "terminal_root_count": 10,
+  "results": [
+    {
+      "execution_id": "05cc7a89-41a2-4f19-a6ce-5eddfe26f5d4",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "1a80085f-517a-4a5b-a0cb-23922b997c8f",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "3da8042b-27ac-4a44-b531-7a3ae3cdd034",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "4fefcc98-972a-4521-aa01-b81dc8e04547",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "5885edad-1f9c-4548-8736-3951d551ac49",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "5fd48f81-502f-4244-bb2e-a4d33839114d",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "6277b523-e38d-490b-92ae-fadb7366d62f",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "662bd657-cb80-4e03-bcd1-ffa6a1b304d4",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "6d6f7c0f-9d4f-4aa2-86db-5e901fc5113d",
+      "native_status": "FINISHED"
+    },
+    {
+      "execution_id": "9aab57da-3c3b-46bd-aedf-0df21598b8b8",
+      "native_status": "FINISHED"
+    }
+  ],
+  "read_only_database_source": "Independent SQLite read from the retained task volume after teardown.",
+  "workers": {
+    "worker-01": {
+      "container": "3c8b5cc94150311dceaff4ddca3376baa0cc0a936b1c197c43aaac7b7883afda",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "0914df40652a6265a93b1fc93369dc1e28be4e4a99019d9dbff65bdfd045482f",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:03.463736000Z",
+          "event": "native-ready",
+          "execution_id": "5fd48f81-502f-4244-bb2e-a4d33839114d",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.302806100Z",
+          "event": "native-running",
+          "execution_id": "5fd48f81-502f-4244-bb2e-a4d33839114d"
+        },
+        {
+          "at": "2026-11-23T01:10:17.489581800Z",
+          "event": "native-finished",
+          "execution_id": "5fd48f81-502f-4244-bb2e-a4d33839114d",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-02": {
+      "container": "1edc00339cd2d7132777876a43cffffce7ddfae1a3a8b7f340ad05c265395737",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "78c8ca33a53890bae725bf96bf480e68fb2132b844bfd3698113f2c414a1fd9c",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:03.430242100Z",
+          "event": "native-ready",
+          "execution_id": "3da8042b-27ac-4a44-b531-7a3ae3cdd034",
+          "native_status": "PAUSED",
+          "namespace_pid": 6
+        },
+        {
+          "at": "2026-11-23T01:10:05.791781000Z",
+          "event": "native-running",
+          "execution_id": "3da8042b-27ac-4a44-b531-7a3ae3cdd034"
+        },
+        {
+          "at": "2026-11-23T01:10:17.810747300Z",
+          "event": "native-finished",
+          "execution_id": "3da8042b-27ac-4a44-b531-7a3ae3cdd034",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-03": {
+      "container": "50fd21af9ceeb1fa12638f2fbc49476984518199cd3dfd1dfd6b91b937a2c51d",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "ea55135844c4c724b2a863608dc124ac20b6a9b132b138a15710e93d6458446e",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:03.621870400Z",
+          "event": "native-ready",
+          "execution_id": "662bd657-cb80-4e03-bcd1-ffa6a1b304d4",
+          "native_status": "PAUSED",
+          "namespace_pid": 6
+        },
+        {
+          "at": "2026-11-23T01:10:05.402784500Z",
+          "event": "native-running",
+          "execution_id": "662bd657-cb80-4e03-bcd1-ffa6a1b304d4"
+        },
+        {
+          "at": "2026-11-23T01:10:17.682842900Z",
+          "event": "native-finished",
+          "execution_id": "662bd657-cb80-4e03-bcd1-ffa6a1b304d4",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-04": {
+      "container": "8bf9548e39725d4c040ceba3d995fbc31536d0b93e67aa538476fa2aa16f1f58",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "abf67d440c7c6c09645f5be17d8ab9ce098ff61785c7ab79903074db245743f1",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:03.888803000Z",
+          "event": "native-ready",
+          "execution_id": "1a80085f-517a-4a5b-a0cb-23922b997c8f",
+          "native_status": "PAUSED",
+          "namespace_pid": 6
+        },
+        {
+          "at": "2026-11-23T01:10:05.439935800Z",
+          "event": "native-running",
+          "execution_id": "1a80085f-517a-4a5b-a0cb-23922b997c8f"
+        },
+        {
+          "at": "2026-11-23T01:10:17.677842600Z",
+          "event": "native-finished",
+          "execution_id": "1a80085f-517a-4a5b-a0cb-23922b997c8f",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-05": {
+      "container": "bb3ec11625b0b75698c9ef77cd77705921c019527f7af8eb058cce5ed9d4aaad",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "550fee88440ac28301df0740295bd9714d31fe5eab43453f27cf685f9b1bd4f2",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.099973500Z",
+          "event": "native-ready",
+          "execution_id": "6277b523-e38d-490b-92ae-fadb7366d62f",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.914783800Z",
+          "event": "native-running",
+          "execution_id": "6277b523-e38d-490b-92ae-fadb7366d62f"
+        },
+        {
+          "at": "2026-11-23T01:10:18.079043900Z",
+          "event": "native-finished",
+          "execution_id": "6277b523-e38d-490b-92ae-fadb7366d62f",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-06": {
+      "container": "15ebb6a40c270e62535bbc55b1c42b590cfa0425d8d09a75ccf5bca344214a33",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "122936044d5a2e8678d45cc5ae54fbacec4e1055e4eda8f27976425f3ceda1f9",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.031845800Z",
+          "event": "native-ready",
+          "execution_id": "9aab57da-3c3b-46bd-aedf-0df21598b8b8",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.841840600Z",
+          "event": "native-running",
+          "execution_id": "9aab57da-3c3b-46bd-aedf-0df21598b8b8"
+        },
+        {
+          "at": "2026-11-23T01:10:17.904992000Z",
+          "event": "native-finished",
+          "execution_id": "9aab57da-3c3b-46bd-aedf-0df21598b8b8",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-07": {
+      "container": "9dd09b1a671c1f90f5a92e560764b013c9d8a2734915aec51ed71f7aeb635310",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "9a98d9d4d46a77d41522a4349f79a53fe0d9df3acafff7678b87b54514e6a84a",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.322090200Z",
+          "event": "native-ready",
+          "execution_id": "05cc7a89-41a2-4f19-a6ce-5eddfe26f5d4",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.908829300Z",
+          "event": "native-running",
+          "execution_id": "05cc7a89-41a2-4f19-a6ce-5eddfe26f5d4"
+        },
+        {
+          "at": "2026-11-23T01:10:18.043224400Z",
+          "event": "native-finished",
+          "execution_id": "05cc7a89-41a2-4f19-a6ce-5eddfe26f5d4",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-08": {
+      "container": "a8c898e67bec0ad8e2918f099b9ce1f978a5a93f81099e6c998d5274e3ac70fa",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "44f9e6df7d5dd3f9cdd4ea289e1dd7d46a605f5a240fd75e78378f1cc20edd95",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.340907200Z",
+          "event": "native-ready",
+          "execution_id": "4fefcc98-972a-4521-aa01-b81dc8e04547",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.837860700Z",
+          "event": "native-running",
+          "execution_id": "4fefcc98-972a-4521-aa01-b81dc8e04547"
+        },
+        {
+          "at": "2026-11-23T01:10:17.882649900Z",
+          "event": "native-finished",
+          "execution_id": "4fefcc98-972a-4521-aa01-b81dc8e04547",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-09": {
+      "container": "7280750bb625ea424c94cadeffd05ce21acb72c85292c84aa05a20c1b5fbf26e",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "61413694a81a32788ec980a0975d538919fd822369c3f273c34b940062ebdf00",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.392833700Z",
+          "event": "native-ready",
+          "execution_id": "6d6f7c0f-9d4f-4aa2-86db-5e901fc5113d",
+          "native_status": "PAUSED",
+          "namespace_pid": 6
+        },
+        {
+          "at": "2026-11-23T01:10:05.914772300Z",
+          "event": "native-running",
+          "execution_id": "6d6f7c0f-9d4f-4aa2-86db-5e901fc5113d"
+        },
+        {
+          "at": "2026-11-23T01:10:18.127245000Z",
+          "event": "native-finished",
+          "execution_id": "6d6f7c0f-9d4f-4aa2-86db-5e901fc5113d",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    },
+    "worker-10": {
+      "container": "af5f2f8d76c39a327d6e21ed673a8cd5388e78f224d4edc7f877a8587232e392",
+      "process_status": "Container removed after prior collector verified exited, code zero, and no OOM; raw terminal logs retained.",
+      "log_sha256": "ba2dae6b0b1cb66f504e5acc6efe47d93325553d81cffcebce002659dccc272a",
+      "events": [
+        {
+          "at": "2026-11-23T01:10:04.550850200Z",
+          "event": "native-ready",
+          "execution_id": "5885edad-1f9c-4548-8736-3951d551ac49",
+          "native_status": "PAUSED",
+          "namespace_pid": 7
+        },
+        {
+          "at": "2026-11-23T01:10:05.880770100Z",
+          "event": "native-running",
+          "execution_id": "5885edad-1f9c-4548-8736-3951d551ac49"
+        },
+        {
+          "at": "2026-11-23T01:10:17.984264300Z",
+          "event": "native-finished",
+          "execution_id": "5885edad-1f9c-4548-8736-3951d551ac49",
+          "native_status": "FINISHED",
+          "hold_retained": true,
+          "native_lifecycle_receipts_settled": true
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "removed_containers": 13,
+    "removed_networks": 3,
+    "host_client_credentials_removed": true,
+    "retained_db_and_audit_volume": "obx-qual-load-ten01-case"
+  },
+  "total_probe_seconds": 19.104,
+  "collector_recovery": "Original collector confirmed all worker exits and the authoritative database before teardown. Windows retained read-only client key files. A second collector reread SQLite and timestamped worker logs, cleared those file attributes within the verified private directory, and confirmed cleanup.",
+  "one_reserved_logical_procedure_100_native_start_intents": {
+    "api-native100": {
+      "max_service_handlers": 24,
+      "passed": true,
+      "request_count": 100,
+      "outcomes": {
+        "503/gateway_unavailable": 76,
+        "409/request_denied": 23,
+        "200/ADMITTED": 1
+      },
+      "spread_seconds": 0.013327,
+      "execution": "42af9ffb-c529-4839-902b-ed5afbf658e8",
+      "native_ready": {
+        "event": "native-ready",
+        "execution_id": "42af9ffb-c529-4839-902b-ed5afbf658e8",
+        "native_status": "PAUSED",
+        "namespace_pid": 7
+      },
+      "native_finished": {
+        "event": "native-finished",
+        "execution_id": "42af9ffb-c529-4839-902b-ed5afbf658e8",
+        "native_status": "FINISHED",
+        "native_lifecycle_receipts_settled": true
+      },
+      "original_full_result": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-native100\\result.json",
+        "sha256": "61431915d2fde7750405f6531ef84eef03862b3527611057884afcc26a6d1239"
+      },
+      "durable": {
+        "executions": 1,
+        "spent": 1,
+        "registered": 1,
+        "results": [
+          [
+            "42af9ffb-c529-4839-902b-ed5afbf658e8",
+            "FINISHED"
+          ]
+        ],
+        "events": [
+          [
+            "CONTEXT_STARTED",
+            1
+          ],
+          [
+            "CONTROL_CONNECTION_OPENED",
+            1
+          ],
+          [
+            "EXECUTION_RESERVED",
+            1
+          ],
+          [
+            "NATIVE_DRIVER_EVENT",
+            2
+          ],
+          [
+            "NATIVE_MEMBER_REGISTERED",
+            1
+          ],
+          [
+            "NATIVE_OWNER_COMMAND_MAILBOX_DISPOSITION",
+            1
+          ],
+          [
+            "NATIVE_ROOT_RESULT_OBSERVED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_ADMITTED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_CONSUME",
+            1
+          ],
+          [
+            "OWNER_COMMAND_DELIVERED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_DISPATCH_REPORTED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_FORWARD",
+            1
+          ],
+          [
+            "WORKER_LAUNCH_PREPARATION_REQUESTED",
+            1
+          ],
+          [
+            "WORKER_PREFLIGHT_CHALLENGED",
+            1
+          ],
+          [
+            "WORKER_SOURCE_PREFLIGHT_VERIFIED",
+            1
+          ],
+          [
+            "WORKER_START_ADMITTED",
+            1
+          ],
+          [
+            "WORKER_START_CONSUMED",
+            1
+          ],
+          [
+            "WORKER_START_DELIVERY_ATTEMPTED",
+            1
+          ]
+        ]
+      },
+      "receipt_error": null
+    },
+    "api-native100-64": {
+      "max_service_handlers": 64,
+      "passed": true,
+      "request_count": 100,
+      "outcomes": {
+        "409/request_denied": 99,
+        "200/ADMITTED": 1
+      },
+      "spread_seconds": 0.01398,
+      "execution": "080b595f-443b-4ebb-aee7-0a7822ca3c14",
+      "native_ready": {
+        "event": "native-ready",
+        "execution_id": "080b595f-443b-4ebb-aee7-0a7822ca3c14",
+        "native_status": "PAUSED",
+        "namespace_pid": 7
+      },
+      "native_finished": {
+        "event": "native-finished",
+        "execution_id": "080b595f-443b-4ebb-aee7-0a7822ca3c14",
+        "native_status": "FINISHED",
+        "native_lifecycle_receipts_settled": true
+      },
+      "original_full_result": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\api-native100-64\\result.json",
+        "sha256": "18b887cb3580ffc4807b94412538e909a088938c999cc7af2ed79a2fac470105"
+      },
+      "durable": {
+        "executions": 1,
+        "spent": 1,
+        "registered": 1,
+        "results": [
+          [
+            "080b595f-443b-4ebb-aee7-0a7822ca3c14",
+            "FINISHED"
+          ]
+        ],
+        "events": [
+          [
+            "CONTEXT_STARTED",
+            1
+          ],
+          [
+            "CONTROL_CONNECTION_OPENED",
+            1
+          ],
+          [
+            "EXECUTION_RESERVED",
+            1
+          ],
+          [
+            "NATIVE_DRIVER_EVENT",
+            2
+          ],
+          [
+            "NATIVE_MEMBER_REGISTERED",
+            1
+          ],
+          [
+            "NATIVE_OWNER_COMMAND_MAILBOX_DISPOSITION",
+            1
+          ],
+          [
+            "NATIVE_ROOT_RESULT_OBSERVED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_ADMITTED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_CONSUME",
+            1
+          ],
+          [
+            "OWNER_COMMAND_DELIVERED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_DISPATCH_REPORTED",
+            1
+          ],
+          [
+            "OWNER_COMMAND_FORWARD",
+            1
+          ],
+          [
+            "WORKER_LAUNCH_PREPARATION_REQUESTED",
+            1
+          ],
+          [
+            "WORKER_PREFLIGHT_CHALLENGED",
+            1
+          ],
+          [
+            "WORKER_SOURCE_PREFLIGHT_VERIFIED",
+            1
+          ],
+          [
+            "WORKER_START_ADMITTED",
+            1
+          ],
+          [
+            "WORKER_START_CONSUMED",
+            1
+          ],
+          [
+            "WORKER_START_DELIVERY_ATTEMPTED",
+            1
+          ]
+        ]
+      },
+      "receipt_error": null
+    }
+  },
+  "single_slot_cleanup": {
+    "containers_and_networks_removed": true,
+    "24_handler_cleanup": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\api100native\\fixture-cleanup.json",
+      "sha256": "9b614ea6cb411087ca8e1813fe2a366c645fc36c184f9d3393062dff9b7cb088"
+    },
+    "64_handler_cleanup": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\single-load64\\api100native64\\fixture-cleanup.json",
+      "sha256": "014978fff01c0a5ad1a4da5c0c7e0c86a401d3dd1f52f6072dde8483f0603ec6"
+    },
+    "test_subject_key_disposition": "Four disposable Alice/observer credential directories remain outside the repositories with ACLs restricted to the executing account and SYSTEM. Automatic command review blocked both recursive test credential cleanup and the narrower request to remove only the four tls.key files. Their isolated endpoints and networks have been removed."
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "published_rc1": {
+    "release_id": 428226383,
+    "source_asset": "source-v0.8-rc1.zip",
+    "source_sha256": "2ee8d42ad82de73d70ec34a9bbbbb6b9ec9fbfce1feb83a8e719a764787373c1",
+    "asset_bytes": 41768771,
+    "tag_commit": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda",
+    "verified_source_paths": [
+      "docs/UPSTREAM-GPL-3.0.txt",
+      "jetbrains/build.py",
+      "jetbrains/qualification/HostQualification.java",
+      "jetbrains/qualification/RemovalQualification.java",
+      "jetbrains/qualify.py",
+      "jetbrains/resources/META-INF/plugin.xml",
+      "jetbrains/src/org/openbexi/spell/DapClient.java",
+      "jetbrains/src/org/openbexi/spell/SpellActions.java",
+      "jetbrains/src/org/openbexi/spell/SpellBreakpointType.java",
+      "jetbrains/src/org/openbexi/spell/SpellConfigurable.java",
+      "jetbrains/src/org/openbexi/spell/SpellConnection.java",
+      "jetbrains/src/org/openbexi/spell/SpellDebugAction.java",
+      "jetbrains/src/org/openbexi/spell/SpellDebugProcess.java",
+      "jetbrains/src/org/openbexi/spell/SpellEditorLibrary.java",
+      "jetbrains/src/org/openbexi/spell/SpellEditorSupport.java",
+      "jetbrains/src/org/openbexi/spell/SpellEditorSyncAction.java",
+      "jetbrains/src/org/openbexi/spell/SpellLaunch.java",
+      "jetbrains/src/org/openbexi/spell/SpellPalette.java",
+      "jetbrains/src/org/openbexi/spell/SpellRecords.java",
+      "jetbrains/src/org/openbexi/spell/SpellRunAction.java",
+      "jetbrains/src/org/openbexi/spell/SpellSettings.java",
+      "jetbrains/src/org/openbexi/spell/SpellSettingsAction.java",
+      "jetbrains/src/org/openbexi/spell/SpellToolWindow.java",
+      "jetbrains/src/org/openbexi/spell/SpellWorkspace.java",
+      "jetbrains/src/org/openbexi/spell/SpellWorkspaceActions.java",
+      "scripts/export_spell_editor.py"
+    ],
+    "zip_plugin_assets": []
+  },
+  "public_v07": {
+    "release_url": "https://github.com/arcazj/openbexi_spell_plugin/releases/tag/v0.7",
+    "release_id": 419427847,
+    "asset": "openbexi-spell-0.7.0.zip",
+    "asset_id": 662147851,
+    "sha256": "7f5e506b6762993cbd4fa930abe2b96d00f88c9fb907b76d9fd1ad4174b7fdf1",
+    "bytes": 106371,
+    "identical_to_rc1_source_build": true
+  },
+  "published_scope": "RC1 contains no released JetBrains ZIP. Its checked source rebuild produces precisely the published 0.7.0 ZIP and uses the local procedure bridge.",
+  "candidate_source_commit": "a6dee29e9e6b40ca10560198b5d7a046b0f3c5f3",
+  "candidate_reproduce": "python jetbrains/build.py --sdk <installed SDK> --output <new directory>",
+  "onboarding": "The private registered hosts requested the vendor user agreement. Only the account owner can make those choices and continue in the two host windows.",
+  "user_profiles": {
+    "IntelliJ": {
+      "loaded_version": "0.3.1-workspace.3",
+      "jar_sha256": "70c246d87129265993e509d2e614dbc500f9ac777927fd5475dca94341422bae",
+      "normal_ordinary_python_run_debug_entries_present": true
+    },
+    "PyCharm": {
+      "installed_version": "0.3.1-workspace.2",
+      "jar_sha256": "2ad85d3ac26f1a85ec27cb0f9ca739643335db27d614b7fd7f9d922895511f38"
+    }
+  },
+  "hosts": {
+    "intellij": {
+      "sdk": {
+        "name": "IntelliJ IDEA",
+        "version": "2026.2.5",
+        "buildNumber": "262.12573.28"
+      },
+      "legacy_command": [
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Scripts\\python.exe",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\source\\jetbrains\\qualify.py",
+        "--sdk",
+        "C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1",
+        "--plugin",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\published-openbexi-spell-0.7.0.zip",
+        "--image",
+        "sha256:d99b095d65c7fef008f9e6c02ff95c678cff295ee85a129f7a62fc0b795b1283",
+        "--interpreter",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Scripts\\python.exe",
+        "--output",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-01"
+      ],
+      "legacy_process": 20556,
+      "published_legacy_zip_load": "PASS",
+      "published_legacy_run_debug": "BLOCKED",
+      "candidate_zip_sha256": "f9ba699a7b5a901753440757835094ceea714e5dae5b4eb061ce0f2a75e2f3dd",
+      "candidate_build": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-v08-receipt\\build.json",
+        "sha256": "1678afd1b17e5c93ad4234ef937599515a59d46c039bfc272cd288b1ff72a991"
+      },
+      "candidate_build_status": "PASS",
+      "legacy_threads": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-01\\timeout-threads.txt",
+        "sha256": "76631283308261627259eebe9490eae02a05ac0c0126f4386a9278bb7a428153"
+      },
+      "registered_config": "Original inventory and task-private config, system, plugins and project, preserving the regular user profile.",
+      "candidate_attempt": "python qualify_jetbrains.py --spell-source <SPELL checkout> --sdk <exact SDK> --plugin <candidate ZIP> --interpreter <installed IDE interpreter> --connection <observer connection.json> --output <new directory>",
+      "candidate_install": "PASS",
+      "loaded_plugins": "2026-11-22 20:00:41,234 [   1465]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: SPELL Private Qualification (1), OpenBEXI SPELL (0.8.0)",
+      "candidate_run_debug": "BLOCKED",
+      "host_log": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-v08-final-host\\host\\log\\idea.log",
+        "sha256": "cddd4ccd5dc58c8eba885a4131c86acca4f54c2f679a4b3d702b0ad05fa54315"
+      },
+      "candidate_pid": 7712,
+      "installed_jar_sha256": "78b341bf80367294536017a6c4414bd2851d1a1cdab3e56f298e86d436597d55",
+      "intermediate_rc": {
+        "zip_sha256": "2378adb026be5592b27fa9a5507ed21ba863e059a29a5422714acac01ab1f798",
+        "registered_host": "Loaded 0.8.0 before vendor onboarding",
+        "timeout_threads": {
+          "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-v08-host\\host\\timeout-threads.txt",
+          "sha256": "149e615f640b8959fc16a5623277a447c3091217a6e829016db355485de18850"
+        }
+      },
+      "candidate_threads": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\intellij-v08-final-host\\host\\timeout-threads.txt",
+        "sha256": "21aacd1cdceec55e5b7df50eaa626eeaea32178bea75a5f77cf9211ea2764bc5"
+      },
+      "observed_vendor_stack": "AgreementUiKt.showAgreementUi / Agreements.showEndUserAndDataSharingAgreements",
+      "candidate_exit": 1
+    },
+    "pycharm": {
+      "sdk": {
+        "name": "PyCharm",
+        "version": "2026.1.2",
+        "buildNumber": "261.24374.152"
+      },
+      "legacy_command": [
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Scripts\\python.exe",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\source\\jetbrains\\qualify.py",
+        "--sdk",
+        "C:\\Program Files\\JetBrains\\PyCharm 2025.1.6",
+        "--plugin",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\published-openbexi-spell-0.7.0.zip",
+        "--image",
+        "sha256:d99b095d65c7fef008f9e6c02ff95c678cff295ee85a129f7a62fc0b795b1283",
+        "--interpreter",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Scripts\\python.exe",
+        "--output",
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-01"
+      ],
+      "legacy_process": 35176,
+      "published_legacy_zip_load": "PASS",
+      "published_legacy_run_debug": "BLOCKED",
+      "candidate_zip_sha256": "f9ba699a7b5a901753440757835094ceea714e5dae5b4eb061ce0f2a75e2f3dd",
+      "candidate_build": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-v08-receipt\\build.json",
+        "sha256": "8138d2e8c09c8abd56077498cb94b89b9a9b5df88881bf5c4be396d094d3e4da"
+      },
+      "candidate_build_status": "PASS",
+      "legacy_threads": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-01\\timeout-threads.txt",
+        "sha256": "b4f1be9acd6bd7133de97d7750a2863575289ba60084d6fcfa67e78b693bcaed"
+      },
+      "registered_config": "Original inventory and task-private config, system, plugins and project, preserving the regular user profile.",
+      "candidate_attempt": "python qualify_jetbrains.py --spell-source <SPELL checkout> --sdk <exact SDK> --plugin <candidate ZIP> --interpreter <installed IDE interpreter> --connection <observer connection.json> --output <new directory>",
+      "candidate_install": "PASS",
+      "loaded_plugins": "2026-11-22 20:00:40,226 [   1141]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: OpenBEXI SPELL (0.8.0), SPELL Private Qualification (1)",
+      "candidate_run_debug": "BLOCKED",
+      "host_log": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-v08-final-host\\host\\log\\idea.log",
+        "sha256": "df142548a4c062ec1e721c5a9917bb58b9c33beeb556075c3f5ecfe2a35ca511"
+      },
+      "candidate_pid": 10964,
+      "installed_jar_sha256": "78b341bf80367294536017a6c4414bd2851d1a1cdab3e56f298e86d436597d55",
+      "intermediate_rc": {
+        "zip_sha256": "2378adb026be5592b27fa9a5507ed21ba863e059a29a5422714acac01ab1f798",
+        "registered_host": "Loaded 0.8.0 before vendor onboarding",
+        "timeout_threads": {
+          "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-v08-host\\host\\timeout-threads.txt",
+          "sha256": "5adcd48928cb581aa472abc8eb7ad52c782198c55dd4b46973db0e0dced09ffb"
+        }
+      },
+      "candidate_threads": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jetbrains\\pycharm-v08-final-host\\host\\timeout-threads.txt",
+        "sha256": "50d568db14db4d43597514b72a88f9b32225c22e3992713e9219f694fec40207"
+      },
+      "observed_vendor_stack": "AgreementUiKt.showAgreementUi / Agreements.showEndUserAndDataSharingAgreements",
+      "candidate_exit": 1
+    }
+  }
+}

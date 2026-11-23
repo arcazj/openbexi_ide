@@ -1,0 +1,488 @@
+{
+  "ide_commit": "3ec9d4d998afa77f8590cd1e48c10b1a38561dca",
+  "spell_commit": "c7292d39f6f40eb98d4edb5304f4a49a0dd50307",
+  "artifacts": "Unpublished canonical wheels",
+  "builds": {
+    "ide": {
+      "commit": "3ec9d4d998afa77f8590cd1e48c10b1a38561dca",
+      "manifest_sha256": "d0dfd65584ffb09c0f125940091ad606343abef7fbc989148d6f03845918ea09"
+    },
+    "spell": {
+      "commit": "c7292d39f6f40eb98d4edb5304f4a49a0dd50307",
+      "manifest_sha256": "5da5c743babc3ec3227389406908d6923102cf4f36b47ba3cc71e6f78ada6399"
+    }
+  },
+  "install": {
+    "artifact_sha256": {
+      "openbexi_ide-1.2.2-py3-none-any.whl": "397d46ae29e17814cceb27033f9f433367ac785c204cc890ec49af05017bace9",
+      "openbexi_spell_dss-0.8.0-py3-none-any.whl": "5aa950d5e9992db399129911459ba3c7542b33bfe001427a8744550c10ee7b61",
+      "openbexi_spell_host-0.8.0-py3-none-any.whl": "e8c197c5cc225481e59a1607a1387fcfb38150f099dfc5995fbb040ea91180bf",
+      "openbexi_spell_server-0.8.0-py3-none-any.whl": "b08492730bde6a79d267621335ef6346c9f2a732c7922c114c799ee6e4d10fb5",
+      "openbexi_spell_shared-0.8.0-py3-none-any.whl": "5a65a4dc7d45390de784db5e26c00a3fa985652ce8870eba216b4a776b3e5898"
+    },
+    "before_spell": {
+      "openbexi_spell_plugin": false,
+      "openbexi_spell_host": false,
+      "openbexi_spell_shared": false,
+      "openbexi_spell_server": false,
+      "openbexi_spell_dss": false,
+      "spell": false,
+      "dss": false
+    },
+    "installed_versions": {
+      "debugpy": "1.8.22",
+      "grpcio": "1.84.0",
+      "openbexi-ide": "1.2.2",
+      "openbexi-spell-dss": "0.8.0",
+      "openbexi-spell-host": "0.8.0",
+      "openbexi-spell-server": "0.8.0",
+      "openbexi-spell-shared": "0.8.0",
+      "pip": "26.2.1",
+      "protobuf": "7.36.2",
+      "Pygments": "2.21.0",
+      "PySide6_Essentials": "6.10.3",
+      "shiboken6": "6.10.3",
+      "typing_extensions": "4.16.0"
+    },
+    "ordinary_python": {
+      "passed": true,
+      "version": "1.2.2",
+      "python": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+      "prefix": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv",
+      "origin": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Lib\\site-packages\\openbexi_ide\\app.py",
+      "script_sha256": "2c337034cc08aa6d110cff81699157c8c621195d63ed210c2c55992db08d0069",
+      "checks": [
+        "Default private CPython interpreter and ordinary Python Run",
+        "debugpy breakpoint, stack, variables, edit, Step and Continue"
+      ],
+      "qt_platform": "windows",
+      "scope": "Installed Qt widget actions and debugger in the selected desktop environment"
+    },
+    "pip_check": {
+      "label": "pip-check",
+      "argv": [
+        "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+        "-I",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    "installed_member_counts": {
+      "openbexi_ide-1.2.2-py3-none-any.whl": 67,
+      "openbexi_spell_dss-0.8.0-py3-none-any.whl": 62,
+      "openbexi_spell_host-0.8.0-py3-none-any.whl": 13,
+      "openbexi_spell_server-0.8.0-py3-none-any.whl": 29,
+      "openbexi_spell_shared-0.8.0-py3-none-any.whl": 6
+    },
+    "passed": true
+  },
+  "full_install_record": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\result.json",
+    "sha256": "b69325e13a112712afba16ff24432156d74dbacd262c7a92a2745ca9b488fd4a"
+  },
+  "commands": [
+    {
+      "label": "new-venv",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "desktop-deps",
+      "exit_code": 0,
+      "log_sha256": "7bd8c2ac0ff2a06cd6be871377b94d87b32b4c89ae5d21c8500a637ce73cb3a7"
+    },
+    {
+      "label": "install-ide",
+      "exit_code": 0,
+      "log_sha256": "e2436ad4610b1a9be5ae0b922953e7ca45c0a21b8c0cf996f802bd2ce3c85634"
+    },
+    {
+      "label": "before-spell",
+      "exit_code": 0,
+      "log_sha256": "ffdbf08ef65eeff1aeaa78bf2a7d25f69d5479777e860cddf8c5ea0473a976ec"
+    },
+    {
+      "label": "ordinary-python",
+      "exit_code": 0,
+      "log_sha256": "d6d1868198e31a61f4d295b842a475cdad75c6588f6d66a2ec746e1cba030901"
+    },
+    {
+      "label": "install-spell",
+      "exit_code": 0,
+      "log_sha256": "52e77578d7fc9d026517400c295a646d40e7efc2b17b7db01df22652ff913340"
+    },
+    {
+      "label": "pip-check",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "label": "after-spell",
+      "exit_code": 0,
+      "log_sha256": "980099345ecece3280da76da44a3d68b2ffd613cc6b89e4a2a3cd50540148393"
+    },
+    {
+      "label": "verify-members",
+      "exit_code": 0,
+      "log_sha256": "b6d56d26fb2ed113391cae4934bba6749123553dd3df7ad1e6e80bad71994267"
+    }
+  ],
+  "reproduce": "CPython 3.13.15 -I qualify_candidate.py --ide <IDE build manifest directory> --spell <SPELL build manifest directory> --dependencies <verified Windows dependency wheels> --output <new directory>",
+  "qtterminal": {
+    "scope": "Installed OpenBEXI Windows Qt widgets",
+    "receipt": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-qt\\result.json",
+      "sha256": "40b02c665ee04a79cb0c2079509f87999b976878e21e598e6d26dc3b30fc5b22"
+    },
+    "status": "PASS",
+    "events": [
+      {
+        "event": "roles_connected",
+        "time": "2026-11-23T00:57:37.378352+00:00",
+        "context": "A",
+        "subject": "alice",
+        "observer": "observer"
+      },
+      {
+        "event": "reserved",
+        "time": "2026-11-23T00:57:38.754053+00:00",
+        "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+        "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+        "revision": "8708496044323f1377cb233ce4011624cc427ef3"
+      },
+      {
+        "event": "start_native_clicked",
+        "time": "2026-11-23T00:57:38.812867+00:00"
+      },
+      {
+        "event": "native_ready",
+        "time": "2026-11-23T00:57:42.088728+00:00",
+        "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+        "status": "PAUSED",
+        "namespace_pid": 7
+      },
+      {
+        "event": "run_continue_clicked",
+        "time": "2026-11-23T00:57:42.095701+00:00"
+      },
+      {
+        "event": "native_finished",
+        "time": "2026-11-23T00:57:44.213588+00:00",
+        "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+        "native_status": "FINISHED",
+        "lifecycle_receipts_settled": true,
+        "hold_retained": true
+      },
+      {
+        "event": "owner_displayed_result",
+        "time": "2026-11-23T00:57:46.246998+00:00",
+        "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      },
+      {
+        "event": "observer_displayed_result",
+        "time": "2026-11-23T00:57:46.301132+00:00",
+        "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      }
+    ],
+    "execution_id": "c6a1b255-438c-43dc-9b3b-c6ba53064fdc",
+    "fixture": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\qtterminal\\case.json",
+      "sha256": "f3e16cb6f32caf946f3b007389995d1bff9e64af351fbddc73697628add023b3"
+    },
+    "worker": "obx-public-launch-qtterminal-worker",
+    "worker_image": "sha256:6dc24f9d7ef473a499397aa9f277c50b6198e18aa48dad1a9fda3f3ebb115bf2",
+    "server_image": "sha256:6189fc60d20bcfd14ae40f10010fcd2cc0c79a9ac70da3118c05c8e2c5dd6583",
+    "image": "sha256:6dc24f9d7ef473a499397aa9f277c50b6198e18aa48dad1a9fda3f3ebb115bf2",
+    "source_revision": "8708496044323f1377cb233ce4011624cc427ef3",
+    "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+    "procedure_sha256": "9b5cd2d34a710047b149e7dc9ad14d3de4b189ed6f459d2830b3b5efca5d666f",
+    "screenshots_sha256": {
+      "reserved.png": "0f92c602e06e06b7487ac141cbb9d04e7c885f118e3674f79c19b20f670385b3",
+      "owner-finished.png": "a7fb192c4cdc281e6008cd1cac65d7433923ebf61d1f8f7b4a6dc0187a17c69f",
+      "observer-finished.png": "b5fff9e361150f2d718b485dbfff9e2c0d33be41e4a4e9c2ee1d9beb26a8dcd7"
+    },
+    "harness_sha256": "241831eab71d99e6d59b4d65ffc111eab5af43a26ab27e3b96586d80798f0d4d",
+    "interpreter": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+    "file_selection": "Supplied the existing role-specific connection file; all other widget actions and TLS requests ran normally."
+  },
+  "jbterminal": {
+    "scope": "Intermediate packaged Swing workspace; reservation receipt indexing failed after server reservation.",
+    "receipt": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1\\result.json",
+      "sha256": "8c2df88a1e93f854d41c41aa1816ad1a7c68a5c7e337efa799b3860a736c9ff5"
+    },
+    "status": "FAIL",
+    "events": [
+      {
+        "event": "authenticated_roles",
+        "at": "2026-11-23T00:58:03.288372Z"
+      }
+    ],
+    "execution_id": null,
+    "fixture": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\jbterminal\\case.json",
+      "sha256": "a525fbe23d81a015a851451c5f6eacc4e51e66379c296b4d6868e73c2d6f7add"
+    },
+    "worker": "obx-public-launch-jbterminal-worker",
+    "worker_image": "sha256:6dc24f9d7ef473a499397aa9f277c50b6198e18aa48dad1a9fda3f3ebb115bf2",
+    "server_image": "sha256:6189fc60d20bcfd14ae40f10010fcd2cc0c79a9ac70da3118c05c8e2c5dd6583",
+    "image": "sha256:6dc24f9d7ef473a499397aa9f277c50b6198e18aa48dad1a9fda3f3ebb115bf2",
+    "source_revision": "8708496044323f1377cb233ce4011624cc427ef3",
+    "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+    "procedure_sha256": "9b5cd2d34a710047b149e7dc9ad14d3de4b189ed6f459d2830b3b5efca5d666f",
+    "screenshots_sha256": {},
+    "plugin_commit": "c7292d39f6f40eb98d4edb5304f4a49a0dd50307",
+    "probe_sdk": {
+      "name": "IntelliJ IDEA",
+      "version": "2026.2.5",
+      "buildNumber": "262.12573.28"
+    },
+    "probe_zip_sha256": "2378adb026be5592b27fa9a5507ed21ba863e059a29a5422714acac01ab1f798",
+    "probe_jar_sha256": "73189b0147a5afabeccae81b9d8e6ad79b0e4c0b3c22996d0e9f40b5a02689ca",
+    "probe_wrapper_sha256": "de59aa90dabe0bde08e91079c061cdd2ebd6e729837b7569578c782962b80935",
+    "probe_source_sha256": "cb8229cb4716d73e2541d818e1aab54b669e37e628b13eee771c1c06e9acd719",
+    "probe_commands": [
+      {
+        "argv": [
+          "C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\jbr\\bin\\javac.exe",
+          "--release",
+          "21",
+          "-encoding",
+          "UTF-8",
+          "-classpath",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1\\openbexi-spell.jar;C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\lib\\*;F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1",
+          "-d",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1",
+          "C:\\projects\\openbexi_ide\\docs\\evidence\\ide-1.2.1\\qualification-20261122\\windows\\GatewayComponentProbe.java"
+        ],
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\jbr\\bin\\java.exe",
+          "-classpath",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1\\openbexi-spell.jar;C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\lib\\*;F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1",
+          "GatewayComponentProbe",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+          "F:\\openbexi-builds\\qualification-20261122\\public-launch\\jbterminal",
+          "obx-public-launch-jbterminal-worker",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb1\\swing"
+        ],
+        "exit_code": 1,
+        "log_sha256": "03d69d6a92667f7361a06dd4b43b1621ae8fd4b5e670cff95e84caa5db91d294"
+      }
+    ],
+    "error": "java.lang.AssertionError: Timeout reserving. [Context, 'execution_id', Approved procedure, , Context, Connected as observer, Approved procedure, main.py @ 8708496044323f1377cb233ce4011624cc427ef3]"
+  },
+  "jbcandidate": {
+    "scope": "Corrected packaged Swing workspace on IntelliJ JBR with a settings-only Project test object; full IDE startup is tracked in jetbrains.json",
+    "receipt": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2\\result.json",
+      "sha256": "6b639178f00e50972532e6069f97f09d42b82bb0226ff389953175fdb54d8aca"
+    },
+    "status": "PASS",
+    "events": [
+      {
+        "event": "authenticated_roles",
+        "at": "2026-11-23T01:01:41.734687700Z"
+      },
+      {
+        "event": "start_native_clicked",
+        "at": "2026-11-23T01:01:42.096269400Z"
+      },
+      {
+        "event": "native_ready",
+        "execution_id": "9f73c5a0-e7d0-4c37-95ab-5f701c392d77",
+        "namespace_pid": 8,
+        "native_status": "PAUSED",
+        "quiescence_proven": false,
+        "at": "2026-11-23T01:01:44.239417Z"
+      },
+      {
+        "event": "run_continue_clicked",
+        "at": "2026-11-23T01:01:44.986513500Z"
+      },
+      {
+        "event": "native_finished",
+        "execution_id": "9f73c5a0-e7d0-4c37-95ab-5f701c392d77",
+        "native_status": "FINISHED",
+        "hold_retained": true,
+        "external_driver_effects_enabled": false,
+        "native_driver_methods": [],
+        "context_audit_events_enabled": true,
+        "runtime_enabled": false,
+        "native_children_admitted": 0,
+        "native_lifecycle_receipts_settled": true,
+        "notifications_seen": 9,
+        "full_family_qualified": false,
+        "at": "2026-11-23T01:01:46.896101700Z"
+      },
+      {
+        "role": "owner",
+        "native_result": "FINISHED",
+        "lifecycle": "STARTING",
+        "event": "displayed_result",
+        "at": "2026-11-23T01:01:47.595569700Z"
+      },
+      {
+        "role": "observer",
+        "native_result": "FINISHED",
+        "lifecycle": "STARTING",
+        "event": "displayed_result",
+        "at": "2026-11-23T01:01:48.294668800Z"
+      }
+    ],
+    "execution_id": "9f73c5a0-e7d0-4c37-95ab-5f701c392d77",
+    "fixture": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\jbcandidate\\case.json",
+      "sha256": "0a3f48e3d8320a5ac4ddf267e8825d67b4758f3c312575ecddf815c2f4053675"
+    },
+    "worker": "obx-public-launch-jbcandidate-worker",
+    "worker_image": "sha256:de617ca4c3e0d2550bd639c201182f3f36ee21de6d7fd232e17fead8a47e47f3",
+    "server_image": "sha256:6189fc60d20bcfd14ae40f10010fcd2cc0c79a9ac70da3118c05c8e2c5dd6583",
+    "image": "sha256:de617ca4c3e0d2550bd639c201182f3f36ee21de6d7fd232e17fead8a47e47f3",
+    "source_revision": "8708496044323f1377cb233ce4011624cc427ef3",
+    "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+    "procedure_sha256": "9b5cd2d34a710047b149e7dc9ad14d3de4b189ed6f459d2830b3b5efca5d666f",
+    "screenshots_sha256": {
+      "observer-finished.png": "d56061378b96a73d869c2556479e23dfa1bfb3cf71b80fde1117218da5139379",
+      "owner-finished.png": "06da444c958bfc4680aa892d10de9774f59947d2095b594cc82559405c692dc6",
+      "reserved.png": "41dff8e7eda635a2e6cd08e9a5a839759be3a8bd75585e3d1ee6a975a71bf4b3"
+    },
+    "plugin_commit": "a6dee29e9e6b40ca10560198b5d7a046b0f3c5f3",
+    "probe_sdk": {
+      "name": "IntelliJ IDEA",
+      "version": "2026.2.5",
+      "buildNumber": "262.12573.28"
+    },
+    "probe_zip_sha256": "f9ba699a7b5a901753440757835094ceea714e5dae5b4eb061ce0f2a75e2f3dd",
+    "probe_jar_sha256": "78b341bf80367294536017a6c4414bd2851d1a1cdab3e56f298e86d436597d55",
+    "probe_wrapper_sha256": "de59aa90dabe0bde08e91079c061cdd2ebd6e729837b7569578c782962b80935",
+    "probe_source_sha256": "cb8229cb4716d73e2541d818e1aab54b669e37e628b13eee771c1c06e9acd719",
+    "probe_commands": [
+      {
+        "argv": [
+          "C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\jbr\\bin\\javac.exe",
+          "--release",
+          "21",
+          "-encoding",
+          "UTF-8",
+          "-classpath",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2\\openbexi-spell.jar;C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\lib\\*;F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2",
+          "-d",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2",
+          "C:\\projects\\openbexi_ide\\docs\\evidence\\ide-1.2.1\\qualification-20261122\\windows\\GatewayComponentProbe.java"
+        ],
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\jbr\\bin\\java.exe",
+          "-classpath",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2\\openbexi-spell.jar;C:\\Users\\arcaz\\AppData\\Local\\Programs\\IntelliJ IDEA 2026.2.1\\lib\\*;F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2",
+          "GatewayComponentProbe",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+          "F:\\openbexi-builds\\qualification-20261122\\public-launch\\jbcandidate",
+          "obx-public-launch-jbcandidate-worker",
+          "F:\\openbexi-builds\\qualification-20261122\\windows\\native-canonical-jb2\\swing"
+        ],
+        "exit_code": 0,
+        "log_sha256": "6dd9156b4fe7eb76f6c5bdbed1582713c5d8b4a554622ac09566c5cfd9a5f1f4"
+      }
+    ]
+  },
+  "qtmatched": {
+    "scope": "Installed Windows Qt widgets with the same full native worker as the corrected JetBrains component",
+    "receipt": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-final-qt\\result.json",
+      "sha256": "d27fb1f9f3ac1bbdee07fbba62c688eed4c30fe63b7558115be2ca2815a65d13"
+    },
+    "status": "PASS",
+    "events": [
+      {
+        "event": "roles_connected",
+        "time": "2026-11-23T01:03:14.996487+00:00",
+        "context": "A",
+        "subject": "alice",
+        "observer": "observer"
+      },
+      {
+        "event": "reserved",
+        "time": "2026-11-23T01:03:16.353697+00:00",
+        "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+        "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+        "revision": "8708496044323f1377cb233ce4011624cc427ef3"
+      },
+      {
+        "event": "start_native_clicked",
+        "time": "2026-11-23T01:03:16.411043+00:00"
+      },
+      {
+        "event": "native_ready",
+        "time": "2026-11-23T01:03:19.676231+00:00",
+        "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+        "status": "PAUSED",
+        "namespace_pid": 7
+      },
+      {
+        "event": "run_continue_clicked",
+        "time": "2026-11-23T01:03:19.679907+00:00"
+      },
+      {
+        "event": "native_finished",
+        "time": "2026-11-23T01:03:21.830169+00:00",
+        "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+        "native_status": "FINISHED",
+        "lifecycle_receipts_settled": true,
+        "hold_retained": true
+      },
+      {
+        "event": "owner_displayed_result",
+        "time": "2026-11-23T01:03:23.767646+00:00",
+        "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      },
+      {
+        "event": "observer_displayed_result",
+        "time": "2026-11-23T01:03:23.826120+00:00",
+        "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      }
+    ],
+    "execution_id": "96fece73-18b9-4248-8e5c-4e2dafc094ca",
+    "fixture": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\qtmatched\\case.json",
+      "sha256": "141904650c589f73585da57212ebeddae2fd14b955368b72b49aa0defdf34b3b"
+    },
+    "worker": "obx-public-launch-qtmatched-worker",
+    "worker_image": "sha256:de617ca4c3e0d2550bd639c201182f3f36ee21de6d7fd232e17fead8a47e47f3",
+    "server_image": "sha256:6189fc60d20bcfd14ae40f10010fcd2cc0c79a9ac70da3118c05c8e2c5dd6583",
+    "image": "sha256:de617ca4c3e0d2550bd639c201182f3f36ee21de6d7fd232e17fead8a47e47f3",
+    "source_revision": "8708496044323f1377cb233ce4011624cc427ef3",
+    "source_sha256": "5b985adabe12248f467f9fffa83847987c4f5cf3949cdeae39adb5d2ab3194c0",
+    "procedure_sha256": "9b5cd2d34a710047b149e7dc9ad14d3de4b189ed6f459d2830b3b5efca5d666f",
+    "screenshots_sha256": {
+      "reserved.png": "0f92c602e06e06b7487ac141cbb9d04e7c885f118e3674f79c19b20f670385b3",
+      "owner-finished.png": "a7fb192c4cdc281e6008cd1cac65d7433923ebf61d1f8f7b4a6dc0187a17c69f",
+      "observer-finished.png": "b5fff9e361150f2d718b485dbfff9e2c0d33be41e4a4e9c2ee1d9beb26a8dcd7"
+    },
+    "harness_sha256": "241831eab71d99e6d59b4d65ffc111eab5af43a26ab27e3b96586d80798f0d4d",
+    "interpreter": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+    "file_selection": "Supplied the existing role-specific connection file; all other widget actions and TLS requests ran normally."
+  }
+}
