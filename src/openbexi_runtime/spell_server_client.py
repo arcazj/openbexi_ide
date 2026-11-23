@@ -284,6 +284,9 @@ class SpellServerClient:
             "session.close",
             "session.heartbeat",
             "execution.reserve",
+            "execution.prepare",
+            "execution.launch_status",
+            "execution.launch",
             "execution.rebind",
             "execution.claim",
             "execution.decide",
@@ -407,6 +410,59 @@ class SpellServerClient:
     def has_controller(self, context, execution):
         with self._lock:
             return (context, execution) in self._controllers
+
+    def launch(self, context, execution, *, key, cancelled=None):
+        """Start one reserved native worker paused, using the original owner proof."""
+        identity = (identifier(context), identifier(execution))
+        cancel = cancelled if cancelled is not None else threading.Event()
+        with self._lock:
+            original = self._controllers.get(identity)
+            if original is None:
+                raise SpellServerError(403, "controller_proof_required")
+            proof = dict(original)
+        if cancel.is_set():
+            raise SpellServerError(409, "launch_cancelled")
+        prepared = self.authority(context, "execution.prepare", proof, key=key)
+        if prepared != {"preparation_id": key}:
+            raise SpellServerError(503, "invalid_launch_preparation")
+        # Only repeat the read-only readiness query. A response loss at either
+        # mutation exits immediately. Heartbeats continue on their own thread.
+        deadline = time.monotonic() + 25
+        while time.monotonic() < deadline and not cancel.is_set():
+            status = self.authority(context, "execution.launch_status", proof, key=key)
+            if (
+                status == {"preparation_id": key, "ready": True}
+                and type(status.get("ready")) is bool
+            ):
+                break
+            if (
+                status != {"preparation_id": key, "ready": False}
+                or type(status.get("ready")) is not bool
+            ):
+                raise SpellServerError(503, "invalid_launch_readiness")
+            cancel.wait(0.25)
+        else:
+            raise SpellServerError(
+                409,
+                "launch_cancelled" if cancel.is_set() else "worker_preflight_timeout",
+            )
+        with self._lock:
+            if cancel.is_set() or self._controllers.get(identity) != proof:
+                raise SpellServerError(409, "launch_controller_changed")
+        receipt = self.authority(context, "execution.launch", proof, key=key)
+        if (
+            type(receipt) is not dict
+            or set(receipt) != {"execution_id", "request_id", "state"}
+            or receipt["execution_id"] != execution
+            or receipt["state"] != "ADMITTED"
+        ):
+            raise SpellServerError(503, "invalid_launch_receipt")
+        try:
+            if str(uuid.UUID(receipt["request_id"])) != receipt["request_id"]:
+                raise ValueError
+        except (AttributeError, TypeError, ValueError) as error:
+            raise SpellServerError(503, "invalid_launch_receipt") from error
+        return receipt
 
     def command(self, context, execution, command, *, key, target_admission_id=None):
         """Send one intent using the original delivered controller proof.

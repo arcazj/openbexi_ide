@@ -38,7 +38,8 @@ def main():
     report = {'passed': False, 'version': importlib.metadata.version('openbexi-ide'),
               'python': sys.executable, 'prefix': sys.prefix, 'origin': desktop.__file__,
               'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              'checks': [], 'scope': 'Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence'}
+              'checks': [], 'qt_platform': application.platformName(),
+              'scope': 'Installed Qt widget actions and debugger in the selected desktop environment'}
 
     def wait(predicate, timeout=45):
         deadline = time.monotonic() + timeout

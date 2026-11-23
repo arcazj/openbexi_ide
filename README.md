@@ -4,6 +4,8 @@ A CPython 3.13 desktop IDE with local and shared development, debugging and opti
 
 ## Current status
 
+**November 22 qualification.** The published IDE 1.2.1 passed ordinary Python Run and Debug on Windows. Its SPELL connection stops at reservation. IDE **1.2.2** and SPELL **0.8.0** are the candidates for native launch. Both are pending joint qualification. [Qualification record](docs/CURRENT_STATUS.md)
+
 **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 423.326 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
 
 The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.

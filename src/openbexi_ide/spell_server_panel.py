@@ -2,9 +2,10 @@
 
 import queue
 import threading
+import time
 import uuid
 
-from PySide6.QtCore import QObject, Qt, Signal
+from PySide6.QtCore import QObject, Qt, QTimer, Signal
 from PySide6.QtWidgets import (
     QComboBox,
     QFileDialog,
@@ -17,7 +18,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from openbexi_runtime.spell_server_client import SpellServerClient
+from openbexi_runtime.spell_server_client import SpellServerClient, SpellServerError
 
 
 class ServerWorker(QObject):
@@ -74,6 +75,7 @@ class SpellServerPanel(QWidget):
         self.retained_connections = set()
         self.closing_keys = {}
         self.state = {}
+        self.pending_start = None
         self.busy = False
         self.worker = ServerWorker(self)
         self.worker.completed.connect(self.receive, Qt.QueuedConnection)
@@ -100,12 +102,14 @@ class SpellServerPanel(QWidget):
         self.procedures = QComboBox()
         controls.addWidget(self.procedures)
         self.reserve_button = QPushButton("Reserve")
+        self.launch_button = QPushButton("Start native")
         self.rebind_button = QPushButton("Reconnect control")
         self.claim_button = QPushButton("Request control")
         self.accept_button = QPushButton("Accept request")
         self.reject_button = QPushButton("Reject request")
         for button in (
             self.reserve_button,
+            self.launch_button,
             self.rebind_button,
             self.claim_button,
             self.accept_button,
@@ -135,6 +139,7 @@ class SpellServerPanel(QWidget):
         self.context.currentTextChanged.connect(self.refresh)
         self.executions.itemSelectionChanged.connect(self.update_buttons)
         self.reserve_button.clicked.connect(lambda: self.mutate("reserve"))
+        self.launch_button.clicked.connect(self.launch_native)
         self.rebind_button.clicked.connect(lambda: self.mutate("rebind"))
         self.claim_button.clicked.connect(lambda: self.mutate("claim"))
         self.accept_button.clicked.connect(lambda: self.mutate("accept"))
@@ -173,14 +178,27 @@ class SpellServerPanel(QWidget):
         if self.busy or self.client is None or not self.context.currentText():
             return
         context, client = self.context.currentText(), self.client
-        self.submit(
-            lambda: {
-                "context": context,
-                "health": client.read(context, "health"),
-                "procedures": client.read(context, "procedures"),
-                "executions": client.read(context, "executions"),
-            }
-        )
+
+        def snapshot():
+            health = client.read(context, "health")
+            executions = client.read(context, "executions")
+            try:
+                procedures = client.read(context, "procedures")
+            except SpellServerError as error:
+                # Earlier gateways intentionally redact upstream error details.
+                # A missing catalog is a visible partial read. Preserve all
+                # authorization, identity, transport and other errors.
+                if error.status != 404:
+                    raise
+                procedures = {"procedures": [], "unavailable": True}
+            return dict(
+                context=context,
+                health=health,
+                procedures=procedures,
+                executions=executions,
+            )
+
+        self.submit(snapshot)
 
     def selected(self):
         item = self.executions.currentItem()
@@ -195,6 +213,7 @@ class SpellServerPanel(QWidget):
             result = item["result"]
             if result.get("disconnected"):
                 self.client = None
+                self.pending_start = None
                 self.state = {}
                 self.context.clear()
                 self.executions.clear()
@@ -215,6 +234,11 @@ class SpellServerPanel(QWidget):
                 self.status.setText(
                     "Connected • "
                     + health["subject"]
+                    + (
+                        " • source catalog unavailable (404)"
+                        if result["procedures"].get("unavailable")
+                        else ""
+                    )
                     + (
                         " • execution unavailable"
                         if not health["runtime_enabled"]
@@ -241,6 +265,37 @@ class SpellServerPanel(QWidget):
                 self.procedures.clear()
                 for procedure in result["procedures"]["procedures"]:
                     self.procedures.addItem(procedure["procedure_id"], procedure)
+                if self.pending_start:
+                    context, execution_id, deadline = self.pending_start
+                    pending = next(
+                        (
+                            row
+                            for row in result["executions"]["executions"]
+                            if row["id"] == execution_id
+                        ),
+                        {},
+                    )
+                    if context != result["context"] or pending.get(
+                        "native_root_registered"
+                    ):
+                        self.pending_start = None
+                    elif time.monotonic() < deadline:
+                        self.status.setText(
+                            "Native start admitted. Waiting for the Executor to register."
+                        )
+                        QTimer.singleShot(350, self, self.refresh)
+                    else:
+                        self.pending_start = None
+                        self.status.setText(
+                            "Executor registration is unconfirmed. Refresh to check its state."
+                        )
+            elif "launch" in result:
+                self.pending_start = (
+                    result["launch_context"],
+                    result["launch"]["execution_id"],
+                    time.monotonic() + 30,
+                )
+                self.refresh()
             else:
                 self.refresh()
         self.update_buttons()
@@ -297,6 +352,15 @@ class SpellServerPanel(QWidget):
                 self.context.currentText(), execution.get("id")
             )
         )
+        self.launch_button.setEnabled(
+            bool(has_proof)
+            and health.get("native_launch") is True
+            and "execution:start" in permissions
+            and not self.state.get("procedures", {}).get("unavailable")
+            and not execution.get("native_start_admitted")
+            and execution.get("lifecycle") == "RESERVED"
+            and execution.get("control_state") == "OWNED"
+        )
         for button in (self.accept_button, self.reject_button):
             button.setEnabled(
                 control and owner and has_proof and bool(execution.get("pending_claim"))
@@ -306,6 +370,7 @@ class SpellServerPanel(QWidget):
             button.setEnabled(
                 bool(has_proof)
                 and execution.get("lifecycle") == "STARTING"
+                and execution.get("native_root_registered", True)
                 and (
                     execution.get("control_state") == "OWNED"
                     or (
@@ -315,6 +380,22 @@ class SpellServerPanel(QWidget):
                 )
                 and command in available
             )
+
+    def launch_native(self):
+        if self.busy or self.client is None or not self.launch_button.isEnabled():
+            return
+        execution = self.selected()["id"]
+        context, client = self.context.currentText(), self.client
+        key = str(uuid.uuid4())
+        self.status.setText("Waiting for the native worker to verify its source")
+        self.submit(
+            lambda: {
+                "launch_context": context,
+                "launch": client.launch(
+                    context, execution, key=key, cancelled=self.worker.closed
+                ),
+            }
+        )
 
     def send_command(self, command):
         button = self.command_buttons.get(command)

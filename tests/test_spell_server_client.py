@@ -125,6 +125,134 @@ def test_native_command_uses_delivered_proof_once_even_after_response_loss():
     assert len(sent) == 1
 
 
+def test_launch_never_retries_admission_or_replaces_the_original_proof():
+    import threading
+    import uuid
+
+    client = object.__new__(SpellServerClient)
+    client._lock = threading.RLock()
+    client._controllers = {}
+    eid, key = str(uuid.uuid4()), str(uuid.uuid4())
+    client.remember_controller(
+        "A",
+        dict(
+            id=eid,
+            connection_id=str(uuid.uuid4()),
+            epoch=1,
+            connection_generation=3,
+            capability="a" * 64,
+        ),
+    )
+    original = dict(client._controllers[("A", eid)])
+    sent = []
+
+    def upstream(context, method, payload, *, key):
+        sent.append((method, dict(payload)))
+        if method == "execution.prepare":
+            return {"preparation_id": key}
+        if method == "execution.launch_status":
+            return {"preparation_id": key, "ready": True}
+        raise SpellServerError(503, "gateway_unavailable")
+
+    client.authority = upstream
+    with pytest.raises(SpellServerError, match="gateway_unavailable"):
+        client.launch("A", eid, key=key)
+    assert sent == [
+        (operation, original)
+        for operation in (
+            "execution.prepare",
+            "execution.launch_status",
+            "execution.launch",
+        )
+    ]
+    cancel = threading.Event()
+    cancel.set()
+    with pytest.raises(SpellServerError, match="launch_cancelled"):
+        client.launch("A", eid, key=str(uuid.uuid4()), cancelled=cancel)
+    assert len(sent) == 3
+
+
+@pytest.mark.parametrize("status", [404, 403, 503])
+def test_panel_catalog_failure_keeps_authorized_partial_reads_visible(app, status):
+    panel = SpellServerPanel()
+
+    class Client:
+        def read(self, context, resource):
+            if resource == "procedures":
+                raise SpellServerError(status, "request_denied")
+            if resource == "executions":
+                return {"executions": []}
+            return {
+                "subject": "observer",
+                "runtime_enabled": False,
+                "permissions": ["context:read", "execution:read"],
+            }
+
+    panel.client = Client()
+    try:
+        panel.context.addItem("A")
+        until = time.monotonic() + 3
+        while panel.busy and time.monotonic() < until:
+            app.processEvents()
+            time.sleep(0.005)
+        assert not panel.busy
+        if status == 404:
+            assert panel.state["health"]["subject"] == "observer"
+            assert "catalog unavailable (404)" in panel.status.text()
+        else:
+            assert panel.state == {} and str(status) in panel.status.text()
+        assert (
+            not panel.reserve_button.isEnabled() and not panel.launch_button.isEnabled()
+        )
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
+def test_start_and_run_follow_private_admission_and_root_registration(app):
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QTreeWidgetItem
+
+    panel = SpellServerPanel()
+    panel.client = type("Client", (), {"has_controller": lambda *a: True})()
+    row = QTreeWidgetItem(["procedure", "alice", "OWNED", ""])
+    panel.state = {
+        "health": {
+            "native_launch": True,
+            "native_commands": ["CMD_RUN"],
+            "subject": "alice",
+            "permissions": ["execution:control", "execution:start"],
+        }
+    }
+    panel.executions.addTopLevelItem(row)
+    panel.executions.setCurrentItem(row)
+    try:
+        for lifecycle, admitted, registered, start, run in (
+            ("RESERVED", False, False, True, False),
+            ("RESERVED", True, False, False, False),
+            ("STARTING", True, False, False, False),
+            ("STARTING", True, True, False, True),
+        ):
+            row.setData(
+                0,
+                Qt.UserRole,
+                dict(
+                    id="one",
+                    owner="alice",
+                    control_state="OWNED",
+                    lifecycle=lifecycle,
+                    native_start_admitted=admitted,
+                    native_root_registered=registered,
+                ),
+            )
+            panel.update_buttons()
+            assert panel.launch_button.isEnabled() is start
+            assert panel.command_buttons["CMD_RUN"].isEnabled() is run
+    finally:
+        panel.worker.close()
+        panel.close()
+
+
 @pytest.mark.parametrize(
     "state,enabled",
     [

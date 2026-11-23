@@ -1,6 +1,11 @@
 name: Fresh checkout complete IDE verification
 on:
   workflow_dispatch:
+    inputs:
+      spell_commit:
+        description: Exact companion SPELL commit for its simulator SDK
+        required: false
+        type: string
 permissions:
   contents: read
 jobs:
@@ -19,13 +24,19 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           repository: arcazj/openbexi_spell_plugin
-          ref: 08ee0045635131d60be06a8a31e0ae8b90d7df65
+          ref: ${{ inputs.spell_commit || 'a260204f4fb6b64dfe99ff87c8535c29a6ccd69b' }}
           path: .qualification/companion-plugin
       - name: Install Qt system library
         run: sudo apt-get update && sudo apt-get install -y libegl1
-      - name: Install exact desktop tools and candidate
+      - name: Build and install the canonical desktop wheel
         run: |
-          python -m pip install '.[desktop,test]' ruff==0.14.1
+          mkdir -p "$RUNNER_TEMP/ide-src" .qualification/v08-client/wheels
+          git archive --format=tar HEAD | tar -xf - -C "$RUNNER_TEMP/ide-src"
+          export SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)
+          python -m pip wheel --no-deps "$RUNNER_TEMP/ide-src" -w .qualification/v08-client/wheels
+          wheel=$(find .qualification/v08-client/wheels -name '*.whl')
+          sha256sum "$wheel" > .qualification/v08-client/wheel.sha256
+          python -m pip install --report .qualification/v08-client/install.json "${wheel}[desktop,test]" ruff==0.14.1
           python -m pip install --no-deps ./.qualification/companion-plugin
       - name: Check new client source
         run: |
@@ -40,9 +51,8 @@ jobs:
           mkdir -p .qualification/v08-client
           set -o pipefail
           python -m pytest tests -q -W error --tb=short --junitxml=.qualification/v08-client/hosted.xml 2>&1 | tee .qualification/v08-client/hosted.log
-      - name: Build and smoke installed client
+      - name: Smoke installed client
         run: |
-          python -m pip wheel --no-deps . --wheel-dir .qualification/v08-client/wheels
           python -I -m openbexi_runtime.spell_server_client --help
       - name: Retain all qualification outcomes
         if: always()
