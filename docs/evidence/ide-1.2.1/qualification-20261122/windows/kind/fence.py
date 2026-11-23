@@ -13,7 +13,7 @@ u, db_query=helpers["u"], helpers["CHECK_DB"]
 key=lambda:str(uuid.uuid4())
 
 def main():
-    assert u["CASE_NAME"]=="fence"
+    assert u["CASE_NAME"] in {"fence", "final47one"}
     u["validate_cluster"]()
     ns=u["namespace"]
     folder=u["CASE"];out=folder/"probe";out.mkdir(exist_ok=False)

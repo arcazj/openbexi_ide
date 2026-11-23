@@ -17,7 +17,10 @@ def main():
     sources = parser.add_mutually_exclusive_group(required=True)
     sources.add_argument("--dependencies", type=Path, help="Previously verified local dependency wheels")
     sources.add_argument("--online", action="store_true", help="Download dependencies directly from public PyPI")
+    parser.add_argument("--installer-lock", type=Path, help="Pinned online Windows installer bootstrap")
     args = parser.parse_args()
+    if args.installer_lock and not args.online:
+        parser.error("--installer-lock requires --online")
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
     here = Path(__file__).resolve()
@@ -87,6 +90,12 @@ def main():
         else:
             index = ["--no-index", "--find-links", args.dependencies.resolve()]
         pip = [py, "-I", "-m", "pip", "install", *index]
+        if args.installer_lock:
+            bootstrap_report = out / "pip-installer.json"
+            run("online-installer-bootstrap", [*pip, "--report", bootstrap_report, "--require-hashes",
+                "--only-binary=:all:", "-r", args.installer_lock.resolve()])
+            report["installer_bootstrap"] = {"lock_sha256": digest(args.installer_lock), "downloaded": origins(bootstrap_report),
+                                             "pip_report_sha256": digest(bootstrap_report)}
         desktop_report = out / "pip-desktop.json"
         spell_report = out / "pip-spell.json"
         run("desktop-deps", [*pip, "--report", desktop_report, "--require-hashes", "--only-binary=:all:", "-r", repo / "requirements-windows-cp313.lock"])

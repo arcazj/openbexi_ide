@@ -1,0 +1,135 @@
+{
+  "status": "COLLECTED",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "scanner": "Version: 0.76.2",
+  "scanner_binary_sha256": "dd07adf881a72b54d1a922191d62fa939938df2155be85a727da93b67b24e617",
+  "installation_sha256": "66398913dc87c09c4f56661ebbbe2979296c2735ee1e630e2c8ea6442f3ea469",
+  "components": 33,
+  "initial_file_scanner_components": 0,
+  "pip_vendor_manifest_sha256": "3df0c9601bfa2e0dca23cc574a4f900a4d7fdad060ab203fab8354350ed93320",
+  "package_versions_recognized_by_advisory_scan": 32,
+  "pip_vendored_versions": {
+    "cachecontrol": "0.14.4",
+    "distlib": "0.4.2",
+    "distro": "1.9.0",
+    "msgpack": "1.1.2",
+    "packaging": "26.2",
+    "platformdirs": "4.10.0",
+    "pyproject-hooks": "1.2.0",
+    "requests": "2.34.2",
+    "certifi": "2026.6.17",
+    "idna": "3.18",
+    "urllib3": "2.7.0",
+    "rich": "14.2.0",
+    "pygments": "2.20.0",
+    "resolvelib": "1.2.1",
+    "setuptools": "70.3.0",
+    "tomli": "2.4.1",
+    "tomli-w": "1.2.0",
+    "truststore": "0.10.4"
+  },
+  "qt_runtime_version": "6.10.3",
+  "distributions": {
+    "debugpy": {
+      "version": "1.8.22",
+      "notices": 1,
+      "native_binaries": 10
+    },
+    "grpcio": {
+      "version": "1.84.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-ide": {
+      "version": "1.2.2",
+      "notices": 10,
+      "native_binaries": 3
+    },
+    "openbexi-spell-dss": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-spell-host": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-spell-plugin": {
+      "version": "0.1.0",
+      "notices": 2,
+      "native_binaries": 1
+    },
+    "openbexi-spell-server": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 2
+    },
+    "openbexi-spell-shared": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 0
+    },
+    "pip": {
+      "version": "26.2.1",
+      "notices": 46,
+      "native_binaries": 9
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "pygments": {
+      "version": "2.21.0",
+      "notices": 2,
+      "native_binaries": 1
+    },
+    "pyside6-essentials": {
+      "version": "6.10.3",
+      "notices": 1,
+      "native_binaries": 246
+    },
+    "shiboken6": {
+      "version": "6.10.3",
+      "notices": 1,
+      "native_binaries": 12
+    },
+    "typing-extensions": {
+      "version": "4.16.0",
+      "notices": 1,
+      "native_binaries": 0
+    }
+  },
+  "native_binary_hashes": 288,
+  "installed_distributions_missing_from_scanner": [],
+  "distinct_advisory_package_versions": 9,
+  "advisory_severities": {
+    "HIGH": 5,
+    "MEDIUM": 2,
+    "CRITICAL": 1,
+    "LOW": 1
+  },
+  "with_upstream_fix": 9,
+  "raw_findings_sha256": "c3cbf0d1c6d23ccf0e451a24ec887f3dc30e631c6b5abaef0b24aeabae4df822",
+  "archive": "installed-components-47e.zip",
+  "archive_sha256": "e19bdded16dc815e71ebd6d43532988bb42eebbc78e58c8e88e4e47ca4dcc457",
+  "members": {
+    "installed.cdx.json": "81d6e8d2920706221e53f61ecb6ebacb4e8f51b8d27e9b7d9acd76c7e2d06fa7",
+    "initial-file-discovery.cdx.json": "ce284abf5288cb3a4543c5438ce9ba3c4bdb75e4fbcdb95a2d32dde8ebda9258",
+    "advisory-matches.json": "7b24eb8d938d5cb81691727f0df1a065b9543b14213259b0e04cf336d94b5b25",
+    "installed-notices-and-binaries.json": "75283736e8fb2b5b5ec0b6f57914213281535582c51d0394f7557ae4de2c1218"
+  },
+  "scope": "The six staged Windows products, seven online dependencies and bootstrap pip are established by installed metadata. The SBOM also includes pip-declared vendored dependencies and the Qt version reported by the installed runtime. Native binaries and notices have individual hashes. The raw file-discovery scan and advisory search of the explicit SBOM are separate. Embedded native library code requires independent review.",
+  "release_disposition": "OPEN_INDEPENDENT_REVIEW",
+  "risk_exceptions": []
+}
