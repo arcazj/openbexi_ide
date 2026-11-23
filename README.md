@@ -4,17 +4,23 @@ A CPython 3.13 desktop IDE with local and shared development, debugging and opti
 
 ## Current status
 
-**IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 423.326 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
+**Joint release on hold.** The tested candidate pairs IDE **1.2.2** (`fadac70d`) with SPELL **0.8.0** (`47e0cb37`) and simulator SDK **0.1.0**. Windows uses online installation. Published IDE 1.2.1 passed ordinary Python Run/Debug and stopped at native reservation. The candidate passed installed Windows native execution and browser handoff. Sustained memory, driver deadlines and inherited compatibility still block stable publication. [Qualification results](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
 
-The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.
-
-[Current status and next work](docs/CURRENT_STATUS.md) · [roadmap](ROADMAP.md) · [deadline and memory evidence](https://github.com/arcazj/openbexi_spell_plugin/blob/main/docs/v0.8/CONTEXT_DSS_DEADLINES_20261105.md) · [cleanup and recovery](docs/REPOSITORY_MAINTENANCE.md)
+Both five-minute sanitizer workloads exceeded the approved 64 MiB growth limit. Controller handoff grew by **259.07 MiB** and the installed IDE by **308.17 MiB**, with zero swap. The original one-hour runs remain gated. Full native compatibility, supported deployments, JetBrains host acceptance and independent security review remain open. [Qualification status](docs/CURRENT_STATUS.md) · [Roadmap](ROADMAP.md)
 
 ## Use and develop
 
 [Desktop setup and recovery](docs/IDE_SPELL_V07.md) · [procedure workspace](docs/PROCEDURE_WORKSPACE.md) · [shared debugging](docs/shared-debugging.md) · [examples](examples/test_spell/README.md)
 
 The existing local desktop at `http://127.0.0.1:6088` uses the v0.7 native baseline. Follow the setup guide for the matching release; desktop health does not establish v0.8 qualification. [Development dependencies and retained tooling](docs/DEPENDENCIES.md) describe fresh-checkout verification.
+
+## Windows installation
+
+For a staged Windows wheel, pass its manifest checksum to the online installer from PowerShell. The script creates a CPython 3.13 virtual environment and verifies the bootstrap and desktop wheels. [Installer](install.ps1) · [Installer dependency lock](requirements-windows-installer.lock)
+
+```powershell
+.\install.ps1 -Python C:\path\to\python.exe -IdeWheel C:\path\to\openbexi_ide-1.2.2-py3-none-any.whl -IdeWheelSha256 1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f
+```
 
 ## Architecture reference
 

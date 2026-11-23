@@ -1,0 +1,240 @@
+{
+  "schema": "openbexi.windows-published-baseline/1",
+  "verdict": "PASS",
+  "scope": "Published IDE 1.2.1 ordinary Python Run/Debug without SPELL, then published 0.8-rc1 wheel installation and remote-client/host CLI entry points.",
+  "host": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.15 (main, Aug 14 2026, 15:36:10) [MSC v.1944 64 bit (AMD64)]",
+  "spell_commit": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda",
+  "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+  "release_assets": {
+    "ide": {
+      "tag": "v1.2.1",
+      "release_id": 428225663,
+      "url": "https://github.com/arcazj/openbexi_ide/releases/tag/v1.2.1",
+      "checksum_file_sha256": "a9a021c887304ad6cb6b6b0de6240dfc3c3b323f3251ebb98b337c3cd52e02ca",
+      "wheel_assets": {
+        "openbexi_ide-1.2.1-py3-none-any.whl": {
+          "bytes": 207604,
+          "sha256": "43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b",
+          "asset_id": 689444734
+        }
+      }
+    },
+    "spell": {
+      "tag": "v0.8-rc1",
+      "release_id": 428226383,
+      "url": "https://github.com/arcazj/openbexi_spell_plugin/releases/tag/v0.8-rc1",
+      "checksum_file_sha256": "66bf0e38b9f8c9e78650464cf2a84886c949e3cd32f59b0e5e812620874e569e",
+      "wheel_assets": {
+        "openbexi_spell_dss-0.8.0rc1-py3-none-any.whl": {
+          "bytes": 120702,
+          "sha256": "2a90c7abe18bfd1912f610daa6391e7f3fcab17991d56a2f1bd87037a05966fa",
+          "asset_id": 689446665
+        },
+        "openbexi_spell_host-0.8.0rc1-py3-none-any.whl": {
+          "bytes": 26896,
+          "sha256": "300c5ba181a76224a0f9d07a471a9dac307e9f42a3b17a3ec3bdf821d1127d5f",
+          "asset_id": 689446667
+        },
+        "openbexi_spell_server-0.8.0rc1-py3-none-any.whl": {
+          "bytes": 91744,
+          "sha256": "f5c775fe21d8f5f3daba3fd133e6809931c445f943d4a9ef813733e9e919c208",
+          "asset_id": 689446693
+        },
+        "openbexi_spell_shared-0.8.0rc1-py3-none-any.whl": {
+          "bytes": 20901,
+          "sha256": "339ae72b1f108bac43a16ab898c0bebfb046bf293070a7fb3b311873a35bac22",
+          "asset_id": 689446698
+        }
+      }
+    }
+  },
+  "input_hashes": {
+    "C:\\projects\\openbexi_ide\\docs\\evidence\\ide-1.2.1\\qualification-20261122\\windows\\qualify_installed.py": "6252b9b3c519c9391d8b8332d738d0f836593ef298c687c42c5809edad48ca63",
+    "C:\\projects\\openbexi_ide\\requirements-windows-cp313.lock": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8",
+    "C:\\projects\\openbexi_ide\\scripts\\distribution_desktop.py": "2c337034cc08aa6d110cff81699157c8c621195d63ed210c2c55992db08d0069"
+  },
+  "command": [
+    "C:\\Users\\arcaz\\AppData\\Roaming\\uv\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+    "-I",
+    "C:\\projects\\openbexi_ide\\docs\\evidence\\ide-1.2.1\\qualification-20261122\\windows\\qualify_installed.py",
+    "--output",
+    "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02",
+    "--ide-repo",
+    "C:\\projects\\openbexi_ide"
+  ],
+  "qt_platform": "windows",
+  "installed_ide_origin": "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Lib\\site-packages\\openbexi_ide\\app.py",
+  "isolated_python": "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\venv\\Scripts\\python.exe",
+  "before_spell": {
+    "modules_present": {
+      "openbexi_spell_plugin": false,
+      "openbexi_spell_host": false,
+      "openbexi_spell_shared": false,
+      "openbexi_spell_server": false,
+      "openbexi_spell_dss": false,
+      "spell": false,
+      "dss": false
+    },
+    "installed": {
+      "debugpy": "1.8.22",
+      "openbexi-ide": "1.2.1",
+      "pip": "26.2.1",
+      "Pygments": "2.21.0",
+      "PySide6_Essentials": "6.10.3",
+      "shiboken6": "6.10.3"
+    }
+  },
+  "ordinary_python": {
+    "checks": [
+      "Default private CPython interpreter and ordinary Python Run",
+      "debugpy breakpoint, stack, variables, edit, Step and Continue"
+    ],
+    "run_stdout": "BUNDLED_PYTHON_23",
+    "paused_line": 2,
+    "local_value_observed": "21",
+    "local_value_set": "40",
+    "line_after_step": 3,
+    "debug_stdout": "BUNDLED_PYTHON_42",
+    "end_status": "exit 0",
+    "evidence": {
+      "result.json": "7bcc23ae67f6120807f6bcc870b58a43cc4f0f7854c85bdc9eddd78b5fbe4c21",
+      "console.txt": "4828eabdb4ac40eeae4ef3c3afe4b69e88ded6837e2fa7795a1b46c80eb38d24",
+      "python-debugger.png": "3788a437c513f3e694bcbb74399a1524a8be1711ed92fbb371856b9aa8e62058"
+    }
+  },
+  "after_spell_installed": {
+    "debugpy": "1.8.22",
+    "grpcio": "1.84.0",
+    "openbexi-ide": "1.2.1",
+    "openbexi-spell-dss": "0.8.0rc1",
+    "openbexi-spell-host": "0.8.0rc1",
+    "openbexi-spell-server": "0.8.0rc1",
+    "openbexi-spell-shared": "0.8.0rc1",
+    "pip": "26.2.1",
+    "protobuf": "7.36.2",
+    "Pygments": "2.21.0",
+    "PySide6_Essentials": "6.10.3",
+    "shiboken6": "6.10.3",
+    "typing_extensions": "4.16.0"
+  },
+  "verified_wheel_members_excluding_regenerated_RECORD": {
+    "openbexi_ide-1.2.1-py3-none-any.whl": 67,
+    "openbexi_spell_dss-0.8.0rc1-py3-none-any.whl": 62,
+    "openbexi_spell_host-0.8.0rc1-py3-none-any.whl": 13,
+    "openbexi_spell_server-0.8.0rc1-py3-none-any.whl": 28,
+    "openbexi_spell_shared-0.8.0rc1-py3-none-any.whl": 6
+  },
+  "all_downloaded_wheel_sha256": {
+    "debugpy-1.8.22-cp313-cp313-win_amd64.whl": "f49b1d6cecf326b63c06d7f517e4a6642777f758c58cb799e7bc5a6dd74721c2",
+    "grpcio-1.84.0-cp313-cp313-win_amd64.whl": "b61692f0069b3eee2fc8a3a1b7f6c044df9e03fede6ce69b3ca832e1c39f26c5",
+    "openbexi_ide-1.2.1-py3-none-any.whl": "43bbc5cdae4e6bff9cf258faf9c28f778c7e8617df304ca93436ddceeb4df96b",
+    "openbexi_spell_dss-0.8.0rc1-py3-none-any.whl": "2a90c7abe18bfd1912f610daa6391e7f3fcab17991d56a2f1bd87037a05966fa",
+    "openbexi_spell_host-0.8.0rc1-py3-none-any.whl": "300c5ba181a76224a0f9d07a471a9dac307e9f42a3b17a3ec3bdf821d1127d5f",
+    "openbexi_spell_server-0.8.0rc1-py3-none-any.whl": "f5c775fe21d8f5f3daba3fd133e6809931c445f943d4a9ef813733e9e919c208",
+    "openbexi_spell_shared-0.8.0rc1-py3-none-any.whl": "339ae72b1f108bac43a16ab898c0bebfb046bf293070a7fb3b311873a35bac22",
+    "protobuf-7.36.2-cp310-abi3-win_amd64.whl": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353",
+    "pygments-2.21.0-py3-none-any.whl": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+    "pyside6_essentials-6.10.3-cp39-abi3-win_amd64.whl": "051a70e2df79cf1c012a208ad82a98e8de23ca7fe3b0f3344d07152d15705b59",
+    "shiboken6-6.10.3-cp39-abi3-win_amd64.whl": "38261c88e87a1c32d1302b642b755470d2369c78af3c7d7d9e95d631f79b556c",
+    "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+  },
+  "commands": [
+    {
+      "label": "identity-ide_wheel_commit",
+      "exit_code": 0,
+      "log_sha256": "3b7ef4f2dfc7777cb561202776251c93ed55b65be5f02a764926b1ebfdd19173"
+    },
+    {
+      "label": "identity-ide_harness_checkout",
+      "exit_code": 0,
+      "log_sha256": "806fd7cf4147bfa6336bbd884219cafd3019f4559c8a12227d2aa63e9fef66b9"
+    },
+    {
+      "label": "venv",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "download-desktop-deps",
+      "exit_code": 0,
+      "log_sha256": "25f8185d01051ba61949f743cf7b4a6d1678be3455031d9d909f637ffadb976b"
+    },
+    {
+      "label": "install-desktop-deps",
+      "exit_code": 0,
+      "log_sha256": "462087da6c3d42624b9d6605813e54df9fa279a799144649be6584db3672b5bd"
+    },
+    {
+      "label": "install-published-ide",
+      "exit_code": 0,
+      "log_sha256": "6a33aa5db83200921c31ba3773459bbfa9e696e2b58dc21c7cf26d4605e302af"
+    },
+    {
+      "label": "before-spell",
+      "exit_code": 0,
+      "log_sha256": "b0dab243dda3ba8703fb4441a2bb21d4c72f5fffbce65ab4cc646ed4d111f2d1"
+    },
+    {
+      "label": "verify-ide-members",
+      "exit_code": 0,
+      "log_sha256": "957bd4f6938be1c9229ebc98fd27341959bfba626d169b49f9a3de4c20303b83"
+    },
+    {
+      "label": "ordinary-python",
+      "exit_code": 0,
+      "log_sha256": "7bcc23ae67f6120807f6bcc870b58a43cc4f0f7854c85bdc9eddd78b5fbe4c21"
+    },
+    {
+      "label": "download-dss-deps",
+      "exit_code": 0,
+      "log_sha256": "0ba60c534a5db0350c1f5c575c3e51344e873f26b9162e79ac4992f6fbcc628c"
+    },
+    {
+      "label": "install-published-spell",
+      "exit_code": 0,
+      "log_sha256": "8ecb866de03de0b79b21372749786a7501c8157ea93958aae53ab3f834bd92c9"
+    },
+    {
+      "label": "installed-dependencies",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "label": "after-spell",
+      "exit_code": 0,
+      "log_sha256": "8a86fb5ff7735b54c82008178c55d1c0075a6a2016e417a6227d84e1bf7110ae"
+    },
+    {
+      "label": "verify-spell-members",
+      "exit_code": 0,
+      "log_sha256": "89cfeff3f15886aa23637e922ee502d9cdf4359e7f85637da0af03ddb0905be6"
+    },
+    {
+      "label": "public-remote-client-cli",
+      "exit_code": 0,
+      "log_sha256": "e435e0521d94050909128d8af8ad0ddf245c805842a86a2679ac05c1994f260b"
+    },
+    {
+      "label": "public-host-cli",
+      "exit_code": 0,
+      "log_sha256": "2b4783c693a3b8d44d0761782a1e8aec5d2c44804eec4489322a3b370dcfaedc"
+    }
+  ],
+  "exact_argv_and_full_logs": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\run-02\\result.json",
+    "sha256": "3a1aa1fec2f35bd1f445ec8497eccbd5b7e4c471a689ed64904ef44abec35f80"
+  },
+  "earlier_failed_observer_attempt": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\run-01\\result.json",
+    "sha256": "8ef42c16d0d41e06c521bcb06ad1bbe16e77b1d56cf50ea71be113a4b2efb6c8",
+    "outcome": "FAIL",
+    "step": "verify-ide-members",
+    "log_sha256": "7f4c3b05480fdd72f9649a0b70eadbf9a2f116d358f7a2a9eacf5806ace7beac",
+    "reason": "Verifier parsed .dist-info as part of the distribution name. Corrected it to read the METADATA Name header and repeated from a fresh venv."
+  },
+  "limits": [
+    "The workstation Windows installation is shared. The virtual environment and GUI settings are fresh.",
+    "The stable v0.8 successor, Linux native service, JetBrains, hosted Windows and clean offline distribution require separate evidence."
+  ]
+}

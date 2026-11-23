@@ -1,0 +1,238 @@
+{
+  "status": "PASS",
+  "scope": "Fresh Windows online install with SHA-locked pip 26.3 and all six frozen product wheels. Ordinary Run and Debug preceded SPELL installation; installed owner and observer used real Qt against the exact Linux role images.",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "installer": {
+    "lock_sha256": "6e8991bfdc315202039f40e4939cf8b66ece553edfd27875e5dbdbd844cadbe2",
+    "downloaded": {
+      "pip": {
+        "version": "26.3",
+        "file": "pip-26.3-py3-none-any.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13"
+      }
+    },
+    "pip_report_sha256": "9f4c1d9596527fb6491011796a6288bd7aa08c2343163e3956c073178a8ddac6"
+  },
+  "products": {
+    "openbexi_ide-1.2.2-py3-none-any.whl": "1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+    "openbexi_spell_dss-0.8.0-py3-none-any.whl": "93e1b280ef192b4da0994b0fe66d8168dd702e582bcb5e0aa5e6d84c09361caa",
+    "openbexi_spell_host-0.8.0-py3-none-any.whl": "8ecfee7b6484ed86246b91a22d8c0c1d544682af51662feae88da98af5beaa6f",
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": "c167dd91b6d3f18ae1de522cedfc20a9b70e504c36c541663687a2c1adda5a8e",
+    "openbexi_spell_server-0.8.0-py3-none-any.whl": "d39f4c6cc0735fea0c1331724a520658d866faf4548ded7f01802fcab2f6f3e8",
+    "openbexi_spell_shared-0.8.0-py3-none-any.whl": "80a3affab5a552363a62f7e5fe86ce45dbe3284aaf5eedd9f17bea23e1dd2374"
+  },
+  "third_party": {
+    "PySide6_Essentials": {
+      "version": "6.10.3",
+      "file": "pyside6_essentials-6.10.3-cp39-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "051a70e2df79cf1c012a208ad82a98e8de23ca7fe3b0f3344d07152d15705b59"
+    },
+    "shiboken6": {
+      "version": "6.10.3",
+      "file": "shiboken6-6.10.3-cp39-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "38261c88e87a1c32d1302b642b755470d2369c78af3c7d7d9e95d631f79b556c"
+    },
+    "debugpy": {
+      "version": "1.8.22",
+      "file": "debugpy-1.8.22-cp313-cp313-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "f49b1d6cecf326b63c06d7f517e4a6642777f758c58cb799e7bc5a6dd74721c2"
+    },
+    "Pygments": {
+      "version": "2.21.0",
+      "file": "pygments-2.21.0-py3-none-any.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+    },
+    "grpcio": {
+      "version": "1.84.0",
+      "file": "grpcio-1.84.0-cp313-cp313-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "b61692f0069b3eee2fc8a3a1b7f6c044df9e03fede6ce69b3ca832e1c39f26c5"
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "file": "protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353"
+    },
+    "typing_extensions": {
+      "version": "4.16.0",
+      "file": "typing_extensions-4.16.0-py3-none-any.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    }
+  },
+  "qt_platform": "windows",
+  "execution": "7d3ffa84-808d-4365-858c-d723650a9141",
+  "runtime_images": {
+    "gateway_image": "sha256:f500c700cb5714a2040064a1a9bc93e3e86ae086cdc28dc65d363161af3ba94e",
+    "core_image": "sha256:b1b46dcda1f8db45889f6a145d2125362bbc04c41ded6e956ea99ca1ea61f968",
+    "worker_image": "sha256:489ff81aaa52ecbf09b4281499ed00f22fdd8b19e51e133a0202f2bbb6a40413"
+  },
+  "events": [
+    {
+      "event": "roles_connected",
+      "time": "2026-11-23T03:06:06.696243+00:00",
+      "context": "A",
+      "subject": "alice",
+      "observer": "observer"
+    },
+    {
+      "event": "reserved",
+      "time": "2026-11-23T03:06:08.073078+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "source_sha256": "bf0db88c1e0900f3150ab3b859118adbe93752ba4744f50f2844ef3e202e1154",
+      "revision": "aaee59d3c24c69d0ba9a57dec0a9f6e4be99706d"
+    },
+    {
+      "event": "start_native_clicked",
+      "time": "2026-11-23T03:06:08.169207+00:00"
+    },
+    {
+      "event": "native_ready",
+      "time": "2026-11-23T03:06:11.439122+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "status": "PAUSED",
+      "namespace_pid": 7
+    },
+    {
+      "event": "run_continue_clicked",
+      "time": "2026-11-23T03:06:11.483005+00:00"
+    },
+    {
+      "event": "observer_filtered_pending_prompt",
+      "time": "2026-11-23T03:06:13.300025+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141"
+    },
+    {
+      "event": "owner_displayed_native_prompt",
+      "time": "2026-11-23T03:06:13.761634+00:00",
+      "question": "Continue the qualification procedure?",
+      "choices": [
+        "Y",
+        "N"
+      ],
+      "send_requires_selection": true
+    },
+    {
+      "event": "owner_sent_native_answer",
+      "time": "2026-11-23T03:06:13.880899+00:00",
+      "selected_index": 0
+    },
+    {
+      "event": "verified_native_post_answer_marker",
+      "time": "2026-11-23T03:06:14.643143+00:00",
+      "path": "/workspace/approved-procedure-completed",
+      "bytes": 43,
+      "sha256": "e19d465ec80074d2faa6474f82e1afa29aa0074978ae53380332b8810e0f39d4"
+    },
+    {
+      "event": "native_finished",
+      "time": "2026-11-23T03:06:15.764794+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "native_status": "FINISHED",
+      "lifecycle_receipts_settled": true,
+      "hold_retained": true
+    },
+    {
+      "event": "owner_displayed_result",
+      "time": "2026-11-23T03:06:16.382588+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "lifecycle": "STARTING",
+      "native_root_result": "FINISHED",
+      "native_controls_disabled": true
+    },
+    {
+      "event": "observer_displayed_result",
+      "time": "2026-11-23T03:06:16.439298+00:00",
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "lifecycle": "STARTING",
+      "native_root_result": "FINISHED",
+      "native_controls_disabled": true
+    },
+    {
+      "event": "verified_durable_prompt_and_reply",
+      "time": "2026-11-23T03:06:16.562144+00:00",
+      "prompt_id": "7109fb8f-6dea-448c-9f74-2bd17aaa861a",
+      "prompt_state": "CLOSED",
+      "outcome": "ANSWER_SELECTED",
+      "owner": "alice",
+      "action": "ANSWER",
+      "reply_state": "CONSUMED_UNPROVEN",
+      "diagnostic": "IPC_SEND_ACKNOWLEDGED"
+    }
+  ],
+  "durable_prompt": [
+    [
+      "7d3ffa84-808d-4365-858c-d723650a9141",
+      "CLOSED",
+      "ANSWER_SELECTED"
+    ]
+  ],
+  "native_results": [
+    {
+      "execution_id": "7d3ffa84-808d-4365-858c-d723650a9141",
+      "native_status": "FINISHED"
+    }
+  ],
+  "processes": [
+    {
+      "pid": 135,
+      "ppid": 71,
+      "executable": "SPELL-Executor"
+    },
+    {
+      "pid": 54,
+      "ppid": 7,
+      "executable": "SPELL-Listener"
+    },
+    {
+      "pid": 7,
+      "ppid": 1,
+      "executable": "python3.13"
+    },
+    {
+      "pid": 71,
+      "ppid": 54,
+      "executable": "SPELL-Context"
+    }
+  ],
+  "audit": [
+    {
+      "name": "2026-11-23_030609_Executor_main#1.ASRUN",
+      "bytes": 1048,
+      "sha256": "cb397c71264e077c214ac29b5720a9a916cfbc7abaeb626d1ac3e0883c3ab9d5"
+    }
+  ],
+  "worker_exit": 0,
+  "sources": {
+    "qualify_native.py": "765ff0f281640dc235ced8a1e1116130be51c5a20bfed6012695722b3300c4a2",
+    "qualify_candidate.py": "7b366c4e22d14562558f1ddc1be1acccc922da58753727451be4d51df8e47211",
+    "start_case.py": "e8621c813537be6565f21f11d6f703cc0ea36aea4611d550fe09b868d81249ab",
+    "collect_case.py": "faa294d9bc0295ee24558dc465f7fdf7a5fad9fc975ae0fa190bf417ac724df0"
+  },
+  "raw_receipts": {
+    "online_install": "9575fa741b613f2f20e2ed6a46efe06ffab59a4da526368003c10f476e2e99c4",
+    "installed_qt": "d49f402fc98a1af443a12452980e0b74a779c189e7b54493e2d32643a6d9d3fb",
+    "native_backend": "de0bc16c0f1643e97b9747d6c0ddc948a181f21e49be2e376eed4d78aceac685"
+  },
+  "prior_trial": {
+    "execution": "cb2529f5-8064-4b15-bc6f-9048a798abf2",
+    "qt_passed": true,
+    "windows_receipt_sha256": "84e53e0a6cdf2216cc5d0628885233741de80635ae40e81822dc87d2c7a7123d",
+    "backend_collection": "The early collector inspected a still-running worker after the visible terminal result. The follow-up waited for natural worker exit before reading its audit. No product code or deadlines changed."
+  }
+}

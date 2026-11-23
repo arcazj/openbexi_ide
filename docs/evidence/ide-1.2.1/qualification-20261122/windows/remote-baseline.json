@@ -1,0 +1,426 @@
+{
+  "ide_commit": "08c314fb6b802b407cbabe01777072884d2b7504",
+  "spell_commit": "ce45fa4fd31b77cb97a1ef3621aa3906d2c94dda",
+  "published_wheels": "installed.json",
+  "scope": "Four independent Linux TLS services and real Windows Qt clients. Frozen baseline; no assigned native worker.",
+  "attempts": [
+    {
+      "id": "prelaunch01",
+      "verdict": "BLOCKED",
+      "finding": "Temporary Docker Desktop bind-mounted issuer exceeded its bounded run before services or UI testing.",
+      "command": "python run_prelaunch.py --name prelaunch01",
+      "receipt": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\prelaunch01\\summary.json",
+        "sha256": "8c6828b2b8e4cf3b65e1ae6bf8e17f2ce0a1894a1732a60e8dd03d7193ef28f1"
+      },
+      "credentials_removed": true
+    },
+    {
+      "id": "prelaunch02",
+      "verdict": "BLOCKED",
+      "finding": "Native Windows file chooser automation timed out before authenticated connection. Subsequent tests substitute only the file selection.",
+      "command": "python run_prelaunch_vol.py --name prelaunch02",
+      "receipt": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\prelaunch02\\summary.json",
+        "sha256": "c9ed1a57d5dad56eb2a7d8f7b544917f775ebd939bb3148ae23a3b3ef4279f15"
+      },
+      "credentials_removed": true,
+      "gui_log": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\prelaunch02\\windows-panel.log",
+        "sha256": "f45ff52ab1e18fab47d7c526c4ad063928ea7dd2ecec6eb4c48a68f334591472"
+      }
+    },
+    {
+      "id": "prelaunch03",
+      "verdict": "FAIL",
+      "finding": "Installed 1.2.1 reports 404 request_denied when published Compose provisions no approved source catalog. Health and executions are lost in the panel refresh.",
+      "command": "python run_prelaunch_vol.py --name prelaunch03",
+      "receipt": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\prelaunch03\\summary.json",
+        "sha256": "0571c6a63def220928f4c56fdd79dfa446cd0f080b401fd3479f702514d31378"
+      },
+      "credentials_removed": true,
+      "gui_log": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\prelaunch03\\windows-panel.log",
+        "sha256": "844d5a000cc442cedeec82b76557a8d0aeddd6acc15082581a45c5de09a1fbb3"
+      }
+    },
+    {
+      "id": "catalog01",
+      "verdict": "PASS",
+      "finding": "A read-only approved Git catalog enables reservation. The installer supplies only the role-specific file choice; all authentication, mutation and native Windows widget actions are real.",
+      "command": "python run_prelaunch_catalog.py --name catalog01",
+      "receipt": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\catalog01\\summary.json",
+        "sha256": "ac1020c3b5f0daea907b46390b66f1e3579cf5d11eee76bc664519f83be6d9ef"
+      },
+      "credentials_removed": true,
+      "gui_log": {
+        "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\catalog01\\windows-panel.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "published_gui": {
+    "version": "1.2.1",
+    "qt_platform": "windows",
+    "connection_file_selection": "The file chooser returned the fixture's private path. Connect, TLS, authorization and all other widget actions ran normally.",
+    "harness_sha256": "98267ae5c4a47b6943f655bb9727eb4cee83681a20851deb96325c5e3d22b1c1",
+    "identities": {
+      "alice": {
+        "visible_contexts": [
+          "A",
+          "B"
+        ],
+        "selected_context": "A",
+        "permissions": [
+          "blackboard:admin",
+          "blackboard:read",
+          "context:read",
+          "execution:control",
+          "execution:read",
+          "execution:request_control",
+          "execution:start"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true
+      },
+      "bob": {
+        "visible_contexts": [
+          "B"
+        ],
+        "selected_context": "B",
+        "permissions": [
+          "blackboard:admin",
+          "blackboard:read",
+          "context:read",
+          "execution:control",
+          "execution:read",
+          "execution:request_control",
+          "execution:start"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true
+      },
+      "observer": {
+        "visible_contexts": [
+          "A"
+        ],
+        "selected_context": "A",
+        "permissions": [
+          "context:read",
+          "execution:read"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true,
+        "mutation_controls_disabled": true
+      }
+    },
+    "passed": true,
+    "reservation": {
+      "execution_id": "a0beaf81-f3e4-48d1-89b8-c82d46658db6",
+      "procedure_id": "windows-demo",
+      "source_revision": "291f3d40f19cdd9e3a25b8e426435c784c4beb9f",
+      "source_sha256": "af0f47de0397e5cb1654a99981c826badf182237a2685a94c1e2ed03a88c34f2",
+      "lifecycle": "RESERVED",
+      "owner": "alice",
+      "native_start_action_available": false
+    },
+    "explicit_disconnect_restored_local_run": true
+  },
+  "records": {
+    "context-a": {
+      "id": "ff363a831811783c764ef261a44368c8038296cf4d10bf37c96fa73ed3c91e59",
+      "image": "sha256:295638b950a09a0c8c2f8467162407b9adaabfd96d558a9f02c67b97a38644ed",
+      "docker_host_pid": 8951,
+      "health": "healthy"
+    },
+    "context-b": {
+      "id": "922f95d9fd5599d8b4e165b6d99bd0677f79474671e1dccb7296a7f6f8d7ff68",
+      "image": "sha256:295638b950a09a0c8c2f8467162407b9adaabfd96d558a9f02c67b97a38644ed",
+      "docker_host_pid": 9008,
+      "health": "healthy"
+    },
+    "listener": {
+      "id": "b03b5e8dd2039d3123ba3192184fb84729972eedafadd7042f722bf0da678525",
+      "image": "sha256:295638b950a09a0c8c2f8467162407b9adaabfd96d558a9f02c67b97a38644ed",
+      "docker_host_pid": 9112,
+      "health": "healthy"
+    },
+    "gateway": {
+      "id": "956111bc10038b6fa20d8d06ac5fd354a3795a2afaf64318e802a67564db16e7",
+      "image": "sha256:295638b950a09a0c8c2f8467162407b9adaabfd96d558a9f02c67b97a38644ed",
+      "docker_host_pid": 9231,
+      "health": "healthy"
+    }
+  },
+  "successful_command": "python run_prelaunch_catalog.py --name catalog01",
+  "successful_launcher": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\run_prelaunch_catalog.py",
+    "sha256": "1b1b81c6d5ec2eb03646774a9dbfefe2f3dd1b9b6985bb688f75678a56ea3a34"
+  },
+  "verified_server_wheel_sha256": "f5c775fe21d8f5f3daba3fd133e6809931c445f943d4a9ef813733e9e919c208",
+  "base_image": "sha256:aeeb78b23b63640c75bd7a511bf6ec65d084d381d33035a027c02ef23cedabc1",
+  "deployed_server_image": "sha256:295638b950a09a0c8c2f8467162407b9adaabfd96d558a9f02c67b97a38644ed",
+  "complete_command_record": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\catalog01\\summary.json",
+    "sha256": "ac1020c3b5f0daea907b46390b66f1e3579cf5d11eee76bc664519f83be6d9ef"
+  },
+  "gui_receipt": {
+    "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\catalog01\\gui\\result.json",
+    "sha256": "9e4d62c7ee012e2cb97ec6aa04ab32d5cac63edbf785b4899f884b3d74a1f693"
+  },
+  "qualification": "FAIL for native start on v1.2.1; no public Start action after Reserve.",
+  "tested_scope": "PASS for certificate scopes, observer prohibitions, local Run/Debug guards, explicit disconnect, and immutable-source reservation.",
+  "staged_1_2_2_older_server": {
+    "digest": {
+      "openbexi_ide-1.2.2-py3-none-any.whl": "9be19f840d1338623332c94337c60522242383af3bcd458c5b28fa6ae5d8705e",
+      "openbexi_spell_dss-0.8.0-py3-none-any.whl": "a7803582061401867265fcf2ba25f43a3e970ff07cb304fce98afd72771d364d",
+      "openbexi_spell_host-0.8.0-py3-none-any.whl": "c0cf31571b07a033a0360a21504b23168e7e1211de94fcd8273fa387bf5fd188",
+      "openbexi_spell_server-0.8.0-py3-none-any.whl": "fed9387a9fc5aadda3fa4b1bd38d6daefc39a4ec93868914ff246b47e0caa623",
+      "openbexi_spell_shared-0.8.0-py3-none-any.whl": "4ac666af9109942294aa18ec38373a97a4cbea636572967a6ebdcdc6970b3de8"
+    },
+    "outcome": "PASS authenticated read and missing-catalog presentation on all three certificates; overall diagnostic FAIL at the post-disconnect local Python marker.",
+    "roles": {
+      "alice": {
+        "visible_contexts": [
+          "A",
+          "B"
+        ],
+        "selected_context": "A",
+        "permissions": [
+          "blackboard:admin",
+          "blackboard:read",
+          "context:read",
+          "execution:control",
+          "execution:read",
+          "execution:request_control",
+          "execution:start"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true,
+        "missing_catalog_visible": true,
+        "executions_readable": true
+      },
+      "bob": {
+        "visible_contexts": [
+          "B"
+        ],
+        "selected_context": "B",
+        "permissions": [
+          "blackboard:admin",
+          "blackboard:read",
+          "context:read",
+          "execution:control",
+          "execution:read",
+          "execution:request_control",
+          "execution:start"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true,
+        "missing_catalog_visible": true,
+        "executions_readable": true
+      },
+      "observer": {
+        "visible_contexts": [
+          "A"
+        ],
+        "selected_context": "A",
+        "permissions": [
+          "context:read",
+          "execution:read"
+        ],
+        "remote_runtime_enabled": false,
+        "disabled_local_actions": true,
+        "direct_local_calls_rejected": true,
+        "missing_catalog_visible": true,
+        "executions_readable": true,
+        "mutation_controls_disabled": true
+      }
+    },
+    "command": "python run_missing_catalog.py --name fixedcatalog01",
+    "evidence": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\fixedcatalog01\\summary.json",
+      "sha256": "66cb4a1d5e158fb461ee92293c40a9454148509d8c47ecdb520a6435b0acf9e4"
+    },
+    "error_output": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\fixedcatalog01\\windows-panel.log",
+      "sha256": "8e5d81f219be3124574b77d890877032419d1c4b3924d976cde33d2d8119ff6a"
+    },
+    "credentials_removed": true
+  },
+  "canonical_1_2_2_older_server": {
+    "ide_commit": "3ec9d4d998afa77f8590cd1e48c10b1a38561dca",
+    "attempts": {
+      "canonicalcatalog01": {
+        "passed": false,
+        "receipt": {
+          "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonicalcatalog01\\summary.json",
+          "sha256": "fbce293c1aeb504cbe9184a652632f3d31481b8c75513ea457f98558dff91d02"
+        },
+        "credentials_removed": true,
+        "finding": "Disposable stack could not allocate default Docker network address pool. Repeated after task-owned intermediate networks closed."
+      },
+      "canonicalcatalog02": {
+        "passed": false,
+        "receipt": {
+          "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonicalcatalog02\\summary.json",
+          "sha256": "47bd760a73a5c558d8f76642cc3b22228399d212c19c0704899e8923f47a5d5c"
+        },
+        "credentials_removed": true,
+        "roles": {
+          "alice": {
+            "visible_contexts": [
+              "A",
+              "B"
+            ],
+            "selected_context": "A",
+            "permissions": [
+              "blackboard:admin",
+              "blackboard:read",
+              "context:read",
+              "execution:control",
+              "execution:read",
+              "execution:request_control",
+              "execution:start"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true
+          },
+          "bob": {
+            "visible_contexts": [
+              "B"
+            ],
+            "selected_context": "B",
+            "permissions": [
+              "blackboard:admin",
+              "blackboard:read",
+              "context:read",
+              "execution:control",
+              "execution:read",
+              "execution:request_control",
+              "execution:start"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true
+          },
+          "observer": {
+            "visible_contexts": [
+              "A"
+            ],
+            "selected_context": "A",
+            "permissions": [
+              "context:read",
+              "execution:read"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true,
+            "mutation_controls_disabled": true
+          }
+        },
+        "post_disconnect": {
+          "run_enabled": true,
+          "language": "python",
+          "interpreter": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+          "busy": false,
+          "current_editor": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonicalcatalog02\\gui\\ordinary.py",
+          "legacy_session_active": false
+        },
+        "console": "Running ordinary.py\n\n",
+        "local_run_seconds": null
+      },
+      "canonicalcatalog03": {
+        "passed": true,
+        "receipt": {
+          "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonicalcatalog03\\summary.json",
+          "sha256": "6aba1372aefb8405ba6fa6b548bd79738cf081ee4ac75add2eab6ff2e33a7205"
+        },
+        "credentials_removed": true,
+        "roles": {
+          "alice": {
+            "visible_contexts": [
+              "A",
+              "B"
+            ],
+            "selected_context": "A",
+            "permissions": [
+              "blackboard:admin",
+              "blackboard:read",
+              "context:read",
+              "execution:control",
+              "execution:read",
+              "execution:request_control",
+              "execution:start"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true
+          },
+          "bob": {
+            "visible_contexts": [
+              "B"
+            ],
+            "selected_context": "B",
+            "permissions": [
+              "blackboard:admin",
+              "blackboard:read",
+              "context:read",
+              "execution:control",
+              "execution:read",
+              "execution:request_control",
+              "execution:start"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true
+          },
+          "observer": {
+            "visible_contexts": [
+              "A"
+            ],
+            "selected_context": "A",
+            "permissions": [
+              "context:read",
+              "execution:read"
+            ],
+            "remote_runtime_enabled": false,
+            "disabled_local_actions": true,
+            "direct_local_calls_rejected": true,
+            "missing_catalog_visible": true,
+            "executions_readable": true,
+            "mutation_controls_disabled": true
+          }
+        },
+        "post_disconnect": {
+          "run_enabled": true,
+          "language": "python",
+          "interpreter": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonical-01\\venv\\Scripts\\python.exe",
+          "busy": false,
+          "current_editor": "F:\\openbexi-builds\\qualification-20261122\\windows\\canonicalcatalog03\\gui\\ordinary.py",
+          "legacy_session_active": false
+        },
+        "console": "Running ordinary.py\n\n\nFinished \u00b7 exit 0\n",
+        "local_run_seconds": 1.965
+      }
+    },
+    "result": "PASS on all three roles with explicit GIL yield in the UI poll, matching distribution_desktop.py. Ordinary local Run completed 1.965 seconds after explicit disconnect."
+  }
+}

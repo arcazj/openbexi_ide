@@ -2,14 +2,18 @@
 
 import queue
 import threading
+import time
 import uuid
 
-from PySide6.QtCore import QObject, Qt, Signal
+from PySide6.QtCore import QObject, Qt, QTimer, Signal
 from PySide6.QtWidgets import (
     QComboBox,
+    QDialog,
+    QDialogButtonBox,
     QFileDialog,
     QHBoxLayout,
     QLabel,
+    QLineEdit,
     QPushButton,
     QTreeWidget,
     QTreeWidgetItem,
@@ -17,7 +21,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from openbexi_runtime.spell_server_client import SpellServerClient
+from openbexi_runtime.spell_server_client import SpellServerClient, SpellServerError
 
 
 class ServerWorker(QObject):
@@ -74,6 +78,9 @@ class SpellServerPanel(QWidget):
         self.retained_connections = set()
         self.closing_keys = {}
         self.state = {}
+        self.pending_observation = None
+        self.prompt_dialog = None
+        self.prompt_identity = None
         self.busy = False
         self.worker = ServerWorker(self)
         self.worker.completed.connect(self.receive, Qt.QueuedConnection)
@@ -93,19 +100,27 @@ class SpellServerPanel(QWidget):
         layout.addWidget(self.status)
         self.executions = QTreeWidget()
         self.executions.setHeaderLabels(
-            ["Procedure", "Controller", "State", "Control request"]
+            [
+                "Procedure",
+                "Controller",
+                "Control state",
+                "Control request",
+                "Native result",
+            ]
         )
         layout.addWidget(self.executions)
         controls = QHBoxLayout()
         self.procedures = QComboBox()
         controls.addWidget(self.procedures)
         self.reserve_button = QPushButton("Reserve")
+        self.launch_button = QPushButton("Start native")
         self.rebind_button = QPushButton("Reconnect control")
         self.claim_button = QPushButton("Request control")
         self.accept_button = QPushButton("Accept request")
         self.reject_button = QPushButton("Reject request")
         for button in (
             self.reserve_button,
+            self.launch_button,
             self.rebind_button,
             self.claim_button,
             self.accept_button,
@@ -129,12 +144,16 @@ class SpellServerPanel(QWidget):
             self.command_buttons[command] = button
             command_row.addWidget(button)
         layout.addLayout(command_row)
+        self.prompt_button = QPushButton("View prompt")
+        self.prompt_button.clicked.connect(self.view_prompt)
+        command_row.addWidget(self.prompt_button)
         self.connect_button.clicked.connect(self.choose_connection)
         self.refresh_button.clicked.connect(self.refresh)
         self.disconnect_button.clicked.connect(self.disconnect_server)
         self.context.currentTextChanged.connect(self.refresh)
         self.executions.itemSelectionChanged.connect(self.update_buttons)
         self.reserve_button.clicked.connect(lambda: self.mutate("reserve"))
+        self.launch_button.clicked.connect(self.launch_native)
         self.rebind_button.clicked.connect(lambda: self.mutate("rebind"))
         self.claim_button.clicked.connect(lambda: self.mutate("claim"))
         self.accept_button.clicked.connect(lambda: self.mutate("accept"))
@@ -170,17 +189,35 @@ class SpellServerPanel(QWidget):
         self.worker.submit(operation)
 
     def refresh(self):
-        if self.busy or self.client is None or not self.context.currentText():
+        if (
+            self.busy
+            or self.prompt_dialog is not None
+            or self.client is None
+            or not self.context.currentText()
+        ):
             return
         context, client = self.context.currentText(), self.client
-        self.submit(
-            lambda: {
-                "context": context,
-                "health": client.read(context, "health"),
-                "procedures": client.read(context, "procedures"),
-                "executions": client.read(context, "executions"),
-            }
-        )
+
+        def snapshot():
+            health = client.read(context, "health")
+            executions = client.read(context, "executions")
+            try:
+                procedures = client.read(context, "procedures")
+            except SpellServerError as error:
+                # Earlier gateways intentionally redact upstream error details.
+                # A missing catalog is a visible partial read. Preserve all
+                # authorization, identity, transport and other errors.
+                if error.status != 404:
+                    raise
+                procedures = {"procedures": [], "unavailable": True}
+            return dict(
+                context=context,
+                health=health,
+                procedures=procedures,
+                executions=executions,
+            )
+
+        self.submit(snapshot)
 
     def selected(self):
         item = self.executions.currentItem()
@@ -195,6 +232,7 @@ class SpellServerPanel(QWidget):
             result = item["result"]
             if result.get("disconnected"):
                 self.client = None
+                self.pending_observation = None
                 self.state = {}
                 self.context.clear()
                 self.executions.clear()
@@ -216,6 +254,11 @@ class SpellServerPanel(QWidget):
                     "Connected • "
                     + health["subject"]
                     + (
+                        " • source catalog unavailable (404)"
+                        if result["procedures"].get("unavailable")
+                        else ""
+                    )
+                    + (
                         " • execution unavailable"
                         if not health["runtime_enabled"]
                         and not health.get("native_commands")
@@ -232,6 +275,7 @@ class SpellServerPanel(QWidget):
                             execution["owner"],
                             execution["control_state"],
                             claim.get("requester", ""),
+                            execution.get("native_root_result") or "",
                         ]
                     )
                     row.setData(0, Qt.UserRole, execution)
@@ -241,6 +285,48 @@ class SpellServerPanel(QWidget):
                 self.procedures.clear()
                 for procedure in result["procedures"]["procedures"]:
                     self.procedures.addItem(procedure["procedure_id"], procedure)
+                if self.pending_observation:
+                    context, execution_id, field, deadline = self.pending_observation
+                    pending = next(
+                        (
+                            row
+                            for row in result["executions"]["executions"]
+                            if row["id"] == execution_id
+                        ),
+                        {},
+                    )
+                    if context != result["context"] or pending.get(field):
+                        self.pending_observation = None
+                    elif time.monotonic() < deadline:
+                        if field == "native_root_registered":
+                            self.status.setText(
+                                "Native start admitted. Waiting for the Executor to register."
+                            )
+                        QTimer.singleShot(350, self, self.refresh)
+                    else:
+                        self.pending_observation = None
+                        self.status.setText(
+                            "Refresh to check the native Executor's current state."
+                        )
+            elif "view_prompt" in result:
+                self.show_prompt(result["identity"], result["view_prompt"])
+            elif "launch" in result:
+                self.pending_observation = (
+                    result["launch_context"],
+                    result["launch"]["execution_id"],
+                    "native_root_registered",
+                    time.monotonic() + 30,
+                )
+                self.refresh()
+            elif "observe_terminal" in result:
+                context, execution_id = result["observe_terminal"]
+                self.pending_observation = (
+                    context,
+                    execution_id,
+                    "native_root_result",
+                    time.monotonic() + 30,
+                )
+                self.refresh()
             else:
                 self.refresh()
         self.update_buttons()
@@ -297,6 +383,31 @@ class SpellServerPanel(QWidget):
                 self.context.currentText(), execution.get("id")
             )
         )
+        self.launch_button.setEnabled(
+            bool(has_proof)
+            and health.get("native_launch") is True
+            and "execution:start" in permissions
+            and not self.state.get("procedures", {}).get("unavailable")
+            and not execution.get("native_start_admitted")
+            and execution.get("lifecycle") == "RESERVED"
+            and execution.get("control_state") == "OWNED"
+        )
+        prompt_pending = bool(
+            has_proof
+            and execution.get("native_prompt_pending")
+            and execution.get("control_state") == "OWNED"
+        )
+        self.prompt_button.setVisible(bool(execution.get("native_prompt_pending")))
+        self.prompt_button.setEnabled(prompt_pending)
+        if (
+            self.prompt_dialog
+            and not self.busy
+            and (
+                not prompt_pending
+                or self.prompt_identity != self._selected_prompt_identity()
+            )
+        ):
+            self.prompt_dialog.reject()
         for button in (self.accept_button, self.reject_button):
             button.setEnabled(
                 control and owner and has_proof and bool(execution.get("pending_claim"))
@@ -306,6 +417,8 @@ class SpellServerPanel(QWidget):
             button.setEnabled(
                 bool(has_proof)
                 and execution.get("lifecycle") == "STARTING"
+                and execution.get("native_root_registered", True)
+                and not execution.get("native_root_result")
                 and (
                     execution.get("control_state") == "OWNED"
                     or (
@@ -315,6 +428,114 @@ class SpellServerPanel(QWidget):
                 )
                 and command in available
             )
+
+    def _selected_prompt_identity(self):
+        row = self.selected() or {}
+        return (
+            self.context.currentText(),
+            row.get("id"),
+            row.get("epoch"),
+            row.get("connection_generation"),
+        )
+
+    def view_prompt(self):
+        if self.busy or not self.prompt_button.isEnabled():
+            return
+        identity = self._selected_prompt_identity()
+        client = self.client
+        self.submit(
+            lambda: {
+                "identity": identity,
+                "view_prompt": client.prompt(*identity[:2], key=str(uuid.uuid4())),
+            }
+        )
+
+    def show_prompt(self, identity, prompt):
+        if not prompt or identity != self._selected_prompt_identity():
+            self.status.setText("The native prompt is no longer available")
+            return
+        if self.prompt_dialog:
+            self.prompt_dialog.reject()
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Native procedure prompt")
+        layout = QVBoxLayout(dialog)
+        question = QLabel(dialog)
+        question.setTextFormat(Qt.PlainText)
+        question.setWordWrap(True)
+        question.setText(prompt["text"])
+        layout.addWidget(question)
+        choices = QComboBox(dialog)
+        value = QLineEdit(dialog)
+        value.setMaxLength(4096)
+        choices.addItems(prompt["choices"])
+        choices.setCurrentIndex(-1)
+        use_choices = bool(prompt["choices"])
+        editor = choices if use_choices else value
+        editor.setAccessibleName("Response")
+        layout.addWidget(editor)
+        hidden_editor = value if use_choices else choices
+        hidden_editor.hide()
+        controls = QDialogButtonBox(dialog)
+        send = controls.addButton("Send answer", QDialogButtonBox.AcceptRole)
+        cancel = controls.addButton(
+            "Cancel native prompt", QDialogButtonBox.DestructiveRole
+        )
+        dismiss = controls.addButton("Dismiss", QDialogButtonBox.RejectRole)
+        send.setEnabled(not use_choices)
+        choices.currentIndexChanged.connect(lambda i: send.setEnabled(i >= 0))
+        send.clicked.connect(dialog.accept)
+        cancel.clicked.connect(lambda: dialog.done(2))
+        dismiss.clicked.connect(dialog.reject)
+        layout.addWidget(controls)
+        self.prompt_dialog, self.prompt_identity = dialog, identity
+
+        def completed(outcome):
+            self.prompt_dialog, self.prompt_identity = None, None
+            answer = str(choices.currentIndex()) if use_choices else value.text()
+            value.clear()
+            dialog.deleteLater()
+            if (
+                outcome not in (QDialog.Accepted, 2)
+                or identity != self._selected_prompt_identity()
+            ):
+                return
+            reply = {
+                key: prompt[key]
+                for key in ("prompt_id", "target_admission_id", "definition_sha256")
+            }
+            reply.update(
+                action="CANCEL" if outcome == 2 else "ANSWER",
+                answer=None if outcome == 2 else answer,
+            )
+            context, execution = identity[:2]
+            client, key = self.client, str(uuid.uuid4())
+            self.submit(
+                lambda: {
+                    "prompt_receipt": client.prompt(
+                        context, execution, key=key, reply=reply
+                    ),
+                    "observe_terminal": (context, execution),
+                }
+            )
+
+        dialog.finished.connect(completed)
+        dialog.open()
+
+    def launch_native(self):
+        if self.busy or self.client is None or not self.launch_button.isEnabled():
+            return
+        execution = self.selected()["id"]
+        context, client = self.context.currentText(), self.client
+        key = str(uuid.uuid4())
+        self.status.setText("Waiting for the native worker to verify its source")
+        self.submit(
+            lambda: {
+                "launch_context": context,
+                "launch": client.launch(
+                    context, execution, key=key, cancelled=self.worker.closed
+                ),
+            }
+        )
 
     def send_command(self, command):
         button = self.command_buttons.get(command)
@@ -326,6 +547,14 @@ class SpellServerPanel(QWidget):
 
         def action():
             result = client.command(context, execution["id"], command, key=key)
+            if (
+                command in {"CMD_RUN", "CMD_ABORT", "CMD_CLOSE"}
+                and "native_root_result" in execution
+            ):
+                return {
+                    "command_result": result,
+                    "observe_terminal": (context, execution["id"]),
+                }
             return {"command_result": result}
 
         self.submit(action)

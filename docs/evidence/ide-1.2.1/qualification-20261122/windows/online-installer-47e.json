@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "scope": "Clean Windows online installation through install.ps1 using the manifest-verified candidate IDE wheel. The actual installed Qt application ran ordinary Python and debugged it before any SPELL package was present.",
+  "command": "install.ps1 -Python <CPython 3.13> -IdeWheel <IDE 1.2.2 wheel> -IdeWheelSha256 1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+  "input_file_sha256": {
+    "install.ps1": "7208ce119aeb1dcf1a3ddf07b824fff1451b26a9f121ce28e83270677ecc53e2",
+    "requirements-windows-installer.lock": "6e8991bfdc315202039f40e4939cf8b66ece553edfd27875e5dbdbd844cadbe2",
+    "requirements-windows-cp313.lock": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8"
+  },
+  "wheel_sha256": "1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+  "bad_checksum_exit": 1,
+  "bad_checksum_rejected_before_environment_creation": true,
+  "installed": {
+    "debugpy": "1.8.22",
+    "openbexi-ide": "1.2.2",
+    "pip": "26.3",
+    "Pygments": "2.21.0",
+    "PySide6_Essentials": "6.10.3",
+    "shiboken6": "6.10.3"
+  },
+  "qt": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue"
+  ],
+  "qt_platform": "windows",
+  "logs_sha256": {
+    "install.log": "8abc4014d911e09e05efd711443c81550b023f0b27bfcd1f1369ecb7e04b0fe8",
+    "desktop.log": "90e310fe760d6077f570b57f5f59bd7e42a21b2e86bde6798a2bbf42163cb5f9",
+    "ordinary/result.json": "90e310fe760d6077f570b57f5f59bd7e42a21b2e86bde6798a2bbf42163cb5f9",
+    "ordinary/console.txt": "4828eabdb4ac40eeae4ef3c3afe4b69e88ded6837e2fa7795a1b46c80eb38d24"
+  }
+}

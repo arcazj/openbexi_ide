@@ -1,5 +1,11 @@
 # Current qualification status
 
+## November 22 joint execution
+
+**Hold the release.** The tested candidate is IDE 1.2.2 (`fadac70d`) and SPELL 0.8.0 (`47e0cb37`). The installed Windows owner and observer saw native completion, and the browser retained the original root and child through explicit handoff and reconnect. The original five-minute sanitizer runs exceeded 64 MiB. Complete native evidence covers 330/763 inherited requirements across the dated builds. [Exact tests and remaining gates](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
+
+## November 6 reference
+
 Updated November 6, 2026 UTC. **IDE v1.2.1 and SPELL v0.8-rc1 remain unqualified.** All eleven full-release groups are open. The reference Linux foundation passed **1,823 tests in 423.326 seconds**, with zero failures, errors or skips and the original 600-second limit. Matched concurrent requests and heartbeats pass under measured conditions; preserved storage-stall failures prevent an unconditional reliability claim.
 
 The complete **303.491-second** Context/bridge diagnostic captured all eight processes and zero swap, but growth was **304.76 MiB** against **64 MiB** allowed. No conforming memory correction is established. Both original one-hour scenarios remain pending; cleanup and branch consolidation do not qualify a release.

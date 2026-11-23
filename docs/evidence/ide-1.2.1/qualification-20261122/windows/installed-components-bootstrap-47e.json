@@ -1,0 +1,135 @@
+{
+  "status": "COLLECTED",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "scanner": "Version: 0.76.2",
+  "scanner_binary_sha256": "dd07adf881a72b54d1a922191d62fa939938df2155be85a727da93b67b24e617",
+  "inventory_harness_sha256": "1df04891d03993ad0dbbe0ac447103909d62c53c56e10f97349c70b6a63bcee5",
+  "installation_sha256": "9575fa741b613f2f20e2ed6a46efe06ffab59a4da526368003c10f476e2e99c4",
+  "components": 32,
+  "initial_file_scanner_components": 0,
+  "pip_vendor_manifest_sha256": "11885a895536bbc3dbf956f493d775fab0ba0bcde182b8d2549f2cbd2ed9fd76",
+  "package_versions_recognized_by_advisory_scan": 31,
+  "pip_vendored_versions": {
+    "cachecontrol": "0.14.4",
+    "distlib": "0.4.4",
+    "distro": "1.9.0",
+    "msgpack": "1.2.4",
+    "packaging": "26.3",
+    "platformdirs": "4.12.4",
+    "pyproject-hooks": "1.3.3",
+    "requests": "2.34.2",
+    "certifi": "2026.10.23",
+    "idna": "3.20",
+    "urllib3": "2.8.0",
+    "rich": "15.0.0",
+    "pygments": "2.21.0",
+    "resolvelib": "1.2.1",
+    "setuptools": "70.3.0",
+    "tomli": "2.3.2",
+    "tomli-w": "1.2.0",
+    "truststore": "0.10.5"
+  },
+  "qt_runtime_version": "6.10.3",
+  "distributions": {
+    "debugpy": {
+      "version": "1.8.22",
+      "notices": 1,
+      "native_binaries": 10
+    },
+    "grpcio": {
+      "version": "1.84.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-ide": {
+      "version": "1.2.2",
+      "notices": 10,
+      "native_binaries": 3
+    },
+    "openbexi-spell-dss": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-spell-host": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "openbexi-spell-plugin": {
+      "version": "0.1.0",
+      "notices": 2,
+      "native_binaries": 1
+    },
+    "openbexi-spell-server": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 2
+    },
+    "openbexi-spell-shared": {
+      "version": "0.8.0",
+      "notices": 1,
+      "native_binaries": 0
+    },
+    "pip": {
+      "version": "26.3",
+      "notices": 46,
+      "native_binaries": 9
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "notices": 1,
+      "native_binaries": 1
+    },
+    "pygments": {
+      "version": "2.21.0",
+      "notices": 2,
+      "native_binaries": 1
+    },
+    "pyside6-essentials": {
+      "version": "6.10.3",
+      "notices": 1,
+      "native_binaries": 246
+    },
+    "shiboken6": {
+      "version": "6.10.3",
+      "notices": 1,
+      "native_binaries": 12
+    },
+    "typing-extensions": {
+      "version": "4.16.0",
+      "notices": 1,
+      "native_binaries": 0
+    }
+  },
+  "native_binary_hashes": 288,
+  "installed_distributions_missing_from_scanner": [],
+  "distinct_advisory_package_versions": 3,
+  "advisory_severities": {
+    "HIGH": 1,
+    "MEDIUM": 1,
+    "LOW": 1
+  },
+  "with_upstream_fix": 3,
+  "raw_findings_sha256": "07d2e3a396fe11370b39f741c0b8f3eac217cef27f61ee9cad69b6a95b638391",
+  "archive": "installed-components-bootstrap-47e.zip",
+  "archive_sha256": "8265ce15fcc4c538495feea1b39543ad694a81f4f79338b195003d35ea57ec9b",
+  "members": {
+    "installed.cdx.json": "8cf2dc0e8773fa4868c77931a64bcf3fd9b9702c4cab94429aebb050145f8a5d",
+    "initial-file-discovery.cdx.json": "670dd8326cd184318725a7ef7bd5ee492430bb164a895aef8a3512fa7f2d40da",
+    "advisory-matches.json": "374a82ce2a2ca4070763e6f0b8bb0ad890613111b6f0745df81886d1d9585603",
+    "installed-notices-and-binaries.json": "3b933b0472029caa457583e57d0b54d8289afbaa4d99b61afa9435e159a82485"
+  },
+  "scope": "The six staged Windows products, seven online dependencies and bootstrap pip are established by installed metadata. The SBOM also includes pip-declared vendored dependencies and the Qt version reported by the installed runtime. Native binaries and notices have individual hashes. The raw file-discovery scan and advisory search of the explicit SBOM are separate. Embedded native library code requires independent review.",
+  "release_disposition": "OPEN_INDEPENDENT_REVIEW",
+  "risk_exceptions": []
+}

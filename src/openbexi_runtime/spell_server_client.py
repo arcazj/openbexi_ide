@@ -284,6 +284,11 @@ class SpellServerClient:
             "session.close",
             "session.heartbeat",
             "execution.reserve",
+            "execution.prepare",
+            "execution.launch_status",
+            "execution.launch",
+            "execution.prompt.view",
+            "execution.prompt.reply",
             "execution.rebind",
             "execution.claim",
             "execution.decide",
@@ -407,6 +412,111 @@ class SpellServerClient:
     def has_controller(self, context, execution):
         with self._lock:
             return (context, execution) in self._controllers
+
+    def launch(self, context, execution, *, key, cancelled=None):
+        """Start one reserved native worker paused, using the original owner proof."""
+        identity = (identifier(context), identifier(execution))
+        cancel = cancelled if cancelled is not None else threading.Event()
+        with self._lock:
+            original = self._controllers.get(identity)
+            if original is None:
+                raise SpellServerError(403, "controller_proof_required")
+            proof = dict(original)
+        if cancel.is_set():
+            raise SpellServerError(409, "launch_cancelled")
+        prepared = self.authority(context, "execution.prepare", proof, key=key)
+        if prepared != {"preparation_id": key}:
+            raise SpellServerError(503, "invalid_launch_preparation")
+        # Only repeat the read-only readiness query. A response loss at either
+        # mutation exits immediately. Heartbeats continue on their own thread.
+        deadline = time.monotonic() + 25
+        while time.monotonic() < deadline and not cancel.is_set():
+            status = self.authority(context, "execution.launch_status", proof, key=key)
+            if (
+                status == {"preparation_id": key, "ready": True}
+                and type(status.get("ready")) is bool
+            ):
+                break
+            if (
+                status != {"preparation_id": key, "ready": False}
+                or type(status.get("ready")) is not bool
+            ):
+                raise SpellServerError(503, "invalid_launch_readiness")
+            cancel.wait(0.25)
+        else:
+            raise SpellServerError(
+                409,
+                "launch_cancelled" if cancel.is_set() else "worker_preflight_timeout",
+            )
+        with self._lock:
+            if cancel.is_set() or self._controllers.get(identity) != proof:
+                raise SpellServerError(409, "launch_controller_changed")
+        receipt = self.authority(context, "execution.launch", proof, key=key)
+        if (
+            type(receipt) is not dict
+            or set(receipt) != {"execution_id", "request_id", "state"}
+            or receipt["execution_id"] != execution
+            or receipt["state"] != "ADMITTED"
+        ):
+            raise SpellServerError(503, "invalid_launch_receipt")
+        try:
+            if str(uuid.UUID(receipt["request_id"])) != receipt["request_id"]:
+                raise ValueError
+        except (AttributeError, TypeError, ValueError) as error:
+            raise SpellServerError(503, "invalid_launch_receipt") from error
+        return receipt
+
+    def prompt(self, context, execution, *, key, reply=None):
+        with self._lock:
+            proof = self._controllers.get((context, execution))
+            if proof is None:
+                raise SpellServerError(403, "controller_proof_required")
+            if reply is None:
+                result = self.authority(
+                    context, "execution.prompt.view", dict(proof), key=key
+                )
+                prompt = result.get("prompt")
+                if set(result) != {"prompt"} or (
+                    prompt is not None
+                    and (
+                        type(prompt) is not dict
+                        or set(prompt)
+                        != {
+                            "prompt_id",
+                            "target_admission_id",
+                            "definition_sha256",
+                            "text",
+                            "choices",
+                        }
+                        or not all(
+                            isinstance(prompt[k], str)
+                            for k in ("prompt_id", "definition_sha256", "text")
+                        )
+                        or not re.fullmatch("[0-9a-f]{64}", prompt["definition_sha256"])
+                        or (
+                            prompt["target_admission_id"] is not None
+                            and not isinstance(prompt["target_admission_id"], str)
+                        )
+                        or type(prompt["choices"]) is not list
+                        or len(prompt["choices"]) > 64
+                        or not all(
+                            isinstance(choice, str) for choice in prompt["choices"]
+                        )
+                    )
+                ):
+                    raise SpellServerError(503, "invalid_prompt_receipt")
+                return prompt
+            if set(reply) != {
+                "prompt_id",
+                "target_admission_id",
+                "definition_sha256",
+                "action",
+                "answer",
+            }:
+                raise ValueError("Invalid native prompt reply")
+            return self.authority(
+                context, "execution.prompt.reply", {**proof, **reply}, key=key
+            )
 
     def command(self, context, execution, command, *, key, target_admission_id=None):
         """Send one intent using the original delivered controller proof.

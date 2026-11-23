@@ -1,0 +1,38 @@
+{
+  "schema": "openbexi.installed-ide.git-conflict/1",
+  "status": "PASS",
+  "subject": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "scope": "Two independent Windows IDE Development windows edited and resolved a conflict in local clones. Git CLI committed, fetched, merged and pushed to a private bare remote.",
+  "stale_push_rejected": true,
+  "stale_save_default": "Cancel",
+  "actual_unmerged_git_stages": 3,
+  "verified_clean_converged_head": "bb63047c3edd2f0a94006de3b734d2d515cd7703",
+  "parent_count": 2,
+  "resolved_content_sha256": "8f601fcbbe5b42a8e5919daa009ede5537039ed472d1bfdbe294175a49b678ab",
+  "git": "git version 2.45.1.windows.1",
+  "screenshots_sha256": {
+    "stale-save.png": "098a0f4fa4e46ccf9e36762b3c3d911f8d6eea21ac9538b5ae3b9067785ee8b5",
+    "conflict-in-editor.png": "0b2d6af8708d4f65fad93c8328225bdc560825b21598ebbdee53596793ba8e2a",
+    "converged-ide.png": "18cadf3991edd2268cc28360181ea9ccf160369d4acb622a8f052ab07f00a43c"
+  },
+  "test_source_sha256": "8b01d6d95acb2a4e326f6d8a2b068297ca89ebb1bf6bb67319a9a3b82ea496b3",
+  "command": "python -I qualify_git_conflict.py --output <new private directory>",
+  "evidence": {
+    "archive": "windows/git-conflict-47e/result.json",
+    "sha256": "dd6b32d80316cd98f07a8e754d59ff26458af885a74026101d2e17d933b7b7ab"
+  },
+  "clean_installation": {
+    "archive": "windows/online-47e0cb37/result.json",
+    "sha256": "66398913dc87c09c4f56661ebbbe2979296c2735ee1e630e2c8ea6442f3ea469"
+  },
+  "archive_root": "F:/openbexi-builds/qualification-20261122"
+}

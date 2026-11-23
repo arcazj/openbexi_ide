@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "scope": "Fresh isolated installation on the Windows qualification workstation. Ordinary Python Run and Debug ran before adding the five SPELL packages. The six candidate wheels were staged from their recorded Git archives. Seven third-party wheels came from public PyPI with the cache disabled.",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "products": {
+    "openbexi_ide-1.2.2-py3-none-any.whl": {
+      "sha256": "1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+      "version": "1.2.2",
+      "installed_members_verified": 67
+    },
+    "openbexi_spell_dss-0.8.0-py3-none-any.whl": {
+      "sha256": "93e1b280ef192b4da0994b0fe66d8168dd702e582bcb5e0aa5e6d84c09361caa",
+      "version": "0.8.0",
+      "installed_members_verified": 62
+    },
+    "openbexi_spell_host-0.8.0-py3-none-any.whl": {
+      "sha256": "8ecfee7b6484ed86246b91a22d8c0c1d544682af51662feae88da98af5beaa6f",
+      "version": "0.8.0",
+      "installed_members_verified": 13
+    },
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": {
+      "sha256": "c167dd91b6d3f18ae1de522cedfc20a9b70e504c36c541663687a2c1adda5a8e",
+      "version": "0.1.0",
+      "installed_members_verified": 27
+    },
+    "openbexi_spell_server-0.8.0-py3-none-any.whl": {
+      "sha256": "d39f4c6cc0735fea0c1331724a520658d866faf4548ded7f01802fcab2f6f3e8",
+      "version": "0.8.0",
+      "installed_members_verified": 33
+    },
+    "openbexi_spell_shared-0.8.0-py3-none-any.whl": {
+      "sha256": "80a3affab5a552363a62f7e5fe86ce45dbe3284aaf5eedd9f17bea23e1dd2374",
+      "version": "0.8.0",
+      "installed_members_verified": 6
+    }
+  },
+  "online_dependencies": {
+    "PySide6_Essentials": {
+      "version": "6.10.3",
+      "file": "pyside6_essentials-6.10.3-cp39-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "051a70e2df79cf1c012a208ad82a98e8de23ca7fe3b0f3344d07152d15705b59"
+    },
+    "shiboken6": {
+      "version": "6.10.3",
+      "file": "shiboken6-6.10.3-cp39-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "38261c88e87a1c32d1302b642b755470d2369c78af3c7d7d9e95d631f79b556c"
+    },
+    "debugpy": {
+      "version": "1.8.22",
+      "file": "debugpy-1.8.22-cp313-cp313-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "f49b1d6cecf326b63c06d7f517e4a6642777f758c58cb799e7bc5a6dd74721c2"
+    },
+    "Pygments": {
+      "version": "2.21.0",
+      "file": "pygments-2.21.0-py3-none-any.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+    },
+    "grpcio": {
+      "version": "1.84.0",
+      "file": "grpcio-1.84.0-cp313-cp313-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "b61692f0069b3eee2fc8a3a1b7f6c044df9e03fede6ce69b3ca832e1c39f26c5"
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "file": "protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353"
+    },
+    "typing_extensions": {
+      "version": "4.16.0",
+      "file": "typing_extensions-4.16.0-py3-none-any.whl",
+      "origin": "files.pythonhosted.org",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    }
+  },
+  "dependency_lock_sha256": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8",
+  "pip_reports_sha256": {
+    "pip-desktop.json": "7efe341bb5f50ea56cc0ddabc6788efae8237542cd7632bf91b7e950fe237baa",
+    "pip-spell.json": "5102b11b231b23c5c7227a0083b9c23ac116fdeeef5112f8df1f9c01df0ec01c"
+  },
+  "pre_spell_module_presence": {
+    "openbexi_spell_plugin": false,
+    "openbexi_spell_host": false,
+    "openbexi_spell_shared": false,
+    "openbexi_spell_server": false,
+    "openbexi_spell_dss": false,
+    "spell": false,
+    "dss": false
+  },
+  "operating_system": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.15 (main, Aug 14 2026, 15:36:10) [MSC v.1944 64 bit (AMD64)]",
+  "ordinary_python": [
+    "Default private CPython interpreter and ordinary Python Run",
+    "debugpy breakpoint, stack, variables, edit, Step and Continue"
+  ],
+  "debug_console": "Debugging ordinary_python.py\n\nBUNDLED_PYTHON_42\n\nFinished \u00b7 exit 0",
+  "harnesses": {
+    "qualify_candidate.py": "7b366c4e22d14562558f1ddc1be1acccc922da58753727451be4d51df8e47211",
+    "distribution_desktop.py": "e223be4de225b7128a971b44619baba63d8b533b4b87c558ed689a519e489e83",
+    "qualify_installed.py": "6252b9b3c519c9391d8b8332d738d0f836593ef298c687c42c5809edad48ca63"
+  },
+  "commands": [
+    {
+      "label": "new-venv",
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "online-installer-bootstrap",
+      "exit_code": 0,
+      "log_sha256": "aac5738f9493a76357d28a524d35f6183debcbeb2b7711002f3bcf0d8b1f9f66"
+    },
+    {
+      "label": "desktop-deps",
+      "exit_code": 0,
+      "log_sha256": "b439621dddc358f7e33218e69843707a5b0873ee084ed18d815d9d28b81bb5d6"
+    },
+    {
+      "label": "install-ide",
+      "exit_code": 0,
+      "log_sha256": "e650ddff4e3ff13ed78d43b1e95cd8c2c6f601100150c4d7f931600252f1b918"
+    },
+    {
+      "label": "desktop-entry-point",
+      "exit_code": 0,
+      "log_sha256": "382d659ee7d555e74eb8f50ff38da14f0ff4c0470de89c6b1a80b3342366cf54"
+    },
+    {
+      "label": "before-spell",
+      "exit_code": 0,
+      "log_sha256": "56363b6e2b5fc70a731fcfbb9cba5e3b4bf7fbbd202f5e31d3911783e01a7d3d"
+    },
+    {
+      "label": "ordinary-python",
+      "exit_code": 0,
+      "log_sha256": "dbe3f504b548980936270832c57d5e5accb267201485b60164ea27ea69f927bf"
+    },
+    {
+      "label": "install-spell",
+      "exit_code": 0,
+      "log_sha256": "9a96b5cd61fcff684cb0490032562934ecf26770b6ce52fc5409d5333a4891dc"
+    },
+    {
+      "label": "pip-check",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "label": "remote-entry-point",
+      "exit_code": 0,
+      "log_sha256": "e435e0521d94050909128d8af8ad0ddf245c805842a86a2679ac05c1994f260b"
+    },
+    {
+      "label": "native-host-entry-point",
+      "exit_code": 0,
+      "log_sha256": "2b4783c693a3b8d44d0761782a1e8aec5d2c44804eec4489322a3b370dcfaedc"
+    },
+    {
+      "label": "after-spell",
+      "exit_code": 0,
+      "log_sha256": "206df309f08f0b2e247f2c9b16d2301fa205e537ef1f1bec6abecd6416a40e60"
+    },
+    {
+      "label": "verify-members",
+      "exit_code": 0,
+      "log_sha256": "8a4f787605c055844c39fc7cbaff6e5d0e6a6bcfa9b78fbc7952480f265c95f1"
+    }
+  ],
+  "raw_receipt_sha256": "9575fa741b613f2f20e2ed6a46efe06ffab59a4da526368003c10f476e2e99c4",
+  "reproduction": "python -I qualify_candidate.py --online --ide <IDE artifact directory> --spell <SPELL artifact directory> --output <fresh directory>",
+  "installer_bootstrap": {
+    "lock_sha256": "6e8991bfdc315202039f40e4939cf8b66ece553edfd27875e5dbdbd844cadbe2",
+    "downloaded": {
+      "pip": {
+        "version": "26.3",
+        "file": "pip-26.3-py3-none-any.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13"
+      }
+    },
+    "pip_report_sha256": "9f4c1d9596527fb6491011796a6288bd7aa08c2343163e3956c073178a8ddac6"
+  }
+}

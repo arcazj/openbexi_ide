@@ -38,7 +38,8 @@ def main():
     report = {'passed': False, 'version': importlib.metadata.version('openbexi-ide'),
               'python': sys.executable, 'prefix': sys.prefix, 'origin': desktop.__file__,
               'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              'checks': [], 'scope': 'Actual installed Qt widgets offscreen; not noVNC/clean-machine evidence'}
+              'checks': [], 'qt_platform': application.platformName(),
+              'scope': 'Installed Qt widget actions and debugger in the selected desktop environment'}
 
     def wait(predicate, timeout=45):
         deadline = time.monotonic() + timeout
@@ -60,7 +61,7 @@ def main():
         return result[0]
 
     try:
-        assert view.interpreter == Path(sys.executable), (view.interpreter, sys.executable)
+        assert view.interpreter.samefile(sys.executable), (view.interpreter, sys.executable)
         view.open_file(source)
         view.run_action.trigger()
         wait(lambda: not view.run_controller.running)
