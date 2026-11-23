@@ -1,6 +1,6 @@
 # OpenBEXI IDE roadmap
 
-The November 22 qualification pairs IDE 1.2.2 (`fadac70d`) and SPELL 0.8.0 (`47e0cb37`). Close the original sanitizer and driver failures, finish inherited compatibility, run project-level checks in both JetBrains hosts, and obtain the representative deployment and independent security review before publication. [Gate owners, remaining checks and evidence](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
+The November 22 qualification pairs IDE 1.2.2 (`fadac70d`) and SPELL 0.8.0 (`47e0cb37`). Correct the five-minute sanitizer growth and command deadline failures, then rerun the affected checks. Fix the 27 failed inherited requirements and finish the 404 incomplete ones. Release also requires both JetBrains hosts, a representative deployment and independent security review. [Gate owners, remaining checks and evidence](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
 
 1. Preserve reliable concurrent requests and heartbeats within the original **2 s, 3 s and 1.5 s** checks. Retain paired local/reference evidence and storage-contention failures. Correct a runner or code path only when measurements establish its cause.
 2. Keep the validated native test compiler optimization (`-g1`). Require the complete foundation suite to pass within **600 seconds**, with zero failures, errors or skips.

@@ -97,8 +97,11 @@ def resources(deployment, case, refs, shipped):
     for index, name in enumerate([*roles,*workers]):
         worker = name in workers
         if worker and util["CASE_NAME"] not in {"concurrent","ten"}:
+            node = NODES[(index-len(roles))%2]
+            if util["CASE_NAME"] in {"node47", "node47b"} and name == "worker-01":
+                node = NODES[1]
             docs.append(shipped(NS, name, refs["worker"], refs["core"],
-                                deployment["source_archives_sha256"]["snapshot"], NODES[(index-len(roles))%2]))
+                                deployment["source_archives_sha256"]["snapshot"], node))
             continue
         role = "worker" if worker else name
         uid = 10003 if worker else 65532

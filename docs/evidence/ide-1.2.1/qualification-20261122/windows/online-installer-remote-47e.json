@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "setup_source": "068a73f67cc277e6afcf4e7b3a5af2d24cb4d74b",
+  "scope": "Fresh downloads from the immutable public GitHub source revision, matched against the exact files exercised on the Windows installation. Candidate wheels remain staged during the release hold.",
+  "files": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/arcazj/openbexi_ide/068a73f67cc277e6afcf4e7b3a5af2d24cb4d74b/install.ps1",
+      "sha256": "7208ce119aeb1dcf1a3ddf07b824fff1451b26a9f121ce28e83270677ecc53e2",
+      "bytes": 2402
+    },
+    "requirements-windows-installer.lock": {
+      "url": "https://raw.githubusercontent.com/arcazj/openbexi_ide/068a73f67cc277e6afcf4e7b3a5af2d24cb4d74b/requirements-windows-installer.lock",
+      "sha256": "6e8991bfdc315202039f40e4939cf8b66ece553edfd27875e5dbdbd844cadbe2",
+      "bytes": 167
+    },
+    "requirements-windows-cp313.lock": {
+      "url": "https://raw.githubusercontent.com/arcazj/openbexi_ide/068a73f67cc277e6afcf4e7b3a5af2d24cb4d74b/requirements-windows-cp313.lock",
+      "sha256": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8",
+      "bytes": 551
+    }
+  },
+  "windows_installation": "online-installer-47e.json"
+}

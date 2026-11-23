@@ -11,7 +11,8 @@ CONTEXT = "kind-obxqual2211"
 CASE_NAME = os.environ.get("OPENBEXI_KIND_CASE", "ten")
 NAMESPACE = {"ten":"obx-native-qualification","concurrent":"obx-native-concurrent",
              "admission":"obx-native-admission","cohort2":"obx-native-cohort2",
-             "fence":"obx-native-fence","final47":"obx-native-final47","final47one":"obx-native-final47one"}[CASE_NAME]
+             "fence":"obx-native-fence","final47":"obx-native-final47","final47one":"obx-native-final47one",
+             "node47":"obx-native-node47", "node47b":"obx-native-node47b"}[CASE_NAME]
 CASE = LAB / CASE_NAME
 NODES = ("obxqual2211-worker", "obxqual2211-worker2")
 IMAGES = {
@@ -20,7 +21,7 @@ IMAGES = {
     "worker": ("obx-compat-deps:655", "sha256:a545c9617133bfc8034f385ef0ffb71c5eb2cfc9a74fd078838ee33bdf6753d4"),
 }
 PROVISIONER = "sha256:6324fa788e5b2a28e3f89e8e499a13b711c2d7b3232db10ea6302ddb08e84e16"
-FINAL_47 = CASE_NAME in {"final47","final47one"}
+FINAL_47 = CASE_NAME in {"final47","final47one","node47","node47b"}
 if FINAL_47:
     bindings = json.loads((LAB/"release47-images.json").read_text())
     assert bindings["commit"] == "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d"

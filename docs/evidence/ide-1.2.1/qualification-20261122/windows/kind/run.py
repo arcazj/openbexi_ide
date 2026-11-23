@@ -8,8 +8,8 @@ import sys
 
 if __name__ == "__main__":
     _, case, operation, *args = sys.argv
-    assert case in {"ten","concurrent","cohort2","admission","fence","final47","final47one"}
-    assert operation in {"prepare","deploy","ingress","collect","fence","single","probe","cluster"}
+    assert case in {"ten","concurrent","cohort2","admission","fence","final47","final47one","node47","node47b"}
+    assert operation in {"prepare","deploy","ingress","collect","fence","single","probe","cluster","node_loss","node_restore"}
     os.environ["OPENBEXI_KIND_CASE"]=case
     root=Path(__file__).resolve().parent
     script=root.parent/"api/qualify_load.py" if operation=="probe" else root/(operation+".py")

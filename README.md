@@ -6,7 +6,7 @@ A CPython 3.13 desktop IDE with local and shared development, debugging and opti
 
 **Joint release on hold.** The tested candidate pairs IDE **1.2.2** (`fadac70d`) with SPELL **0.8.0** (`47e0cb37`) and simulator SDK **0.1.0**. Windows uses online installation. Published IDE 1.2.1 passed ordinary Python Run/Debug and stopped at native reservation. The candidate passed installed Windows native execution and browser handoff. Sustained memory, driver deadlines and inherited compatibility still block stable publication. [Qualification results](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
 
-Both five-minute sanitizer workloads exceeded the approved 64 MiB growth limit. Controller handoff grew by **259.07 MiB** and the installed IDE by **308.17 MiB**, with zero swap. The original one-hour runs remain gated. Full native compatibility, supported deployments, JetBrains host acceptance and independent security review remain open. [Qualification status](docs/CURRENT_STATUS.md) · [Roadmap](ROADMAP.md)
+Both five-minute sanitizer workloads exceeded the approved 64 MiB growth limit on the review rerun. Controller handoff grew by **296.55 MiB** and the installed IDE by **300.16 MiB**, with zero swap. The one-hour checks are gated on both five-minute passes. [Qualification status](docs/CURRENT_STATUS.md) · [Roadmap](ROADMAP.md)
 
 ## Use and develop
 
