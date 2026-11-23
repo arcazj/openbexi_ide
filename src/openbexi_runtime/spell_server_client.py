@@ -287,6 +287,8 @@ class SpellServerClient:
             "execution.prepare",
             "execution.launch_status",
             "execution.launch",
+            "execution.prompt.view",
+            "execution.prompt.reply",
             "execution.rebind",
             "execution.claim",
             "execution.decide",
@@ -463,6 +465,58 @@ class SpellServerClient:
         except (AttributeError, TypeError, ValueError) as error:
             raise SpellServerError(503, "invalid_launch_receipt") from error
         return receipt
+
+    def prompt(self, context, execution, *, key, reply=None):
+        with self._lock:
+            proof = self._controllers.get((context, execution))
+            if proof is None:
+                raise SpellServerError(403, "controller_proof_required")
+            if reply is None:
+                result = self.authority(
+                    context, "execution.prompt.view", dict(proof), key=key
+                )
+                prompt = result.get("prompt")
+                if set(result) != {"prompt"} or (
+                    prompt is not None
+                    and (
+                        type(prompt) is not dict
+                        or set(prompt)
+                        != {
+                            "prompt_id",
+                            "target_admission_id",
+                            "definition_sha256",
+                            "text",
+                            "choices",
+                        }
+                        or not all(
+                            isinstance(prompt[k], str)
+                            for k in ("prompt_id", "definition_sha256", "text")
+                        )
+                        or not re.fullmatch("[0-9a-f]{64}", prompt["definition_sha256"])
+                        or (
+                            prompt["target_admission_id"] is not None
+                            and not isinstance(prompt["target_admission_id"], str)
+                        )
+                        or type(prompt["choices"]) is not list
+                        or len(prompt["choices"]) > 64
+                        or not all(
+                            isinstance(choice, str) for choice in prompt["choices"]
+                        )
+                    )
+                ):
+                    raise SpellServerError(503, "invalid_prompt_receipt")
+                return prompt
+            if set(reply) != {
+                "prompt_id",
+                "target_admission_id",
+                "definition_sha256",
+                "action",
+                "answer",
+            }:
+                raise ValueError("Invalid native prompt reply")
+            return self.authority(
+                context, "execution.prompt.reply", {**proof, **reply}, key=key
+            )
 
     def command(self, context, execution, command, *, key, target_admission_id=None):
         """Send one intent using the original delivered controller proof.
