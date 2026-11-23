@@ -75,7 +75,7 @@ class SpellServerPanel(QWidget):
         self.retained_connections = set()
         self.closing_keys = {}
         self.state = {}
-        self.pending_start = None
+        self.pending_observation = None
         self.busy = False
         self.worker = ServerWorker(self)
         self.worker.completed.connect(self.receive, Qt.QueuedConnection)
@@ -95,7 +95,13 @@ class SpellServerPanel(QWidget):
         layout.addWidget(self.status)
         self.executions = QTreeWidget()
         self.executions.setHeaderLabels(
-            ["Procedure", "Controller", "State", "Control request"]
+            [
+                "Procedure",
+                "Controller",
+                "Control state",
+                "Control request",
+                "Native result",
+            ]
         )
         layout.addWidget(self.executions)
         controls = QHBoxLayout()
@@ -213,7 +219,7 @@ class SpellServerPanel(QWidget):
             result = item["result"]
             if result.get("disconnected"):
                 self.client = None
-                self.pending_start = None
+                self.pending_observation = None
                 self.state = {}
                 self.context.clear()
                 self.executions.clear()
@@ -256,6 +262,7 @@ class SpellServerPanel(QWidget):
                             execution["owner"],
                             execution["control_state"],
                             claim.get("requester", ""),
+                            execution.get("native_root_result") or "",
                         ]
                     )
                     row.setData(0, Qt.UserRole, execution)
@@ -265,8 +272,8 @@ class SpellServerPanel(QWidget):
                 self.procedures.clear()
                 for procedure in result["procedures"]["procedures"]:
                     self.procedures.addItem(procedure["procedure_id"], procedure)
-                if self.pending_start:
-                    context, execution_id, deadline = self.pending_start
+                if self.pending_observation:
+                    context, execution_id, field, deadline = self.pending_observation
                     pending = next(
                         (
                             row
@@ -275,24 +282,33 @@ class SpellServerPanel(QWidget):
                         ),
                         {},
                     )
-                    if context != result["context"] or pending.get(
-                        "native_root_registered"
-                    ):
-                        self.pending_start = None
+                    if context != result["context"] or pending.get(field):
+                        self.pending_observation = None
                     elif time.monotonic() < deadline:
-                        self.status.setText(
-                            "Native start admitted. Waiting for the Executor to register."
-                        )
+                        if field == "native_root_registered":
+                            self.status.setText(
+                                "Native start admitted. Waiting for the Executor to register."
+                            )
                         QTimer.singleShot(350, self, self.refresh)
                     else:
-                        self.pending_start = None
+                        self.pending_observation = None
                         self.status.setText(
-                            "Executor registration is unconfirmed. Refresh to check its state."
+                            "Refresh to check the native Executor's current state."
                         )
             elif "launch" in result:
-                self.pending_start = (
+                self.pending_observation = (
                     result["launch_context"],
                     result["launch"]["execution_id"],
+                    "native_root_registered",
+                    time.monotonic() + 30,
+                )
+                self.refresh()
+            elif "observe_terminal" in result:
+                context, execution_id = result["observe_terminal"]
+                self.pending_observation = (
+                    context,
+                    execution_id,
+                    "native_root_result",
                     time.monotonic() + 30,
                 )
                 self.refresh()
@@ -371,6 +387,7 @@ class SpellServerPanel(QWidget):
                 bool(has_proof)
                 and execution.get("lifecycle") == "STARTING"
                 and execution.get("native_root_registered", True)
+                and not execution.get("native_root_result")
                 and (
                     execution.get("control_state") == "OWNED"
                     or (
@@ -407,6 +424,14 @@ class SpellServerPanel(QWidget):
 
         def action():
             result = client.command(context, execution["id"], command, key=key)
+            if (
+                command in {"CMD_RUN", "CMD_ABORT", "CMD_CLOSE"}
+                and "native_root_result" in execution
+            ):
+                return {
+                    "command_result": result,
+                    "observe_terminal": (context, execution["id"]),
+                }
             return {"command_result": result}
 
         self.submit(action)

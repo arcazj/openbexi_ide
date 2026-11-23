@@ -248,6 +248,21 @@ def test_start_and_run_follow_private_admission_and_root_registration(app):
             panel.update_buttons()
             assert panel.launch_button.isEnabled() is start
             assert panel.command_buttons["CMD_RUN"].isEnabled() is run
+        final = dict(
+            panel.selected(), native_root_result="FINISHED", procedure_id="procedure"
+        )
+        panel.receive(
+            {
+                "result": {
+                    "context": "A",
+                    "health": dict(panel.state["health"], runtime_enabled=False),
+                    "procedures": {"procedures": []},
+                    "executions": {"executions": [final]},
+                }
+            }
+        )
+        assert panel.executions.topLevelItem(0).text(4) == "FINISHED"
+        assert not any(button.isEnabled() for button in panel.command_buttons.values())
     finally:
         panel.worker.close()
         panel.close()
