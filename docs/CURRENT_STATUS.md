@@ -2,7 +2,7 @@
 
 ## November 22 joint execution
 
-**Hold the release.** Ordinary Python Run/Debug passed on the published 1.2.1 wheel. Its public SPELL interface stops at reservation. The 1.2.2 candidate launched and completed a native procedure visible to its controller and observer. On the matched 0.8.0 runtime, both five-minute sanitizer runs exceeded 64 MiB growth. [Windows receipts](evidence/ide-1.2.1/qualification-20261122/windows/canonical-windows.json) · [Joint verdicts and evidence](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
+**Hold the release.** The tested candidate is IDE 1.2.2 (`fadac70d`) and SPELL 0.8.0 (`47e0cb37`). The installed Windows owner and observer saw native completion, and the browser retained the original root and child through explicit handoff and reconnect. The original five-minute sanitizer runs exceeded 64 MiB. Complete native evidence covers 318/763 inherited requirements across the dated builds. [Exact tests and remaining gates](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
 
 ## November 6 reference
 

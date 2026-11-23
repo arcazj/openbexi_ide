@@ -27,7 +27,7 @@ def main():
     desktop = repo / "scripts/distribution_desktop.py"
     targets = {}
     subjects = {}
-    selected = ("ide", "spell_dss", "spell_host", "spell_server", "spell_shared")
+    selected = ("ide", "spell_dss", "spell_host", "spell_plugin", "spell_server", "spell_shared")
     for folder in (args.ide.resolve(), args.spell.resolve()):
         manifest = json.loads((folder / "packages.json").read_text())
         subjects[manifest["repo"]] = {"commit": manifest["commit"], "manifest_sha256": digest(folder / "packages.json")}
@@ -38,7 +38,7 @@ def main():
             if digest(wheel) != expected:
                 raise ValueError("Invalid candidate wheel: " + name)
             targets[wheel] = expected
-    assert len(targets) == 5 and set(subjects) == {"ide", "spell"}
+    assert len(targets) == len(selected) and set(subjects) == {"ide", "spell"}
     py = out / "venv/Scripts/python.exe"
     env = os.environ.copy()
     for name in ("PYTHONPATH", "PYTHONHOME", "VIRTUAL_ENV"):

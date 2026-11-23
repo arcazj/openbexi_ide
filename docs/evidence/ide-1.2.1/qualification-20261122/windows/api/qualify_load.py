@@ -8,6 +8,7 @@ import hashlib
 import importlib.metadata
 import json
 from pathlib import Path
+import runpy
 import subprocess
 import sys
 import threading
@@ -29,10 +30,16 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--case", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--race-native", action="store_true", help="Race 100 distinct native start intents for the first reservation")
     args = p.parse_args()
     case_dir, out = args.case.resolve(), args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
     deployment = json.loads((case_dir / "deployment.json").read_text())
+    cluster = None
+    if deployment.get("provider") == "kubernetes":
+        cluster = runpy.run_path(str(Path(__file__).resolve().parent.parent / "kind/cluster.py"))
+        cluster["validate_cluster"]()
+        assert deployment["namespace"] == cluster["NAMESPACE"]
     case = json.loads((case_dir / "case.json").read_text())
     prefix = deployment["prefix"]
     workers = case["workers"]
@@ -65,10 +72,14 @@ def main():
     connection = None
 
     def worker_logs(worker):
-        proc = subprocess.run(["docker", "logs", prefix + "-" + worker], capture_output=True, timeout=12, check=True)
+        if cluster:
+            raw_logs = cluster["namespace"]("logs", "job/" + worker, "-c", "worker", timeout=12)
+        else:
+            proc = subprocess.run(["docker", "logs", prefix + "-" + worker], capture_output=True, timeout=12, check=True)
+            raw_logs = proc.stdout + proc.stderr
         rows = []
         events = {"native-ready", "native-running", "native-finished"}
-        for raw in (proc.stdout + proc.stderr).splitlines():
+        for raw in raw_logs.splitlines():
             try:
                 row = json.loads(raw)
             except (UnicodeError, ValueError):
@@ -185,8 +196,34 @@ def main():
         def start(name):
             try: return name,owner.launch("A",ids[name],key=key())
             except Exception as error: return name,{"error":str(error)}
+        remaining = procedure_ids
+        launches = {}
+        if args.race_native:
+            first = procedure_ids[0]
+            native_barrier = threading.Barrier(100)
+            def native_contender(index):
+                native_barrier.wait(timeout=30)
+                begin = time.monotonic()
+                row = {"index":index,"started_offset_seconds":round(begin-now,6)}
+                try:
+                    reply = owner.launch("A", ids[first], key=key())
+                    row.update(http=200,state=reply["state"],execution_id=reply["execution_id"],request_id=reply["request_id"])
+                except SpellServerError as error:
+                    row.update(http=error.status,code=error.code)
+                except Exception as error:
+                    row.update(http=0,error=type(error).__name__)
+                row["seconds"] = round(time.monotonic()-begin,6)
+                return row
+            with ThreadPoolExecutor(100) as pool:
+                attempts = list(pool.map(native_contender, range(100)))
+            record("same_execution_native_start_intents", attempts)
+            accepted_native = [r for r in attempts if r.get("state")=="ADMITTED" and r.get("execution_id")==ids[first]]
+            report["verdicts"]["one_native_start_from_100_distinct_intents"] = "PASS" if len(accepted_native)==1 else "FAIL"
+            assert len(accepted_native)==1
+            launches[first] = accepted_native[0]
+            remaining = procedure_ids[1:]
         with ThreadPoolExecutor(3) as pool:
-            launches = dict(pool.map(start, procedure_ids))
+            launches.update(dict(pool.map(start, remaining)))
         record("public_launch_receipts", launches)
         assert all(r.get("state") == "ADMITTED" for r in launches.values())
         ready = wait_workers("native-ready",65)

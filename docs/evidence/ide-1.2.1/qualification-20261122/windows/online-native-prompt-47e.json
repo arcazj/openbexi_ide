@@ -1,0 +1,427 @@
+{
+  "status": "PASS",
+  "scope": "Windows online wheel installation, ordinary Run/Debug with SPELL absent, native prompt answer through the installed Qt execution panel and a separate authenticated read-only observer.",
+  "subjects": {
+    "ide": {
+      "commit": "fadac70d574760cbe21c5e5512a384dddfa36e80",
+      "manifest_sha256": "4a725971bad76a8ba0df89a98eb8ac49f5fc1414ec0c14edc27a2a78e6151b58"
+    },
+    "spell": {
+      "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+      "manifest_sha256": "f383108572d6d05857ee41e45b2e267f42451f30023164539de219061b660119"
+    }
+  },
+  "product_wheels_sha256": {
+    "openbexi_ide-1.2.2-py3-none-any.whl": "1d68d0a13f85a9e64a084757c6be280cdc2feb77d97027df0d98bfc2ebffb58f",
+    "openbexi_spell_dss-0.8.0-py3-none-any.whl": "93e1b280ef192b4da0994b0fe66d8168dd702e582bcb5e0aa5e6d84c09361caa",
+    "openbexi_spell_host-0.8.0-py3-none-any.whl": "8ecfee7b6484ed86246b91a22d8c0c1d544682af51662feae88da98af5beaa6f",
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": "c167dd91b6d3f18ae1de522cedfc20a9b70e504c36c541663687a2c1adda5a8e",
+    "openbexi_spell_server-0.8.0-py3-none-any.whl": "d39f4c6cc0735fea0c1331724a520658d866faf4548ded7f01802fcab2f6f3e8",
+    "openbexi_spell_shared-0.8.0-py3-none-any.whl": "80a3affab5a552363a62f7e5fe86ce45dbe3284aaf5eedd9f17bea23e1dd2374"
+  },
+  "installed_wheel_members": {
+    "openbexi_ide-1.2.2-py3-none-any.whl": {
+      "version": "1.2.2",
+      "verified_members": 67
+    },
+    "openbexi_spell_dss-0.8.0-py3-none-any.whl": {
+      "version": "0.8.0",
+      "verified_members": 62
+    },
+    "openbexi_spell_host-0.8.0-py3-none-any.whl": {
+      "version": "0.8.0",
+      "verified_members": 13
+    },
+    "openbexi_spell_plugin-0.1.0-py3-none-any.whl": {
+      "version": "0.1.0",
+      "verified_members": 27
+    },
+    "openbexi_spell_server-0.8.0-py3-none-any.whl": {
+      "version": "0.8.0",
+      "verified_members": 33
+    },
+    "openbexi_spell_shared-0.8.0-py3-none-any.whl": {
+      "version": "0.8.0",
+      "verified_members": 6
+    }
+  },
+  "windows_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpython": "3.13.15 (main, Aug 14 2026, 15:36:10) [MSC v.1944 64 bit (AMD64)]",
+    "profile": "new virtual environment on the existing Windows qualification workstation"
+  },
+  "ordinary_python": {
+    "spell_modules_before_install": {
+      "openbexi_spell_plugin": false,
+      "openbexi_spell_host": false,
+      "openbexi_spell_shared": false,
+      "openbexi_spell_server": false,
+      "openbexi_spell_dss": false,
+      "spell": false,
+      "dss": false
+    },
+    "checks": [
+      "Default private CPython interpreter and ordinary Python Run",
+      "debugpy breakpoint, stack, variables, edit, Step and Continue"
+    ],
+    "platform": "windows",
+    "debug_output": "Debugging ordinary_python.py\n\nBUNDLED_PYTHON_42\n\nFinished \u00b7 exit 0",
+    "console_sha256": "4828eabdb4ac40eeae4ef3c3afe4b69e88ded6837e2fa7795a1b46c80eb38d24"
+  },
+  "online_entry_point": {
+    "source": "Hash-locked desktop dependencies from PyPI with pip cache disabled, the staged IDE wheel with its desktop extra, then five directly supplied staged SPELL wheels and their online dependencies.",
+    "pip_commands": [
+      "new-venv",
+      "desktop-deps",
+      "install-ide",
+      "desktop-entry-point",
+      "before-spell",
+      "ordinary-python",
+      "install-spell",
+      "pip-check",
+      "remote-entry-point",
+      "native-host-entry-point",
+      "after-spell",
+      "verify-members"
+    ],
+    "desktop_lock_sha256": "00d3ebec190f98c943bd3018bd4c56c560f9a8699ee1881d3bc3543665cc5ae8",
+    "downloaded": {
+      "PySide6_Essentials": {
+        "version": "6.10.3",
+        "file": "pyside6_essentials-6.10.3-cp39-abi3-win_amd64.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "051a70e2df79cf1c012a208ad82a98e8de23ca7fe3b0f3344d07152d15705b59"
+      },
+      "shiboken6": {
+        "version": "6.10.3",
+        "file": "shiboken6-6.10.3-cp39-abi3-win_amd64.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "38261c88e87a1c32d1302b642b755470d2369c78af3c7d7d9e95d631f79b556c"
+      },
+      "debugpy": {
+        "version": "1.8.22",
+        "file": "debugpy-1.8.22-cp313-cp313-win_amd64.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "f49b1d6cecf326b63c06d7f517e4a6642777f758c58cb799e7bc5a6dd74721c2"
+      },
+      "Pygments": {
+        "version": "2.21.0",
+        "file": "pygments-2.21.0-py3-none-any.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+      },
+      "grpcio": {
+        "version": "1.84.0",
+        "file": "grpcio-1.84.0-cp313-cp313-win_amd64.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "b61692f0069b3eee2fc8a3a1b7f6c044df9e03fede6ce69b3ca832e1c39f26c5"
+      },
+      "protobuf": {
+        "version": "7.36.2",
+        "file": "protobuf-7.36.2-cp310-abi3-win_amd64.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353"
+      },
+      "typing_extensions": {
+        "version": "4.16.0",
+        "file": "typing_extensions-4.16.0-py3-none-any.whl",
+        "origin": "files.pythonhosted.org",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+      }
+    },
+    "pip_reports": {
+      "pip-desktop.json": "b0dafe1b1a1e5e708298d2ae8e0a03f3602d27566fa3e0039b81dc39187fd456",
+      "pip-spell.json": "8d47d9e720fcbc5400557def82db10db8cba60fa7a018290d7d3b6c2551a0793"
+    }
+  },
+  "execution": {
+    "id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+    "fixture": {
+      "revision": "aaee59d3c24c69d0ba9a57dec0a9f6e4be99706d",
+      "source_sha256": "bf0db88c1e0900f3150ab3b859118adbe93752ba4744f50f2844ef3e202e1154",
+      "procedure_sha256": "f2390e17ffff10e191efef5b229fcb5ebf516be3b9c82acec5af5aad034fb4b8",
+      "driver_binding": "context-audit",
+      "server_image": "sha256:f500c700cb5714a2040064a1a9bc93e3e86ae086cdc28dc65d363161af3ba94e",
+      "worker_image": "sha256:489ff81aaa52ecbf09b4281499ed00f22fdd8b19e51e133a0202f2bbb6a40413"
+    },
+    "events": [
+      {
+        "event": "roles_connected",
+        "time": "2026-11-23T02:36:02.300448+00:00",
+        "context": "A",
+        "subject": "alice",
+        "observer": "observer"
+      },
+      {
+        "event": "reserved",
+        "time": "2026-11-23T02:36:03.744037+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+        "source_sha256": "bf0db88c1e0900f3150ab3b859118adbe93752ba4744f50f2844ef3e202e1154",
+        "revision": "aaee59d3c24c69d0ba9a57dec0a9f6e4be99706d"
+      },
+      {
+        "event": "start_native_clicked",
+        "time": "2026-11-23T02:36:03.851396+00:00"
+      },
+      {
+        "event": "native_ready",
+        "time": "2026-11-23T02:36:08.551325+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+        "status": "PAUSED",
+        "namespace_pid": 7
+      },
+      {
+        "event": "run_continue_clicked",
+        "time": "2026-11-23T02:36:08.570746+00:00"
+      },
+      {
+        "event": "observer_filtered_pending_prompt",
+        "time": "2026-11-23T02:36:10.483205+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054"
+      },
+      {
+        "event": "owner_displayed_native_prompt",
+        "time": "2026-11-23T02:36:11.169218+00:00",
+        "question": "Continue the qualification procedure?",
+        "choices": [
+          "Y",
+          "N"
+        ],
+        "send_requires_selection": true
+      },
+      {
+        "event": "owner_sent_native_answer",
+        "time": "2026-11-23T02:36:11.409372+00:00",
+        "selected_index": 0
+      },
+      {
+        "event": "verified_native_post_answer_marker",
+        "time": "2026-11-23T02:36:12.175824+00:00",
+        "path": "/workspace/approved-procedure-completed",
+        "bytes": 43,
+        "sha256": "e19d465ec80074d2faa6474f82e1afa29aa0074978ae53380332b8810e0f39d4"
+      },
+      {
+        "event": "native_finished",
+        "time": "2026-11-23T02:36:13.416148+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+        "native_status": "FINISHED",
+        "lifecycle_receipts_settled": true,
+        "hold_retained": true
+      },
+      {
+        "event": "owner_displayed_result",
+        "time": "2026-11-23T02:36:14.261761+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      },
+      {
+        "event": "observer_displayed_result",
+        "time": "2026-11-23T02:36:14.325932+00:00",
+        "execution_id": "aaa39d05-d53a-42cd-bc95-06972a760054",
+        "lifecycle": "STARTING",
+        "native_root_result": "FINISHED",
+        "native_controls_disabled": true
+      },
+      {
+        "event": "verified_durable_prompt_and_reply",
+        "time": "2026-11-23T02:36:14.783043+00:00",
+        "prompt_id": "59d7a7f2-589f-4aff-be4a-7336ceaccde9",
+        "prompt_state": "CLOSED",
+        "outcome": "ANSWER_SELECTED",
+        "owner": "alice",
+        "action": "ANSWER",
+        "reply_state": "CONSUMED_UNPROVEN",
+        "diagnostic": "IPC_SEND_ACKNOWLEDGED"
+      }
+    ],
+    "worker_observed_events": [
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-before-spawn-request",
+      "native-before-spawn-admitted",
+      "native-admission-timing",
+      "native-executor-bound",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-ready",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-position",
+      "native-child-parent-status",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-position",
+      "native-before-forward-admitted",
+      "native-admission-timing",
+      "native-before-consume-admitted",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-parent-status",
+      "native-running",
+      "native-admission-timing",
+      "native-mailbox-disposition-received",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-prompt-protocol-acknowledged",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-parent-status",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-position",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-position",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-prompt-protocol-acknowledged",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-parent-status",
+      "native-admission-timing",
+      "native-prompt-protocol-acknowledged",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-position",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-admission-timing",
+      "native-child-parent-status",
+      "native-finished",
+      "native-startup-diagnostics"
+    ],
+    "native_processes": [
+      {
+        "pid": 482,
+        "ppid": 7,
+        "executable": "SPELL-Listener"
+      },
+      {
+        "pid": 506,
+        "ppid": 482,
+        "executable": "SPELL-Context"
+      },
+      {
+        "pid": 574,
+        "ppid": 506,
+        "executable": "SPELL-Executor"
+      },
+      {
+        "pid": 7,
+        "ppid": 1,
+        "executable": "python3.13"
+      }
+    ],
+    "native_audit": [
+      {
+        "name": "2026-11-23_023606_Executor_main#1.ASRUN",
+        "bytes": 1087,
+        "sha256": "48c14996f0869dcec85fd07a4ce5ed05079d7ad2cf88540729d74c603a0efcbd"
+      }
+    ]
+  },
+  "screenshots": {
+    "owner_native_dialog": {
+      "file": "screenshots/qt-47e-native-prompt.png",
+      "sha256": "646649d9d836ce2a674cdd6bec901d2c205565f13ee39a1012087504858402f8"
+    },
+    "all_local_gui_images": {
+      "reserved.png": "0f92c602e06e06b7487ac141cbb9d04e7c885f118e3674f79c19b20f670385b3",
+      "owner-native-prompt.png": "646649d9d836ce2a674cdd6bec901d2c205565f13ee39a1012087504858402f8",
+      "owner-finished.png": "a7fb192c4cdc281e6008cd1cac65d7433923ebf61d1f8f7b4a6dc0187a17c69f",
+      "observer-finished.png": "b5fff9e361150f2d718b485dbfff9e2c0d33be41e4a4e9c2ee1d9beb26a8dcd7"
+    }
+  },
+  "harnesses": {
+    "qualify_candidate.py": "d57733422a4ff31c3f24f92954fd07752f242baf226d3b8e37de9164e2d638a1",
+    "distribution_desktop.py": "e223be4de225b7128a971b44619baba63d8b533b4b87c558ed689a519e489e83",
+    "qualify_installed.py": "6252b9b3c519c9391d8b8332d738d0f836593ef298c687c42c5809edad48ca63",
+    "qualify_native.py": "765ff0f281640dc235ced8a1e1116130be51c5a20bfed6012695722b3300c4a2"
+  },
+  "receipts": {
+    "online_installation": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\online-47e0cb37\\result.json",
+      "sha256": "66398913dc87c09c4f56661ebbbe2979296c2735ee1e630e2c8ea6442f3ea469"
+    },
+    "native_widgets": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\native-prompt-47e\\result.json",
+      "sha256": "b7be3d7c28fa58ad9097f0bd11362a3a369280db0d41b766b2912d7a440dc180"
+    },
+    "native_fixture": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\qt47prompt\\case.json",
+      "sha256": "20782bf2de216cf29f4124ff0f3dca53995f58dbf77fe877ef3b16853cd30ae3"
+    },
+    "independent_native_backend": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\public-launch\\qt47prompt\\public-result.json",
+      "sha256": "b214339147341fb9db90260a12b3e7d32721b1af4baef75f7c389be7cb70b6d0"
+    }
+  },
+  "reproduce": [
+    "python -I qualify_candidate.py --online --ide <IDE artifacts> --spell <SPELL artifacts> --output <new directory>",
+    "<installed Python> -I qualify_native.py --prompt --case <authorized native prompt fixture> --worker <assigned single-use worker> --output <new directory>"
+  ],
+  "limits": "Candidate wheels were staged locally while publication was on hold. The GUI drove installed Qt widgets using a supplied per-role connection file in the native file chooser. The complete IntelliJ IDEA and PyCharm project Run/Debug gates remain separate.",
+  "windows_jetbrains_package": {
+    "commit": "47e0cb376dac1e49e1f6745318c0eb3e43b2ec4d",
+    "zip_sha256": "f9ba699a7b5a901753440757835094ceea714e5dae5b4eb061ce0f2a75e2f3dd",
+    "installed_jar_sha256": "78b341bf80367294536017a6c4414bd2851d1a1cdab3e56f298e86d436597d55",
+    "built_on": {
+      "IntelliJ": {
+        "name": "IntelliJ IDEA",
+        "version": "2026.2.5",
+        "buildNumber": "262.12573.28"
+      },
+      "PyCharm": {
+        "name": "PyCharm",
+        "version": "2026.1.2",
+        "buildNumber": "261.24374.152"
+      }
+    },
+    "build_receipt": {
+      "path": "F:\\openbexi-builds\\qualification-20261122\\windows\\jb-47e0cb37\\result.json",
+      "sha256": "6eb7c6491195a557160723c2dfb5ca859e5cf53a41438b87eb00b4c2bc8f6b7a"
+    },
+    "earlier_genuine_host_receipt": "jetbrains.json",
+    "earlier_genuine_host_receipt_sha256": "e2d039d2d5d0b8659b362194d31c84107eb2cbd19484e22e07d097352d160059",
+    "actual_host_run_debug": "PENDING_VENDOR_ONBOARDING"
+  }
+}

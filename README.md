@@ -4,7 +4,7 @@ A CPython 3.13 desktop IDE with local and shared development, debugging and opti
 
 ## Current status
 
-**November 22 release decision — HOLD.** IDE **1.2.2** and SPELL **0.8.0** are the candidate pairing (IDE `3ec9d4d9` and SPELL `99686362`). The simulator SDK uses **0.1.0**. The installed Windows client and authenticated Chromium workspace can launch a native procedure and display its result. Published IDE 1.2.1 passed ordinary Python Run/Debug and stopped at reservation in the paired SPELL test. [Tested artifacts and limitations](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
+**Joint release on hold.** The tested candidate pairs IDE **1.2.2** (`fadac70d`) with SPELL **0.8.0** (`47e0cb37`) and simulator SDK **0.1.0**. Windows uses online installation. Published IDE 1.2.1 passed ordinary Python Run/Debug and stopped at native reservation. The candidate passed installed Windows native execution and browser handoff. Sustained memory, driver deadlines and inherited compatibility still block stable publication. [Qualification results](https://github.com/arcazj/openbexi_spell_plugin/blob/qualification/ide-spell-20261122/docs/v0.8/evidence/qualification-20261122/README.md)
 
 Both five-minute sanitizer workloads exceeded the approved 64 MiB growth limit. Controller handoff grew by **259.07 MiB** and the installed IDE by **308.17 MiB**, with zero swap. The original one-hour runs remain gated. Full native compatibility, supported deployments, JetBrains host acceptance and independent security review remain open. [Qualification status](docs/CURRENT_STATUS.md) · [Roadmap](ROADMAP.md)
 
