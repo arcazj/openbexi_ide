@@ -61,7 +61,7 @@ def main():
         return result[0]
 
     try:
-        assert view.interpreter == Path(sys.executable), (view.interpreter, sys.executable)
+        assert view.interpreter.samefile(sys.executable), (view.interpreter, sys.executable)
         view.open_file(source)
         view.run_action.trigger()
         wait(lambda: not view.run_controller.running)

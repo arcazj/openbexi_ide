@@ -40,6 +40,7 @@ def main():
     parser.add_argument('--artifacts', type=Path, nargs='+', required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--manifest', type=Path, default=ROOT / 'docker/v08-qualification-inputs.json')
+    parser.add_argument('--updates', type=Path, help='Offline Debian and Python files pinned by the candidate manifest')
     parser.add_argument('--tag')
     args = parser.parse_args()
     output = args.output.resolve()
@@ -65,8 +66,9 @@ def main():
             shutil.copy2(candidates[0], wheels / name)
         alias = image_alias(manifest['base_image'])
         archive_path = output / 'published-ide.tar'
+        paths = ['examples', 'scripts/distribution_desktop.py'] if native else []
         subprocess.run(
-            ['git', 'archive', '--format=tar', '--output=' + str(archive_path), manifest['ide_commit']],
+            ['git', 'archive', '--format=tar', '--output=' + str(archive_path), manifest['ide_commit'], *paths],
             cwd=ROOT, check=True,
         )
         with tarfile.open(archive_path) as archive:
@@ -83,7 +85,24 @@ def main():
                 raise ValueError('Native build and SPELL package sources differ')
             native_args = ['--build-arg', 'NATIVE_IMAGE=' + image_alias(native['image'])]
             inputs += [(ROOT / 'docker' / name, context / name)
-                       for name in ('verify_v08_native.py', 'v08_desktop.py')]
+                       for name in ('verify_v08_native.py', 'v08_desktop.py', 'install_v08_desktop_updates.py')]
+            updates = context / 'updates'
+            updates.mkdir()
+            if 'desktop_updates' in manifest:
+                if not args.updates:
+                    raise ValueError('The pinned desktop updates require --updates')
+                update_pins = manifest['desktop_updates']
+                for group, pins in (('debs', update_pins['debian']),
+                                    ('wheels', {n: row['sha256'] for n, row in update_pins['python'].items()})):
+                    directory = updates / group
+                    directory.mkdir()
+                    for name, digest in pins.items():
+                        if Path(name).name != name:
+                            raise ValueError('Unexpected update filename')
+                        path = args.updates / group / name
+                        if sha(path) != digest:
+                            raise ValueError('Desktop update checksum differs: ' + name)
+                        shutil.copyfile(path, directory / name)
         for source, destination in inputs:
             shutil.copy2(source, destination)
             report['build_inputs'][destination.name] = sha(source)

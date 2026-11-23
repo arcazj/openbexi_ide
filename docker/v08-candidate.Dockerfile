@@ -11,14 +11,16 @@ COPY --from=native /usr/local/lib/python3.13/site-packages/spell_native/ /usr/lo
 COPY --from=native /usr/local/lib/python3.13/site-packages/libSPELL_DTA_v3.py /usr/local/lib/python3.13/site-packages/
 COPY --from=native /usr/local/lib/python3.13/site-packages/libSPELL_DTA_v3.py /opt/spell-native/lib/python3.13/site-packages/
 COPY wheels/ /opt/qualification-inputs/wheels/
-COPY published-pair.json verify_installed.py verify_v08_native.py /opt/qualification-inputs/
+COPY published-pair.json verify_installed.py verify_v08_native.py install_v08_desktop_updates.py /opt/qualification-inputs/
+COPY updates/ /opt/qualification-inputs/updates/
 COPY ide/examples/ /opt/openbexi/examples/
 COPY ide/scripts/distribution_desktop.py /opt/openbexi/scripts/
 COPY v08_desktop.py /opt/test-lab/
 RUN ln -s v08_desktop.py /opt/test-lab/health.py
-ENV LD_LIBRARY_PATH=/opt/v08-native-home/bin:/opt/spell-native/lib \
+ENV LD_LIBRARY_PATH=/opt/v08-native-home/bin:/usr/local/lib:/usr/lib/x86_64-linux-gnu:/opt/spell-native/lib \
     OPENBEXI_SPELL_BACKEND="" OPENBEXI_DSS_URL=""
-RUN python -m pip install --no-index --no-deps --force-reinstall /opt/qualification-inputs/wheels/*.whl \
+RUN python -I /opt/qualification-inputs/install_v08_desktop_updates.py \
+    && python -m pip install --no-index --no-deps --force-reinstall /opt/qualification-inputs/wheels/*.whl \
     && python -I /opt/qualification-inputs/verify_installed.py \
     && python -I /opt/qualification-inputs/verify_v08_native.py \
     && python -m pip check

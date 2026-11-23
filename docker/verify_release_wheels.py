@@ -11,7 +11,10 @@ root = Path('/opt/qualification-inputs')
 manifest = json.loads((root / 'published-pair.json').read_text())
 site = Path(sysconfig.get_path('purelib'))
 checked = {}
-for name, digest in manifest['wheels'].items():
+expected = dict(manifest['wheels'])
+if manifest.get('native'):
+    expected.update({name: row['sha256'] for name, row in manifest['dependencies'].items()})
+for name, digest in expected.items():
     path = root / 'wheels' / name
     assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
     count = 0
